@@ -93,7 +93,7 @@ local spellBuffPowers =
 	["Heroism"] =
 	{
 		["fixed"] = 5,
-		["proportional"] = 2,
+		["proportional"] = 1,
 	},
 }
 local spellStatsBuffPowers =
