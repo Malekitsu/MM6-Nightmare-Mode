@@ -198,7 +198,7 @@ local newWeaponSkillAttackBonuses =
 {
 	[const.Skills.Staff]	= {1, 2, 2, },
 	[const.Skills.Sword]	= {1, 2, 2, },
-	[const.Skills.Dagger]	= {1, 1, 1, },
+	[const.Skills.Dagger]	= {1, 2, 2, },
 	[const.Skills.Axe]		= {1, 2, 2, },
 	[const.Skills.Spear]	= {1, 2, 3, },
 	[const.Skills.Bow]		= {3, 3, 3, },
@@ -1602,47 +1602,59 @@ function events.GameInitialized2()
 	-- 
 	-- class descriptions
 	----------------------------------------------------------------------------------------------------
+	Game.ClassDescriptions[const.Class.Paladin] ="A cross between Knight and Cleric, Paladins perform both roles well, but not as well as the more focused classes they borrow from.  Like Knights, Paladins can learn to use any type of weapon or armor, although they don’t have as many choices to begin with.  Paladins also begin with the Spirit realm of magic, and can also learn to use the Clerical Mind, Body and Light realms.  They cannot, however, learn to use the greater realm of Dark, nor any of the Elemental realms.  Paladins that are true to their cause may be promoted to Crusader (gaining one hit point and spell point per level) and ultimately to Hero (gaining another hit point and spell point per level).  Paladins may learn all of the secondary skills."
+	Game.ClassDescriptions[const.Class.Crusader] = "Crusader is the first Paladin promotion.  Crusaders can learn to use any type of weapon or armor, and they can learn the Clerical magics of Spirit, Mind, and Body.  Crusaders enjoy the benefit of an extra hit point and spell point per level, and can be promoted to Heroes, gaining an additional hit point and spell point per level."
+	Game.ClassDescriptions[const.Class.Hero] = "Hero is the second and last Paladin promotion.  Heroes can learn to use any type of weapon or armor, and they can learn the Clerical magics of Spirit, Mind, and Body.  Heroes enjoy the benefit of an extra two hit points and spell points per level." 
+	Game.ClassDescriptions[const.Class.Archer] = "Like Paladins, the Archer is a hybrid of the Knight and Sorcerer classes.  Archers may learn to use any type of weapon (specializing in the bow, of course) but they may never learn the shield or plate armor skills.  They are compensated by beginning with the Air realm of magic and may eventually learn to use the rest of the Elemental realms.  The greater realm of Light is, however, beyond their grasp.  Archers can be promoted to Battle Mage (gaining one hit point and one spell point per level) and eventually may become Warrior Mages (gaining another hit point and spell point per level).  All of the secondary skills are open to the Archer.\n\nArchers are skilled Bow users and add 2 Attack per skill level.\n\nArchers are also swift dagger users, having a 5% bonus crit chance and critical damage at 75% with 1 dagger, 200% with 2 daggers"
+	Game.ClassDescriptions[const.Class.BattleMage] = "Battle Mage is the first Archer promotion.  Battle Mages may learn to use any type of weapon, but they may never learn the shield or plate armor skills.  They may also learn the four elemental schools of magic of the Sorcerer.  Battle Mages enjoy the benefit of an extra hit point and spell point per level, and may be promoted to Warrior Mage, gaining another hit point and spell point per level.\n\nBattle Mage are Great Bow users and add 2 attack and 1 damage per skill level.\n\nArchers are also swift dagger users, having a 5% bonus crit chance and critical damage at 75% with 1 dagger, 200% with 2 daggers"
+	Game.ClassDescriptions[const.Class.WarriorMage] = "Warrior Mage is the second and last Archer promotion.  Warrior Mages may learn to use any type of weapon, but they may never learn the shield or plate armor skills.  They may also learn the four elemental schools of magic of the Sorcerer.  Warrior Mages enjoy the benefit of an extra two hit points and spell points per level.\n\nWarrior Mage are formidable Bow users and add 2 attack, 2 damage and 1% Attack Speed per skill level.\n\nArchers are also swift dagger users, having a 5% bonus crit chance and critical damage at 75% with 1 dagger, 200% with 2 daggers"
 	
 	-- melee damage bonus
-	--[[
+	
+	
+	
 	for classIndex, value in pairs(classMeleeWeaponSkillDamageBonus) do
 	
 		Game.ClassDescriptions[classIndex] = Game.ClassDescriptions[classIndex] ..
 			string.format(
-				"\n\n%s - %s - %s adds %d - %d - %d additional damage per skill level to each distinct melee weapon type in hands.",
+				"\n\n%s - %s - %s adds %d - %.1f - %d additional damage per skill level to each distinct melee weapon type in hands.",
 				Game.ClassNames[math.floor(classIndex / 3) * 3 + 0],
 				Game.ClassNames[math.floor(classIndex / 3) * 3 + 1],
-				Game.ClassNames[math.floor(classIndex / 3) * 3 + 2],
+				Game.ClassNames[math.floor(classIndex / 3) * 3 + 2],	
 				classMeleeWeaponSkillDamageBonus[math.floor(classIndex / 3) * 3 + 0],
 				classMeleeWeaponSkillDamageBonus[math.floor(classIndex / 3) * 3 + 1],
 				classMeleeWeaponSkillDamageBonus[math.floor(classIndex / 3) * 3 + 2]
 			)
 			
 	end
-	]]
+	
 	----------------------------------------------------------------------------------------------------
-	--[[ skill descriptions
+	-- skill descriptions
 	----------------------------------------------------------------------------------------------------
+	Game.SkillDescriptions[const.Skills.Bodybuilding] = "Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character’s base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant 1% of extra maximum health per skill level. "
+	
+	Game.SkillDescriptions[const.Skills.Meditation] = "Meditation skill adds spell points directly to your character’s spell point totals.  Multiply the skill in meditation by the character’s base class bonus (4 for sorcerers, 0 for knights, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will grant mana regeneration depending on maximum Mana and Meditation skill.\nHero and Warrior Mage get an extra 50% mana regeneration bonus."
 	
 	Game.SkillDescriptions[const.Skills.Bow] = Game.SkillDescriptions[const.Skills.Bow] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Bow]
+			"\n\nBase bonus Attack Speed: %d\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed | damage ",
+			newWeaponBaseRecoveryBonuses[const.Skills.Bow]
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Bow] =
 			string.format(
-				"     %s |     %s | %s",
+				"     %s |     %s |     %s | %s",
 				formatSkillRankNumber(newWeaponSkillAttackBonuses[const.Skills.Bow][rank], 101),
 				formatSkillRankNumber(newWeaponSkillRecoveryBonuses[const.Skills.Bow][rank], 158),
+				formatSkillRankNumber(newWeaponSkillDamageBonuses[const.Skills.Bow][rank], 185),
 				(rank == const.Master and "two arrows per shot" or "")
 			)
 	end
 
 	Game.SkillDescriptions[const.Skills.Blaster] = Game.SkillDescriptions[const.Skills.Blaster] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Blaster]
+			"\n\nBase bonus Attack speed: %d\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Blaster]
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Blaster] =
@@ -1654,8 +1666,8 @@ function events.GameInitialized2()
 	
 	Game.SkillDescriptions[const.Skills.Staff] = Game.SkillDescriptions[const.Skills.Staff] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nSpecial effects: Shrink and Feeblemind\nchance = %d%% + %d%% * level, duration = %d minutes\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | AC | resistance to all |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Staff],
+			"\n\nBase bonus Attack speed: %d\n\nSpecial effects: Shrink and Feeblemind\nchance = %d%% + %d%% * level, duration = %d minutes\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | AC | resistance to all |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Staff],
 			staffEffect["base"],
 			staffEffect["multiplier"],
 			staffEffect["duration"]
@@ -1672,40 +1684,45 @@ function events.GameInitialized2()
 	
 	Game.SkillDescriptions[const.Skills.Sword] = Game.SkillDescriptions[const.Skills.Sword] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nCan be held in left hand as an auxiliary weapon.\n\nHolding by two hands adds %d damage per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Sword],
+			"\n\nBase bonus Attack speed: %d\n\nCan be held in left hand as an auxiliary weapon.\n\nHolding by two hands adds %d damage per skill level.\n\nOne-hand Sword do not get any class damage bonus when in main hand\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed | damage |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Sword],
 			twoHandedWeaponDamageBonus
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Sword] =
 			string.format(
-				"     %s |     %s |",
+				"     %s |     %s |     %s |",
 				formatSkillRankNumber(newWeaponSkillAttackBonuses[const.Skills.Sword][rank], 101),
-				formatSkillRankNumber(newWeaponSkillRecoveryBonuses[const.Skills.Sword][rank], 158)
+				formatSkillRankNumber(newWeaponSkillRecoveryBonuses[const.Skills.Sword][rank], 158),
+				formatSkillRankNumber(newWeaponSkillDamageBonuses[const.Skills.Sword][rank], 225)
 			)
 	end
 	
-	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "slower opponents'.", "slower opponents'. The dagger can also do more damage when you're fighting multiple enemies at once.")
+--[[	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "slower opponents'.", "slower opponents'. The dagger can also do more damage when you're fighting multiple enemies at once.")
 	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "Expert dagger fighters can wield a dagger in their left hand while using another weapon in their right.", "\nCan be held in left hand as an auxiliary weapon.")
 	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "Master dagger fighters have a chance of doing a triple damage attack.", "\nChance to deliver triple damage per attack.")
 	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger] ..
 		string.format(
-			"\n\nBase recovery: %d\n\n+ %2.1f damage per close enemy per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Dagger],
+			"\n\nBase bonus Attack speed: %d\n\n+ %2.1f damage per close enemy per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Dagger],
 			daggerCrowdDamageMultiplier
 		)
+		]]
+	Game.SkillDescriptions[const.Skills.Dagger] = "While daggers don't do the kind of damage that a sword or an axe can deliver, they are very quick—sometimes letting you get two attacks for every one of your slower opponents'.\n\nMain hand dagger do not get any class damage bonus\n\nDagger can be dual wielded at Novice Level and has 5+1% chance per skill level to deal critical damage, dealing 40% extra damage.\nDual wielding dagger will make your critical hits to deal 150% extra damage, allowing huge critical hits.\n\nBase bonus Attack speed: 40\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |"
+		
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Dagger] =
 			string.format(
-				"     %s |",
-				formatSkillRankNumber(newWeaponSkillAttackBonuses[const.Skills.Dagger][rank], 101)
+				"     %s |     %s |",
+				formatSkillRankNumber(newWeaponSkillAttackBonuses[const.Skills.Dagger][rank], 101),
+				formatSkillRankNumber(newWeaponSkillRecoveryBonuses[const.Skills.Dagger][rank], 158)
 			)
 	end
 	
 	Game.SkillDescriptions[const.Skills.Axe] = Game.SkillDescriptions[const.Skills.Axe] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nHolding by two hands adds %d damage per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed | damage |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Axe],
+			"\n\nBase bonus Attack speed: %d\n\nHolding by two hands adds %d damage per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed | damage |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Axe],
 			twoHandedWeaponDamageBonus
 		)
 	for rank = const.Novice, const.Master do
@@ -1720,23 +1737,24 @@ function events.GameInitialized2()
 	
 	Game.SkillDescriptions[const.Skills.Spear] = Game.SkillDescriptions[const.Skills.Spear] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nHolding by two hands adds %d damage per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | damage |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Spear],
+			"\n\nBase bonus Attack speed: %d\n\nHolding by two hands adds %d damage per skill level.\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | damage | AC |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Spear],
 			twoHandedWeaponDamageBonus
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Spear] =
 			string.format(
-				"     %s |       %s |",
+				"     %s |       %s | %s |",
 				formatSkillRankNumber(newWeaponSkillAttackBonuses[const.Skills.Spear][rank], 101),
-				formatSkillRankNumber(newWeaponSkillDamageBonuses[const.Skills.Spear][rank], 171)
+				formatSkillRankNumber(newWeaponSkillDamageBonuses[const.Skills.Spear][rank], 171),
+				formatSkillRankNumber(newWeaponSkillACBonuses[const.Skills.Spear][rank], 206)
 			)
 	end
 	
 	Game.SkillDescriptions[const.Skills.Mace] = Game.SkillDescriptions[const.Skills.Mace] ..
 		string.format(
-			"\n\nBase recovery: %d\n\nSpecial effects: Paralyze\nchance = %d%% + 0.25 * level, duration = %d minutes\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | damage |",
-			100 - newWeaponBaseRecoveryBonuses[const.Skills.Mace],
+			"\n\nBase bonus Attack speed: %d\n\nSpecial effects: Paralyze\nchance = %d%% + 0.25 * level, duration = %d minutes\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | damage |",
+			newWeaponBaseRecoveryBonuses[const.Skills.Mace],
 			maceEffect["base"],
 			maceEffect["multiplier"],
 			maceEffect["duration"]
@@ -1817,7 +1835,7 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 				learningSkillMultiplierByMastery[rank]
 			)
 	end
-]]
+
 	----------------------------------------------------------------------------------------------------
 	-- spell descriptions - externalized to spell-overrides as of 0.8.3
 	
@@ -2458,7 +2476,7 @@ local function modifiedCharacterStrikeWithDamageProjectile(d, def, playerPointer
 		local playerEquipmentData = getPlayerEquipmentData(player)
 		
 		if playerEquipmentData.shield.equipped then
-			local classMultiplier = table.find(knightClasses, player.Class) and (shieldDoubleSkillEffectForKnights and 2 or 3) or 1
+			local classMultiplier = table.find(knightClasses, player.Class) and (shieldDoubleSkillEffectForKnights and 1 or 2) or 1
 			damageMultiplier = damageMultiplier * math.pow(1 - (shieldProjectileDamageReductionPerLevel * classMultiplier), playerEquipmentData.shield.level)
 		end
 		
