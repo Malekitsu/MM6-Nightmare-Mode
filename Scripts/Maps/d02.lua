@@ -1,3 +1,40 @@
+
+--[[AES(2454, 100)
+evt.map[100] = function()
+	if mapvars.tyeksekk ~= 3 then 
+    Message("This text is made possible by Eksekk, but now you are going to die")
+		if mapvars.tyeksekk == nil then
+		mapvars.tyeksekk = 0
+		end
+	mapvars.tyeksekk = mapvars.tyeksekk + 1
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	Sleep(120)
+	pseudoSpawnpoint{monster = 76, x = Party.X, y = Party.Y, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 1024, group = 255}	
+	
+	end
+end
+]]
+
+
+
 local TXT = Localize{
 	[0] = " ",
 	[1] = "Door",
@@ -38,6 +75,7 @@ evt.map[105] = function()
 			pl.Skills[const.Skills.RepairItem] = JoinSkill(math.max(skill, 4), math.max(mastery, const.Expert))
 			end
 		evt.StatusText(13)
+		evt.ForPlayer("All")		
 		evt.Add("Experience", 500)
 		mapvars.learned = 1
 	end

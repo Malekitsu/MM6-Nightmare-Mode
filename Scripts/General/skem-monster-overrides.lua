@@ -100,7 +100,7 @@ local monsterInfos =
 {
 	--Maddening Eye
 	[12] = {["SpellChance"] = 2, ["Spell"] = "Dispell Magic", ["SpellSkill"] = JoinSkill(10, const.Novice), },
-	--Priest of Baa
+	--[[Priest of Baa
 	[16] = 
 	{["Name"]= "Priest of Baa",["FullHP"] = 220,["Level"] = 40, ["ArmorClass"]=40,["Experience"]= 1144,["Attack1"] = {["Type"] = const.Damage.Elec, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 6, ["DamageAdd"] = 0, ["Missile"] = missiles["Elec"], },},
 	--Bishop of Baa
@@ -109,7 +109,8 @@ local monsterInfos =
 	--Cardinal of Baa
 	[18] = 
 	{["Name"]= "Cardinal of Baa",["FullHP"] = 510,["Level"] =60,["ArmorClass"]=60,["Experience"]= 4000,["Attack1"] = {["Type"] = const.Damage.Elec, ["DamageDiceCount"] = 10, ["DamageDiceSides"] = 6, ["DamageAdd"] = 10, ["Missile"] = missiles["Elec"], },["Spell"] = "Flying Fist", ["SpellSkill"] = JoinSkill(6, const.Master),},
-	--devil Spawn
+	]]
+	--[[devil Spawn
 	[28] = {["FullHP"] = 190,["Level"] = 50,["ArmorClass"]=40,["Experience"]= 2800, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 4, ["DamageDiceSides"] = 6, ["DamageAdd"] = 8,},["Attack2"] = {["Type"] = const.Damage.Fire, ["DamageDiceCount"] = 2, ["DamageDiceSides"] = 26, ["DamageAdd"] = 4, ["Missile"] = missiles["Fire"], },["SpellChance"] = 20, ["SpellName"] = "Fire Bolt", ["SpellSkill"] = JoinSkill(12, const.Master),},
 	--devil Worker
 	[29] = {["FullHP"] = 480,["Level"] = 60,["ArmorClass"]=60,["Experience"]= 4800, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 5, ["DamageDiceSides"] = 6, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Poison, ["DamageDiceCount"] = 3, ["DamageDiceSides"] = 26, ["DamageAdd"] = 10, ["Missile"] = missiles["Poison"], },["SpellChance"] = 20, ["SpellName"] = "Fire Bolt", ["SpellSkill"] = JoinSkill(13, const.Master),},
@@ -121,6 +122,7 @@ local monsterInfos =
 	[26] = {["FullHP"] = 950,["Level"] = 90,["ArmorClass"]=90, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 17, ["DamageDiceSides"] = 8, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Elec, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 32, ["Missile"] = missiles["Elec"], },["SpellChance"] = 20, ["SpellName"] = "Meteor Shower", ["SpellSkill"] = JoinSkill(3, const.Master),},	
 	--Devil King
 	[27] = { ["FullHP"] = 1150,["Level"] = 100,["ArmorClass"]=100, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 20, ["DamageDiceSides"] = 9, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Magic, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 39, ["Missile"] = missiles["Magic"], },["Bonus"] = 0, ["BonusMul"] = 0},
+	]]
 	--Grand druid
 	[45] = {["Bonus"] = 0, ["BonusMul"] = 0},
 	--Defender of VARN
@@ -205,6 +207,7 @@ local monsterInfos =
 	[165] = {["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 3, ["DamageDiceSides"] = 4, ["DamageAdd"] = 6,},["Attack2"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 3, ["DamageDiceSides"] = 4, ["DamageAdd"] = 9,},["Level"] = 12,["FullHP"] = 50, ["ArmorClass"]=14, ["Experience"]= 264, ["Bonus"] = 0, ["BonusMul"] = 0},
 
 
+
 	--The Unpeasanting
 	[103] = {["Name"] = "Manservant", ["Level"] = 4,},
 	[104] = {["Name"] = "Craftsman", ["Level"] = 6,},
@@ -266,11 +269,14 @@ end
 
 function calculateMovespeed(monsterArray) 
 	speed = monsterArray["MoveSpeed"]
-	if (monsterArray["Attack1"]["Missile"] == 0)
+	if (speed > 0)
 	then
-		speed = (speed + (400 - speed) / 2 + 100) * 101 / 100
-	else
-		speed = speed * 99 / 100
+		if (monsterArray["Attack1"]["Missile"] == 0)
+		then
+			speed = (speed + (400 - speed) / 2 + 100) * 101 / 100
+		else
+			speed = speed * 99 / 100
+		end
 	end
 	return speed
 end
@@ -477,8 +483,8 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 				end
 			elseif (resist == const.Damage.Phys) 	
 			then
-				sides = sides * damageMultiplier * dampener
-				bonus = math.min(bonus * damageMultiplier * dampener, 250)
+				sides = sides * damageMultiplier 
+				bonus = math.min(bonus * damageMultiplier, 250)
 			else
 				sides = sides * damageMultiplier
 				bonus = math.min(bonus * damageMultiplier, 250)
@@ -662,7 +668,7 @@ function events.LoadMap()
 	end
 end
 
--- monster power spawn event
+--[[ monster power spawn event
 local idsToBasePics = {}
 function events.GameInitialized2()
 	local a, c = string.byte("ac", 1, 2)
@@ -699,3 +705,4 @@ end, 6)
 function events.RandomSpawnMonster(t)
 	
 end
+]]
