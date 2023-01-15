@@ -122,9 +122,9 @@
 121	151	51	140	1400	1401	1402	1403	PeasantF1A	pfemsta	pfemwaa	pfemata0	pfemata0	pfemwia0	pfemdea0	pfemdef0	pfemfia
 122	151	51	140	1400	1401	1402	1403	PeasantF1B	pfBmsta	pfBmwaa	pfBmata0	pfBmata0	pfBmwia0	pfBmdea0	pfBmdef0	pfBmfia
 123	151	51	140	1400	1401	1402	1403	Peasantf1C	pfCmsta	pfCmwaa	pfCmata0	pfCmata0	pfCmwia0	pfCmdea0	pfCmdef0	pfCmfia
-124	157	50	140	1410	1411	1412	1413	PeasantF2A	fmAsta	fmAwal	fmAatta	fmAatta	fmAwin	fmAdyia	fmAdead	fmAfid
-125	157	50	140	1410	1411	1412	1413	PeasantF2B	fmBsta	fmBwal	fmBatta	fmBatta	fmBwin	fmBdyia	fmBdead	fmBfid
-126	157	50	140	1410	1411	1412	1413	PeasantF2C	fmCsta	fmCwal	fmCatta	fmCatta	fmCwin	fmCdyia	fmCdead	fmCfid
+124	474	129	140	1550	1551	1552	1553	WallTitanA	ttn1sta	ttn1waa	ttn1ata0	ttn1ata0	ttn1wia0	ttn1dea0	ttn1def0	ttn1fia
+125	474	129	140	1550	1551	1552	1553	WallTitanB	ttn2sta	ttn2waa	ttn2ata0	ttn2ata0	ttn2wia0	ttn2dea0	ttn2def0	ttn2fia
+126	474	129	140	1550	1551	1552	1553	WallTitanC	ttn3sta	ttn3waa	ttn3ata0	ttn3ata0	ttn3wia0	ttn3dea0	ttn3def0	ttn3fia
 127	153	44	140	1420	1421	1422	1423	PeasantF3A	mfpstaa	mfpwala	mfpatta	mfpatta	mfpwina	mfpdyia	mfpded	mfpfida
 128	153	44	140	1420	1421	1422	1423	PeasantF3B	mf2staa	mf2wala	mf2atta	mf2atta	mf2wina	mf2dyia	mf2ded	mf2fida
 129	153	44	140	1420	1421	1422	1423	PeasantF3C	mf3staa	mf3wala	mf3atta	mf3atta	mf3wina	mf3dyia	mf3ded	mf3fida
