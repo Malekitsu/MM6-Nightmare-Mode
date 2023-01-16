@@ -1046,3 +1046,11 @@ function events.RemoveConditionBySpell(t)
 		end
 	end
 end
+
+-- MASS DISTORSION Fix
+
+function events.CalcSpellDamage(t)
+	if t.Spell == 44 then  -- Mass Distorsion
+		t.Result = t.HP*0.25+t.HP*t.Skill*0.01
+	end
+end
