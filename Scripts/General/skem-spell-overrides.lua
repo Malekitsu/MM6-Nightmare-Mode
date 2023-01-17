@@ -18,7 +18,7 @@ local training = {
 
 local spellTxtIds = {}
 
-
+local DifficultyModifier = SETTINGS["DifficultyModifier"]
 
 -- helper functions
 
@@ -177,35 +177,80 @@ local spellDescs = {
 	},
 	["Healing Touch"] = {
 		["Description"] = "Heals a single character.  Skill increases the recovery rate of this spell.",
-		["Normal"] = "Costs 3 SP.\nHeals around 5 HP.",
-		["Expert"] = "Costs 6 SP.\nHeals around 30 HP.",
-		["Master"] = "Costs 12 SP.\nHeals around 70 HP.",
+		["Normal"] = "Costs 3 SP.\nHeals 5+2 HP per skill level.",
+		["Expert"] = "Costs 6 SP.\nHeals 10+3 HP per skill level.",
+		["Master"] = "Costs 12 SP.\nHeals 15+5 HP per skill level.",
 	},
 	["First Aid"] = {
-		["Description"] = "Cheaply heals a single character for a fixed amount.  Skill increases the recovery rate of this spell.",
-		["Normal"] = "Heals 5 HP",
-		["Expert"] = "Heals 14 HP",
-		["Master"] = "Heals 250 HP",
+		["Description"] = "Cheaply heals a single character.  Skill increases the recovery rate of this spell.\nAt Master becomes Final Aid, healing a huge amount of health",
+		["Normal"] = "Costs 2 SP.\nHeals 5 HP",
+		["Expert"] = "Costs 3 SP.\nHeals 15 HP",
+		["Master"] = "Final Aid: costs 100 SP.\nHeals 100+12 HP per skill level.",
 	},
 	["Cure Wounds"] = {
 		["Description"] = "Heals a single character.  Potency increases relative to the caster's skill in Body Magic.",
-		["Normal"] = "Costs 5 SP.\nHeals 10 HP + 2 per point of skill.",
-		["Expert"] = "Costs 8 SP.\nHeals 20 HP + 3 per point of skill.",
-		["Master"] = "Costs 15 SP.\nHeals 40 HP + 5 per point of skill.",
+		["Normal"] = "Costs 5 SP.\nHeals 10 HP + 3 per point of skill.",
+		["Expert"] = "Costs 8 SP.\nHeals 15 HP + 4 per point of skill.",
+		["Master"] = "Costs 16 SP.\nHeals 25 HP + 6 per point of skill.",
 	},
 	["Power Cure"] = {
-		["Description"] = "Heals every member of the party for 3 HP per point of skill in Body Magic.",
+		["Description"] = "Cures hit points of all characters in your party at once.  The number cured is equal to 10 plus 3 per point of skill in Body Magic.",
 	},
+		["Resurrection"] = {
+		["Description"] = "The final healing magic. Resurrects an eradicated (body destroyed) character if you cast this spell in time.  The greater the skill and rank in Spirit Magic the longer the condition could have been present before the “point of no return” is reached.  After that, the only way to resurrect the character is to visit a temple.  Casting this spell will leave your character in the weak condition.",
+		["Normal"] = "Works if eradicated less than 3 minutes per point of skill.\nHeals 50 HP + 15 per point of skill.",
+		["Expert"] = "Works if eradicated less than 1 hour per point of skill.\nHeals 100 HP + 15 per point of skill.",
+		["Master"] = "Works if eradicated less than 1 day per point of skill.\nHeals 150 HP + 15 per point of skill.",
+	},
+	["Shared Life"] = {
+		["Description"] = "Shared Life combines the life force of your characters and redistributes it amongst them as evenly as possible.  All current hit points are totaled and 9 extra point per point of skill in Spirit Magic is added to this total.  Then the points are distributed back to the characters, with no individual character being allowed to have more points than his maximum total hit points.",
+		["Normal"] = "Moderate recovery rate. Heals 9 points pr rank.",
+		["Expert"] = "Faster recovery rate. Heals 9 points pr rank.",
+		["Master"] = "Fastest recovery rate. Heals 9 points pr rank.",
+	},
+	["Cure Poison"] = {
+		["Description"] = "Heals and cures poison in a character if you cast this spell in time.  The greater the skill and rank in Body Magic the longer the character could have been poisoned before the “point of no return” is reached.  After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",
+		["Normal"] = "Works if poisoned less than 3 minutes per point of skill\nHeals 15 HP.",
+		["Expert"] = "Works if poisoned less than 1 hour per point of skill\nHeals 30 HP.",
+		["Master"] = "Works if poisoned less than 1 day per point of skill\nHeals 65 HP.",
+	},	
+		["Cure Insanity"] = {
+		["Description"] = "Heals and cures insanity if you cast this spell in time.  The greater the skill and rank in Mind Magic the longer the character could have been insane before the “point of no return” is reached.  After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",
+		["Normal"] = "Works if insane less than 3 minutes per point of skill\nCosts 20 SP.\nHeals 15+4 HP per point of skill.",
+		["Expert"] = "Works if insane less than 1 hour per point of skill\nCosts 30 SP.\nHeals 25+5 HP per point of skill.",
+		["Master"] = "Works if insane less than 1 day per point of skill\nCosts 40 SP.\nHeals 35+6 HP per point of skill.",
+	},	
+			["Remove Fear"] = {
+		["Description"] = "Heals and removes fear if you cast this spell in time.  The greater the skill and rank in Mind Magic the longer the character could have been insane before the “point of no return” is reached.  After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",
+		["Normal"] = "Works if afraid less than 3 minutes per point of skill\nCosts 2 SP.\nHeals 3 HP.",
+		["Expert"] = "Works if afraid less than 1 hour per point of skill\nCosts 4 SP.\nHeals 10 HP.",
+		["Master"] = "Works if afraid less than 1 day per point of skill\nCosts 6 SP.\nHeals 50 HP.",
+	},
+			["Remove Curse"] = {
+		["Description"] = "Heals and removes the cursed condition from a character if you cast this spell in time.  The greater the skill and rank in Spirit Magic the longer the condition could have been present before the “point of no return” is reached.  After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",
+		["Normal"] = "Works if cursed less than 3 minutes per point of skill\nCosts 3 SP.\nHeals 5 HP.",
+		["Expert"] = "Works if cursed less than 1 hour per point of skill\nCosts 6 SP.\nHeals 30 HP.",
+		["Master"] = "Works if cursed less than 1 day per point of skill\nCosts 12 SP.\nHeals 70 HP.",
+	},	
+			["Cure Disease"] = {
+		["Description"] = "Heals and cures disease in a character if you cast this spell in time.  The greater the skill and rank in Body Magic the longer the character could have been diseased before the “point of no return” is reached.  After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",
+		["Normal"] = "Works if cursed less than 3 minutes per point of skill\nHeals 25 HP.",
+		["Expert"] = "Works if cursed less than 1 hour per point of skill\nHeals 45 HP.",
+		["Master"] = "Works if cursed less than 1 day per point of skill\nHeals 90 HP.",
+	},	
 }
 
 local spellCosts =
 {
 	-- healing spells
 	["Healing Touch"] = {["Normal"] = 3, ["Expert"] = 6, ["Master"] = 12},
-	["Cure Wounds"] = {["Normal"] = 5, ["Expert"] = 8, ["Master"] = 15},
-	["Shared Life"] = {["Normal"] = 10, ["Expert"] = 10, ["Master"] = 12},
-	["First Aid"] = {["Master"] = 100},
-		
+	["Cure Wounds"] = {["Normal"] = 5, ["Expert"] = 8, ["Master"] = 16},
+	["First Aid"] = {["Expert"] = 3,["Master"] = 100},
+	["Remove Fear"] = {["Normal"] = 2, ["Expert"] = 4, ["Master"] = 6},
+	["Remove Curse"] = {["Normal"] = 3, ["Expert"] = 6, ["Master"] = 12},
+	["Cure Insanity"] = {["Normal"] = 20, ["Expert"] = 30, ["Master"] = 40},
+	["Resurrection"] = {["Normal"] = 200, ["Expert"] = 200, ["Master"] = 200},
+	
 	-- damage spells
 	["Fireball"] = {["Master"] = 16},
 	["Ice Bolt"] = {["Master"] = 11},
@@ -703,7 +748,8 @@ mem.hookcall(0x00421C5C, 0, 0, disableFeeblemindedMonsterCasting)
 
 -- Feeblemind prevents monster to do bad things
 
-local function disableFeeblemindedMonsterSpecialAbility(d, def, playerPointer, thing)
+-- disabled because conflicts with mm6patch
+--[[local function disableFeeblemindedMonsterSpecialAbility(d, def, playerPointer, thing)
 	-- get monster
 	local monsterIndex, monster = GetMonster(d.edi)
 	-- check monster is feebleminded
@@ -714,7 +760,16 @@ local function disableFeeblemindedMonsterSpecialAbility(d, def, playerPointer, t
 		def(playerPointer, thing)
 	end
 end
-mem.hookcall(0x00431DE7, 1, 1, disableFeeblemindedMonsterSpecialAbility)
+mem.hookcall(0x00431DE7, 1, 1, disableFeeblemindedMonsterSpecialAbility)]]
+
+-- this done instead
+mem.autohook2(0x431DE1, function(d)
+	local monsterIndex, monster = GetMonster(d.edi)
+	if monster.SpellBuffs[const.MonsterBuff.Feeblemind].ExpireTime ~= 0 then
+		d:push(0x431DEC)
+		return true
+	end
+end)
 
 -- Guardian Angel changes
 -- supersedes skill-mod.lua:3316-3359
@@ -758,6 +813,8 @@ mem.hookcall(0x0048875B, 1, 1, changedCharacterCalcStatBonusByItems)
 -- supersedes skill-mod.lua:2658-2693
 local function modifiedMonsterCalculateDamage(d, def, monsterPointer, attackType)
 
+Mlevel = monsterArray["Level"]
+
 	-- get monster
 
 	local monsterIndex, monster = GetMonster(d.edi)
@@ -768,11 +825,12 @@ local function modifiedMonsterCalculateDamage(d, def, monsterPointer, attackType
 
 	if attackType == 0 then
 		-- primary attack is calculated correctly
+		damage = damage * DifficultyModifier
 		return damage
 	elseif attackType == 1 then
 		-- secondary attach uses attack1 DamageAdd
 		-- replace Attack1.DamageAdd with Attack2.DamageAdd
-		damage = damage - monster.Attack1.DamageAdd + monster.Attack2.DamageAdd
+		damage = (damage - monster.Attack1.DamageAdd + monster.Attack2.DamageAdd) * DifficultyModifier
 		return damage
 	elseif attackType == 2 and (monster.Spell == 44 or monster.Spell == 95) then
 		-- don't recalculate Mass Distortion or Finger of Death
@@ -782,7 +840,7 @@ local function modifiedMonsterCalculateDamage(d, def, monsterPointer, attackType
 	-- calculate spell damage same way as for party
 
 	local spellSkill, spellMastery = SplitSkill(monster.SpellSkill)
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0)
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/16)+0.75)
 
 	return damage
 
@@ -877,6 +935,119 @@ function events.GameInitialized2()
 	
 	
 end
+if not const.Spells then
+	const.Spells = {
+		TorchLight = 1,
+		Haste = 5,
+		Fireball = 6,
+		MeteorShower = 9,
+		Inferno = 10,
+		Incinerate = 11,
+		WizardEye = 12,
+		Sparks = 15,
+		Shield = 17,
+		LightningBolt = 18,
+		Implosion = 20,
+		Fly = 21,
+		Starburst = 22,
+		Awaken = 23,
+		WaterWalk = 27,
+		TownPortal = 31,
+		IceBlast = 32,
+		LloydsBeacon = 33,
+		Stun = 34,
+		DeadlySwarm = 37,
+		StoneSkin = 38,
+		Blades = 39,
+		StoneToFlesh = 40,
+		RockBlast = 41,
+		DeathBlossom = 43,
+		MassDistortion = 44,
+		Bless = 46,
+		RemoveCurse = 49,
+		Heroism = 51,
+		RaiseDead = 53,
+		SharedLife = 54,
+		Resurrection = 55,
+		CureInsanity = 64,
+		PsychicShock = 65,
+		CureWeakness = 67,
+		Harm = 70,
+		CurePoison = 72,
+		CureDisease = 74,
+		FlyingFist = 76,
+		PowerCure = 77,
+		DispelMagic = 80,
+		DayOfTheGods = 83,
+		PrismaticLight = 84,
+		DivineIntervention = 88,
+		Reanimate = 89,
+		ToxicCloud = 90,
+		DragonBreath = 97,
+		Armageddon = 98,
+		ShootFire = nil,  -- unused
+	}
+
+	table.copy({
+		Shoot = 100,
+		ShootFire = 101,
+		ShootBlaster = 102,
+	}, const.Spells, true)
+	table.copy({
+		FlameArrow = 2,
+		ProtectionFromFire = 3,
+		FireBolt = 4,
+		RingOfFire = 7,
+		FireBlast = 8,
+		StaticCharge = 13,
+		ProtectionFromElectricity = 14,
+		FeatherFall = 16,
+		Jump = 19,
+		ColdBeam = 24,
+		ProtectionFromCold = 25,
+		PoisonSpray = 26,
+		IceBolt = 28,
+		EnchantItem = 29,
+		AcidBurst = 30,
+		MagicArrow = 35,
+		ProtectionFromMagic = 36,
+		TurnToStone = 42,
+		SpiritArrow = 45,
+		HealingTouch = 47,
+		LuckyDay = 48,
+		GuardianAngel = 50,
+		TurnUndead = 52,
+		Meditation = 56,
+		RemoveFear = 57,
+		MindBlast = 58,
+		Precision = 59,
+		CureParalysis = 60,
+		Charm = 61,
+		MassFear = 62,
+		Feeblemind = 63,
+		Telekinesis = 66,
+		FirstAid = 68,
+		ProtectionFromPoison = 69,
+		CureWounds = 71,
+		Speed = 73,
+		Power = 75,
+		CreateFood = 78,
+		GoldenTouch = 79,
+		Slow = 81,
+		DestroyUndead = 82,
+		HourOfPower = 85,
+		Paralyze = 86,
+		SunRay = 87,
+		MassCurse = 91,
+		Shrapmetal = 92,
+		ShrinkingRay = 93,
+		DayOfProtection = 94,
+		FingerOfDeath = 95,
+		MoonRay = 96,
+		DarkContainment = 99,
+		
+	}, const.Spells, true)
+end
 
 -- allow setting healing spells power
 local healingSpellPowers =
@@ -885,7 +1056,7 @@ local healingSpellPowers =
 	{
 		[const.Novice] = {fixedMin = 5, fixedMax = 5, variableMin = 0, variableMax = 0, },
 		[const.Expert] = {fixedMin = 15, fixedMax = 15, variableMin = 0, variableMax = 0, },
-		[const.Master] = {fixedMin = 300, fixedMax = 300, variableMin = 0, variableMax = 0, },
+		[const.Master] = {fixedMin = 100, fixedMax = 100, variableMin = 12, variableMax = 12, },
 	},
 	[const.Spells.RemoveCurse] =
 	{
@@ -901,9 +1072,9 @@ local healingSpellPowers =
 	},
 	[const.Spells.CureInsanity] =
 	{
-		[const.Novice] = {fixedMin = 25, fixedMax = 25, variableMin = 0, variableMax = 0, },
-		[const.Expert] = {fixedMin = 80, fixedMax = 80, variableMin = 0, variableMax = 0, },
-		[const.Master] = {fixedMin = 200, fixedMax = 200, variableMin = 0, variableMax = 0, },
+		[const.Novice] = {fixedMin = 15, fixedMax = 15, variableMin = 4, variableMax = 4, },
+		[const.Expert] = {fixedMin = 25, fixedMax = 25, variableMin = 5, variableMax = 5, },
+		[const.Master] = {fixedMin = 35, fixedMax = 35, variableMin = 6, variableMax = 6, },
 	},
 	[const.Spells.CurePoison] =
 	{
@@ -913,21 +1084,27 @@ local healingSpellPowers =
 	},
 	[const.Spells.HealingTouch] =
 	{
-		[const.Novice] = {fixedMin = 2, fixedMax = 2, variableMin = 2, variableMax = 2, },
-		[const.Expert] = {fixedMin = 4, fixedMax = 4, variableMin = 3, variableMax = 3, },
+		[const.Novice] = {fixedMin = 5, fixedMax = 5, variableMin = 2, variableMax = 2, },
+		[const.Expert] = {fixedMin = 10, fixedMax = 10, variableMin = 3, variableMax = 3, },
 		[const.Master] = {fixedMin = 15, fixedMax = 15, variableMin = 5, variableMax = 5, },
 	},
 	[const.Spells.CureWounds] =
 	{
-		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 3, variableMax = 3, },
-		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 5, variableMax = 5, },
-		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 8, variableMax = 8, },
+		[const.Novice] = {fixedMin = 10, fixedMax = 10, variableMin = 3, variableMax = 3, },
+		[const.Expert] = {fixedMin = 15, fixedMax = 15, variableMin = 4, variableMax = 4, },
+		[const.Master] = {fixedMin = 25, fixedMax = 25, variableMin = 6, variableMax = 6, },
+	},
+	[const.Spells.CureDisease] =
+	{
+	[const.Novice] = {fixedMin = 25, fixedMax = 25, variableMin = 0, variableMax = 0, },
+	[const.Expert] = {fixedMin = 40, fixedMax = 40, variableMin = 0, variableMax = 0, },
+	[const.Master] = {fixedMin = 90, fixedMax = 90, variableMin = 0, variableMax = 0, },
 	},
 	[const.Spells.SharedLife] =
 	{
-		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 3, variableMax = 3, },
-		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 3, variableMax = 3, },
-		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 3, variableMax = 3, },
+		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 9, variableMax = 9, },
+		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 9, variableMax = 9, },
+		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 9, variableMax = 9, },
 	},
 	[const.Spells.PowerCure] =
 	{
@@ -935,6 +1112,13 @@ local healingSpellPowers =
 		[const.Expert] = {fixedMin = 10, fixedMax = 10, variableMin = 3, variableMax = 3, },
 		[const.Master] = {fixedMin = 10, fixedMax = 10, variableMin = 3, variableMax = 3, },
 	},
+	[const.Spells.Resurrection] =
+	{
+		[const.Novice] = {fixedMin = 50, fixedMax = 50, variableMin = 15, variableMax = 15, },
+		[const.Expert] = {fixedMin = 100, fixedMax = 100, variableMin = 15, variableMax = 15, },
+		[const.Master] = {fixedMin = 150, fixedMax = 150, variableMin = 15, variableMax = 15, },
+	},
+	
 }
 
 -- def is addHP()
@@ -958,7 +1142,7 @@ mem.autohook(0x4271DC, function(d) -- shared life, amount is total
 	local spellStructurePtr = d.ebx
 	t.Spell = mem.u2[spellStructurePtr]
 	t.CasterIndex, t.Caster = mem.u2[spellStructurePtr + 2], Party.PlayersArray[mem.u2[spellStructurePtr + 2] ]
-	t.Skill, t.Mastery = SplitSkill(mem.u1[spellStructurePtr + 0xA])
+	t.Skill, t.Mastery = SplitSkill(t.Caster.Skills[const.Skills.Spirit])
 	events.call("HealingSpellPower", t)
 	mem.u4[d.esp + 0x28] = t.Result
 end)
@@ -974,10 +1158,14 @@ end
 function events.HealingSpellPower(t)
 	local power = healingSpellPowers[t.Spell]
 	if power then
-		local skill = t.Caster.Skills[const.Skills.Fire + math.ceil((t.Spell + 1) / 11) - 1]
+		local skill = t.Caster.Skills[const.Skills.Fire + math.ceil(t.Spell / 11) - 1]
 		local s, m = SplitSkill(skill)
 		local entry = power[m]
-		t.Result = Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)
+		if t.Spell == const.Spells.SharedLife then
+			t.Result = t.Result - t.Skill * t.Mastery + Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)
+		else
+			t.Result = Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)
+		end
 	end
 end
 
@@ -1021,7 +1209,7 @@ mem.asmhook(0x427AFC, [[
 	je absolute 0x427B33
 ]])
 
-local conditionToSpell = {
+local spellToCondition = {
 	[const.Condition.Cursed] = const.Spells.RemoveCurse,
 	[const.Condition.Weak] = const.Spells.CureWeakness,
 	[const.Condition.Asleep] = const.Spells.Awaken,
@@ -1036,7 +1224,7 @@ local conditionToSpell = {
 }
 
 function events.RemoveConditionBySpell(t)
-	local sp = conditionToSpell[t.Condition]
+	local sp = spellToCondition[t.Condition]
 	if sp then
 		local t2 = table.copy(t)
 		t2.TimeLimit, t2.Condition, t2.Result = nil, nil, 0
