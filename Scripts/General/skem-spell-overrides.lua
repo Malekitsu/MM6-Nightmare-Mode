@@ -5,6 +5,7 @@
 
 -- set to true to show damage in the spell descriptions as a dice string
 local SHOW_DAMAGE_AS_DICE = SETTINGS["ShowDiceInSpellDescription"]
+local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
 
 -- NOT IMPLEMENTED YET
 -- set to true to show "dynamic" damage in spell descriptions, rather than generic damage.
@@ -240,6 +241,14 @@ local spellDescs = {
 	},	
 }
 
+local SC = 0
+local SD = 1
+if ADAPTIVE == "100" then
+SC = 35
+SD = 2
+else
+end
+
 local spellCosts =
 {
 	-- healing spells
@@ -252,16 +261,21 @@ local spellCosts =
 	["Resurrection"] = {["Normal"] = 200, ["Expert"] = 200, ["Master"] = 200},
 	
 	-- damage spells
-	["Fireball"] = {["Master"] = 16},
+	["Fireball"] = {["Master"] = 16 + SC},
+	["Fire Blast"] = {["Master"] = 15 + SC},
 	["Ice Bolt"] = {["Master"] = 11},
+	["Acid Burst"] = {["Master"] = 15 + SC},
 	["Fire Bolt"] = {["Master"] = 8},
 	["Deadly Swarm"] = {["Master"] = 6},
+	["Rock Blast"] = {["Master"] = 15 + SC},
 	["Mind Blast"] = {["Expert"] = 2, ["Master"] = 1},
-	["Lightning Bolt"] = {["Master"] = 14},
+	["Lightning Bolt"] = {["Master"] = 14 + SC^0.9},
 	["Moon Ray"] = {["Master"] = 55},
 	["Dark Containment"] = {["Master"] = 100},
-	["Poison Spray"] = {["Master"] = 13},
-	["Sparks"] = {["Master"] = 13},
+	["Poison Spray"] = {["Master"] = 13 + SC},
+	["Sparks"] = {["Master"] = 13 + SC},
+	["Shrap Metal"] = {["Master"] = 50 + SC^0.65},
+	["Mass Distortion"] = {["Master"] = 30 + SC * 3},
 	
 	--debuff spells
 	["Slow"] = {["Master"] = 5},
@@ -279,7 +293,7 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 2, },
 		[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 2, },
-		[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 2, },
+		[const.Master] = {fixedMin = 6*SD^2, fixedMax = 6*SD^2, variableMin = 1, variableMax = 2*SD^2, },
 	},
 	-- Fire Bolt
 	[4] =
@@ -293,7 +307,7 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 6, },
 		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 6, },
-		[const.Master] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 9, },
+		[const.Master] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 9*SD, },
 	},
 	-- Ring of Fire
 	[7] =
@@ -307,7 +321,7 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4, },
 		[const.Expert] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4, },
-		[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4, },
+		[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4*SD, },
 	},
 	-- Meteor Shower
 	[9] =
@@ -335,21 +349,21 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 5, fixedMax = 5, variableMin = 1, variableMax = 1, },
 		[const.Expert] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 1, },
-		[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 1, },
+		[const.Master] = {fixedMin = 20*SD^2, fixedMax = 20*SD^2, variableMin = 1*SD^2, variableMax = 1*SD^2, },
 	},
 	-- Sparks
 	[15] =
 	{
 		[const.Novice] = {fixedMin = 3, fixedMax = 3, variableMin = 1, variableMax = 2, },
 		[const.Expert] = {fixedMin = 3, fixedMax = 3, variableMin = 1, variableMax = 2, },
-		[const.Master] = {fixedMin = 1, fixedMax = 1, variableMin = 1, variableMax = 3, },
+		[const.Master] = {fixedMin = 1, fixedMax = 1, variableMin = 1, variableMax = 3*SD, },
 	},
 	-- Lightning Bolt
 	[18] =
 	{
 		[const.Novice] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 9, },
 		[const.Expert] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 9, },
-		[const.Master] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 9, },
+		[const.Master] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 9*SD^0.6, },
 	},
 	-- Implosion
 	[20] =
@@ -363,14 +377,14 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 3, },
 		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 3, },
-		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 3, },
+		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 3*SD^2, },
 	},
 	-- Poison Spray
 	[26] =
 	{
 		[const.Novice] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 2, },
 		[const.Expert] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 2, },
-		[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4, },
+		[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 4*SD, },
 	},
 	-- Ice Bolt
 	[28] =
@@ -384,7 +398,7 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 12, },
 		[const.Expert] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 12, },
-		[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 12, },
+		[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 12*SD, },
 	},
 	-- Ice Blast
 	[32] =
@@ -398,7 +412,7 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 1, },
 		[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 1, },
-		[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 1, },
+		[const.Master] = {fixedMin = 6*SD^2, fixedMax = 6*SD^2, variableMin = 1, variableMax = 1*SD^2, },
 	},
 	-- Deadly Swarm
 	[37] =
@@ -414,6 +428,13 @@ local spellPowers =
 		[const.Expert] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 8, },
 		[const.Master] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 8, },
 	},
+	-- Rock Blast
+	[41] =
+	{
+		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 8, },
+		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 8, },
+		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 8 * SD, },
+	},
 	-- Death blossom
 	[43] =
 	{
@@ -426,14 +447,14 @@ local spellPowers =
 	{
 		[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5, },
 		[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5, },
-		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5, },
+		[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5*SD^2, },
 	},
 	-- Mind Blast
 	[58] =
 	{
 		[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 6, },
 		[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 6, },
-		[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 6, },
+		[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 6*SD^1.68, },
 	},
 	-- Psychic Shock
 	[65] =
@@ -473,9 +494,9 @@ local spellPowers =
 	-- Sun Ray
 	[87] =
 	{
-		[const.Novice] = {fixedMin = 60, fixedMax = 60, variableMin = 1, variableMax = 40, },
-		[const.Expert] = {fixedMin = 60, fixedMax = 60, variableMin = 1, variableMax = 40, },
-		[const.Master] = {fixedMin = 60, fixedMax = 60, variableMin = 1, variableMax = 40, },
+		[const.Novice] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 60, },
+		[const.Expert] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 60, },
+		[const.Master] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 60, },
 	},
 	-- Toxic Cloud
 	[90] =
@@ -494,6 +515,8 @@ local spellPowers =
 }
 
 
+
+
 -- Spell Overrides, ASM Patches, set 1
 -- supersedes skill-mod.lua:1802-1987
 
@@ -502,8 +525,10 @@ local spellPowers =
 mem.asmpatch(0x0043188D, "jmp     0x23", 2)
 
 -- debuff success rate - level is less important
-
+--if ADAPTIVE == "100" then
+--else
 mem.asmhook(0x421F06, "shr cl, 2")
+--end
 
 -- spell damage modification
 
@@ -1239,6 +1264,6 @@ end
 
 function events.CalcSpellDamage(t)
 	if t.Spell == 44 then  -- Mass Distorsion
-		t.Result = t.HP*0.25+t.HP*t.Skill*0.01
+		t.Result = t.HP*0.15+t.HP*t.Skill*0.01
 	end
 end
