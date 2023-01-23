@@ -119,9 +119,9 @@ local monsterInfos =
 	[25] = {["FullHP"] = 750,["Level"] = 80,["ArmorClass"]=80, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 16, ["DamageDiceSides"] = 6, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Cold, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 23, ["Missile"] = missiles["Cold"], },},
 	--Devil Master
 	[26] = {["FullHP"] = 950,["Level"] = 90,["ArmorClass"]=90, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 17, ["DamageDiceSides"] = 8, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Elec, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 32, ["Missile"] = missiles["Elec"], },["SpellChance"] = 20, ["SpellName"] = "Meteor Shower", ["SpellSkill"] = JoinSkill(3, const.Master),},	
-	]]
 	--Devil King
 	[27] = { ["FullHP"] = 1150,["Level"] = 100,["ArmorClass"]=100, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 20, ["DamageDiceSides"] = 9, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Magic, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 39, ["Missile"] = missiles["Magic"], },["Bonus"] = 0, ["BonusMul"] = 0},
+	]]
 	--Grand druid
 	[45] = {["Bonus"] = 0, ["BonusMul"] = 0},
 	--Defender of VARN
