@@ -1272,13 +1272,14 @@ function events.CalcStatBonusBySkills(t)
 				then
 					t.Result = t.Result - main.level
 				end
+				local classMeleeDamageBonus = classMeleeWeaponSkillDamageBonus[t.Player.Class] or 0
 				
 				-- add new bonus for main weapon
 				-- removing the class bonus from main hand if main hand sword or dagger
 				if main.skill == const.Skills.Sword then
-				t.Result = t.Result + (newWeaponSkillDamageBonuses[main.skill][main.rank] * mainEffectiveSkillLevel)-((classMeleeWeaponSkillDamageBonus[t.Player.Class])*mainEffectiveSkillLevel)
+				t.Result = t.Result + (newWeaponSkillDamageBonuses[main.skill][main.rank] * mainEffectiveSkillLevel)-(classMeleeDamageBonus*mainEffectiveSkillLevel)
 					elseif main.skill == const.Skills.Dagger then
-					t.Result = t.Result + (newWeaponSkillDamageBonuses[main.skill][main.rank] * mainEffectiveSkillLevel)-((classMeleeWeaponSkillDamageBonus[t.Player.Class])*mainEffectiveSkillLevel)
+					t.Result = t.Result + (newWeaponSkillDamageBonuses[main.skill][main.rank] * mainEffectiveSkillLevel)-(classMeleeDamageBonus*mainEffectiveSkillLevel)
 						else
 						t.Result = t.Result + (newWeaponSkillDamageBonuses[main.skill][main.rank] * mainEffectiveSkillLevel)
 				end
@@ -1286,13 +1287,13 @@ function events.CalcStatBonusBySkills(t)
 				-- add new bonus for extra weapon if any
 				
 				if extra.weapon then
-					t.Result = t.Result + math.round((newWeaponSkillDamageBonuses[extra.skill][extra.rank]+(classMeleeWeaponSkillDamageBonus[t.Player.Class])) * (extraEffectiveSkillLevel))
+					t.Result = t.Result + math.round((newWeaponSkillDamageBonuses[extra.skill][extra.rank]+classMeleeDamageBonus) * (extraEffectiveSkillLevel))
 				end
 				
 				-- add class bonus for main hand weapon
 				
 				if classMeleeWeaponSkillDamageBonus[t.Player.Class] ~= nil then
-					t.Result = t.Result + (classMeleeWeaponSkillDamageBonus[t.Player.Class] * mainEffectiveSkillLevel)
+					t.Result = t.Result + (classMeleeDamageBonus * mainEffectiveSkillLevel)
 				end
 				
 				--[[ add class bonus for extra hand weapon if any and different from main weapon
@@ -1955,6 +1956,7 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	Game.Classes.SPFactor[const.Class.BattleMage] = 3
 	Game.Classes.SPFactor[const.Class.WarriorMage] = 4	
 	Game.ClassKinds.SPBase[4] = 8
+	Game.Classes.SPFactor[const.Class.ArchMage] = 6
 	
 	----------------------------------------------------------------------------------------------------
 	-- item stats were externalized to skem-item-overrides.lua as of 0.8.2
@@ -2133,16 +2135,16 @@ local function navigateMissile(object)
 end
 
 -- game tick related functionality
-
+local homingProjectiles = SETTINGS.HomingProjectiles
 function events.Tick()
 
 	-- navigateMissiles
-	
-	for objectIndex = 1,Map.Objects.high do
-		local object =  Map.Objects[objectIndex]
-		navigateMissile(object)
+	if homingProjectiles then
+		for objectIndex = 1,Map.Objects.high do
+			local object =  Map.Objects[objectIndex]
+			navigateMissile(object)
+		end
 	end
-	
 end
 
 -- feeblemind fix externalized to spell-overrides as of 0.8.3
