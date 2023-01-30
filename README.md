@@ -11,10 +11,7 @@ Note to users
 
 This mod will feature:
 
-\2 new dungeons
-\Harder monsters
-\Epic boss fights
-\Epic loot
+2 new dungeons, Even Harder monsters, Epic boss fights, Epic loot.
 
 
 ## **Goal**
