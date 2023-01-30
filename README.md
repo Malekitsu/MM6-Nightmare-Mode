@@ -10,10 +10,11 @@ Note to users
 ## **Nightmare Mode**
 
 This mod will feature:
-2 new dungeons
-Harder monsters
-Epic boss fights
-Epic loot
+
+\2 new dungeons
+\Harder monsters
+\Epic boss fights
+\Epic loot
 
 
 ## **Goal**
