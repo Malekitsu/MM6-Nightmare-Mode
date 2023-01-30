@@ -13,6 +13,8 @@ This mod will feature:
 
 2 new dungeons, Even Harder monsters, Epic boss fights, Epic loot.
 
+Identify Item and Repair are learned in Goblinwatch and Abandoned temple. Good luck finding them.
+
 
 ## **Goal**
 In **MAW** we strive to rebalance the game, to make all aspects useful, challenging and fun. The goal has been to stay as true to the original game as possible while still achieving this.
