@@ -464,7 +464,8 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 		if levelmod > 50 then
 			levelmod = 50
 		end
-		dampener = 1 - (levelmod / 100)
+		--dampener = 1 - (levelmod / 100)
+		dampener = 1
 	end
 
 	for i=1,2 do
