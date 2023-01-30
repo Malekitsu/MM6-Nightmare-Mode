@@ -1899,9 +1899,14 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	Game.ClassKinds.StartingSkills[0][const.Skills.Leather] = 3
 	Game.ClassKinds.StartingSkills[0][const.Skills.Sword] = 2
 	Game.ClassKinds.StartingSkills[0][const.Skills.Chain] = 1
-	Game.ClassKinds.StartingSkills[0][const.Skills.Repair] = 2
+	Game.ClassKinds.StartingSkills[0][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[0][const.Skills.IdentifyItem] = 0
 	-- cleric
+	Game.ClassKinds.StartingSkills[1][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[1][const.Skills.IdentifyItem] = 0
 	-- sorcerer
+	Game.ClassKinds.StartingSkills[2][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[2][const.Skills.IdentifyItem] = 0
 	-- paladin
 	Game.ClassKinds.StartingSkills[3][const.Skills.Spear] = 1
 	Game.ClassKinds.StartingSkills[3][const.Skills.Bodybuilding] = 2
@@ -1914,6 +1919,8 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	Game.ClassKinds.StartingSkills[3][const.Skills.Diplomacy] = 3
 	Game.ClassKinds.StartingSkills[3][const.Skills.Light] = 3
 	Game.ClassKinds.StartingSkills[3][const.Skills.Dagger] = 0
+	Game.ClassKinds.StartingSkills[3][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[3][const.Skills.IdentifyItem] = 0
 	-- archer
 
 	Game.ClassKinds.StartingSkills[4][const.Skills.Spear] = 2
@@ -1925,9 +1932,11 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	Game.ClassKinds.StartingSkills[4][const.Skills.Earth] = 2
 	Game.ClassKinds.StartingSkills[4][const.Skills.Axe] = 3
 	Game.ClassKinds.StartingSkills[4][const.Skills.Diplomacy] = 3
-	Game.ClassKinds.StartingSkills[4][const.Skills.IdentifyItem] = 2
+	Game.ClassKinds.StartingSkills[4][const.Skills.Water] = 2
 	Game.ClassKinds.StartingSkills[4][const.Skills.Dark] = 3
 	Game.ClassKinds.StartingSkills[4][const.Skills.Perception] = 3
+	Game.ClassKinds.StartingSkills[4][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[4][const.Skills.IdentifyItem] = 0
 	-- druid
 	Game.ClassKinds.StartingSkills[5][const.Skills.Fire] = 2
 	Game.ClassKinds.StartingSkills[5][const.Skills.Air] = 2
@@ -1936,6 +1945,8 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	Game.ClassKinds.StartingSkills[5][const.Skills.Learning] = 3
 	Game.ClassKinds.StartingSkills[5][const.Skills.Meditation] = 2
 	Game.ClassKinds.StartingSkills[5][const.Skills.Shield] = 0
+	Game.ClassKinds.StartingSkills[5][const.Skills.Repair] = 0
+	Game.ClassKinds.StartingSkills[5][const.Skills.IdentifyItem] = 0
 	
 		----------------------------------------------------------------------------------------------------
 	-- Class starting HP/SP
