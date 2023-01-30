@@ -17,5 +17,5 @@ https://github.com/GrayFace/MMExtension/archive/refs/heads/master.zip
 
 ## Install this mod
 
-* Lastly, simply [extract this mod](https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders/releases/tag/v1.1.1) into your Might and Magic 6 folder.
+* Lastly, simply [extract this mod](https://github.com/Malekitsu/MM6-Nightmare-Mode) into your Might and Magic 6 folder.
 
