@@ -205,11 +205,11 @@ local monsterInfos =
 	-- Rogue
 	[165] = {["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 3, ["DamageDiceSides"] = 4, ["DamageAdd"] = 6,},["Attack2"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 3, ["DamageDiceSides"] = 4, ["DamageAdd"] = 9,},["Level"] = 12,["FullHP"] = 50, ["ArmorClass"]=14, ["Experience"]= 264, ["Bonus"] = 0, ["BonusMul"] = 0},
 	--Swordsman A
-	[112] = {["FullHP"] = 217,["Level"] = 34,["ArmorClass"]=40, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 7, ["DamageDiceSides"] = 7, ["DamageAdd"] = 12,}, ["Experience"]= 1496},
+	--[112] = {["FullHP"] = 217,["Level"] = 34,["ArmorClass"]=40, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 7, ["DamageDiceSides"] = 7, ["DamageAdd"] = 12,}, ["Experience"]= 1496},
 	--Swordsman B
-	[113] = {["FullHP"] = 325,["Level"] = 44,["ArmorClass"]=50, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 8, ["DamageDiceSides"] = 7, ["DamageAdd"] = 16,}, ["Experience"]= 2376},
+	--[113] = {["FullHP"] = 325,["Level"] = 44,["ArmorClass"]=50, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 8, ["DamageDiceSides"] = 7, ["DamageAdd"] = 16,}, ["Experience"]= 2376},
 	--Swordsman C
-	[114] = {["FullHP"] = 453,["Level"] = 54,["ArmorClass"]=60, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 50}, ["Experience"]= 3456},
+	--[114] = {["FullHP"] = 453,["Level"] = 54,["ArmorClass"]=60, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 50}, ["Experience"]= 3456},
 
 
 	--The Unpeasanting
