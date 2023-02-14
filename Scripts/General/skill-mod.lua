@@ -2879,11 +2879,35 @@ end)
 
 --Bow Calculation
 function events.ModifyItemDamage(t)
-	local s, m = SplitSkill(t.Player.Skills[const.Skills.Bow])
-	if t.Item:T().EquipStat == const.ItemType.Missile - 1 then
-		t.Result = t.Result + s * (m <= const.Expert and m or 2)
-		if classRangedWeaponSkillDamageBonus[t.Player.Class] ~= nil then
-			t.Result = t.Result + (classRangedWeaponSkillDamageBonus[t.Player.Class] * s)
+    local s, m = SplitSkill(t.Player.Skills[const.Skills.Bow])
+    if t.Item:T().EquipStat == const.ItemType.Missile - 1 then
+        local masteryBonus = 0
+        if m == const.Basic then
+            masteryBonus = 1
+        elseif m == const.Expert then
+            masteryBonus = 2
+        elseif m == const.Master then
+            masteryBonus = 4
+        end
+				-- increase s based on ArmsMaster, WeaponsMaster, or Squire professions of hired NPCs
+		local hiredNPC = Game.Party.HiredNPC
+		local npcBonus = 0
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.ArmsMaster) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.ArmsMaster) then
+			npcBonus = npcBonus + 2
 		end
-	end
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.WeaponsMaster) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.WeaponsMaster) then
+			npcBonus = npcBonus + 3
+		end
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.Squire) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.Squire) then
+			npcBonus = npcBonus + 2
+		end
+		s = s + npcBonus
+        t.Result = t.Result + s * (masteryBonus)
+        if classRangedWeaponSkillDamageBonus[t.Player.Class] ~= nil then
+            t.Result = t.Result + classRangedWeaponSkillDamageBonus[t.Player.Class] * s
+        end
+    end
 end
