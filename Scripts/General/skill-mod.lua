@@ -18,7 +18,7 @@ meditation-sp-regen.lua
 ----------------------------------------------------------------------------------------------------
 
 local blastersUseClassMultipliers = true
-local shieldDoubleSkillEffectForKnights = false
+local shieldDoubleSkillEffectForKnights = true
 local knightClasses = {const.Class.Knight, const.Class.Cavalier, const.Class.Champion}
 
 local newMMExt
@@ -89,7 +89,6 @@ local meleeRecoveryCap = 10
 
 --
 -- attribute breakpoints
-
 local attributeBreakpoints =
 {
 400,
@@ -228,7 +227,7 @@ local newWeaponSkillRecoveryBonuses =
 	[const.Skills.Dagger]	= {0, 0, 1, },
 	[const.Skills.Axe]		= {0, 2, 2, },
 	[const.Skills.Spear]	= {0, 0, 0, },
-	[const.Skills.Bow]		= {0, 0, 0, },
+	[const.Skills.Bow]		= {2, 2, 2, },
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
@@ -254,7 +253,7 @@ local newWeaponSkillDamageBonuses =
 	[const.Skills.Dagger]	= {0, 0, 0, },
 	[const.Skills.Axe]		= {0, 1, 2, },
 	[const.Skills.Spear]	= {0, 1, 2, },
-	[const.Skills.Bow]		= {1, 2, 4, },
+	[const.Skills.Bow]		= {1, 2, 2, },
 	[const.Skills.Mace]		= {0, 1, 2, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 	
@@ -372,15 +371,15 @@ local classMeleeWeaponSkillDamageBonus =
 }
 local classRangedWeaponSkillAttackBonusMultiplier =
 {
-	[const.Class.Archer] = 2,
-	[const.Class.BattleMage] = 2,
-	[const.Class.WarriorMage] = 2,
+	[const.Class.Archer] = 5/3,
+	[const.Class.BattleMage] = 5/3,
+	[const.Class.WarriorMage] = 5/3,
 }
 local classRangedWeaponSkillSpeedBonusMultiplier =
 {
-	[const.Class.Archer] = 0,
-	[const.Class.BattleMage] = 0,
-	[const.Class.WarriorMage] = 1,
+	[const.Class.Archer] = 2,
+	[const.Class.BattleMage] = 2,
+	[const.Class.WarriorMage] = 2,
 }
 local classRangedWeaponSkillDamageBonus =
 {
@@ -853,7 +852,6 @@ local function getWeaponRecoveryCorrection(equipmentData1, equipmentData2, playe
 	return correction
 	
 end
-
 -- Spell Overrides:function randomSpellPower(spellPower, level) was externalized as of 0.8.3 to skem-spell-overrides
 
 -- calculate distance from party to monster side
@@ -1065,6 +1063,7 @@ function events.CalcStatBonusByItems(t)
 	end
 	
 end
+
 
 -- calculate stat bonus by skill
 
@@ -1773,7 +1772,7 @@ function events.GameInitialized2()
 	
 	Game.SkillDescriptions[const.Skills.Shield] = Game.SkillDescriptions[const.Skills.Shield] ..
 		string.format(
-			"\n\nExperienced shield users can effectively cover the team from all kind of physical and magical projectiles reducing their impact damage. Each shield wearer in the party reduces damage by =%d%%= per each skill level multiplicatively.\n\nBonus increment per skill level and recovery penalty\n------------------------------------------------------------\n          AC | recovery penalty |",
+			"\n\nExperienced shield users can effectively cover the team from all kind of physical and magical projectiles reducing their impact damage. Each shield wearer in the party reduces damage by =%d%%= per each skill level multiplicatively. Knights reduces 2 percent per skill point instead.\n\nBonus increment per skill level and recovery penalty\n------------------------------------------------------------\n          AC | recovery penalty |",
 			math.round(shieldProjectileDamageReductionPerLevel * 100)
 		)
 	for rank = const.Novice, const.Master do
@@ -2889,7 +2888,7 @@ function events.ModifyItemDamage(t)
         elseif m == const.Expert then
             masteryBonus = 2
         elseif m == const.Master then
-            masteryBonus = 4
+            masteryBonus = 2
         end
 				-- increase s based on ArmsMaster, WeaponsMaster, or Squire professions of hired NPCs
 		local hiredNPC = Game.Party.HiredNPC
