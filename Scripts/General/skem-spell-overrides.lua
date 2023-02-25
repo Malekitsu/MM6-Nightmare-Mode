@@ -238,6 +238,15 @@ local spellDescs = {
 		["Expert"] = "Works if cursed less than 1 hour per point of skill\nHeals 45 HP.",
 		["Master"] = "Works if cursed less than 1 day per point of skill\nHeals 90 HP.",
 	},	
+			["Flame Arrow"] = {
+		["Description"] = "Creates and fires a single flaming arrow.  The arrow does 6 + 1-2 points of damage per skill.",
+	},	
+			["Magic Arrow"] = {
+		["Description"] = "Creates and fires a single magical arrow. Also unlike most spells, Magic Arrow is free to cast when you become a Master of Earth.  The arrow does 6 + 1 points of damage per skill.",
+	},	
+			["Spirit Arrow"] = {
+		["Description"] = "Fires an ectoplasmic bolt of negative spiritual energy at a single target. The arrow causes 1-5 points of damage.",
+	},
 }
 
 local spellCosts =
