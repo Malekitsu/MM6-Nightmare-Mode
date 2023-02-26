@@ -1,5 +1,5 @@
 -- configure shrine event
-configureShrineEvent(261, 8, "BaseMight", 18, 19, 20, 21)
+configureShrineEvent(261, 8, "ElecResistance", 18, 19, 20, 21)
 
 
 Game.MapEvtLines:RemoveEvent(94)
