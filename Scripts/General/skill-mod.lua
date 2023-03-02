@@ -1879,17 +1879,17 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	setProfessionChance(const.NPCProfession.Noble, 0)
 	setProfessionChance(const.NPCProfession.Gambler, 0)
 	
-	setProfessionCost(const.NPCProfession.ArmsMaster, 1500)
-	setProfessionCost(const.NPCProfession.WeaponsMaster, 3000)
-	setProfessionCost(const.NPCProfession.Squire, 3000)
+	setProfessionCost(const.NPCProfession.ArmsMaster, 500)
+	setProfessionCost(const.NPCProfession.WeaponsMaster, 2000)
+	setProfessionCost(const.NPCProfession.Squire, 1500)
 	setProfessionCost(const.NPCProfession.Burglar, 500)
 	setProfessionCost(const.NPCProfession.Factor, 100)
 	setProfessionCost(const.NPCProfession.Banker, 200)
 	setProfessionCost(const.NPCProfession.Apprentice, 1500)
 	setProfessionCost(const.NPCProfession.Instructor, 1500)
 	setProfessionCost(const.NPCProfession.Teacher, 800)
-	setProfessionCost(const.NPCProfession.SpellMaster, 4000)
-	setProfessionCost(const.NPCProfession.Mystic, 2500)
+	--setProfessionCost(const.NPCProfession.SpellMaster, 4000)
+	--setProfessionCost(const.NPCProfession.Mystic, 2500)
 	
 	----------------------------------------------------------------------------------------------------
 	-- class starting skills
