@@ -17,6 +17,9 @@ local PRESETS = {
 	["GlobalMapResetDays"] = "default",
 	["DifficultyModifier"] = 1.00,
 	HomingProjectiles = true,
+	["KnightAsBloodKnight"] = false,
+	["ArcherAsAssassin"] = false,
+	["PaladinAsBerseker"] = false,
 }
 
 SETTINGS = { }
