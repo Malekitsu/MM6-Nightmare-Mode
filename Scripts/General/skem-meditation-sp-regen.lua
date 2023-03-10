@@ -26,7 +26,7 @@ function calculateMeditationSPRegen(rank, mastery, fullSP)
 			end
 		end
 	if BERSERKER and (class == const.Class.Hero) or (class == const.Class.Crusader) or (class == const.Class.Paladin) then
-		scaled = -20
+		scaled = -10
 	end
 	return math.floor(scaled)
 end
