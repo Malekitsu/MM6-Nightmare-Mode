@@ -2912,3 +2912,341 @@ function events.ModifyItemDamage(t)
         end
     end
 end
+
+local vals = 
+{	1000,	200,
+	995,	199,
+	990,	198,
+	985,	197,
+	980,	196,
+	975,	195,
+	970,	194,
+	965,	193,
+	960,	192,
+	955,	191,
+	950,	190,
+	945,	189,
+	940,	188,
+	935,	187,
+	930,	186,
+	925,	185,
+	920,	184,
+	915,	183,
+	910,	182,
+	905,	181,
+	900,	180,
+	895,	179,
+	890,	178,
+	885,	177,
+	880,	176,
+	875,	175,
+	870,	174,
+	865,	173,
+	860,	172,
+	855,	171,
+	850,	170,
+	845,	169,
+	840,	168,
+	835,	167,
+	830,	166,
+	825,	165,
+	820,	164,
+	815,	163,
+	810,	162,
+	805,	161,
+	800,	160,
+	795,	159,
+	790,	158,
+	785,	157,
+	780,	156,
+	775,	155,
+	770,	154,
+	765,	153,
+	760,	152,
+	755,	151,
+	750,	150,
+	745,	149,
+	740,	148,
+	735,	147,
+	730,	146,
+	725,	145,
+	720,	144,
+	715,	143,
+	710,	142,
+	705,	141,
+	700,	140,
+	695,	139,
+	690,	138,
+	685,	137,
+	680,	136,
+	675,	135,
+	670,	134,
+	665,	133,
+	660,	132,
+	655,	131,
+	650,	130,
+	645,	129,
+	640,	128,
+	635,	127,
+	630,	126,
+	625,	125,
+	620,	124,
+	615,	123,
+	610,	122,
+	605,	121,
+	600,	120,
+	595,	119,
+	590,	118,
+	585,	117,
+	580,	116,
+	575,	115,
+	570,	114,
+	565,	113,
+	560,	112,
+	555,	111,
+	550,	110,
+	545,	109,
+	540,	108,
+	535,	107,
+	530,	106,
+	525,	105,
+	520,	104,
+	515,	103,
+	510,	102,
+	505,	101,
+	500, 100,
+	495, 99,
+	490, 98,
+	485, 97,
+	480, 96,
+	475, 95,
+	470, 94,
+	465, 93,
+	460, 92,
+	455, 91,
+	450, 90,
+	445, 89,
+	440, 88,
+	435, 87,
+	430, 86,
+	425, 85,
+	420, 84,
+	415, 83,
+	410, 82,
+	405, 81,
+	400, 80,
+	395, 79,
+	390, 78,
+	385, 77,
+	380, 76,
+	375, 75,
+	370, 74,
+	365, 73,
+	360, 72,
+	355, 71,
+	350, 70,
+	345, 69,
+	340, 68,
+	335, 67,
+	330, 66,
+	325, 65,
+	320, 64,
+	315, 63,
+	310, 62,
+	305, 61,
+	300, 60,
+	295, 59,
+	290, 58,
+	285, 57,
+	280, 56,
+	275, 55,
+	270, 54,
+	265, 53,
+	260, 52,
+	255, 51,
+	250, 50,
+	245, 49,
+	240, 48,
+	235, 47,
+	230, 46,
+	225, 45,
+	220, 44,
+	215, 43,
+	210, 42,
+	205, 41,
+	200, 40,
+	195, 39,
+	190, 38,
+	185, 37,
+	180, 36,
+	175, 35,
+	170, 34,
+	165, 33,
+	160, 32,
+	155, 31,
+	150, 30,
+	145, 29,
+	140, 28,
+	135, 27,
+	130, 26,
+	125, 25,
+	120, 24,
+	115, 23,
+	110, 22,
+	105, 21,
+	100, 20,
+	95, 19,
+	90, 18,
+	85, 17,
+	80, 16,
+	75, 15,
+	70, 14,
+	65, 13,
+	60, 12,
+	55, 11,
+	50, 10,
+	45, 9,
+	40, 8,
+	35, 7,
+	30, 6,
+	25, 5,
+	21, 4,
+	19, 3,
+	17, 2,
+	15, 1,
+	13, 0,
+	11, -1,
+	9, -2,
+	7, -3,
+	-20, -4,
+	-25, -5,
+	-30, -6,
+	-35, -7,
+	-40, -8,
+	-45, -9,
+	-50, -10,
+	-55, -11,
+	-60, -12,
+	-65, -13,
+	-70, -14,
+	-75, -15,
+	-80, -16,
+	-85, -17,
+	-90, -18,
+	-95, -19,
+	-100, -20
+}
+function events.GetStatisticEffect(t)
+	for i = 1, #vals - 2, 2 do
+		if t.Value >= vals[i] then
+			t.Result = vals[i + 1]
+			return
+		end
+	end
+	t.Result = vals[#vals]
+end
+
+-- fix game code being weird by having a dedicated getStatisticEffect() function and yet
+-- not using it everywhere...
+
+local hooks = HookManager{getStatEffect = 0x482DC0, getFullLuck = 0x47E0E0}
+local function patch(addr, valueReg, resultReg, jump, nopAddr)
+	hooks.ref.valueReg = valueReg
+	hooks.ref.resultReg = resultReg
+	hooks.ref.jump = jump
+	-- also disables jump effectively capping stat at 400
+	-- REMEMBER: patch getStatisticEffect()
+	-- AND check for registers if some need saving
+	hooks.asmpatch(addr, [[
+		push %valueReg%
+		call absolute %getStatEffect%
+		mov %resultReg%, eax
+		jmp short %jump%
+	]], jump) -- just so happens jump forward is the patch size
+	if type(nopAddr) == "number" then
+		hooks.nop(nopAddr) -- simple nop, usually move from [resultReg + offset] to resultReg, which is already computed
+	else
+		nopAddr() -- various other stuff, usually moving from preserved register to clobbered register
+	end
+end
+
+local patches =
+{
+	{0x47E3B0, "eax", "edi", 27, function() hooks.asmpatch(0x47E3F3, "mov eax,edi") end},
+	{0x47E7AE, "eax", "edi", 27, 0x47E7C9},
+	{0x47E977, "eax", "ebx", 27, function() hooks.asmpatch(0x47E9BA, "mov eax,ebx") end},
+	{0x47EA61, "eax", "ebx", 27, function() hooks.asmpatch(0x47EAA4, "mov eax,ebx") end},
+	{0x47EC7E, "eax", "ebx", 27, function() hooks.asmpatch(0x47ECC9, "mov eax,ebx") end},
+	{0x47EDAE, "eax", "ebp", 27, function() hooks.asmpatch(0x47EDF1, "mov eax,ebp") end},
+	{0x47F897, "eax", "edi", 27, 0x47F8B2},
+	{0x47F998, "eax", "edi", 27, 0x47F9B3},
+	{0x47FA99, "eax", "edi", 27, 0x47FAB4},
+	-- 0x47FAF0 done below
+	{0x47FCF3, "eax", "ebp", 27, function() hooks.asmpatch(0x47FD2B, "mov edx,ebp") end},
+	{0x480114, "eax", "edi", 27, 0x48012F},
+	{0x48020C, "eax", "edi", 27, 0x480227},
+	{0x480304, "eax", "edi", 27, 0x48031F},
+	{0x4803FC, "eax", "edi", 27, 0x480417},
+	{0x4804F4, "eax", "edi", 27, 0x48050F},
+	{0x4805EC, "eax", "edi", 27, 0x480607},
+	{0x4807B0, "eax", "edi", 27, 0x4807CB},
+	{0x4808A8, "eax", "edi", 27, 0x4808C3},
+	{0x4809A0, "eax", "edi", 27, 0x4809BB},
+	{0x480A98, "eax", "edi", 27, 0x480AB3},
+	{0x480DF1, "eax", "edi", 27, 0x480E0C},
+	-- 00480F39 done below
+	{0x481DD2, "eax", "ebx", 27, 0x481DF1},
+	{0x482009, "eax", "ebp", 27, function() hooks.asmpatch(0x482041, "mov edx, ebp") end},
+	{0x482176, "eax", "ebx", 27, function() hooks.asmpatch(0x4821AC, "mov ecx, ebx") end},
+	{0x4822C3, "eax", "ebx", 27, function() hooks.asmpatch(0x4822F9, "mov ecx, ebx") end},
+	{0x4824B3, "edi", "ebx", 27, function()
+		hooks.asmpatch(0x482414, [[
+			push eax
+			call absolute %getStatEffect%
+			mov dword [esp + 0x10], eax
+			jmp short 0x1F
+		]], 0x1F)
+		hooks.asmpatch(0x4824EF, [[
+			mov ecx,ebx
+		]], 0xE) -- also disables next move, because [esp + 10] already contains effect, not breakpoint index
+	end},
+	{0x4826B0, "eax", "ebx", 27, function() hooks.asmpatch(0x4826E1, "mov eax, ebx") end},
+	{0x482840, "eax", "ebx", 27, function() hooks.asmpatch(0x482880, "mov eax, ebx") end},
+	{0x484086, "eax", "ebx", 27, function() hooks.asmpatch(0x4840BE, "mov edx, ebx") end},
+	-- 00484F69 done below
+	{0x487D10, "eax", "ebp", 27, function() hooks.asmpatch(0x487D46, "mov eax, ebp") end},
+	{0x487E8B, "eax", "ebp", 27, function() hooks.asmpatch(0x487EC1, "mov eax, ebp") end},
+	{0x4884E6, "eax", "ebx", 27, function() hooks.asmpatch(0x48851E, "mov edx, ebx") end},
+}
+
+for i, v in ipairs(patches) do
+	patch(unpack(v))
+end
+
+-- luck is special
+hooks.asmpatch(0x47FAEE, [[
+	mov ecx, esi
+	call absolute %getFullLuck%
+	push eax
+	call absolute %getStatEffect%
+	mov esi, eax
+	jmp short 0x29
+]], 0x29)
+
+-- other
+hooks.asmpatch(0x480F39, [[
+	push eax
+	call absolute %getStatEffect%
+	mov ebp, eax
+	mov ebx, dword [esp + 0x14]
+	jmp short 0x2A
+]], 0x2A)
+
+hooks.asmpatch(0x484F69, [[
+	push eax
+	call absolute %getStatEffect%
+	mov dword [esp + 0x10], eax
+	jmp short 0x23
+]], 0x23)
+
+hooks.asmpatch(0x484FB1, "mov edx, dword [esp + 0x10]", 7)
