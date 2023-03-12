@@ -21,6 +21,7 @@ local PRESETS = {
 	["ArcherAsAssassin"] = false,
 	["PaladinAsBerseker"] = false,
 	["SorcererAsNecromancer"] = false,
+	["ClericAsSeraphin"] = false,
 }
 
 SETTINGS = { }
