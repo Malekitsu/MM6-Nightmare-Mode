@@ -22,6 +22,7 @@ local PRESETS = {
 	["PaladinAsBerseker"] = false,
 	["SorcererAsNecromancer"] = false,
 	["ClericAsSeraphin"] = false,
+	["ImbaSubClasses"] = false,
 }
 
 SETTINGS = { }
