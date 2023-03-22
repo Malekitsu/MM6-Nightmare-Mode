@@ -227,7 +227,7 @@ local newWeaponSkillRecoveryBonuses =
 	[const.Skills.Dagger]	= {0, 0, 1, },
 	[const.Skills.Axe]		= {0, 2, 2, },
 	[const.Skills.Spear]	= {0, 0, 0, },
-	[const.Skills.Bow]		= {2, 2, 2, },
+	[const.Skills.Bow]		= {1, 2, 2, },
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
@@ -375,11 +375,12 @@ local classRangedWeaponSkillAttackBonusMultiplier =
 	[const.Class.BattleMage] = 5/3,
 	[const.Class.WarriorMage] = 5/3,
 }
+--ranged class speed bonus not working apparently
 local classRangedWeaponSkillSpeedBonusMultiplier =
 {
-	[const.Class.Archer] = 2,
-	[const.Class.BattleMage] = 2,
-	[const.Class.WarriorMage] = 2,
+	[const.Class.Archer] = 0,
+	[const.Class.BattleMage] = 0,
+	[const.Class.WarriorMage] = 0,
 }
 local classRangedWeaponSkillDamageBonus =
 {
@@ -388,7 +389,7 @@ local classRangedWeaponSkillDamageBonus =
 	[const.Class.WarriorMage] = 2,
 	[const.Class.Knight] = 0,
 	[const.Class.Cavalier] = 0,
-	[const.Class.Champion] = 2,
+	[const.Class.Champion] = 1,
 }
 
 -- plate cover chances by rank
@@ -3250,3 +3251,123 @@ hooks.asmpatch(0x484F69, [[
 ]], 0x23)
 
 hooks.asmpatch(0x484FB1, "mov edx, dword [esp + 0x10]", 7)
+
+
+-- condition effect on statistics
+-- effects are in percentages, no more than 255
+
+-- example usage: setConditionEffects(const.Condition.Insane, {[const.Stats.Might] = 200, 200, 200, 200, 200, 200, 200}) -- insanity doubles each stat now
+--[[
+setConditionEffects({
+	[const.Condition.Paralyzed] = {
+		[const.Stats.Might] = 200
+	}
+}) -- paralyzed doubles might
+
+setConditionEffects({
+	[const.Condition.Paralyzed] = {
+		[const.Stats.Luck] = 0,
+		[const.Stats.Personality] = 50
+	},
+	[const.Condition.Weak] = {
+		[const.Stats.Endurance] = 0
+	}
+}) -- paralyzed zeroes luck and halves personality, weakness zeroes endurance
+]]
+local conditionEffectBase = 0x4C27B4
+local u1 = mem.u1
+function setConditionEffects(cond, percentages)
+	if type(cond) == "number" then -- single condition passed - set all effects for it (table indexed by stat)
+		for stat, val in pairs(percentages) do
+			u1[conditionEffectBase + cond + stat * 18] = val -- 18 = condition count (including "good")
+		end
+	else -- multiple conditions passed - set all effects for them (table indexed by condition, then stat)
+		local condTable = cond -- for readability purposes
+		for cond, values in pairs(condTable) do
+			for stat, val in pairs(values) do
+				u1[conditionEffectBase + cond + stat * 18] = val
+			end
+		end
+	end
+end
+
+-- returns values like above input
+function getConditionEffects(cond)
+	local out = {}
+	if cond then -- condition passed - get all effects for it (table indexed by stat)
+		for stat = 0, const.Stats.Luck do
+			out[stat] = u1[conditionEffectBase + cond + stat * 18]
+		end
+	else -- condition not passed - get all effects for all conditions (table indexed by condition, then stat)
+		for cond = 0, const.Condition.Good do
+			out[cond] = {}
+			for stat = 0, const.Stats.Luck do
+				out[cond][stat] = u1[conditionEffectBase + cond + stat * 18]
+			end
+		end
+	end
+	return out
+end
+
+-- 1/n spell skills
+-- when ranking up spell skill, let n be number of other spell skills at skill level equal to or greater than next rank
+-- then cost is (old cost / (n + 1)), no less than 1
+
+local function getNewSkillCost(pl, newS, skillId)
+	local equalOrHigherCount = 0
+	if skillId >= const.Skills.Fire and skillId <= const.Skills.Dark then
+		for i = const.Skills.Fire, const.Skills.Dark do
+			if i ~= skillId then
+				local otherS, _ = SplitSkill(pl.Skills[i])
+				if otherS >= newS then
+					equalOrHigherCount = equalOrHigherCount + 1
+				end
+			end
+		end
+	end
+	local newCost = newS
+	if equalOrHigherCount >= 1 then
+		newCost = math.max(1, math.ceil(newCost / (equalOrHigherCount + 1)))
+	end
+	return newCost
+end
+
+local newCode = mem.asmpatch(0x42D0E4, [[
+	; edx = current skill value
+	; esi - current skill points
+	; [esp + 0x10] - skill id
+	; ecx - player ptr
+	and edx,0x3F
+	inc edx
+	nop
+	nop
+	nop
+	nop
+	nop
+	cmp esi,edx
+]], 6)
+
+local newCost
+-- checking if enough skill points
+mem.hook(newCode + 4, function(d)
+	local skillId = mem.u4[d.esp + 0x14]
+	local newS = d.dl
+	local _, pl = GetPlayer(d.ecx)
+	newCost = getNewSkillCost(pl, newS, skillId)
+	d.dl = newCost
+end)
+
+-- actually subtracting skill points
+-- need to do entire hook, because two earlier jumps might mess things up
+mem.autohook(0x42D109, function(d)
+	d.eax = assert(newCost)
+end)
+
+-- display on mouseover
+mem.hook(0x41F8E9, function(d)
+	local skillId = mem.u4[d.esi + 0x24]
+	local newS, _ = SplitSkill(d.al) + 1
+	local _, pl = GetPlayer(d.ecx)
+	newCost = getNewSkillCost(pl, newS, skillId)
+	d.eax = newCost
+end, 10)
