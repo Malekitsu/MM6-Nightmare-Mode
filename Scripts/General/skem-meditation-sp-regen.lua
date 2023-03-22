@@ -16,17 +16,11 @@ end
 
 function calculateMeditationSPRegen(rank, mastery, fullSP)
 	scaled = math.ceil(fullSP^0.5 * rank^2/400)
-		if ASSASSIN==true and (class == const.Class.WarriorMage)then
-		scaled=40
-			else if ASSASSIN==true and (class == const.Class.BattleMage)then
-			scaled=30
-				else if ASSASSIN==true and (class == const.Class.Archer)then
-				scaled=20
-				end
-			end
+		if ASSASSIN==true and (class == const.Class.WarriorMage or class == const.Class.BattleMage or class == const.Class.Archer)then
+		scaled=0
 		end
 	if BERSERKER and (class == const.Class.Hero) or (class == const.Class.Crusader) or (class == const.Class.Paladin) then
-		scaled = -10
+		scaled = 0
 	end
 	return math.floor(scaled)
 end
