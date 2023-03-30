@@ -698,19 +698,19 @@ mem.asmpatch(0x0042962E, [[
 
 -- Day of the Gods
 
--- Novice power = 05 + skill * 1
+-- Novice power = 0 + skill * 1
 mem.asmpatch(0x00428A90, [[
-		lea    edx,[ecx+0x5]
+		lea    edx,[ecx+0x0]
 		nop
 	]], 4)
--- Expert power = 10 + skill * 1
+-- Expert power = 0 + skill * 2
 mem.asmpatch(0x00428A7B, [[
-		lea    ecx,[ecx+0xa]
+		lea    ecx,[ecx*2+0x0]
 		nop
 	]], 4)
--- Master power = 15 + skill * 1
+-- Master power = 5 + skill * 2
 mem.asmpatch(0x00428A62, [[
-		lea    eax,[ecx+0xf]
+		lea    eax,[ecx*2+0x5]
 		nop
 		nop
 		nop
