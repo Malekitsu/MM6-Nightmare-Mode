@@ -2044,7 +2044,7 @@ mem.autohook(0x47FD71, BBHook("edi"))
 -- Rest()
 mem.autohook(0x484FF3, BBHook("edi"))
 -- HP regeneration
-mem.autohook(0x487F05, BBHook("edi"))
+mem.autohook(0x487D8A, BBHook("edi"))
 
 -- allow to hold sword in left hand at novice rank
 mem.asmpatch(0x0045A4AB, "test   BYTE [ebp+0x61],0xFF", 0x4)
