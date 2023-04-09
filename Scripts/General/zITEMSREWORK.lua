@@ -37,9 +37,7 @@ function events.GenerateItem(t)
 	end
 end
 
-function events.ItemGenerated(t)
-
-	debug.Message(dump(t))		
+function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
 		t.Handled=true
 		
