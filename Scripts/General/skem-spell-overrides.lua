@@ -1212,7 +1212,13 @@ function events.HealingSpellPower(t)
 		if t.Spell == const.Spells.SharedLife then
 			t.Result = t.Result - t.Skill * t.Mastery + Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)
 		else
-			t.Result = Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)
+			t.Result = Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)	
+		end
+		if SETTINGS["StatsRework"]==true then
+		personality=t.Caster:GetPersonality()
+		intellect=t.Caster:GetIntellect()
+		bonus=math.max(personality,intellect)
+		t.Result = t.Result*(1+bonus/500)
 		end
 	end
 end
