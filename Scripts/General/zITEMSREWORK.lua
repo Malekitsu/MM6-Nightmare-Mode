@@ -90,4 +90,37 @@ function events.CalcStatBonusByItems(t)
 	end
 end
 
+function events.GameInitialized2()
+--2h dice bonus
+for i = 6, 8 do
+	Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13))
 end
+for i = 28, 41 do
+	Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13))
+end
+
+--2h artifacts bonus
+Game.ItemsTxt[402].Mod1DiceSides = Game.ItemsTxt[402].Mod1DiceSides^(2^(1*Game.ItemsTxt[402].Mod2/13))
+Game.ItemsTxt[417].Mod1DiceSides = Game.ItemsTxt[417].Mod1DiceSides^(2^(1*Game.ItemsTxt[417].Mod2/13))
+Game.ItemsTxt[419].Mod1DiceSides = Game.ItemsTxt[419].Mod1DiceSides^(2^(1*Game.ItemsTxt[419].Mod2/13))
+
+--weapon bonus
+for i = 1, 63 do
+	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+end
+
+for i = 400, 405 do
+	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+end
+
+for i = 415, 420 do
+	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+end
+
+end
+
+
+end
+
+
+
