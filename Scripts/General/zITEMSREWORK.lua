@@ -117,7 +117,42 @@ for i = 415, 420 do
 	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
 end
 
+--tooltips
+Game.SpcItemsTxt[3].BonusStat="Adds 9-12 points of Cold damage."
+Game.SpcItemsTxt[4].BonusStat="Adds 18-24 points of Cold damage."
+Game.SpcItemsTxt[5].BonusStat="Adds 27-36 points of Cold damage."
+Game.SpcItemsTxt[6].BonusStat="Adds 6-15 points of Electrical damage."
+Game.SpcItemsTxt[7].BonusStat="Adds 12-30 points of Electrical damage."
+Game.SpcItemsTxt[8].BonusStat="Adds 18-45 points of Electrical damage."
+Game.SpcItemsTxt[9].BonusStat="Adds 3-18 points of Fire damage."
+Game.SpcItemsTxt[10].BonusStat="Adds 6-36 points of Fire damage."
+Game.SpcItemsTxt[11].BonusStat="Adds 9-54 points of Fire damage."
+Game.SpcItemsTxt[12].BonusStat="Adds 15 points of Poison damage."
+Game.SpcItemsTxt[13].BonusStat="Adds 24 points of Poison damage."
+Game.SpcItemsTxt[14].BonusStat="Adds 36 points of Poison damage."
+Game.SpcItemsTxt[45].BonusStat="Adds 30-60 points of Fire damage and +25 Might."
+
 end
+
+--ENCHANTS HERE
+
+function events.CalcDamageToMonster(t)
+local data = WhoHitMonster()
+	if data.Player and t.DamageKind~=0 and data.Object==nil then
+		for it in data.Player:EnumActiveItems() do
+			if it.Bonus2 >= 4 and it.Bonus2 <= 15 or it.Bonus2 == 46 then
+				t.Result = t.Result * 3	
+				debug.Message(dump(t.Result))
+			end
+			--rough fix for bugged enchant
+			if it.Bonu2==11 or it.Bonu2==12 and t.DamageKind==2 then
+			fix=math.random(0,math.round(t.Result))
+			t.Result=t.Result-(fix*0.875)
+			end
+		end		
+	end	
+end
+
 
 
 end
