@@ -39,45 +39,72 @@ end
 
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
-		t.Handled=true
+
 		
-		extraDataProc=math.random(1,100)
-		if extraDataProc<=(t.Strength-1)*10 then
-			t.Item.ExtraData = math.random(1, 14 * 25)
-		end
 		
+		--give bonus a chance to proc even if bonus2 is already in the item
 		if t.Item.Bonus2~=0 then
 		bonusprocChance=math.random(1,100)
 			if bonusprocChance<=40 and t.Strength~=1 or (t.Strength==6 and bonusprocChance<=75) then
-				t.Item.Bonus = math.random(0,13)
+				t.Item.Bonus = math.random(1,14)
 				local bonuses = {{1, 5}, {3, 8}, {6, 12}, {10, 17}, {15, 25}}
 				local bonus = bonuses[t.Strength - 1]
 				t.Item.BonusStrength = math.random(bonus[1], bonus[2])
 			end
 		end
-		
-		ancient=math.random(1,100)
-		if ancient<=t.Strength-3 then
-			t.Item.ExtraData=math.random(350,560)
-			t.Item.Bonus=math.random(0,13)
-			t.Item.BonusStrength=math.random(25,40)
-			t.Item.Bonus2=math.random(1,63)
+		--extra bonus proc
+		extraBonusChance={0,20,25,30,40,50}
+		extraBonusPowerLow={0,1,3,6,10,15}
+		extraBonusPowerHigh={0,5,8,12,17,25}
+		extraDataProc=math.random(1,100)
+		if extraDataProc<=extraBonusChance[t.Strength] then
+			lowerLimit=t.Strength
+			t.Item.ExtraData = math.random(14 * extraBonusPowerLow[t.Strength]-13, 14 * extraBonusPowerHigh[t.Strength])
+			--make it standard bonus if no standard bonus
+			if t.Item.Bonus==0 then
+				t.Item.Bonus=t.Item.ExtraData%14
+				t.Item.BonusStrength=math.ceil(t.Item.ExtraData/14)
+				t.Item.ExtraData=0
+			end
 		end
 		
+		
+		
+		--chance for ancient item, only if bonus 2 is spawned
+		if t.Item.Bonus2~=0 then 
+			ancient=math.random(1,50)
+			if ancient<=t.Strength-3 then
+				t.Item.ExtraData=math.random(364,560)
+				t.Item.Bonus=math.random(1,14)
+				t.Item.BonusStrength=math.random(26,40)
+			end
+		end
+		
+		--primordial item
 		primordial=math.random(1,200)
 		if primordial<=t.Strength-4 then
 			t.Item.ExtraData=math.random(547,560)
-			t.Item.Bonus=math.random(0,13)
+			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=40
-			t.Item.Bonus2=math.random(1,63)
-			Sleep(1)
-			Message("WOW")
+			if t.Item.Number>60 then
+				t.Item.Bonus2=math.random(1,2)
+				else
+				t.Item.Bonus2=41
+			end
 		end	
+		--buff to hp and mana items
+		if t.Item.Bonus==8 or t.Item.Bonus==9 then
+			t.Item.BonusStrength=t.Item.BonusStrength*2
+		end
+		if t.Item.ExtraData%14==7 or t.Item.ExtraData%14==8 then
+			t.Item.ExtraData=t.Item.ExtraData+14*math.ceil(t.Item.ExtraData/14)
+		end
+		
 	end
 end
 
 
-
+--apply extra data effect
 function events.CalcStatBonusByItems(t)
 	for it in t.Player:EnumActiveItems() do
 		if it.ExtraData ~= nil then
@@ -89,7 +116,9 @@ function events.CalcStatBonusByItems(t)
 		end
 	end
 end
-
+----------------------
+--weapon rework
+----------------------
 function events.GameInitialized2()
 --2h dice bonus
 for i = 6, 8 do
@@ -117,7 +146,9 @@ for i = 415, 420 do
 	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
 end
 
+------------
 --tooltips
+------------
 Game.SpcItemsTxt[3].BonusStat="Adds 9-12 points of Cold damage."
 Game.SpcItemsTxt[4].BonusStat="Adds 18-24 points of Cold damage."
 Game.SpcItemsTxt[5].BonusStat="Adds 27-36 points of Cold damage."
@@ -130,7 +161,6 @@ Game.SpcItemsTxt[11].BonusStat="Adds 9-54 points of Fire damage."
 Game.SpcItemsTxt[12].BonusStat="Adds 15 points of Poison damage."
 Game.SpcItemsTxt[13].BonusStat="Adds 24 points of Poison damage."
 Game.SpcItemsTxt[14].BonusStat="Adds 36 points of Poison damage."
-Game.SpcItemsTxt[45].BonusStat="Adds 30-60 points of Fire damage and +25 Might."
 
 end
 
@@ -142,10 +172,9 @@ local data = WhoHitMonster()
 		for it in data.Player:EnumActiveItems() do
 			if it.Bonus2 >= 4 and it.Bonus2 <= 15 or it.Bonus2 == 46 then
 				t.Result = t.Result * 3	
-				debug.Message(dump(t.Result))
 			end
 			--rough fix for bugged enchant
-			if it.Bonu2==11 or it.Bonu2==12 and t.DamageKind==2 then
+			if it.Bonus2==11 or it.Bonus2==12 and t.DamageKind==2 then
 			fix=math.random(0,math.round(t.Result))
 			t.Result=t.Result-(fix*0.875)
 			end
@@ -153,9 +182,74 @@ local data = WhoHitMonster()
 	end	
 end
 
+end
 
+---------------------
+--multiple enchant tooltip
+---------------------
+
+
+mem.autohook(0x41C440, function(d)
+	local t = {Item = structs.Item:new(d.ecx)}
+	events.call("ShowItemTooltip", t)
+end)
+
+mem.autohook(0x41CE00, function(d)
+	events.call("AfterShowItemTooltip")
+end)
+
+
+--STAT NAMES for custom tooltip
+itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "Speed", "Luck", "Hit Points", "Spell Points", "Armor Class", "Fire Resistance", "Elec Resistance", "Cold Resistance", "Poison Resistance"}
+
+
+
+--change tooltip
+function events.GameInitialized2()
+	itemName = {}
+
+	for i = 1, 134 do
+	  itemName[i] = Game.ItemsTxt[i].Name
+	end
+	--fix long tooltips causing crash 
+	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
+	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
+	Game.SpcItemsTxt[45].BonusStat= "Adds 30-60 points of Fire damage, +25 Might."
+	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
+	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
+end
+
+function events.ShowItemTooltip(item)
+	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData~=0 then
+	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
+		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData==0 then
+			Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat, itemStatName[item.Item.Bonus])
+			else if item.Item.Bonus~=0 and item.Item.ExtraData~=0 and item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
+				else if item.Item.Bonus~=0 and item.Item.ExtraData==0 and item.Item.Bonus2==0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
+				end
+			end
+		end
+	end
+	
+--Change item name
+
+if item.Item.BonusStrength>25 then
+	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
+end
+
+if item.Item.BonusStrength==40 and math.ceil(item.Item.ExtraData/14)==40 then
+	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
+end
 
 end
 
 
 
+
+-- some spare code, just in case
+--[[
+function AfterShowItemTooltip()
+  debug.Message(dump(t))
+end]]
