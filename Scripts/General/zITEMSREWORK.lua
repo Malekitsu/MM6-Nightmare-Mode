@@ -208,7 +208,7 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 function events.GameInitialized2()
 	itemName = {}
 
-	for i = 1, 134 do
+	for i = 1, 580 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
 	--fix long tooltips causing crash 
@@ -234,14 +234,16 @@ function events.ShowItemTooltip(item)
 	end
 	
 --Change item name
-
-if item.Item.BonusStrength>25 then
+ancient=0
+if (item.Item.BonusStrength>25 and item.Item.Bonus~=8 and item.Item.Bonus~=9) or (item.Item.BonusStrength>50 and (item.Item.Bonus==8 or item.Item.Bonus==9)) then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
+	else 
+	Game.ItemsTxt[item.Item.Number].Name=string.format("%s", itemName[item.Item.Number])
 end
 
-if item.Item.BonusStrength==40 and math.ceil(item.Item.ExtraData/14)==40 then
+if (item.Item.BonusStrength==40 and (item.Item.Bonus<8 or item.Item.Bonus>9) or item.Item.BonusStrength==80 and (item.Item.Bonus==8 or item.Item.Bonus==9)) and ((item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8) and math.ceil(item.Item.ExtraData/14)==80) or (math.ceil(item.Item.ExtraData/14)==40 and (item.Item.ExtraData%14~=7 or item.Item.ExtraData%14~=8)) then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
-end
+	end
 
 end
 
