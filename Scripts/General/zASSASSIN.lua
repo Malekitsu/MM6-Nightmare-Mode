@@ -74,6 +74,7 @@ function events.CalcSpellDamage(t)
 	
     if comboPoint==nil then
 		comboPoint=0
+	end
 	if comboPoint==0 then
 		if data.Player.Class==const.Class.Archer then 			
 		t.Result=t.Result*0.5
