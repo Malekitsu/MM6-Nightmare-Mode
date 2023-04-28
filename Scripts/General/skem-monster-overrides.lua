@@ -711,3 +711,75 @@ function events.RandomSpawnMonster(t)
 	
 end
 ]]
+
+function events.LoadMap()	
+if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+	for i=0, Map.Monsters.High do
+	if not (Map.Monsters[i].Ally == 1) then
+				Map.Monsters[i].Ally = 1
+			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
+			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
+		
+	-- bonus damage
+				DamageMultiplier=Map.Monsters[i].Level/100+1
+				--attack 1
+				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
+				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
+				b=Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
+				Map.Monsters[i].Attack1.DamageDiceSides = Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
+				
+				--attack 2
+				c=Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
+				Map.Monsters[i].Attack2.DamageAdd = Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
+				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
+				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
+				--OVERFLOW FIX
+					--Attack 1 Overflow fix
+					--add damage fix
+					if (a > 250) then
+					Overflow = a - 250
+					Map.Monsters[i].Attack1.DamageAdd = 250
+					b=b + (math.round(2*Overflow/Map.Monsters[i].Attack1.DamageDiceCount))
+					Map.Monsters[i].Attack1.DamageDiceSides = b 
+					end
+					--Dice Sides fix
+					if (b > 250) then
+					Overflow = b / 250
+					Map.Monsters[i].Attack1.DamageDiceSides = 250
+					--checking for dice count overflow
+					e = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
+					Map.Monsters[i].Attack1.DamageDiceCount = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
+					end
+					--Just in case Dice Count fix
+					if not (e == nil) then
+						if (e > 250) then
+						Map.Monsters[i].Attack1.DamageDiceCount = 250
+						end
+					end
+					--Attack 2 Overflow fix, same formula
+					--add damage fix
+					if (c > 250) then
+					Overflow = c - 250
+					Map.Monsters[i].Attack2.DamageAdd = 250
+					d=d + (math.round(2*Overflow/Map.Monsters[i].Attack2.DamageDiceCount))
+					Map.Monsters[i].Attack2.DamageDiceSides = d
+					end
+					--Dice Sides fix
+					if (d > 250) then
+					Overflow = d / 250
+					Map.Monsters[i].Attack2.DamageDiceSides = 250
+					--checking for dice count overflow
+					f=Map.Monsters[i].Attack2.DamageDiceCount * Overflow
+					Map.Monsters[i].Attack2.DamageDiceCount = Map.Monsters[i].Attack2.DamageDiceCount * Overflow
+					end
+					--Just in case Dice Count fix
+					if not (f ==nil) then
+						if (f > 250) then
+						Map.Monsters[i].Attack2.DamageDiceCount = 250
+						end
+					end
+
+		end
+	end
+end
+end
