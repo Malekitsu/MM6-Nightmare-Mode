@@ -68,7 +68,13 @@ function events.ItemGenerated(t)
 			end
 		end
 		
-		
+		--of x spell proc chance
+		if t.Item.Number>=120 and t.Item.Number<=134 and t.Item.Bonus2~=0 and t.Strength < 6 then
+			roll=math.random(1,100)
+			if roll<(t.Strength-1)*10 then
+				t.Item.Bonus2=math.random(26,34)
+			end
+		end
 		
 		--chance for ancient item, only if bonus 2 is spawned
 		if t.Item.Bonus2~=0 then 
@@ -182,7 +188,7 @@ local data = WhoHitMonster()
 	end	
 end
 
-end
+
 
 ---------------------
 --multiple enchant tooltip
@@ -217,6 +223,7 @@ function events.GameInitialized2()
 	Game.SpcItemsTxt[45].BonusStat= "Adds 30-60 points of Fire damage, +25 Might."
 	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
 	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
+	Game.SpcItemsTxt[53].BonusStat=" +15 Endurance and Regenerate HP over time."
 end
 
 function events.ShowItemTooltip(item)
@@ -248,7 +255,7 @@ if (item.Item.BonusStrength==40 and (item.Item.Bonus<8 or item.Item.Bonus>9) or 
 end
 
 
-
+end
 
 -- some spare code, just in case
 --[[
