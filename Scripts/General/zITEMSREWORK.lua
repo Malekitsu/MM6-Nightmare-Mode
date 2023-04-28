@@ -174,16 +174,19 @@ end
 
 function events.CalcDamageToMonster(t)
 local data = WhoHitMonster()
+local a=0
 	if data.Player and t.DamageKind~=0 and data.Object==nil then
 		for it in data.Player:EnumActiveItems() do
-			if it.Bonus2 >= 4 and it.Bonus2 <= 15 or it.Bonus2 == 46 then
+			if t.DamageKind==2 then
+				fix=math.random(0,math.round(t.Result))
+				t.Result=t.Result-(fix*0.875)
+			end
+			if it.Bonus2 >= 4 and it.Bonus2 <= 15 or it.Bonus2 == 46 and a==0 then
 				t.Result = t.Result * 3	
+				break
 			end
 			--rough fix for bugged enchant
-			if it.Bonus2==11 or it.Bonus2==12 and t.DamageKind==2 then
-			fix=math.random(0,math.round(t.Result))
-			t.Result=t.Result-(fix*0.875)
-			end
+
 		end		
 	end	
 end
