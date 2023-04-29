@@ -7,15 +7,6 @@ function events.CalcDamageToMonster(t)
 		damageBonus=might/500		
 		t.Result=t.Result*(1+damageBonus)
 		end
-	--luck/accuracy bonus	
-		luck=data.Player:GetLuck()
-		accuracy=data.Player:GetAccuracy()
-		critDamage=accuracy/250
-		critChance=5+luck/10
-		roll=math.random(1, 100)
-		if roll <= critChance then
-			t.Result=t.Result*(1.5+critDamage)
-		end
 end
 
 --speed
