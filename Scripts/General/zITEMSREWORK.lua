@@ -53,9 +53,9 @@ function events.ItemGenerated(t)
 			end
 		end
 		--extra bonus proc
-		extraBonusChance={0,20,25,30,40,50}
-		extraBonusPowerLow={0,1,3,6,10,15}
-		extraBonusPowerHigh={0,5,8,12,17,25}
+		extraBonusChance={30,40,50,50,50,50}
+		extraBonusPowerLow={1,1,3,6,10,15}
+		extraBonusPowerHigh={3,5,8,12,17,25}
 		extraDataProc=math.random(1,100)
 		if extraDataProc<=extraBonusChance[t.Strength] then
 			lowerLimit=t.Strength
