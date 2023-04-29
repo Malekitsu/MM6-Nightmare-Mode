@@ -53,6 +53,28 @@ function events.CalcDamageToMonster(t)
 		if mastery>=64 then
 		mastery=mastery-64
 		end
+				--get light
+		light=data.Player.Skills[const.Skills.Light]
+		rankBonus=1
+		if light>=64 then 
+		light=light-64
+		rankBonus=1
+		end
+		if light>=64 then
+		light=light-64
+		rankBonus=1
+		end
+		--get spirit
+		spirit=data.Player.Skills[const.Skills.Spirit]
+		rankBonus=1
+		if body>=64 then 
+		spirit=spirit-64
+		rankBonus=1
+		end
+		if spirit>=64 then
+		spirit=spirit-64
+		rankBonus=1
+		end
 		
 		--bunch of code for healing most injured player
 		function indexof(table, value)
@@ -91,7 +113,7 @@ function events.CalcDamageToMonster(t)
 		min_index = indexof({a, b, c, d}, min_value)
 		min_index = min_index - 1
 		--Calculate heal value and apply
-		healValue=2*body*rankBonus+mastery*3
+		healValue=2*body*rankBonus+mastery*3+math.max(4*spirit-2*light-mastery*2+body, 0)
 		evt[min_index].Add("HP",healValue)		
 		--bug fix
 		if Party[min_index].HP>0 then
@@ -126,17 +148,6 @@ function events.CalcDamageToMonster(t)
 		mastery=mastery-64
 		end
 		t.Result=t.Result+2*light*rankBonus+(mastery*4)
-		end
-end
-
---Scales with might and personality (10 stat=1% damage)
-function events.CalcDamageToMonster(t)
-	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) and t.DamageKind==0 and data.Object==nil then
-			might=data.Player:GetMight()
-			personality=data.Player:GetPersonality()
-			bonusDamage=might/1000 + personality/1000
-			t.Result=t.Result*(1+bonusDamage*Rebalanze)*Rebalance
 		end
 end
 
@@ -243,6 +254,15 @@ end
 
 -------------end of divine shield---------------
 
+---deactivate offhand weapon
+function events.CalcDamageToMonster(t)
+	 data=WhoHitMonster()
+	 ind=data.Player:GetIndex()
+		if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) and (data.Player.ItemExtraHand >= 1 or data.Player.ItemExtraHand <= 14 or data.Player.ItemExtraHand ==403 or data.Player.ItemExtraHand >= 415) then
+			t.Result=0
+			Message("Seraphin aren't able to dual wield")
+		end
+end
 
 
 
@@ -257,21 +277,21 @@ Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
 Game.ClassKinds.StartingSkills[1][const.Skills.Dark] = 0
 
     Game.Classes.HPFactor[const.Class.Cleric] = 3
-	Game.Classes.SPFactor[const.Class.Cleric] = 2
+	Game.Classes.SPFactor[const.Class.Cleric] = 1+Rebalanze
 	Game.Classes.HPFactor[const.Class.Priest] = 4
-	Game.Classes.SPFactor[const.Class.Priest] = 3
+	Game.Classes.SPFactor[const.Class.Priest] = 2+Rebalanze
 	Game.Classes.HPFactor[const.Class.HighPriest] = 5
-	Game.Classes.SPFactor[const.Class.HighPriest] = 4
+	Game.Classes.SPFactor[const.Class.HighPriest] = 3+Rebalanze
 --LORE BONUS Seraphin are blessed with divine powers, giving him +20 starting hp and +10 mana and light skill
-	Game.ClassKinds.HPBase[1] = 40
-	Game.ClassKinds.SPBase[1] = 20 / (2-rebalanze)
+	Game.ClassKinds.HPBase[1] = 20 + 20 * Rebalanze
+	Game.ClassKinds.SPBase[1] = 10 + 10 * Rebalanze
 
 Game.ClassNames[const.Class.Cleric]="Seraphin"
 Game.ClassNames[const.Class.Priest]="Angel"
 Game.ClassNames[const.Class.HighPriest]="Archangel"
-Game.ClassDescriptions[const.Class.Cleric] = "Seraphin is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphin wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n3 HP and 2 mana points gained per level\nDamage scaling based on Might and Personality (each 10 points adds 1% damage)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
-Game.ClassDescriptions[const.Class.Priest] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n4 HP and 3 mana points gained per level\nDamage scaling based on Might and Personality (each 10 points adds 1% damage)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
-Game.ClassDescriptions[const.Class.HighPriest] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n5 HP and 4 mana points gained per level\nDamage scaling based on Might and Personality (each 10 points adds 1% damage)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
+Game.ClassDescriptions[const.Class.Cleric] = "Seraphin is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphin wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n3 HP and 2 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point) - a further 4 points of healing is added pr rank in spirit, however this number is reduced by 2 pr rank in light and masteryand increased by 1 pr rank in Body magic, thus if you rank Body and Spirit and keep Light at minimum and mastery low your attacks will heal a lot but do low damage.\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
+Game.ClassDescriptions[const.Class.Priest] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n4 HP and 3 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
+Game.ClassDescriptions[const.Class.HighPriest] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
 end
 
 end
