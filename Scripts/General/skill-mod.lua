@@ -2874,18 +2874,37 @@ if not DaggerCritsIgnoreElementalBonuses and mem.dll.kernel32.GetPrivateProfileI
 	end, 0x7)
 end
 
+function events.CalcDamageToMonster(t)
+	local data = WhoHitMonster()	
+	--luck/accuracy bonus
+		luck=data.Player:GetLuck()
+		accuracy=data.Player:GetAccuracy()
+		critDamage=accuracy/250
+		critChance=5+luck/10
+		roll=math.random(1, 100)
+		if roll <= critChance then
+			t.Result=t.Result*(1.5+critDamage)
+			crit2=true
+		end
+end
 mem.autohook2(0x431276, function(d)
-	if crit then
-		d.eax = mem.topointer(CritStrings.kill)
+	if crit or crit2 then
+		d.eax = mem.topointer(CritStrings.kill)		
+		if crit then
+			mul = 1
+		end
+		crit2 = false
 		crit = false
-		mul = 1
 	end
 end)
 mem.autohook2(0x431339, function(d)
-	if crit then
+	if crit or crit2 then
 		d.eax = mem.topointer(CritStrings.attack)
+		if crit then
+			mul = 1
+		end
+		crit2 = false
 		crit = false
-		mul = 1
 	end
 end)
 
