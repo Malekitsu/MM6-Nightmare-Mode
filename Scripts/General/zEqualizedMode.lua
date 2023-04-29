@@ -8,7 +8,7 @@ function events.CalcDamageToMonster(t)
 if PL > ML then
 t.Result=t.Result*(2+ML)/(2+PL)
 elseif ML > PL then
-t.Result=t.Result*(0.5+(2+ML)/(2+PL)/2)*1.5
+t.Result=t.Result*(0.5+(2+ML)/(2+PL)/2)
 end
 end
 
@@ -28,7 +28,7 @@ if (data.Monster.Level ~= nil  and data.Monster.Level ~= '' and data.Monster.Lev
 if PL > ML then
 t.Result=t.Result*(2+PL)/(2+ML)
 elseif ML > PL then
-t.Result=t.Result*(0.5+(2+PL)/(2+ML)/2)*1.5
+t.Result=t.Result*(0.5+(2+PL)/(2+ML)/2)
 end
 --end
 end
