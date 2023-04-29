@@ -1,7 +1,7 @@
 
 HERBALIST=SETTINGS["DruidAsHerbalist"]
 SHAMAN=SETTINGS["DruidAsShaman"]
---if SHAMAN==false then
+if SHAMAN==false then
 if HERBALIST==true then
 
 function events.HealingSpellPower(t)
@@ -69,4 +69,4 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Spirit] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
 end
 end
---end
+end
