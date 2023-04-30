@@ -95,11 +95,7 @@ end
 --SP increase items will add only 1/5 of SP
 function events.CalcStatBonusByItems(t)
 	if (t.Player.Class==const.Class.WarriorMage or t.Player.Class==const.Class.BattleMage or t.Player.Class==const.Class.Archer) and t.Stat == const.Stats.SP then
-		for it in t.Player:EnumActiveItems() do
-			if it.Bonus==9 then
-				t.Result = t.Result/5
-			end
-		end
+	t.Result=t.Result/5
 	end
 end
 

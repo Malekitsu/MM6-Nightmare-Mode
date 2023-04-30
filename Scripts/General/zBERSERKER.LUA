@@ -130,11 +130,7 @@ end
 --Mana items will only account for 1/5 of the effect
 function events.CalcStatBonusByItems(t)
 	if (t.Player.Class==const.Class.Paladin or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Hero) and t.Stat == const.Stats.SP then
-		for it in t.Player:EnumActiveItems() do
-			if it.Bonus==9 then
-				t.Result = t.Result/5
-			end
-		end
+	t.Result=t.Result/5
 	end
 end
 
