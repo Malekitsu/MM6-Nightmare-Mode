@@ -721,7 +721,7 @@ if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
 		
 	-- bonus damage
-				DamageMultiplier=Map.Monsters[i].Level/100+1
+				DamageMultiplier=(Map.Monsters[i].Level^1.5-1)/1000+1
 				--attack 1
 				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
 				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
