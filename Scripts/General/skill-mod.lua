@@ -1634,8 +1634,7 @@ function events.GameInitialized2()
 	----------------------------------------------------------------------------------------------------
 	-- skill descriptions
 	----------------------------------------------------------------------------------------------------
-	Game.SkillDescriptions[const.Skills.Bodybuilding] = "Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character’s base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant 1% of extra maximum health per skill level. "
-	
+	Game.SkillDescriptions[const.Skills.Bodybuilding] = "Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character's base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant Skill^2 of extra maximum health per skill level."	
 	Game.SkillDescriptions[const.Skills.Meditation] = "Meditation skill adds spell points directly to your character’s spell point totals.  Multiply the skill in meditation by the character’s base class bonus (4 for sorcerers, 0 for knights, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will grant mana regeneration depending on maximum Mana and Meditation skill.\nHero and Warrior Mage get an extra 50% mana regeneration bonus."
 	
 	Game.SkillDescriptions[const.Skills.Bow] = Game.SkillDescriptions[const.Skills.Bow] ..
