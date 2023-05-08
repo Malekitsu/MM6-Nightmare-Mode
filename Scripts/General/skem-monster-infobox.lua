@@ -9,6 +9,7 @@
 
 local DEBUG = false
 local CHANCE = SETTINGS["ResistancesDisplayMode"]
+local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
 
 if CHANCE == "default"
 then
@@ -83,7 +84,11 @@ local function getDodgeChance(player, monsterLevel)
 end
 
 function calculateMonsterDebuffRate(level,magicResist,is_resist)
+if ADAPTIVE == "100" then
+	rate = 30/(30 + (level / 1) + magicResist)
+else
 	rate = 30/(30 + (level / 4) + magicResist)
+end
 	if (is_resist == true) then
 		rate = 1 - rate
 	end
@@ -186,6 +191,8 @@ function modifiedDrawMonsterInfoName(d, def, dialog, font, left, top, color, str
 		end
 	end
 	
+	oldLevel = Game.MonstersTxt[monster.Id].Level
+	
 	table.insert(textLines, {["key"] = "Level", ["value"] = string.format("%d", monster.Level)})
 	table.insert(textLines, {["key"] = "Max HP", ["value"] = string.format("%d", monster["FullHP"])})
 	table.insert(textLines, {["key"] = "Armor Class", ["value"] = string.format("%d", monster.ArmorClass)})
@@ -199,7 +206,11 @@ function modifiedDrawMonsterInfoName(d, def, dialog, font, left, top, color, str
 	elseif not (monster.SpellChance == 0) 
 	then
 		local spellLevel, spellMastery = SplitSkill(monster.SpellSkill)
-		table.insert(textLines, {["key"] = string.format("Spell: %s (%s.%d)", Game.SpellsTxt[monster.Spell].Name, masteries[spellMastery], spellLevel), ["value"] = ""})
+		if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+		table.insert(textLines, {["key"] = string.format("Spell: %s (%s.%d)", Game.SpellsTxt[monster.Spell].Name, masteries[spellMastery], ((0.75+monster.Level/30*monster.Level/oldLevel)*spellLevel*(monster.Level^1.5/1000+1))), ["value"] = ""})
+		else
+		table.insert(textLines, {["key"] = string.format("Spell: %s (%s.%d)", Game.SpellsTxt[monster.Spell].Name, masteries[spellMastery], ((0.75+monster.Level/30*monster.Level/oldLevel)*spellLevel)), ["value"] = ""})
+		end
 	end
 
 	table.insert(textLines,{["key"] = "", ["value"] = rezstr})
