@@ -77,9 +77,9 @@ function events.ItemGenerated(t)
 		end
 		
 		--chance for ancient item, only if bonus 2 is spawned
-		if t.Item.Bonus2~=0 then 
+		if t.Item.Bonus2~=0 or Game.Map.Name=="zddb10.blv" then 
 			ancient=math.random(1,50)
-			if ancient<=t.Strength-3 then
+			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
 				t.Item.ExtraData=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
@@ -88,7 +88,7 @@ function events.ItemGenerated(t)
 		
 		--primordial item
 		primordial=math.random(1,200)
-		if primordial<=t.Strength-4 then
+		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
 			t.Item.ExtraData=math.random(547,560)
 			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=40
@@ -215,10 +215,22 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 --change tooltip
 function events.GameInitialized2()
 	itemName = {}
-
-	for i = 1, 580 do
+	
+	Game.ItemsTxt[580].NotIdentifiedName="Reality Scroll"
+	Game.ItemsTxt[580].Notes="The Reality Scroll is an ancient artifact of immense power, said to possess the ability to restore reality itself.\nAccording to the legend, it went long gone, stolen by Kreegans. The scroll must be brought to a special fountain created by the gods, which possesses the power to purify anything that touches its waters.\nTo activate the scroll's power, one must immerse it in the fountain's waters and recite the ancient incantation inscribed upon it. However, be warned that the ritual might summon the force of dark.\nOnly those who can pass a series of trials testing their strength, cunning, and purity of heart will be granted access to strongest relic. With the power of the Reality Scroll, one can hope to manipulate the fabric of reality and save the world from chaos."
+	Game.ItemsTxt[579].NotIdentifiedName="Celestial Amulet"
+	Game.ItemsTxt[579].Notes="The celestial dragon amulet is a breathtaking artifact that glimmers with otherworldly radiance. Fashioned from an otherworldly metal that is said to have been forged in the heart of a star, the amulet is adorned with intricate engravings of celestial dragons in mid-flight, their wings outstretched as if to take to the heavens themselves. Wearing this amulet is said to imbue the wielder with immense power, allowing them to channel the energies of the cosmos and bend them to their will. But the amulet's true strength lies in its ability to protect its allies. With a mere thought, the wearer can summon a shield of celestial energy that envelops their comrades, shielding them from harm and granting them the strength to fight on. It is said that only the most noble and righteous of warriors are able to wield the celestial dragon amulet, and that those who do so are blessed with the favor of the Gods themselves. ( +50 to all seven stats, protection to Death and Eradicate)"
+	
+	--FINAL AWARD
+	Game.AwardsTxt[61]="Completed MAW in Nightmare Mode"
+	Game.ItemsTxt[546].Notes="Congratulation, you were able to clear MAW at its highest difficulty!!!"
+	Game.ScrollTxt[546]="To enter the Hall of Fame write me on Discord at Malekith#5670 and send me the save file to verify your run.\nDevs are proud of you" 	
+		
+	for i = 1, 578 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
+	itemName[580] = "Reality Scroll"
+	itemName[579] = "Celestial Dragon Amulet"
 	--fix long tooltips causing crash 
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
 	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
@@ -226,6 +238,14 @@ function events.GameInitialized2()
 	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
 	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
 	Game.SpcItemsTxt[53].BonusStat=" +15 Endurance and Regenerate HP over time."
+	--new tooltips
+	Game.SpcItemsTxt[17].BonusStat="Diseas and Curse Immunity"
+	Game.SpcItemsTxt[18].BonusStat="Insanity and fear Immunity"
+	Game.SpcItemsTxt[19].BonusStat="Paralysis and SP drain Immunity"
+	Game.SpcItemsTxt[20].BonusStat="Poison and weakness Immunity"
+	Game.SpcItemsTxt[21].BonusStat="Sleep and Unconscious Immunity"
+	Game.SpcItemsTxt[22].BonusStat="Stone and premature ageing Immunity"
+	Game.SpcItemsTxt[24].BonusStat="Death and eradication Immunity, +5 Levels"
 end
 
 function events.ShowItemTooltip(item)
@@ -256,6 +276,119 @@ if (item.Item.BonusStrength==40 and (item.Item.Bonus<8 or item.Item.Bonus>9) or 
 
 end
 
+-----------------------------
+---IMMUNITY REWORK
+-----------------------------
+
+--disease/curse
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 18 then
+			if t.Thing==9 or t.Thing==10 or t.Thing==11 or t.Thing==1 then
+			t.Allow=false
+				if t.Thing==9 or t.Thing==10 or t.Thing==11 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from disease",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from curse",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+--insanity/drainsp
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 19 then
+			if t.Thing==5 or t.Thing==22 then
+			t.Allow=false
+				if t.Thing==5 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from insanity",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from spell drain",t.Player.Name))
+				end
+
+			end
+		end
+	end
+end
+--Paralysis/fear
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 20 then
+			if t.Thing==12 or t.Thing==23 then
+			t.Allow=false
+				if t.Thing==12 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from paralysis",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from fear",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+--poison/weak
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 21 then
+			if t.Thing==6 or t.Thing==7 or t.Thing==8 or t.Thing==2 then
+			t.Allow=false
+				if t.Thing==6 or t.Thing==7 or t.Thing==8 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from poison",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from weakness",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+--sleep/unconscious
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 22 then
+			if t.Thing==3 or t.Thing==13 then
+			t.Allow=false
+				if t.Thing==3 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from sleep",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from unconscious",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+--stone/age
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 23 then
+			if t.Thing==15 or t.Thing==21 then
+			t.Allow=false
+				if t.Thing==15 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from stone",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from premature ageing",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+
+--death/erad
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Bonus2 == 25 then
+			if t.Thing==14 or t.Thing==16 then
+			t.Allow=false
+				if t.Thing==14 then
+				Game.ShowStatusText(string.format("Enchantment protects %s from death",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Enchantment protects %s from eradication",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+
+
 
 end
 
@@ -264,3 +397,102 @@ end
 function AfterShowItemTooltip()
   debug.Message(dump(t))
 end]]
+--celestial amulet
+function events.DoBadThingToPlayer(t)
+for it in t.Player:EnumActiveItems() do
+		if it.Number == 579 then
+			if t.Thing==16 or t.Thing==14 then
+			t.Allow=false
+				if t.Thing==14 then
+				Game.ShowStatusText(string.format("Celestial Amulet protects %s from death",t.Player.Name))
+				else 
+				Game.ShowStatusText(string.format("Celestial Amulet protects %s from eradication",t.Player.Name))
+				end
+			end
+		end
+	end
+end
+function events.CalcStatBonusByItems(t)
+	if t.Stat >= const.Stats.Might and t.Stat <= const.Stats.Luck then
+		for it in t.Player:EnumActiveItems() do
+			if it.Number == 579 then
+				t.Result = t.Result + 50
+			end
+		end
+	end
+end
+
+
+
+--------------------
+--STATUS REWORK (needs to stay after status immunity
+--------------------
+if SETTINGS["StatusRework"]==true then
+
+
+function events.LoadMap(wasInGame)
+local function poisonTimer() 
+
+vars.poisonTime=vars.poisonTime or {}
+	for i = 0, 3 do
+		if Party[i].Poison3>0 then
+			if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
+			vars.poisonTime[i]=25
+			end
+			if vars.poisonTime[i]>0 then
+			vars.poisonTime[i]=vars.poisonTime[i]-1
+			end
+			if vars.poisonTime[i]==0 then			
+			Party[i].Poison3=0
+			Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
+			else
+			Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.06)
+			end 
+		else if Party[i].Poison2>0 then
+				if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
+				vars.poisonTime[i]=25
+				end
+				if vars.poisonTime[i]>0 then
+				vars.poisonTime[i]=vars.poisonTime[i]-1
+				end
+				if vars.poisonTime[i]==0 then			
+				Party[i].Poison2=0
+				Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
+				else
+				Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.04)
+				end 
+			else if Party[i].Poison1>0 then
+					if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
+					vars.poisonTime[i]=25
+					end
+					if vars.poisonTime[i]>0 then
+					vars.poisonTime[i]=vars.poisonTime[i]-1
+					end
+					if vars.poisonTime[i]==0 then			
+					Party[i].Poison1=0
+					Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
+					else
+					Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.02)
+					end 
+				else vars.poisonTime[i]=0
+				end
+			end
+		end
+	end
+end
+Timer(poisonTimer, const.Minute) 
+end
+
+function events.DoBadThingToPlayer(t)
+		if (t.Thing==6 or t.Thing==7 or t.Thing==8) and t.Allow then
+		if vars.poisonTime[t.PlayerIndex]==nil or vars.poisonTime[t.PlayerIndex]==0 then
+		vars.poisonTime[t.PlayerIndex]=25
+		else
+		vars.poisonTime[t.PlayerIndex]=math.min(vars.poisonTime[t.PlayerIndex]+5,50)
+		end
+	end
+end
+
+
+
+end
