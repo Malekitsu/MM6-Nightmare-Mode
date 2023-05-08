@@ -33,3 +33,13 @@ evt.map[94] = function()
 	end
 end
 
+evt.hint[333] = "strange Statuette"
+evt.map[333] = function()
+	if vars.CelestialArena1~=nil then
+	Game.ShowStatusText("")
+	evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
+	else
+	Game.ShowStatusText("A strange statuette")
+	end
+end
+

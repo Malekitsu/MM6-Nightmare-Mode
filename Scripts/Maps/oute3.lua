@@ -49,8 +49,10 @@ evt.HouseDoor(11, 92)  -- "A Lonely Knight"
 evt.house[12] = 92  -- "A Lonely Knight"
 evt.HouseDoor(13, 29)  -- "The Seeing Eye"
 evt.house[14] = 29  -- "The Seeing Eye"
+if not vars.noStable and not vars.Endoftheworld then
 evt.HouseDoor(15, 48)  -- "New Sorpigal Coach Company"
 evt.house[16] = 48  -- "New Sorpigal Coach Company"
+end
 evt.HouseDoor(17, 1)  -- "The Knife Shoppe"
 evt.house[18] = 1  -- "The Knife Shoppe"
 evt.HouseDoor(19, 141)  -- "Blades' End"
@@ -430,17 +432,6 @@ end
 
 RefillTimer(evt.map[130].last, const.Day)
 
-evt.hint[131] = evt.str[7]  -- "Drink from Fountain"
-evt.map[131] = function()
-	if evt.Cmp("MapVar49", 1) then
-		evt.Subtract("MapVar49", 1)
-		evt.Add("HP", 5)
-		evt.StatusText(14)         -- "+5 Hit points restored."
-	else
-		evt.StatusText(8)         -- "Refreshing!"
-	end
-	evt.Set("AutonotesBits", 1)         -- "5 Hit points cured by the central fountain in New Sorpigal."
-end
 
 evt.hint[140] = evt.str[7]  -- "Drink from Fountain"
 evt.map[140] = function()
@@ -624,3 +615,169 @@ configureShrineEvent(261, 6, "BaseLuck", 23, 24, 25, 26)
 evt.map[104] = function()
 	evt.MoveToMap{X = -9678, Y = -13013, Z = 0, Direction = 0, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "OutB3.Odm"}
 end
+
+
+
+evt.map[666] = function()  -- Timer(<function>, 5*const.Minute)
+	if vars.Endoftheworld then
+		Game.PlayTrack(1)
+		vars.EndoftheworldStarted=true
+		vars.Endoftheworld=false
+		vars.noStable=true
+		Message("Filled with a furious wrath, the time-space sorcerer wield his power to rip apart the very fabric of reality, unleashing chaos upon the multiverse.")
+		Game.PlayTrack(15)
+		for mid, model in Map.Models do
+			for fid, facet in model.Facets do
+				facet.Invisible=true
+				facet.Untouchable=true
+				evt.SetFacetBitOutdoors{Model = 21, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+				evt.SetFacetBitOutdoors{Model = 18, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+				evt.SetFacetBitOutdoors{Model = 12, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+				evt.SetFacetBitOutdoors{Model = 21, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+				evt.SetFacetBitOutdoors{Model = 18, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+				evt.SetFacetBitOutdoors{Model = 12, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+				Sleep(1)
+			end
+		end
+		for i = 0, Map.Monsters.High	 do
+			if Map.Monsters[i].Id==121 or Map.Monsters[i].Id==122 or Map.Monsters[i].Id==123 or Map.Monsters[i].Id==133 or Map.Monsters[i].Id==134 or Map.Monsters[i].Id==135 then
+			Map.Monsters[i].HP=0
+			Sleep(40)
+			end
+		end
+		for i = 0, Map.Monsters.High	 do
+		Map.Monsters[i].HP=0
+		end
+		for i=0,600 do
+		evt.SetSprite{SpriteId = i, Visible = 0}
+		Sleep(1)
+		end
+		evt.SetTextureOutdoors{Model=21, Facet=24, Name="LAVATYL"}
+		evt.SetTextureOutdoors{Model=18, Facet=24, Name="LAVATYL"}
+		evt.SetTextureOutdoors{Model=12, Facet=24, Name="LAVATYL"}
+		
+		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 200}
+		Sleep(200)
+		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 200}
+		Sleep(200)
+		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 200}
+		Sleep(200)
+		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 200}
+		Message("What?! You mere mortals survived my wrath? How could this be possible?")
+		Sleep(300)
+		Message("Your bravery is admirable, but it means nothing in the face of my power. Time-space will consume you. And this time, there will be no escape.")
+		vars.EndoftheworldStarted=false
+		vars.Endfight=true
+	end
+end
+
+Timer(evt.map[666].last, 3*const.Minute)
+
+
+evt.hint[131] = evt.str[7]  -- "Drink from Fountain"
+evt.map[131] = function()
+	if not vars.Endfight then
+		if evt.Cmp("MapVar49", 1) then
+			evt.Subtract("MapVar49", 1)
+			evt.Add("HP", 5)
+			evt.StatusText(14)         -- "+5 Hit points restored."
+		else
+			evt.StatusText(8)         -- "Refreshing!"
+		end
+		evt.Set("AutonotesBits", 1)         -- "5 Hit points cured by the central fountain in New Sorpigal."
+	else
+	evt.ForPlayer("All")
+		if not evt.Cmp("Inventory", 580) and vars.ritual==nil then
+		evt.Add("Inventory", 580)
+
+		else 
+		vars.ritual=1
+		evt.Subtract("Inventory", 580)
+		Game.ShowStatusText("You start the Reality Scroll Ritual, it will take a while")
+		
+			Sleep(150)
+			pseudoSpawnpoint{monster = 25, x = Party.X+1000, y = Party.Y, z = Party.Z, count = 1, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-1000, y = Party.Y, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 173, x = Party.X, y = Party.Y+1000, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 64, group = 255
+			, transform = function(mon) mon.FullHP = mon.FullHP * 6 mon.HP = mon.FullHP end
+			}
+			pseudoSpawnpoint{monster = 25, x = Party.X, y = Party.Y-1000, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			Sleep(5000)
+			Game.ShowStatusText("Ritual is halfway through, we must survive until the end")
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			Sleep(3000)
+			Game.ShowStatusText("Ritual is almost complete")
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			Sleep(2000)
+		Message("Mortal, the gods have taken notice of your actions and find you worthy of a great challenge. You shall be tested in the celestial arena, where your true value shall be determined.\nDo not fear, for you have been chosen for a reason. Your strength, courage, and wisdom have not gone unnoticed, and the gods have faith that you will succeed in this challenge.")
+		vars.Endfight=false
+		vars.noStable=false
+		evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
+		end
+	end
+end
+
+
+evt.map[667] = function()
+	if vars.Endfight and vars.ritual==nil then
+		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 100}
+		Game.ShowStatusText("Reality is collapsing")
+	end
+	
+	if vars.EndoftheworldStarted or vars.Endfight then
+		if Party.X<-15500 or Party.X>-4208 or Party.Y<-10937 or Party.Y>0 then
+		evt.MoveToMap{X = -9714, Y = -7508, Z = 161, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "0"}
+		end
+	end
+end
+Timer(evt.map[667].last, 2*const.Minute)
+
+function events.LoadMap()
+	if vars.Endfight or vars.EndoftheworldStarted then
+		for mid, model in Map.Models do
+				for fid, facet in model.Facets do
+					facet.Invisible=true
+					facet.Untouchable=true
+					evt.SetFacetBitOutdoors{Model = 21, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+					evt.SetFacetBitOutdoors{Model = 18, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+					evt.SetFacetBitOutdoors{Model = 12, Facet = -1, Bit = const.FacetBits.Invisible, On = false}
+					evt.SetFacetBitOutdoors{Model = 21, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+					evt.SetFacetBitOutdoors{Model = 18, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+					evt.SetFacetBitOutdoors{Model = 12, Facet = -1, Bit = const.FacetBits.Untouchable, On = false}
+				end
+			end
+		evt.SetTextureOutdoors{Model=21, Facet=24, Name="LAVATYL"}
+		evt.SetTextureOutdoors{Model=18, Facet=24, Name="LAVATYL"}
+		evt.SetTextureOutdoors{Model=12, Facet=24, Name="LAVATYL"}
+		for i=0,600 do
+		evt.SetSprite{SpriteId = i, Visible = 0}
+		end
+			if vars.Endfight~=true then
+				for i = 0, Map.Monsters.High do
+				Map.Monsters[i].HP=0
+				end
+			end
+		vars.EndoftheworldStarted=false
+		vars.Endfight=true
+	end
+end
+
+function events.DeathMap(t)
+	if vars.Endfight or vars.EndoftheworldStarted then
+	Message("Reality Collapsed")
+	Game.ExitMapAction=7
+	end
+end
+
+
