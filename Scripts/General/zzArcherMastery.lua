@@ -1,5 +1,7 @@
 ASHIKARI=SETTINGS["ArcherAsAshikari"]
 ASSASSIN=SETTINGS["ArcherAsAssassin"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if ASSASSIN==false then
 if ASHIKARI==false then
 
