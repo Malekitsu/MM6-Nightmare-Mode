@@ -28,10 +28,22 @@ local YEAR = WEEK * 52
 local CENTURY = YEAR * 100
 local NEVER = math.huge
 
-local globalReset = YEAR / 2
+local globalReset = SETTINGS["GlobalMapResetDays"]
 
-if (type(SETTINGS["GlobalMapResetDays"]) == 'number' ) then
-	globalReset = SETTINGS["GlobalMapResetDays"]
+if ((globalReset == nil) or (string.lower(globalReset) == 'default'))
+then
+	globalReset = nil
+elseif (string.lower(globalReset) == 'never')
+then
+	globalReset = math.huge
+elseif (string.lower(globalReset) == 'instant')
+then
+	globalReset = 0
+elseif (type(globalReset) == 'number' ) 
+then
+	globalReset = globalReset
+else
+	globalReset = nil
 end
 
 
@@ -127,14 +139,15 @@ localResets = {
 
 function changeAllRegionResets()
 	for i = 1, Game.MapStats.high do
+		orig = Game.MapStats[i]["RefillDays"]
 		if not (localResets[i] == nil)
 		then
-			Game.MapStats[i]["RefillDays"] = localResets[i]	
-		else
-		--Made default to make vanilla resets timer except for upper values
-			if not SETTINGS["GlobalMapResetDays"] == "default" then
+			Game.MapStats[i]["RefillDays"] = localResets[i]
+		elseif not (globalReset == nil) 
+		then
 			Game.MapStats[i]["RefillDays"] = globalReset
-			end
+		else
+			Game.MapStats[i]["RefillDays"] = orig
 		end
 	end
 end
