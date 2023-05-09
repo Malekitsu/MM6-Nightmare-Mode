@@ -120,15 +120,21 @@ end
 localResets = {
 	[MapIDs["The Arena"]] = 0,
 	[MapIDs["zddb09.blv"]] = 0,
+	[MapIDs["New Sorpigal"]] = 672,
 }
+
+
 
 function changeAllRegionResets()
 	for i = 1, Game.MapStats.high do
 		if not (localResets[i] == nil)
 		then
-			Game.MapStats[i]["RefillDays"] = localResets[i]
+			Game.MapStats[i]["RefillDays"] = localResets[i]	
 		else
+		--Made default to make vanilla resets timer except for upper values
+			if not SETTINGS["GlobalMapResetDays"] == "default" then
 			Game.MapStats[i]["RefillDays"] = globalReset
+			end
 		end
 	end
 end
