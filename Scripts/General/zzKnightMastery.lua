@@ -1,5 +1,7 @@
 GREYKNIGHT=SETTINGS["KnightAsGreyKnight"]
 BLOODKNIGHT=SETTINGS["KnightAsBloodKnight"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if BLOODKNIGHT==false then
 if GREYKNIGHT==false then
 

@@ -1,4 +1,6 @@
 BERSERKER=SETTINGS["PaladinAsBerseker"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if BERSERKER==false then
 
 function events.HealingSpellPower(t)

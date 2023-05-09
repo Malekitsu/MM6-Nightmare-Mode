@@ -1,4 +1,6 @@
 SERAPHIN=SETTINGS["ClericAsSeraphin"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if SERAPHIN==false then
 
 function events.HealingSpellPower(t)

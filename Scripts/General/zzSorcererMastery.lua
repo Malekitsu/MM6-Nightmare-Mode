@@ -1,5 +1,7 @@
 SHADOW=SETTINGS["SorcererAsShadow"]
 NECROMANCER=SETTINGS["SorcererAsNecromancer"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if NECROMANCER==false then
 if SHADOW==false then
 

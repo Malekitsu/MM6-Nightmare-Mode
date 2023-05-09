@@ -1,5 +1,7 @@
 SHAMAN=SETTINGS["DruidAsShaman"]
 HERBALIST=SETTINGS["DruidAsHerbalist"]
+Mastery=SETTINGS["Mastery"]
+if Mastery = true
 if HERBALIST==false then
 if SHAMAN==false then
 
