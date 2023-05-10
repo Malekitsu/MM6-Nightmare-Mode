@@ -1,12 +1,3 @@
-local Rebalance
-Rebalance = 1
-Rebalanze = 1
-if SETTINGS["ImbaSubClasses"]==false then
-Rebalance = 0.95
-Rebalanze = 0
-end
-
-
 SERAPHIN=SETTINGS["ClericAsSeraphin"]
 if SERAPHIN==true then
 
@@ -277,14 +268,14 @@ Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
 Game.ClassKinds.StartingSkills[1][const.Skills.Dark] = 0
 
     Game.Classes.HPFactor[const.Class.Cleric] = 3
-	Game.Classes.SPFactor[const.Class.Cleric] = 1+Rebalanze
+	Game.Classes.SPFactor[const.Class.Cleric] = 1
 	Game.Classes.HPFactor[const.Class.Priest] = 4
-	Game.Classes.SPFactor[const.Class.Priest] = 2+Rebalanze
+	Game.Classes.SPFactor[const.Class.Priest] = 2
 	Game.Classes.HPFactor[const.Class.HighPriest] = 5
-	Game.Classes.SPFactor[const.Class.HighPriest] = 3+Rebalanze
+	Game.Classes.SPFactor[const.Class.HighPriest] = 3
 --LORE BONUS Seraphin are blessed with divine powers, giving him +20 starting hp and +10 mana and light skill
-	Game.ClassKinds.HPBase[1] = 20 + 20 * Rebalanze
-	Game.ClassKinds.SPBase[1] = 10 + 10 * Rebalanze
+	Game.ClassKinds.HPBase[1] = 30
+	Game.ClassKinds.SPBase[1] = 15
 
 Game.ClassNames[const.Class.Cleric]="Seraphin"
 Game.ClassNames[const.Class.Priest]="Angel"
