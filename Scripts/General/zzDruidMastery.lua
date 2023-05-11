@@ -1,7 +1,7 @@
 SHAMAN=SETTINGS["DruidAsShaman"]
 HERBALIST=SETTINGS["DruidAsHerbalist"]
 Mastery=SETTINGS["Mastery"]
-if Mastery = true
+if Mastery == true then
 if HERBALIST==false then
 if SHAMAN==false then
 
@@ -66,3 +66,4 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
 end
 end
 end
+	end
