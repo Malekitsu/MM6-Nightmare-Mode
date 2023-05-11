@@ -382,7 +382,7 @@ function calculateMonsterHealth(monsterArray)
 	
 	--HEALTH FIX FOR ITEM/STATS REWORK
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	healthMod = 1 * (1+level/200)
+	reworkMult = 1 * (1+level/200)
 	end
 	-----------------------------------
 	lookupID = monsterArray["Id"]
@@ -409,7 +409,7 @@ function calculateMonsterHealth(monsterArray)
 	
 	
 	
-	newHealth = oldHealth * baseHealthMultiplier * healthMod
+	newHealth = oldHealth * baseHealthMultiplier * healthMod * reworkMult
 	return math.max(newHealth, oldHealth)
 end
 
@@ -466,7 +466,10 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 	
 	--FIX FOR ITEM/STATS REWORK
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	damageMultiplier = damageMultiplier*((monsterArray.Level^1.5-1)/1000+1)
+	damageMultiplier = damageMultiplier*((monsterArray.Level^1.6-1)/1000+1)
+	for i=1,173 do
+	Game.MonstersTxt[i].Ally=2
+	end
 	end
 	-----------------------------
 	
@@ -501,10 +504,16 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 			elseif (resist == const.Damage.Phys) 	
 			then
 				sides = sides * damageMultiplier * dampener
-				bonus = math.min(bonus * damageMultiplier * dampener, 250)
+				bonus = bonus * damageMultiplier
 			else
 				sides = sides * damageMultiplier
-				bonus = math.min(bonus * damageMultiplier, 250)
+				
+				bonus = bonus * damageMultiplier
+			end
+			if bonus>250 then
+				overflowbonus=bonus-250
+				bonus=250
+				sides=(overflowbonus/dice)*2+sides
 			end
 			dmesg = monsterArray.Name .. ", Attack " .. i .. ": ".. genericForm[key]["DamageDiceCount"].."d"..genericForm[key]["DamageDiceSides"].."+"..genericForm[key]["DamageAdd"].." -> "..dice.."d"..sides.."+"..bonus
 			-- if sides overflows, clamp sides to 250 and increase dice count 
@@ -813,13 +822,15 @@ end
 function events.LoadMap()	
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	for i=0, Map.Monsters.High do
-	if not (Map.Monsters[i].Ally == 2) then
-				Map.Monsters[i].Ally = 2
+	if not (Map.Monsters[i].Ally == 2) and mapvars.boosted~=nil then
+			mapvars.boosted=true
+			Map.Monsters[i].Ally = 2
 			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
 			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
 		
 	-- bonus damage
-				DamageMultiplier=(Map.Monsters[i].Level^1.5-1)/1000+1
+				
+				DamageMultiplier=(Map.Monsters[i].Level^1.6-1)/1000+1
 				--attack 1
 				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
 				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
