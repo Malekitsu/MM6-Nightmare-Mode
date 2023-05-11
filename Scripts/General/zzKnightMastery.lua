@@ -1,7 +1,7 @@
 GREYKNIGHT=SETTINGS["KnightAsGreyKnight"]
 BLOODKNIGHT=SETTINGS["KnightAsBloodKnight"]
 Mastery=SETTINGS["Mastery"]
-if Mastery = true
+if Mastery == true then
 if BLOODKNIGHT==false then
 if GREYKNIGHT==false then
 
@@ -45,4 +45,4 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
 end
 end
 end
-
+end
