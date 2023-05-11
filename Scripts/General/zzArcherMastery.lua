@@ -138,4 +138,4 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
 end
 end
 end
-
+end
