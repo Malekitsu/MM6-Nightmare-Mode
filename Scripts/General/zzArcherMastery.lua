@@ -1,7 +1,7 @@
 ASHIKARI=SETTINGS["ArcherAsAshikari"]
 ASSASSIN=SETTINGS["ArcherAsAssassin"]
 Mastery=SETTINGS["Mastery"]
-if Mastery == true then
+if Mastery==true then
 if ASSASSIN==false then
 if ASHIKARI==false then
 
@@ -133,7 +133,7 @@ end
 
 function events.GameInitialized2()
 
-Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+Game.ClassKinds.StartingSkills[4][const.Skills.Thievery] = 1
 
 end
 end

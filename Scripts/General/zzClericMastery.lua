@@ -1,6 +1,6 @@
 SERAPHIN=SETTINGS["ClericAsSeraphin"]
 Mastery=SETTINGS["Mastery"]
-if Mastery == true then
+if Mastery==true then
 if SERAPHIN==false then
 
 function events.HealingSpellPower(t)
@@ -58,7 +58,7 @@ end
 
 
 function events.GameInitialized2()
-Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
 
 
 end

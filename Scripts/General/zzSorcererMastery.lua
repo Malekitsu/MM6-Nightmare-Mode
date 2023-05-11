@@ -1,7 +1,7 @@
 SHADOW=SETTINGS["SorcererAsShadow"]
 NECROMANCER=SETTINGS["SorcererAsNecromancer"]
 Mastery=SETTINGS["Mastery"]
-if Mastery == true then
+if Mastery==true then
 if NECROMANCER==false then
 if SHADOW==false then
 
@@ -60,7 +60,7 @@ end
 
 
 function events.GameInitialized2()
-Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+Game.ClassKinds.StartingSkills[2][const.Skills.Thievery] = 1
 
 end
 end

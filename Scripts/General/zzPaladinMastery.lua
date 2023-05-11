@@ -1,6 +1,6 @@
 BERSERKER=SETTINGS["PaladinAsBerseker"]
 Mastery=SETTINGS["Mastery"]
-if Mastery == true then
+if Mastery==true then
 if BERSERKER==false then
 
 function events.HealingSpellPower(t)
@@ -189,8 +189,9 @@ end
 
 function events.GameInitialized2()
 
-Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+Game.ClassKinds.StartingSkills[3][const.Skills.Thievery] = 1
 
 end
 end
+
 end
