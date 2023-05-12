@@ -122,8 +122,6 @@ local monsterInfos =
 	--Devil King
 	[27] = { ["FullHP"] = 1150,["Level"] = 100,["ArmorClass"]=100, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 20, ["DamageDiceSides"] = 9, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Magic, ["DamageDiceCount"] = 6, ["DamageDiceSides"] = 13, ["DamageAdd"] = 39, ["Missile"] = missiles["Magic"], },["Bonus"] = 0, ["BonusMul"] = 0},
 	]]
-	--Grand druid
-	[45] = {["Bonus"] = 0, ["BonusMul"] = 0},
 	--Defender of VARN
 	[88] = {["SpellChance"] = 20, ["Spell"] = "Psychic Shock", ["SpellSkill"] = JoinSkill(4, const.Master), },
 	--Sentinel of VARN
@@ -822,8 +820,7 @@ end
 function events.LoadMap()	
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	for i=0, Map.Monsters.High do
-	if not (Map.Monsters[i].Ally == 2) and mapvars.boosted~=nil then
-			mapvars.boosted=true
+	if not (Map.Monsters[i].Ally == 2) and mapvars.boosted==nil then
 			Map.Monsters[i].Ally = 2
 			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
 			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
@@ -890,5 +887,7 @@ if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 
 		end
 	end
+	
+	mapvars.boosted=true
 end
 end
