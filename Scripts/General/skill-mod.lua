@@ -18,7 +18,7 @@ meditation-sp-regen.lua
 ----------------------------------------------------------------------------------------------------
 
 local blastersUseClassMultipliers = true
-local shieldDoubleSkillEffectForKnights = false
+local shieldDoubleSkillEffectForKnights = true
 local knightClasses = {const.Class.Knight, const.Class.Cavalier, const.Class.Champion}
 
 local newMMExt
@@ -89,23 +89,19 @@ local meleeRecoveryCap = 10
 
 --
 -- attribute breakpoints
-
 local attributeBreakpoints =
 {
+400,
+350,
 300,
-280,
-260,
-240,
-220,
+275,
+250,
+225,
 200,
 180,
-170,
 160,
-150,
 140,
-130,
 120,
-110,
 100,
 90,
 80,
@@ -121,23 +117,25 @@ local attributeBreakpoints =
 17,
 15,
 13,
+11,
+9,
+-1000,
 }
+
+
 local attributeEffects =
 {
+80,
+70,
 60,
-56,
-52,
-48,
-44,
+55,
+50,
+45,
 40,
 36,
-34,
 32,
-30,
 28,
-26,
 24,
-22,
 20,
 18,
 16,
@@ -153,6 +151,9 @@ local attributeEffects =
 2,
 1,
 0,
+-1,
+-2,
+-3,
 }
 --
 
@@ -226,7 +227,7 @@ local newWeaponSkillRecoveryBonuses =
 	[const.Skills.Dagger]	= {0, 0, 1, },
 	[const.Skills.Axe]		= {0, 2, 2, },
 	[const.Skills.Spear]	= {0, 0, 0, },
-	[const.Skills.Bow]		= {0, 0, 0, },
+	[const.Skills.Bow]		= {1, 2, 2, },
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
@@ -252,7 +253,7 @@ local newWeaponSkillDamageBonuses =
 	[const.Skills.Dagger]	= {0, 0, 0, },
 	[const.Skills.Axe]		= {0, 1, 2, },
 	[const.Skills.Spear]	= {0, 1, 2, },
-	[const.Skills.Bow]		= {1, 2, 4, },
+	[const.Skills.Bow]		= {1, 2, 2, },
 	[const.Skills.Mace]		= {0, 1, 2, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 	
@@ -370,15 +371,16 @@ local classMeleeWeaponSkillDamageBonus =
 }
 local classRangedWeaponSkillAttackBonusMultiplier =
 {
-	[const.Class.Archer] = 2,
-	[const.Class.BattleMage] = 2,
-	[const.Class.WarriorMage] = 2,
+	[const.Class.Archer] = 5/3,
+	[const.Class.BattleMage] = 5/3,
+	[const.Class.WarriorMage] = 5/3,
 }
+--ranged class speed bonus not working apparently
 local classRangedWeaponSkillSpeedBonusMultiplier =
 {
 	[const.Class.Archer] = 0,
 	[const.Class.BattleMage] = 0,
-	[const.Class.WarriorMage] = 1,
+	[const.Class.WarriorMage] = 0,
 }
 local classRangedWeaponSkillDamageBonus =
 {
@@ -387,7 +389,7 @@ local classRangedWeaponSkillDamageBonus =
 	[const.Class.WarriorMage] = 2,
 	[const.Class.Knight] = 0,
 	[const.Class.Cavalier] = 0,
-	[const.Class.Champion] = 2,
+	[const.Class.Champion] = 1,
 }
 
 -- plate cover chances by rank
@@ -851,7 +853,6 @@ local function getWeaponRecoveryCorrection(equipmentData1, equipmentData2, playe
 	return correction
 	
 end
-
 -- Spell Overrides:function randomSpellPower(spellPower, level) was externalized as of 0.8.3 to skem-spell-overrides
 
 -- calculate distance from party to monster side
@@ -1063,6 +1064,7 @@ function events.CalcStatBonusByItems(t)
 	end
 	
 end
+
 
 -- calculate stat bonus by skill
 
@@ -1632,7 +1634,8 @@ function events.GameInitialized2()
 	----------------------------------------------------------------------------------------------------
 	-- skill descriptions
 	----------------------------------------------------------------------------------------------------
-	Game.SkillDescriptions[const.Skills.Bodybuilding] = "Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character’s base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant 1% of extra maximum health per skill level. "
+	Game.SkillDescriptions[const.Skills.Bodybuilding] = "Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character's base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant Skill^2 of extra maximum health per skill level."
+	--Game.SkillDescriptions[const.Skills.Bodybuilding] = string.format("Bodybuilding skill adds hit points directly to your character’s hit point totals.  Multiply the skill in bodybuilding by the character's base class bonus (4 for knights, 2 for sorcerers, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will also grant Skill^2 of extra maximum health per skill level.\nCurrent bonus is: %s",(Party[Game.CurrentPlayer].Skills[const.Skills.Bodybuilding]%64)^2)
 	
 	Game.SkillDescriptions[const.Skills.Meditation] = "Meditation skill adds spell points directly to your character’s spell point totals.  Multiply the skill in meditation by the character’s base class bonus (4 for sorcerers, 0 for knights, etc.) to get the total.  Expert ranking doubles this total and master triples it.\n\nEach point in skill will grant mana regeneration depending on maximum Mana and Meditation skill.\nHero and Warrior Mage get an extra 50% mana regeneration bonus."
 	
@@ -1771,7 +1774,7 @@ function events.GameInitialized2()
 	
 	Game.SkillDescriptions[const.Skills.Shield] = Game.SkillDescriptions[const.Skills.Shield] ..
 		string.format(
-			"\n\nExperienced shield users can effectively cover the team from all kind of physical and magical projectiles reducing their impact damage. Each shield wearer in the party reduces damage by =%d%%= per each skill level multiplicatively.\n\nBonus increment per skill level and recovery penalty\n------------------------------------------------------------\n          AC | recovery penalty |",
+			"\n\nExperienced shield users can effectively cover the team from all kind of physical and magical projectiles reducing their impact damage. Each shield wearer in the party reduces damage by =%d%%= per each skill level multiplicatively. Knights reduces 2 percent per skill point instead.\n\nBonus increment per skill level and recovery penalty\n------------------------------------------------------------\n          AC | recovery penalty |",
 			math.round(shieldProjectileDamageReductionPerLevel * 100)
 		)
 	for rank = const.Novice, const.Master do
@@ -1878,17 +1881,17 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	setProfessionChance(const.NPCProfession.Noble, 0)
 	setProfessionChance(const.NPCProfession.Gambler, 0)
 	
-	setProfessionCost(const.NPCProfession.ArmsMaster, 1500)
-	setProfessionCost(const.NPCProfession.WeaponsMaster, 3000)
-	setProfessionCost(const.NPCProfession.Squire, 3000)
+	setProfessionCost(const.NPCProfession.ArmsMaster, 500)
+	setProfessionCost(const.NPCProfession.WeaponsMaster, 2000)
+	setProfessionCost(const.NPCProfession.Squire, 1500)
 	setProfessionCost(const.NPCProfession.Burglar, 500)
 	setProfessionCost(const.NPCProfession.Factor, 100)
 	setProfessionCost(const.NPCProfession.Banker, 200)
 	setProfessionCost(const.NPCProfession.Apprentice, 1500)
 	setProfessionCost(const.NPCProfession.Instructor, 1500)
 	setProfessionCost(const.NPCProfession.Teacher, 800)
-	setProfessionCost(const.NPCProfession.SpellMaster, 4000)
-	setProfessionCost(const.NPCProfession.Mystic, 2500)
+	--setProfessionCost(const.NPCProfession.SpellMaster, 4000)
+	--setProfessionCost(const.NPCProfession.Mystic, 2500)
 	
 	----------------------------------------------------------------------------------------------------
 	-- class starting skills
@@ -2030,8 +2033,19 @@ local function BBHook(amountReg)
 		local i, pl = GetPlayer(d.esi)
 		local amount = d[amountReg]
 		local s, m = SplitSkill(pl.Skills[const.Skills.Bodybuilding])
-		if s == 0 then return end
-		d[amountReg] = amount + math.round(amount * 0.01 * s)
+		
+		enduranceBonus=pl:GetEndurance()/500
+		if s == 0 then	
+			if SETTINGS["StatsRework"]==true then
+			d[amountReg] = d[amountReg] * (1+enduranceBonus)
+			end
+		return end
+		if m > 2 then
+		d[amountReg] = amount + s^2 - 4 * s
+		end		
+		if SETTINGS["StatsRework"]==true then
+		d[amountReg] = d[amountReg] * (1+enduranceBonus)
+		end
 	end
 end
 
@@ -2043,6 +2057,7 @@ mem.autohook(0x47FD71, BBHook("edi"))
 mem.autohook(0x484FF3, BBHook("edi"))
 -- HP regeneration
 mem.autohook(0x487F05, BBHook("edi"))
+mem.autohook(0x487D8A, BBHook("edi"))
 
 -- allow to hold sword in left hand at novice rank
 mem.asmpatch(0x0045A4AB, "test   BYTE [ebp+0x61],0xFF", 0x4)
@@ -2861,29 +2876,599 @@ if not DaggerCritsIgnoreElementalBonuses and mem.dll.kernel32.GetPrivateProfileI
 		end
 	end, 0x7)
 end
+if SETTINGS["StatsRework"]==true then
+	function events.CalcDamageToMonster(t)
+		local data = WhoHitMonster()	
+		--luck/accuracy bonus
+			luck=data.Player:GetLuck()
+			accuracy=data.Player:GetAccuracy()
+			critDamage=accuracy/250
+			critChance=5+luck/10
+			roll=math.random(1, 100)
+			if roll <= critChance then
+				t.Result=t.Result*(1.5+critDamage)
+				crit2=true
+			end
+	end
+else
+crit2=false
+end
 
 mem.autohook2(0x431276, function(d)
-	if crit then
-		d.eax = mem.topointer(CritStrings.kill)
+	if crit or crit2 then
+		d.eax = mem.topointer(CritStrings.kill)		
+		if crit then
+			mul = 1
+		end
+		crit2 = false
 		crit = false
-		mul = 1
 	end
 end)
 mem.autohook2(0x431339, function(d)
-	if crit then
+	if crit or crit2 then
 		d.eax = mem.topointer(CritStrings.attack)
+		if crit then
+			mul = 1
+		end
+		crit2 = false
 		crit = false
-		mul = 1
 	end
 end)
 
 --Bow Calculation
 function events.ModifyItemDamage(t)
-	local s, m = SplitSkill(t.Player.Skills[const.Skills.Bow])
-	if t.Item:T().EquipStat == const.ItemType.Missile - 1 then
-		t.Result = t.Result + s * (m <= const.Expert and m or 2)
-		if classRangedWeaponSkillDamageBonus[t.Player.Class] ~= nil then
-			t.Result = t.Result + (classRangedWeaponSkillDamageBonus[t.Player.Class] * s)
+    local s, m = SplitSkill(t.Player.Skills[const.Skills.Bow])
+    if t.Item:T().EquipStat == const.ItemType.Missile - 1 then
+        local masteryBonus = 0
+        if m == const.Basic then
+            masteryBonus = 1
+        elseif m == const.Expert then
+            masteryBonus = 2
+        elseif m == const.Master then
+            masteryBonus = 2
+        end
+				-- increase s based on ArmsMaster, WeaponsMaster, or Squire professions of hired NPCs
+		local hiredNPC = Game.Party.HiredNPC
+		local npcBonus = 0
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.ArmsMaster) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.ArmsMaster) then
+			npcBonus = npcBonus + 2
+		end
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.WeaponsMaster) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.WeaponsMaster) then
+			npcBonus = npcBonus + 3
+		end
+		if (hiredNPC[1] ~= nil and hiredNPC[1].Profession == const.NPCProfession.Squire) or
+			(hiredNPC[2] ~= nil and hiredNPC[2].Profession == const.NPCProfession.Squire) then
+			npcBonus = npcBonus + 2
+		end
+		s = s + npcBonus
+        t.Result = t.Result + s * (masteryBonus)
+        if classRangedWeaponSkillDamageBonus[t.Player.Class] ~= nil then
+            t.Result = t.Result + classRangedWeaponSkillDamageBonus[t.Player.Class] * s
+        end
+    end
+end
+
+local vals = 
+{	1000,	200,
+	995,	199,
+	990,	198,
+	985,	197,
+	980,	196,
+	975,	195,
+	970,	194,
+	965,	193,
+	960,	192,
+	955,	191,
+	950,	190,
+	945,	189,
+	940,	188,
+	935,	187,
+	930,	186,
+	925,	185,
+	920,	184,
+	915,	183,
+	910,	182,
+	905,	181,
+	900,	180,
+	895,	179,
+	890,	178,
+	885,	177,
+	880,	176,
+	875,	175,
+	870,	174,
+	865,	173,
+	860,	172,
+	855,	171,
+	850,	170,
+	845,	169,
+	840,	168,
+	835,	167,
+	830,	166,
+	825,	165,
+	820,	164,
+	815,	163,
+	810,	162,
+	805,	161,
+	800,	160,
+	795,	159,
+	790,	158,
+	785,	157,
+	780,	156,
+	775,	155,
+	770,	154,
+	765,	153,
+	760,	152,
+	755,	151,
+	750,	150,
+	745,	149,
+	740,	148,
+	735,	147,
+	730,	146,
+	725,	145,
+	720,	144,
+	715,	143,
+	710,	142,
+	705,	141,
+	700,	140,
+	695,	139,
+	690,	138,
+	685,	137,
+	680,	136,
+	675,	135,
+	670,	134,
+	665,	133,
+	660,	132,
+	655,	131,
+	650,	130,
+	645,	129,
+	640,	128,
+	635,	127,
+	630,	126,
+	625,	125,
+	620,	124,
+	615,	123,
+	610,	122,
+	605,	121,
+	600,	120,
+	595,	119,
+	590,	118,
+	585,	117,
+	580,	116,
+	575,	115,
+	570,	114,
+	565,	113,
+	560,	112,
+	555,	111,
+	550,	110,
+	545,	109,
+	540,	108,
+	535,	107,
+	530,	106,
+	525,	105,
+	520,	104,
+	515,	103,
+	510,	102,
+	505,	101,
+	500, 100,
+	495, 99,
+	490, 98,
+	485, 97,
+	480, 96,
+	475, 95,
+	470, 94,
+	465, 93,
+	460, 92,
+	455, 91,
+	450, 90,
+	445, 89,
+	440, 88,
+	435, 87,
+	430, 86,
+	425, 85,
+	420, 84,
+	415, 83,
+	410, 82,
+	405, 81,
+	400, 80,
+	395, 79,
+	390, 78,
+	385, 77,
+	380, 76,
+	375, 75,
+	370, 74,
+	365, 73,
+	360, 72,
+	355, 71,
+	350, 70,
+	345, 69,
+	340, 68,
+	335, 67,
+	330, 66,
+	325, 65,
+	320, 64,
+	315, 63,
+	310, 62,
+	305, 61,
+	300, 60,
+	295, 59,
+	290, 58,
+	285, 57,
+	280, 56,
+	275, 55,
+	270, 54,
+	265, 53,
+	260, 52,
+	255, 51,
+	250, 50,
+	245, 49,
+	240, 48,
+	235, 47,
+	230, 46,
+	225, 45,
+	220, 44,
+	215, 43,
+	210, 42,
+	205, 41,
+	200, 40,
+	195, 39,
+	190, 38,
+	185, 37,
+	180, 36,
+	175, 35,
+	170, 34,
+	165, 33,
+	160, 32,
+	155, 31,
+	150, 30,
+	145, 29,
+	140, 28,
+	135, 27,
+	130, 26,
+	125, 25,
+	120, 24,
+	115, 23,
+	110, 22,
+	105, 21,
+	100, 20,
+	95, 19,
+	90, 18,
+	85, 17,
+	80, 16,
+	75, 15,
+	70, 14,
+	65, 13,
+	60, 12,
+	55, 11,
+	50, 10,
+	45, 9,
+	40, 8,
+	35, 7,
+	30, 6,
+	25, 5,
+	21, 4,
+	19, 3,
+	17, 2,
+	15, 1,
+	13, 0,
+	11, -1,
+	9, -2,
+	7, -3,
+	-20, -4,
+	-25, -5,
+	-30, -6,
+	-35, -7,
+	-40, -8,
+	-45, -9,
+	-50, -10,
+	-55, -11,
+	-60, -12,
+	-65, -13,
+	-70, -14,
+	-75, -15,
+	-80, -16,
+	-85, -17,
+	-90, -18,
+	-95, -19,
+	-100, -20
+}
+function events.GetStatisticEffect(t)
+	for i = 1, #vals - 2, 2 do
+		if t.Value >= vals[i] then
+			t.Result = vals[i + 1]
+			return
+		end
+	end
+	t.Result = vals[#vals]
+end
+
+-- fix game code being weird by having a dedicated getStatisticEffect() function and yet
+-- not using it everywhere...
+
+local hooks = HookManager{getStatEffect = 0x482DC0, getFullLuck = 0x47E0E0}
+local function patch(addr, valueReg, resultReg, jump, nopAddr)
+	hooks.ref.valueReg = valueReg
+	hooks.ref.resultReg = resultReg
+	hooks.ref.jump = jump
+	-- also disables jump effectively capping stat at 400
+	-- REMEMBER: patch getStatisticEffect()
+	-- AND check for registers if some need saving
+	hooks.asmpatch(addr, [[
+		push %valueReg%
+		call absolute %getStatEffect%
+		mov %resultReg%, eax
+		jmp short %jump%
+	]], jump) -- just so happens jump forward is the patch size
+	if type(nopAddr) == "number" then
+		hooks.nop(nopAddr) -- simple nop, usually move from [resultReg + offset] to resultReg, which is already computed
+	else
+		nopAddr() -- various other stuff, usually moving from preserved register to clobbered register
+	end
+end
+
+local patches =
+{
+	{0x47E3B0, "eax", "edi", 27, function() hooks.asmpatch(0x47E3F3, "mov eax,edi") end},
+	{0x47E7AE, "eax", "edi", 27, 0x47E7C9},
+	{0x47E977, "eax", "ebx", 27, function() hooks.asmpatch(0x47E9BA, "mov eax,ebx") end},
+	{0x47EA61, "eax", "ebx", 27, function() hooks.asmpatch(0x47EAA4, "mov eax,ebx") end},
+	{0x47EC7E, "eax", "ebx", 27, function() hooks.asmpatch(0x47ECC9, "mov eax,ebx") end},
+	{0x47EDAE, "eax", "ebp", 27, function() hooks.asmpatch(0x47EDF1, "mov eax,ebp") end},
+	{0x47F897, "eax", "edi", 27, 0x47F8B2},
+	{0x47F998, "eax", "edi", 27, 0x47F9B3},
+	{0x47FA99, "eax", "edi", 27, 0x47FAB4},
+	-- 0x47FAF0 done below
+	{0x47FCF3, "eax", "ebp", 27, function() hooks.asmpatch(0x47FD2B, "mov edx,ebp") end},
+	{0x480114, "eax", "edi", 27, 0x48012F},
+	{0x48020C, "eax", "edi", 27, 0x480227},
+	{0x480304, "eax", "edi", 27, 0x48031F},
+	{0x4803FC, "eax", "edi", 27, 0x480417},
+	{0x4804F4, "eax", "edi", 27, 0x48050F},
+	{0x4805EC, "eax", "edi", 27, 0x480607},
+	{0x4807B0, "eax", "edi", 27, 0x4807CB},
+	{0x4808A8, "eax", "edi", 27, 0x4808C3},
+	{0x4809A0, "eax", "edi", 27, 0x4809BB},
+	{0x480A98, "eax", "edi", 27, 0x480AB3},
+	{0x480DF1, "eax", "edi", 27, 0x480E0C},
+	-- 00480F39 done below
+	{0x481DD2, "eax", "ebx", 27, 0x481DF1},
+	{0x482009, "eax", "ebp", 27, function() hooks.asmpatch(0x482041, "mov edx, ebp") end},
+	{0x482176, "eax", "ebx", 27, function() hooks.asmpatch(0x4821AC, "mov ecx, ebx") end},
+	{0x4822C3, "eax", "ebx", 27, function() hooks.asmpatch(0x4822F9, "mov ecx, ebx") end},
+	{0x4824B3, "edi", "ebx", 27, function()
+		hooks.asmpatch(0x482414, [[
+			push eax
+			call absolute %getStatEffect%
+			mov dword [esp + 0x10], eax
+			jmp short 0x1F
+		]], 0x1F)
+		hooks.asmpatch(0x4824EF, [[
+			mov ecx,ebx
+		]], 0xE) -- also disables next move, because [esp + 10] already contains effect, not breakpoint index
+	end},
+	{0x4826B0, "eax", "ebx", 27, function() hooks.asmpatch(0x4826E1, "mov eax, ebx") end},
+	{0x482840, "eax", "ebx", 27, function() hooks.asmpatch(0x482880, "mov eax, ebx") end},
+	{0x484086, "eax", "ebx", 27, function() hooks.asmpatch(0x4840BE, "mov edx, ebx") end},
+	-- 00484F69 done below
+	{0x487D10, "eax", "ebp", 27, function() hooks.asmpatch(0x487D46, "mov eax, ebp") end},
+	{0x487E8B, "eax", "ebp", 27, function() hooks.asmpatch(0x487EC1, "mov eax, ebp") end},
+	{0x4884E6, "edi", "ebx", 27, function() hooks.asmpatch(0x48851E, "mov edx, ebx") end},
+}
+
+for i, v in ipairs(patches) do
+	patch(unpack(v))
+end
+
+-- luck is special
+hooks.asmpatch(0x47FAEE, [[
+	mov ecx, esi
+	call absolute %getFullLuck%
+	push eax
+	call absolute %getStatEffect%
+	mov esi, eax
+	jmp short 0x29
+]], 0x29)
+
+-- other
+hooks.asmpatch(0x480F39, [[
+	push eax
+	call absolute %getStatEffect%
+	mov ebp, eax
+	mov ebx, dword [esp + 0x14]
+	jmp short 0x2A
+]], 0x2A)
+
+hooks.asmpatch(0x484F69, [[
+	push eax
+	call absolute %getStatEffect%
+	mov dword [esp + 0x10], eax
+	jmp short 0x23
+]], 0x23)
+
+hooks.asmpatch(0x484FB1, "mov edx, dword [esp + 0x10]", 7)
+
+
+-- condition effect on statistics
+-- effects are in percentages, no more than 255
+
+-- example usage: setConditionEffects(const.Condition.Insane, {[const.Stats.Might] = 200, 200, 200, 200, 200, 200, 200}) -- insanity doubles each stat now
+--[[
+setConditionEffects({
+	[const.Condition.Paralyzed] = {
+		[const.Stats.Might] = 200
+	}
+}) -- paralyzed doubles might
+
+setConditionEffects({
+	[const.Condition.Paralyzed] = {
+		[const.Stats.Luck] = 0,
+		[const.Stats.Personality] = 50
+	},
+	[const.Condition.Weak] = {
+		[const.Stats.Endurance] = 0
+	}
+}) -- paralyzed zeroes luck and halves personality, weakness zeroes endurance
+]]
+
+
+
+
+if SETTINGS["StatsRework"]==true then
+	function events.GameInitialized2()
+	setConditionEffects(const.Condition.Poison1, {[const.Stats.Might] = 100, 100, 100, 100, 100, 100, 100})
+	setConditionEffects(const.Condition.Poison2, {[const.Stats.Might] = 100, 100, 100, 100, 100, 100, 100})
+	setConditionEffects(const.Condition.Poison3, {[const.Stats.Might] = 100, 100, 100, 100, 100, 100, 100})
+	setConditionEffects(const.Condition.Insane, {[const.Stats.Might] = 110, 65, 65, 105, 50, 105, 100})
+	setConditionEffects(const.Condition.Afraid, {[const.Stats.Might] = 105, 80, 80, 100, 80, 105, 100})
+	end
+end
+
+local conditionEffectBase = 0x4C27B4
+local u1 = mem.u1
+function setConditionEffects(cond, percentages)
+	if type(cond) == "number" then -- single condition passed - set all effects for it (table indexed by stat)
+		for stat, val in pairs(percentages) do
+			u1[conditionEffectBase + cond + stat * 18] = val -- 18 = condition count (including "good")
+		end
+	else -- multiple conditions passed - set all effects for them (table indexed by condition, then stat)
+		local condTable = cond -- for readability purposes
+		for cond, values in pairs(condTable) do
+			for stat, val in pairs(values) do
+				u1[conditionEffectBase + cond + stat * 18] = val
+			end
+		end
+	end
+end
+
+-- returns values like above input
+function getConditionEffects(cond)
+	local out = {}
+	if cond then -- condition passed - get all effects for it (table indexed by stat)
+		for stat = 0, const.Stats.Luck do
+			out[stat] = u1[conditionEffectBase + cond + stat * 18]
+		end
+	else -- condition not passed - get all effects for all conditions (table indexed by condition, then stat)
+		for cond = 0, const.Condition.Good do
+			out[cond] = {}
+			for stat = 0, const.Stats.Luck do
+				out[cond][stat] = u1[conditionEffectBase + cond + stat * 18]
+			end
+		end
+	end
+	return out
+end
+
+-- 1/n spell skills
+-- when ranking up spell skill, let n be number of other spell skills at skill level equal to or greater than next rank
+-- then cost is (old cost / (n + 1)), no less than 1
+
+local function getNewSkillCost(pl, newS, skillId)
+	local equalOrHigherCount = 0
+	if skillId >= const.Skills.Fire and skillId <= const.Skills.Dark then
+		for i = const.Skills.Fire, const.Skills.Dark do
+			if i ~= skillId then
+				local otherS, _ = SplitSkill(pl.Skills[i])
+				if otherS >= newS then
+					equalOrHigherCount = equalOrHigherCount + 1
+				end
+			end
+		end
+	end
+	local newCost = newS
+	if equalOrHigherCount >= 1 then
+		newCost = math.max(1, math.ceil(newCost / (equalOrHigherCount + 1)))
+	end
+	return newCost
+end
+
+local newCode = mem.asmpatch(0x42D0E4, [[
+	; edx = current skill value
+	; esi - current skill points
+	; [esp + 0x10] - skill id
+	; ecx - player ptr
+	and edx,0x3F
+	inc edx
+	nop
+	nop
+	nop
+	nop
+	nop
+	cmp esi,edx
+]], 6)
+
+local newCost
+-- checking if enough skill points
+mem.hook(newCode + 4, function(d)
+	local skillId = mem.u4[d.esp + 0x14]
+	local newS = d.dl
+	local _, pl = GetPlayer(d.ecx)
+	newCost = getNewSkillCost(pl, newS, skillId)
+	d.dl = newCost
+end)
+
+-- actually subtracting skill points
+-- need to do entire hook, because two earlier jumps might mess things up
+mem.autohook(0x42D109, function(d)
+	d.eax = assert(newCost)
+end)
+
+-- display on mouseover
+mem.hook(0x41F8E9, function(d)
+	local skillId = mem.u4[d.esi + 0x24]
+	local newS, _ = SplitSkill(d.al) + 1
+	local _, pl = GetPlayer(d.ecx)
+	newCost = getNewSkillCost(pl, newS, skillId)
+	d.eax = newCost
+end, 10)
+
+if SETTINGS["ShowDamageTaken"]==true then
+--show damage taken
+	function events.CalcDamageToPlayer(t)
+	local i=t.Player:GetIndex() 
+		if i==3 then
+	Game.ShowStatusText(string.format("                                                   %s",t.Result))
+			else if i==2 then
+			Game.ShowStatusText(string.format("              %s",t.Result))
+				else if i==1 then
+				Game.ShowStatusText(string.format("%s                       ",30))
+					else if i==0 then
+					Game.ShowStatusText(string.format("%s                                                             ",30))
+					end
+				end
+			end
+		end
+	end
+end
+
+if SETTINGS["ReworkedMagicDamageCalculation"]==true then
+damage1=0
+	function events.CalcDamageToPlayer(t)
+		if t.DamageKind==1 or t.DamageKind==2 or t.DamageKind==3 or t.DamageKind==4 or t.DamageKind==5 then
+		--get resistances
+			if t.DamageKind==1 then
+			res=t.Player:GetMagicResistance()
+			end
+			if t.DamageKind==2 then
+			res=t.Player:GetFireResistance()
+			end
+			if t.DamageKind==3 then
+			res=t.Player:GetElectricityResistance()
+			end
+			if t.DamageKind==4 then
+			res=t.Player:GetColdResistance()
+			end
+			if t.DamageKind==5 then
+			res=t.Player:GetPoisonResistance()
+			end
+			luck=t.Player:GetLuck()/5
+			--start of new formula
+			roll = 1
+			while (math.random() < (1 - 30/(30 + res + luck))) and (roll <= 4) do
+				damage1 = t.Damage / (1 + 0.5 * roll)
+				roll = roll + 1
+			end
+			t.Result = damage1 * (1 / (1 + (res+luck)^0.7 / 100))
 		end
 	end
 end

@@ -28,10 +28,22 @@ local YEAR = WEEK * 52
 local CENTURY = YEAR * 100
 local NEVER = math.huge
 
-local globalReset = YEAR / 2
+local globalReset = SETTINGS["GlobalMapResetDays"]
 
-if (type(SETTINGS["GlobalMapResetDays"]) == 'number' ) then
-	globalReset = SETTINGS["GlobalMapResetDays"]
+if ((globalReset == nil) or (string.lower(globalReset) == 'default'))
+then
+	globalReset = nil
+elseif (string.lower(globalReset) == 'never')
+then
+	globalReset = math.huge
+elseif (string.lower(globalReset) == 'instant')
+then
+	globalReset = 0
+elseif (type(globalReset) == 'number' ) 
+then
+	globalReset = globalReset
+else
+	globalReset = nil
 end
 
 
@@ -118,17 +130,24 @@ end
 -- Regional Reset stuff
 
 localResets = {
-	[MapIDs["The Hive"]] = 0,
 	[MapIDs["The Arena"]] = 0,
+	[MapIDs["zddb09.blv"]] = 0,
+	[MapIDs["New Sorpigal"]] = 672,
 }
+
+
 
 function changeAllRegionResets()
 	for i = 1, Game.MapStats.high do
+		orig = Game.MapStats[i]["RefillDays"]
 		if not (localResets[i] == nil)
 		then
 			Game.MapStats[i]["RefillDays"] = localResets[i]
-		else
+		elseif not (globalReset == nil) 
+		then
 			Game.MapStats[i]["RefillDays"] = globalReset
+		else
+			Game.MapStats[i]["RefillDays"] = orig
 		end
 	end
 end
@@ -212,4 +231,23 @@ end
 function events.GameInitialized2()
 	changeAllRegionResets()
 	monsterSubstitutions()
+end
+
+function events.GameInitialized2()
+Game.MapStats[62].Monster1Pic = "Minotaur"
+Game.MapStats[62].Monster2Pic = "Lich"
+Game.MapStats[62].Monster3Pic = "KnightPlate"
+Game.MapStats[62].Mon1Low = 6
+Game.MapStats[62].Mon1High = 8
+Game.MapStats[62].Mon2Low = 4
+Game.MapStats[62].Mon2High= 6
+Game.MapStats[62].Mon3Low = 3
+Game.MapStats[62].Mon3High= 5
+Game.MapStats[62].Name="Unknown"
+Game.MapStats[62].Mon1Dif = 5
+Game.MapStats[62].Mon2Dif = 5
+Game.MapStats[62].Mon3Dif = 5
+Game.MapStats[61].Name = "Celestial Arena"
+Game.MapStats[61].Trap = 0
+Game.MapStats[61].RedbookTrack = 10
 end

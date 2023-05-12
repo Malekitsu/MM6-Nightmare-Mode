@@ -87,7 +87,7 @@ end
 evt.global[9] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 505) then         -- "The Letter"
-		evt.SetMessage(12)         -- "Thank you so much for bringing me these letters! <Wilbur begins reading the letters> Iíve been so worriedÖI seeÖ This is not good newsÖOh, no.  Traitors!  Traitors and conspirators everywhere!  I must organize an expedition at once! <Wilbur lowers his voice> I trust you will not speak to the prince about these lettersñ he is already too depressed and unhappy to hear more bad news.  And now I must see to the organization of the expedition.  Here is a bag of gold as a rewardñ youíve earned it and my gratitude.  Now, if only I could find someone to finish looking for Lord KilburnÖ"
+		evt.SetMessage(12)         -- "Thank you so much for bringing me these letters! <Wilbur begins reading the letters> I‚Äôve been so worried‚Ä¶I see‚Ä¶ This is not good news‚Ä¶Oh, no.  Traitors!  Traitors and conspirators everywhere!  I must organize an expedition at once! <Wilbur lowers his voice> I trust you will not speak to the prince about these letters‚Äì he is already too depressed and unhappy to hear more bad news.  And now I must see to the organization of the expedition.  Here is a bag of gold as a reward‚Äì you‚Äôve earned it and my gratitude.  Now, if only I could find someone to finish looking for Lord Kilburn‚Ä¶"
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
 		evt.ForPlayer("All")
@@ -105,7 +105,7 @@ end
 
 -- "Lord Kilburn"
 evt.global[10] = function()
-	evt.SetMessage(13)         -- "<Wilbur snaps his fingers> Say, you wouldnít happen to be interested in taking care of a little detail for me, would you?  Lord Kilburn disappeared near Blackshire.  Find out what you can and return to me with the information.  If it is true that he has been slain by devils, return his shield to me if at all possible.  I will grant you my favor with the High Council, should you require it, and you can rest assured your compensation will be generous."
+	evt.SetMessage(13)         -- "<Wilbur snaps his fingers> Say, you wouldn‚Äôt happen to be interested in taking care of a little detail for me, would you?  Lord Kilburn disappeared near Blackshire.  Find out what you can and return to me with the information.  If it is true that he has been slain by devils, return his shield to me if at all possible.  I will grant you my favor with the High Council, should you require it, and you can rest assured your compensation will be generous."
 	evt.Set("QBits", 86)         -- "Find Lord Kilburn's Shield and return to Wilbur Humphrey in Castle Ironfist to report."
 	evt.SetNPCTopic{NPC = 4, Index = 0, Event = 11}         -- "Wilbur Humphrey" : "Lord Kilburn"
 end
@@ -116,7 +116,7 @@ evt.global[11] = function()
 	if not evt.Cmp("Inventory", 499) then         -- "Lord Kilburn's Shield"
 		evt.SetMessage(14)         -- "Hmm.  No luck finding the shield yet, eh?  Well, do keep looking, will you?  It really is important that someone accounts for his whereabouts."
 	else
-		evt.SetMessage(16)         -- "Ah.  ëTis a sad day when so noble a Knight should fall to such foul monsters!  You have done a good thing, bringing his shield to me.  I shall ensure that he and his men receive all the honors due them.  I am in your debt, and you have my favor with the council.  Here is your reward."
+		evt.SetMessage(16)         -- "Ah.  ‚ÄòTis a sad day when so noble a Knight should fall to such foul monsters!  You have done a good thing, bringing his shield to me.  I shall ensure that he and his men receive all the honors due them.  I am in your debt, and you have my favor with the council.  Here is your reward."
 		evt.Subtract("Inventory", 499)         -- "Lord Kilburn's Shield"
 		evt.Subtract("QBits", 182)         -- Quest item bits for seer
 		evt.Add("Experience", 40000)
@@ -166,7 +166,7 @@ end
 -- "Crusaders"
 evt.global[14] = function()
 	if not evt.Cmp("NPCs", 11) then         -- "Melody Silver"
-		evt.SetMessage(20)         -- "I know there is a shortage of damsels in distress, but this quest is the traditional test.  I really canít bend the rules here.  Keep lookingñ Iím sure youíll find someone.  If it helps, I hear Melody Silver, daughter of the noble John Silver, is being held captive by ruffians on the Island of Mist."
+		evt.SetMessage(20)         -- "I know there is a shortage of damsels in distress, but this quest is the traditional test.  I really can‚Äôt bend the rules here.  Keep looking‚Äì I‚Äôm sure you‚Äôll find someone.  If it helps, I hear Melody Silver, daughter of the noble John Silver, is being held captive by ruffians on the Island of Mist."
 		return
 	end
 	evt.SetMessage(21)         -- "I have heard stories of the daring rescue, and I am delighted that you have returned with Miss Silver.  I shall arrange to have her returned to her family at once.  Exemplary work!  I hereby officially promote all paladins to the status of crusader, and all non-paladins to honorary crusaders!"
@@ -190,7 +190,7 @@ end
 
 -- "Heroes"
 evt.global[15] = function()
-	evt.SetMessage(22)         -- "Well, then!  It is a fine thing to be promoted to crusader, but even finer a thing to be promoted to hero.  As you may have guessed by now, the condition for hero status is to slay a dragon.  I know this seems difficult, but tradition has its demands.  Whatís worse, you canít slay just any dragon, but must slay a named dragon.  Your task is to slay Longfang Witherhide and return with a claw or tooth as proof.  Fortunately, we know that Longfang lives in a cave in the mountains behind Castle Darkmoor.  He has slain at least twelve would-be heroes, so be careful!"
+	evt.SetMessage(22)         -- "Well, then!  It is a fine thing to be promoted to crusader, but even finer a thing to be promoted to hero.  As you may have guessed by now, the condition for hero status is to slay a dragon.  I know this seems difficult, but tradition has its demands.  What‚Äôs worse, you can‚Äôt slay just any dragon, but must slay a named dragon.  Your task is to slay Longfang Witherhide and return with a claw or tooth as proof.  Fortunately, we know that Longfang lives in a cave in the mountains behind Castle Darkmoor.  He has slain at least twelve would-be heroes, so be careful!"
 	evt.Add("QBits", 89)         -- "Slay Longfang Witherhide in his cave near Castle Darkmoor and return to Wilbur Humphrey in Castle Ironfist."
 	evt.SetNPCTopic{NPC = 4, Index = 1, Event = 16}         -- "Wilbur Humphrey" : "Heroes"
 end
@@ -227,7 +227,7 @@ end
 
 -- "Boredom"
 evt.global[18] = function()
-	evt.SetMessage(26)         -- "The palace is deadly dull, and everyone tells me what to do.  Being royalty isnít really worth much and no one will let me go outside the walls while my father is gone.  I havenít left the castle for months!  Anyway, you people look pretty important.  What if you helped me sneak out and stay with you for a couple of days?  I canít give you much in return yet, but Iíll owe you a favor.  Someday Iíll be able to repay you.  I am the prince, after all!  Iíll go out the secret door and meet you outside."
+	evt.SetMessage(26)         -- "The palace is deadly dull, and everyone tells me what to do.  Being royalty isn‚Äôt really worth much and no one will let me go outside the walls while my father is gone.  I haven‚Äôt left the castle for months!  Anyway, you people look pretty important.  What if you helped me sneak out and stay with you for a couple of days?  I can‚Äôt give you much in return yet, but I‚Äôll owe you a favor.  Someday I‚Äôll be able to repay you.  I am the prince, after all!  I‚Äôll go out the secret door and meet you outside."
 	evt.Add("QBits", 90)         -- "Entertain Nicolai."
 	evt.Add("NPCs", 13)         -- "Nicolai Ironfist"
 	evt.SetNPCTopic{NPC = 13, Index = 0, Event = 19}         -- "Nicolai Ironfist" : "The Circus"
@@ -235,7 +235,7 @@ end
 
 -- "The Circus"
 evt.global[19] = function()
-	evt.SetMessage(27)         -- "Letís go see the circus!"
+	evt.SetMessage(27)         -- "Let‚Äôs go see the circus!"
 end
 
 -- "Missing Text 20"
@@ -245,18 +245,18 @@ evt.global[20] = function()
 	evt.SetMessage(28)         -- "It seems that Prince Nicolai disappeared while you were resting."
 	evt.Subtract("QBits", 90)         -- "Entertain Nicolai."
 	evt.Set("QBits", 95)         -- "Find and return Prince Nicolai to Castle Ironfist."
-	evt.SetNPCTopic{NPC = 13, Index = 0, Event = 21}         -- "Nicolai Ironfist" : "Excuse me, your HighnessÖ"
+	evt.SetNPCTopic{NPC = 13, Index = 0, Event = 21}         -- "Nicolai Ironfist" : "Excuse me, your Highness‚Ä¶"
 	evt.SimpleMessage()
 end
 
--- "Excuse me, your HighnessÖ"
+-- "Excuse me, your Highness‚Ä¶"
 evt.global[21] = function()
-	evt.SetMessage(29)         -- "Um.  Hi. <smiling weakly> Would you believe I got lost and these nice people were taking me home?  No?  I guess I wouldnít either.  I suppose itís time we got back to the castle, then."
+	evt.SetMessage(29)         -- "Um.  Hi. <smiling weakly> Would you believe I got lost and these nice people were taking me home?  No?  I guess I wouldn‚Äôt either.  I suppose it‚Äôs time we got back to the castle, then."
 	evt.Set("NPCs", 13)         -- "Nicolai Ironfist"
-	evt.SetNPCTopic{NPC = 13, Index = 0, Event = 22}         -- "Nicolai Ironfist" : "Excuse me, your HighnessÖ"
+	evt.SetNPCTopic{NPC = 13, Index = 0, Event = 22}         -- "Nicolai Ironfist" : "Excuse me, your Highness‚Ä¶"
 end
 
--- "Excuse me, your HighnessÖ"
+-- "Excuse me, your Highness‚Ä¶"
 evt.global[22] = function()
 	evt.SetMessage(30)         -- "We should go back to Castle Ironfist."
 end
@@ -268,12 +268,12 @@ end
 
 -- "Uncle Archibald"
 evt.global[25] = function()
-	evt.SetMessage(33)         -- "Everyone says that my Uncle Archibald wasnít a very nice person, and that he almost usurped the throne from my father, but we defeated him.  Father had Tanir turn him to stone and then locked him in the library.  Nobodyís been in there for years. "
+	evt.SetMessage(33)         -- "Everyone says that my Uncle Archibald wasn‚Äôt a very nice person, and that he almost usurped the throne from my father, but we defeated him.  Father had Tanir turn him to stone and then locked him in the library.  Nobody‚Äôs been in there for years. "
 end
 
 -- "The Third Eye"
 evt.global[26] = function()
-	evt.SetMessage(34)         -- "You want to free Archibald?!  If the Oracle told you to do it, I guess we should, but heíll be trouble once heís loose, thatís for sure.  I know where the bell is that turned him to stone, but I canít open the family vault that itís in without the Third Eye.  Itís one of three gems you need to put into the door of the vault in order to open it.  Iíve got two of themñ one in my fatherís crown and one in his scepter, but my father hid the third one, and he didnít tell me where it is.  If you could find it, I could open the vault and get the bell."
+	evt.SetMessage(34)         -- "You want to free Archibald?!  If the Oracle told you to do it, I guess we should, but he‚Äôll be trouble once he‚Äôs loose, that‚Äôs for sure.  I know where the bell is that turned him to stone, but I can‚Äôt open the family vault that it‚Äôs in without the Third Eye.  It‚Äôs one of three gems you need to put into the door of the vault in order to open it.  I‚Äôve got two of them‚Äì one in my father‚Äôs crown and one in his scepter, but my father hid the third one, and he didn‚Äôt tell me where it is.  If you could find it, I could open the vault and get the bell."
 	evt.Add("QBits", 96)         -- "Find the Third Eye and bring it to Prince Nicolai in Castle Ironfist."
 	evt.SetNPCTopic{NPC = 13, Index = 1, Event = 27}         -- "Nicolai Ironfist" : "Uncle Archibald"
 	evt.SetNPCTopic{NPC = 8, Index = 1, Event = 0}         -- "Oracle"
@@ -283,7 +283,7 @@ end
 evt.global[27] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 446) then         -- "The Third Eye"
-		evt.SetMessage(36)         -- "You found the Third Eye!  All right, wait hereñ the bell should be in the vault.  <Nicolai runs out of the throne room, returning a short while later> Ok, here it is! "
+		evt.SetMessage(36)         -- "You found the Third Eye!  All right, wait here‚Äì the bell should be in the vault.  <Nicolai runs out of the throne room, returning a short while later> Ok, here it is! "
 		evt.Subtract("Inventory", 446)         -- "The Third Eye"
 		evt.Subtract("QBits", 196)         -- Quest item bits for seer
 		evt.Subtract("QBits", 96)         -- "Find the Third Eye and bring it to Prince Nicolai in Castle Ironfist."
@@ -292,7 +292,7 @@ evt.global[27] = function()
 		evt.Set("QBits", 197)         -- Quest item bits for seer
 		evt.SetNPCTopic{NPC = 13, Index = 1, Event = 28}         -- "Nicolai Ironfist" : "Uncle Archibald"
 	else
-		evt.SetMessage(35)         -- "Without the Third Eye, I canít get into the vault to get you the bell that will release Archibald.  He must have hidden it near the castle, because he used to just go right outside and fetch it whenever he needed to open the vault."
+		evt.SetMessage(35)         -- "Without the Third Eye, I can‚Äôt get into the vault to get you the bell that will release Archibald.  He must have hidden it near the castle, because he used to just go right outside and fetch it whenever he needed to open the vault."
 	end
 end
 
@@ -304,7 +304,7 @@ end
 -- "Release Archibald"
 evt.global[30] = function()
 	if not evt.Cmp("QBits", 177) then         -- NPC
-		evt.SetMessage(39)         -- "Now wait just a minute Tanir, and Iíll make it worth your while to let meÖOh. <Archibald is silent for a long while> I guess I have you people to thank for releasing me from my prison of stone.  Thank you!  You say you need a spell that I've created?  <reaching to the shelves and removing a library scroll> Well, as a reward, Iíll give you the Ritual of the Void.  Use it in good health.  Now, Iím sure youíre very busy, as am IÖ<Archibald waves his arms and fades away>"
+		evt.SetMessage(39)         -- "Now wait just a minute Tanir, and I‚Äôll make it worth your while to let me‚Ä¶Oh. <Archibald is silent for a long while> I guess I have you people to thank for releasing me from my prison of stone.  Thank you!  You say you need a spell that I've created?  <reaching to the shelves and removing a library scroll> Well, as a reward, I‚Äôll give you the Ritual of the Void.  Use it in good health.  Now, I‚Äôm sure you‚Äôre very busy, as am I‚Ä¶<Archibald waves his arms and fades away>"
 		evt.Add("Inventory", 544)         -- "Ritual of the Void"
 		evt.Subtract("QBits", 197)         -- Quest item bits for seer
 		evt.Add("QBits", 177)         -- NPC
@@ -327,7 +327,7 @@ end
 
 -- "The Prince of Thieves"
 evt.global[32] = function()
-	evt.SetMessage(41)         -- "Mine is the traditional duty to oversee the, um, less than upright business in the Kingdom.  My House has done this for centuries under the philosophy that such business will always exist and is better watched and regulated than not.  Recently, a man styling himself the 'Prince of Thieves' has begun to usurp my authority in Free Haven.  Not only does he challenge my authority, he cooperates with that loathsome new cult thatís sprung up recentlyÖwhatís it called?  Moo, or Yak, or BarkÖnoÖwhatever.  Some sort of animal sound.  Anyway, my sources tell me that this cult plots to overthrow the King and assume power in Enroth.  This is a bad business, and needs to be stopped.  You can start by arresting the Prince of Thieves and returning him to me in chains.  I will, of course, reward you richly.  "
+	evt.SetMessage(41)         -- "Mine is the traditional duty to oversee the, um, less than upright business in the Kingdom.  My House has done this for centuries under the philosophy that such business will always exist and is better watched and regulated than not.  Recently, a man styling himself the 'Prince of Thieves' has begun to usurp my authority in Free Haven.  Not only does he challenge my authority, he cooperates with that loathsome new cult that‚Äôs sprung up recently‚Ä¶what‚Äôs it called?  Moo, or Yak, or Bark‚Ä¶no‚Ä¶whatever.  Some sort of animal sound.  Anyway, my sources tell me that this cult plots to overthrow the King and assume power in Enroth.  This is a bad business, and needs to be stopped.  You can start by arresting the Prince of Thieves and returning him to me in chains.  I will, of course, reward you richly.  "
 	evt.Set("QBits", 98)         -- "Capture the Prince of Thieves and bring him to Lord Anthony Stone at Castle Stone."
 	evt.SetNPCTopic{NPC = 16, Index = 0, Event = 33}         -- "Anthony Stone" : "The Prince of Thieves"
 end
@@ -335,7 +335,7 @@ end
 -- "The Prince of Thieves"
 evt.global[33] = function()
 	if not evt.Cmp("NPCs", 17) then         -- "The Prince of Thieves"
-		evt.SetMessage(43)         -- "I have no information on his whereabouts, so it will do you no good to talk to me about it.  Try going to Free Haven and asking around.  He must have a hideout somewhere in or near that town.  <Smiling> if you find where heís living, be sure to check under the bed and in the closetñ youíll probably find him hiding under a pile of clothes."
+		evt.SetMessage(43)         -- "I have no information on his whereabouts, so it will do you no good to talk to me about it.  Try going to Free Haven and asking around.  He must have a hideout somewhere in or near that town.  <Smiling> if you find where he‚Äôs living, be sure to check under the bed and in the closet‚Äì you‚Äôll probably find him hiding under a pile of clothes."
 	else
 		evt.Subtract("QBits", 98)         -- "Capture the Prince of Thieves and bring him to Lord Anthony Stone at Castle Stone."
 		evt.SetMessage(44)         -- "Ah!  My friends, you have returned with the package!  Well done!  Here is your reward money.  You have my full support at the council. <looking at the Prince> Welcome to my humble home, mighty Prince.  I have a room prepared just for you.  Guards!  Take him away."
@@ -373,7 +373,7 @@ end
 
 -- "Priests"
 evt.global[35] = function()
-	evt.SetMessage(46)         -- "In addition to my duties as overseer of unlicensed business, I am the High Priest of Enroth.  It is my job to promote clerics to priests, and if warranted, priests to high priests.  Right now, the rolls are full of priests, and I am unable to promote new ones without creating new positions.  To do so would be highly irregular, but if someone were to perform an extraordinary service for the kingdom, the promotion would be acceptable.  <Rubbing his temples> Come to think of it, there is a service I need.  A temple in Free Haven was destroyed by fire a few months ago.  If you could get it rebuilt, I would have a reason to promote any clerics among you to priest status.  Since I really want this job done, I am even willing to promote non-priests to an honorary priest status, and I will pay you well for your service.  Youíll need to hire a stonecutter and a carpenter and show them the temple you want them to work on."
+	evt.SetMessage(46)         -- "In addition to my duties as overseer of unlicensed business, I am the High Priest of Enroth.  It is my job to promote clerics to priests, and if warranted, priests to high priests.  Right now, the rolls are full of priests, and I am unable to promote new ones without creating new positions.  To do so would be highly irregular, but if someone were to perform an extraordinary service for the kingdom, the promotion would be acceptable.  <Rubbing his temples> Come to think of it, there is a service I need.  A temple in Free Haven was destroyed by fire a few months ago.  If you could get it rebuilt, I would have a reason to promote any clerics among you to priest status.  Since I really want this job done, I am even willing to promote non-priests to an honorary priest status, and I will pay you well for your service.  You‚Äôll need to hire a stonecutter and a carpenter and show them the temple you want them to work on."
 	evt.Add("QBits", 105)         -- "Hire a Stonecutter and a Carpenter, bring them to Temple Stone in Free Haven to repair the Temple, and then return to Lord Anthony Stone at Castle Stone."
 	evt.SetNPCTopic{NPC = 16, Index = 1, Event = 36}         -- "Anthony Stone" : "Priests"
 end
@@ -403,7 +403,7 @@ end
 
 -- "High Priests"
 evt.global[37] = function()
-	evt.SetMessage(49)         -- "It seems a bit quick to promote anyone to high priest, given that the promotion to priest has been so recent.  Why, many wait their entire lives to receive such a promotion, only to be granted it posthumously.  However, an extraordinary service could possibly accelerate that promotion to, well, right now for instanceÖ and I do have such a service in mind.  The heretical monks that live on the islands east of Free Haven have stolen our sacred chalice.  Retrieve it from the monks and put it in the temple you rebuilt.  Then return to me."
+	evt.SetMessage(49)         -- "It seems a bit quick to promote anyone to high priest, given that the promotion to priest has been so recent.  Why, many wait their entire lives to receive such a promotion, only to be granted it posthumously.  However, an extraordinary service could possibly accelerate that promotion to, well, right now for instance‚Ä¶ and I do have such a service in mind.  The heretical monks that live on the islands east of Free Haven have stolen our sacred chalice.  Retrieve it from the monks and put it in the temple you rebuilt.  Then return to me."
 	evt.Add("QBits", 107)         -- "Take the Sacred Chalice from the monks in their island temple east of Free Haven, return it to Temple Stone in Free Haven, and then return to Lord Stone at Castle Stone."
 	evt.SetNPCTopic{NPC = 16, Index = 1, Event = 38}         -- "Anthony Stone" : "High Priests"
 end
@@ -443,7 +443,7 @@ end
 
 -- "Arch Mages"
 evt.global[40] = function()
-	evt.SetMessage(121)         -- "Hello there!  Are you here to tile the floors?  Oh!  Sorry, for a moment I forgot who you were!  Welcome again, arch mages!  Perhaps you can assist me in an experiment or two when youíre less busy?"
+	evt.SetMessage(121)         -- "Hello there!  Are you here to tile the floors?  Oh!  Sorry, for a moment I forgot who you were!  Welcome again, arch mages!  Perhaps you can assist me in an experiment or two when you‚Äôre less busy?"
 end
 
 -- "Pilgrimage"
@@ -509,8 +509,8 @@ evt.global[46] = function()
 								return
 							end
 						end
-						evt.SetMessage(437)         -- "Before you destroy the reactor, you will need a spell capable of containing the resulting explosions.  You must free Archibald from his stone prison.  Talk to Nicolai and bring him the Third Eyeñ he will allow you to use Tanir's Bell to turn Archibald back to normal.  From there, you should be able to convince Archibald to give you the knowledge you need."
-						evt.Set("AutonotesBits", 109)         -- "Before you destroy the reactor, you will need a spell capable of containing the resulting explosions.  You must free Archibald from his stone prison.  Talk to Nicolai and bring him the Third Eyeñ he will allow you to use Tanir's Bell to turn Archibald back to normal.  From there, you should be able to convince Archibald to give you the knowledge you need."
+						evt.SetMessage(437)         -- "Before you destroy the reactor, you will need a spell capable of containing the resulting explosions.  You must free Archibald from his stone prison.  Talk to Nicolai and bring him the Third Eye‚Äì he will allow you to use Tanir's Bell to turn Archibald back to normal.  From there, you should be able to convince Archibald to give you the knowledge you need."
+						evt.Set("AutonotesBits", 109)         -- "Before you destroy the reactor, you will need a spell capable of containing the resulting explosions.  You must free Archibald from his stone prison.  Talk to Nicolai and bring him the Third Eye‚Äì he will allow you to use Tanir's Bell to turn Archibald back to normal.  From there, you should be able to convince Archibald to give you the knowledge you need."
 						return
 					end
 				end
@@ -546,7 +546,7 @@ end
 
 -- "Council Quest"
 evt.global[51] = function()
-	evt.SetMessage(61)         -- "I sometimes have the worst trouble trying to remember things Iíve learned.  Iím not sure why this is, but Iíve discovered a way around the problem.  I am going to create a mirror that will allow me to look back in time, so that I can remember what it is Iíve forgotten.  To do this, I need the Hourglass of Time, but my duties and research prevent me from searching for the hourglass on my own.  The hourglass is said to be in a dark cavern up near areaÖ <pauses a moment>  No, that was the Spear of DarknessÖ  where is the hourglass?  <pauses again>  I should be able to remember this.  <snaps his fingers>  Of course!  Itís buried in an old fort to the south of here.  I can offer you my support in the council if you will help me in creating my mirror."
+	evt.SetMessage(61)         -- "I sometimes have the worst trouble trying to remember things I‚Äôve learned.  I‚Äôm not sure why this is, but I‚Äôve discovered a way around the problem.  I am going to create a mirror that will allow me to look back in time, so that I can remember what it is I‚Äôve forgotten.  To do this, I need the Hourglass of Time, but my duties and research prevent me from searching for the hourglass on my own.  The hourglass is said to be in a dark cavern up near area‚Ä¶ <pauses a moment>  No, that was the Spear of Darkness‚Ä¶  where is the hourglass?  <pauses again>  I should be able to remember this.  <snaps his fingers>  Of course!  It‚Äôs buried in an old fort to the south of here.  I can offer you my support in the council if you will help me in creating my mirror."
 	evt.SetNPCTopic{NPC = 5, Index = 0, Event = 52}         -- "Albert Newton" : "Council Quest"
 	evt.Add("QBits", 110)         -- "Find and return the Hourglass of Time to Lord Albert Newton in Mist."
 end
@@ -555,7 +555,7 @@ end
 evt.global[52] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 433) then         -- "Hourglass of Time"
-		evt.SetMessage(64)         -- "Now all I have to do is remember how to create the mirror.  I wrote down all the important parts so I wouldnít forget how to do it.  <stops> Where did I put those notes?  <ponders for a minute> I must have left them somewhere obvious, maybe in the laboratory.  Anyway, your part in this is done, and again I thank you.  You will have my complete support in the council for this.  What were your names again? "
+		evt.SetMessage(64)         -- "Now all I have to do is remember how to create the mirror.  I wrote down all the important parts so I wouldn‚Äôt forget how to do it.  <stops> Where did I put those notes?  <ponders for a minute> I must have left them somewhere obvious, maybe in the laboratory.  Anyway, your part in this is done, and again I thank you.  You will have my complete support in the council for this.  What were your names again? "
 		evt.Add("Experience", 50000)
 		evt.Add("Awards", 3)         -- "Retrieved the Hourglass of Time"
 		evt.Subtract("Inventory", 433)         -- "Hourglass of Time"
@@ -581,15 +581,15 @@ evt.global[52] = function()
 			end
 		end
 	elseif evt.Cmp("Inventory", 487) then         -- "Key to Gharik's Laboratory"
-		evt.SetMessage(65)         -- "The hourglass wasnít there?  Oh, thatís right!  I knew I forgot something!  The key is in there!  You use the key to open the Forge ofÖ <pauses>  Well, I canít remember whose forge it is, but that is the resting place of the Hourglass of Time...I think.  It canít hurt to look there, especially now that youíve found the key.  <pauses>  At least I THINK thatís what the key opens.  Anyway, that forge or laboratory or whatever it is can be found on the islands north of New Sorpigal.  Good Luck!"
+		evt.SetMessage(65)         -- "The hourglass wasn‚Äôt there?  Oh, that‚Äôs right!  I knew I forgot something!  The key is in there!  You use the key to open the Forge of‚Ä¶ <pauses>  Well, I can‚Äôt remember whose forge it is, but that is the resting place of the Hourglass of Time...I think.  It can‚Äôt hurt to look there, especially now that you‚Äôve found the key.  <pauses>  At least I THINK that‚Äôs what the key opens.  Anyway, that forge or laboratory or whatever it is can be found on the islands north of New Sorpigal.  Good Luck!"
 	else
-		evt.SetMessage(63)         -- "Iím still looking for the mirror. <pauses> I mean HourglassÖ I keep getting those mixed up.  Did you try the dark cavernñ no wait, it was the old fort south of here.  I always seem to mix those up."
+		evt.SetMessage(63)         -- "I‚Äôm still looking for the mirror. <pauses> I mean Hourglass‚Ä¶ I keep getting those mixed up.  Did you try the dark cavern‚Äì no wait, it was the old fort south of here.  I always seem to mix those up."
 	end
 end
 
 -- "Put Text Here"
 evt.global[53] = function()
-	evt.SetMessage(65)         -- "The hourglass wasnít there?  Oh, thatís right!  I knew I forgot something!  The key is in there!  You use the key to open the Forge ofÖ <pauses>  Well, I canít remember whose forge it is, but that is the resting place of the Hourglass of Time...I think.  It canít hurt to look there, especially now that youíve found the key.  <pauses>  At least I THINK thatís what the key opens.  Anyway, that forge or laboratory or whatever it is can be found on the islands north of New Sorpigal.  Good Luck!"
+	evt.SetMessage(65)         -- "The hourglass wasn‚Äôt there?  Oh, that‚Äôs right!  I knew I forgot something!  The key is in there!  You use the key to open the Forge of‚Ä¶ <pauses>  Well, I can‚Äôt remember whose forge it is, but that is the resting place of the Hourglass of Time...I think.  It can‚Äôt hurt to look there, especially now that you‚Äôve found the key.  <pauses>  At least I THINK that‚Äôs what the key opens.  Anyway, that forge or laboratory or whatever it is can be found on the islands north of New Sorpigal.  Good Luck!"
 end
 
 -- "Council Quest"
@@ -605,18 +605,18 @@ evt.global[55] = function()
 	if evt.Cmp("ClassIs", const.Class.Sorcerer) then
 		evt.SetMessage(67)         -- "I am the magus in charge of training and promoting sorcerers.  Though powerful, sorcerer is not the pinnacle of the elemental magician.  Wizards take the knowledge and ability of a sorcerer, and hone those abilities to a sharper level.  They have greater magical potential than the sorcerer, and demand greater respect.  The way to earn this training, however, is not easy.  Find the Fountain of Magic, drink from its waters, and return here.  If you are able to do this, I will train you in the ways of the wizard."
 	else
-		evt.SetMessage(68)         -- "I am the magus responsible for  the promotion of sorcerers.  Though none of you are sorcerers, Iím a fair man.  If you are able to locate the Fountain of Magic, Iíll grant you honorary wizard status.  You wonít receive any benefits of the wizardsí training, but you will gain more respect in the eyes of sorcerers and wizards.  "
+		evt.SetMessage(68)         -- "I am the magus responsible for  the promotion of sorcerers.  Though none of you are sorcerers, I‚Äôm a fair man.  If you are able to locate the Fountain of Magic, I‚Äôll grant you honorary wizard status.  You won‚Äôt receive any benefits of the wizards‚Äô training, but you will gain more respect in the eyes of sorcerers and wizards.  "
 	end
 end
 
 -- "Wizards"
 evt.global[56] = function()
-	evt.SetMessage(69)         -- "Donít ask me for hints, Iíve already forgotten where the Fountain is.  I know this isnít an easy task, but if it were not difficult, every sorcerer would already BE a wizard."
+	evt.SetMessage(69)         -- "Don‚Äôt ask me for hints, I‚Äôve already forgotten where the Fountain is.  I know this isn‚Äôt an easy task, but if it were not difficult, every sorcerer would already BE a wizard."
 end
 
 -- "Wizards"
 evt.global[58] = function()
-	evt.SetMessage(70)         -- "You have done well in finding the Fountain.  Itís location and powers are a secret, do not spread its location around.  Now, let me show you the secrets of the wizard."
+	evt.SetMessage(70)         -- "You have done well in finding the Fountain.  It‚Äôs location and powers are a secret, do not spread its location around.  Now, let me show you the secrets of the wizard."
 	evt.ForPlayer("All")
 	evt.Add("Experience", 10000)
 	for pl = 0, Party.High do
@@ -635,7 +635,7 @@ end
 
 -- "Arch Mages"
 evt.global[59] = function()
-	evt.SetMessage(71)         -- "Your training does not end with what you have learned as a wizard, one final step remains.  Arch mage status completes your mastery of elemental magic.  Building on your wizard training, arch mages have vast magical abilityñ the most efficient and skilled use of magic anywhere.  Earning this training requires a powerful artifact, owned by the powerful Arch Mage Drael-.. no, it was Frundir-Ö no, thatís not right either.  Actually, I canít seem to remember what the artifact was or who owned it.  I'd remember it if I saw it, though.  I know it can be found in Corlagonís Estate near the Mire of the Damned.  Search for it there and return it; I must have it to train you to become an arch mage."
+	evt.SetMessage(71)         -- "Your training does not end with what you have learned as a wizard, one final step remains.  Arch mage status completes your mastery of elemental magic.  Building on your wizard training, arch mages have vast magical ability‚Äì the most efficient and skilled use of magic anywhere.  Earning this training requires a powerful artifact, owned by the powerful Arch Mage Drael-.. no, it was Frundir-‚Ä¶ no, that‚Äôs not right either.  Actually, I can‚Äôt seem to remember what the artifact was or who owned it.  I'd remember it if I saw it, though.  I know it can be found in Corlagon‚Äôs Estate near the Mire of the Damned.  Search for it there and return it; I must have it to train you to become an arch mage."
 	evt.Add("QBits", 112)         -- "Retrieve the Crystal of Terrax and return to Lord Albert Newton in Mist."
 	evt.SetNPCTopic{NPC = 5, Index = 1, Event = 60}         -- "Albert Newton" : "Arch Mages"
 end
@@ -644,7 +644,7 @@ end
 evt.global[60] = function()
 	evt.ForPlayer("All")
 	if not evt.Cmp("Inventory", 457) then         -- "Crystal of Terrax"
-		evt.SetMessage(72)         -- "Iím sorry, but I still havenít remembered exactly what it is you need.  I know you need to search Corlagonís Estate.   "
+		evt.SetMessage(72)         -- "I‚Äôm sorry, but I still haven‚Äôt remembered exactly what it is you need.  I know you need to search Corlagon‚Äôs Estate.   "
 		return
 	end
 	evt.SetMessage(73)         -- "Great news!  I remember what you need to find!  The Crystal of Terrax!  Oh, you seem to have found it already.  Well, perfect!  I can train you to arch mage, then.  The first arch mage, Terrax, used this Crystal to master the elements.  Fire, earth, water, and air all formed together to make it, and from analyzing it he learned a great deal about elemental magic.  In addition, its effect on light led him to his discoveries of light and dark magic.  Since that time, the study of this crystal has guided every new arch mage.  Let me show you the secrets of the crystal, arch magi. "
@@ -668,7 +668,7 @@ end
 
 -- "Council Quest"
 evt.global[61] = function()
-	evt.SetMessage(74)         -- "I donít have much time to talk right nowñ I have a lot to do.  Iím in the process of organizing a few campaigns to attack the devils along the western coast.  You must realize, as I do, that nothing in all of Enroth poses as much of a threat to our safety as they do.  I only wish the other Lords would assist me by contributing supplies and troops, or just helping in the planning of these attacks.  They spend more time bickering amongst themselves over borders and laws and trade than in helping me deal with the REAL threat.  The devils have an advance post in Kriegspire near the Sentinels.  From here, they are able to base small raids and gather intelligence on our forces.  I need you to sneak in and attack it, find what information you can on the location of any devil strongholds and patrol patterns, and destroy the place.  Do not let any of the devils escape!  Surprise and secrecy are our greatest weapons."
+	evt.SetMessage(74)         -- "I don‚Äôt have much time to talk right now‚Äì I have a lot to do.  I‚Äôm in the process of organizing a few campaigns to attack the devils along the western coast.  You must realize, as I do, that nothing in all of Enroth poses as much of a threat to our safety as they do.  I only wish the other Lords would assist me by contributing supplies and troops, or just helping in the planning of these attacks.  They spend more time bickering amongst themselves over borders and laws and trade than in helping me deal with the REAL threat.  The devils have an advance post in Kriegspire near the Sentinels.  From here, they are able to base small raids and gather intelligence on our forces.  I need you to sneak in and attack it, find what information you can on the location of any devil strongholds and patrol patterns, and destroy the place.  Do not let any of the devils escape!  Surprise and secrecy are our greatest weapons."
 	evt.Add("QBits", 113)         -- "Destroy the Devil's Outpost and return to Lord Osric Temper at Castle Temper."
 	evt.SetNPCTopic{NPC = 6, Index = 0, Event = 62}         -- "Osric Temper" : "Council Quest"
 end
@@ -677,9 +677,9 @@ end
 evt.global[62] = function()
 	evt.ForPlayer("All")
 	if not evt.Cmp("Inventory", 506) then         -- "Devil Plans"
-		evt.SetMessage(76)         -- "Did you fail in your mission?  You didnít allow the demons to escape, did you?  That post MUST be destroyed for any large attack against them to be successful.  As long as that post exists, your mission still stands. "
+		evt.SetMessage(76)         -- "Did you fail in your mission?  You didn‚Äôt allow the demons to escape, did you?  That post MUST be destroyed for any large attack against them to be successful.  As long as that post exists, your mission still stands. "
 	else
-		evt.SetMessage(77)         -- "Good job!  With the information youíve brought back, we now have the intelligence we need to stage an attack on the devils, and with that post out of the way, we can hit them when they wonít expect it. I give you my full support in the councilñ hopefully the council will actually DO something for once."
+		evt.SetMessage(77)         -- "Good job!  With the information you‚Äôve brought back, we now have the intelligence we need to stage an attack on the devils, and with that post out of the way, we can hit them when they won‚Äôt expect it. I give you my full support in the council‚Äì hopefully the council will actually DO something for once."
 		evt.Add("Experience", 40000)
 		evt.Add("Awards", 4)         -- "Destroyed the Devil's Post"
 		evt.Subtract("Inventory", 506)         -- "Devil Plans"
@@ -727,20 +727,20 @@ end
 
 -- "Nomination"
 evt.global[66] = function()
-	evt.SetMessage(81)         -- "Well there, youíre looking for a nomination to become cavaliers?  I was once a valiant knight in my day.  I fought with Roland in the Succession wars, though now Iím too old to do much good on the battlefield.  Itís good to see Osric keeping the traditions of the knights alive.  Tell him that I proudly nominate you to become cavaliers, and if he gives you any trouble tell him to come see me himself."
+	evt.SetMessage(81)         -- "Well there, you‚Äôre looking for a nomination to become cavaliers?  I was once a valiant knight in my day.  I fought with Roland in the Succession wars, though now I‚Äôm too old to do much good on the battlefield.  It‚Äôs good to see Osric keeping the traditions of the knights alive.  Tell him that I proudly nominate you to become cavaliers, and if he gives you any trouble tell him to come see me himself."
 	evt.SetNPCTopic{NPC = 6, Index = 1, Event = 69}         -- "Osric Temper" : "Cavaliers"
 	evt.SetNPCTopic{NPC = 7, Index = 0, Event = 0}         -- "Chadwick Blackpoole"
 end
 
 -- "Cavaliers"
 evt.global[67] = function()
-	evt.SetMessage(82)         -- "Congratulations!  I know youíll make fine cavaliers.  I only wish I had my youth again to serve with Osric in a campaign against the devils."
+	evt.SetMessage(82)         -- "Congratulations!  I know you‚Äôll make fine cavaliers.  I only wish I had my youth again to serve with Osric in a campaign against the devils."
 	evt.SetNPCTopic{NPC = 7, Index = 0, Event = 0}         -- "Chadwick Blackpoole"
 end
 
 -- "Cavaliers"
 evt.global[68] = function()
-	evt.SetMessage(83)         -- "Come now!  A person of your fame and stature should have no problem being nominated.  Donít tell me your fame is contrivedñ are you sure you deserve to be as famous as you are?  <laughs>  Iím jesting, calm down.  Seriously, I'd suggest looking in Free Haven or the village of Rockham.  I've heard a few cavaliers frequent the taverns there."
+	evt.SetMessage(83)         -- "Come now!  A person of your fame and stature should have no problem being nominated.  Don‚Äôt tell me your fame is contrived‚Äì are you sure you deserve to be as famous as you are?  <laughs>  I‚Äôm jesting, calm down.  Seriously, I'd suggest looking in Free Haven or the village of Rockham.  I've heard a few cavaliers frequent the taverns there."
 end
 
 -- "Cavaliers"
@@ -774,10 +774,10 @@ end
 evt.global[71] = function()
 	evt.ForPlayer("All")
 	if not evt.Cmp("Inventory", 508) then         -- "Discharge Papers"
-		evt.SetMessage(86)         -- "Youíre not scared of the Warlord, are you?  His terror needs to be put to an end.  You canít become champion hiding underneath your bed or standing around looking at the wallsñ you need to go out and DO it!"
+		evt.SetMessage(86)         -- "You‚Äôre not scared of the Warlord, are you?  His terror needs to be put to an end.  You can‚Äôt become champion hiding underneath your bed or standing around looking at the walls‚Äì you need to go out and DO it!"
 		return
 	end
-	evt.SetMessage(87)         -- "Good job!  Excellent!  I wasnít sure youíd make it back alive.  Kergmond had more potential than I realized, but youíre certainly more than a match for an army of Kergmonds.  Youíve proven yourselves worthy of the rank of champion. You must not be afraid to take up arms to defend what is right.  May your enemies fear your approach and your allies rally behind your courage. And now, I promote you to the rank of champion! "
+	evt.SetMessage(87)         -- "Good job!  Excellent!  I wasn‚Äôt sure you‚Äôd make it back alive.  Kergmond had more potential than I realized, but you‚Äôre certainly more than a match for an army of Kergmonds.  You‚Äôve proven yourselves worthy of the rank of champion. You must not be afraid to take up arms to defend what is right.  May your enemies fear your approach and your allies rally behind your courage. And now, I promote you to the rank of champion! "
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Cavalier) then
@@ -798,15 +798,15 @@ end
 
 -- "Champions"
 evt.global[72] = function()
-	evt.SetMessage(120)         -- "Well met, champions!  Please, donít waste your valuable time or mine in times like this.  Use your skills for the good of Enroth and leave me to my planning!  When this battle is over, THEN we can share tales of valor and skill."
+	evt.SetMessage(120)         -- "Well met, champions!  Please, don‚Äôt waste your valuable time or mine in times like this.  Use your skills for the good of Enroth and leave me to my planning!  When this battle is over, THEN we can share tales of valor and skill."
 end
 
 -- "Crystal Locations"
 evt.global[73] = function()
-	evt.SetMessage(88)         --[[ "Memory Crystal Alpha ñ Hermitís Isle.
-Memory Crystal Beta ñ Alamos.
-Memory Crystal Delta ñ Darkmoor.
-Memory Crystal Epsilon ñ Kriegspire." ]]
+	evt.SetMessage(88)         --[[ "Memory Crystal Alpha ‚Äì Hermit‚Äôs Isle.
+Memory Crystal Beta ‚Äì Alamos.
+Memory Crystal Delta ‚Äì Darkmoor.
+Memory Crystal Epsilon ‚Äì Kriegspire." ]]
 	if not evt.Cmp("QBits", 162) then         -- "Find Memory Crystal Alpha in the Supreme Temple of Baa and restore it to a module altar at the Oracle beneath the High Council.."
 		evt.Add("QBits", 162)         -- "Find Memory Crystal Alpha in the Supreme Temple of Baa and restore it to a module altar at the Oracle beneath the High Council.."
 		evt.Add("QBits", 163)         -- "Find Memory Crystal Beta in Castle Alamos and restore it to a module altar at the Oracle beneath the High Council."
@@ -832,7 +832,7 @@ evt.global[76] = function()
 			evt.Subtract("QBits", 195)         -- Quest item bits for seer
 			evt.SetNPCTopic{NPC = 8, Index = 0, Event = 77}         -- "Oracle" : "Kreegan"
 			evt.SetNPCTopic{NPC = 8, Index = 1, Event = 78}         -- "Oracle" : "Ancients"
-			evt.SetMessage(91)         -- "You now have access to the Control Center.  Simply ask to be transported and I will oblige.  One warning howeverñ the guardians of the Control Center are no longer under my control, so please exercise caution while visiting the Center."
+			evt.SetMessage(91)         -- "You now have access to the Control Center.  Simply ask to be transported and I will oblige.  One warning however‚Äì the guardians of the Control Center are no longer under my control, so please exercise caution while visiting the Center."
 			return
 		end
 	else
@@ -843,7 +843,7 @@ evt.global[76] = function()
 		evt.Subtract("QBits", 164)         -- "Find Memory Crystal Delta in Castle Darkmoor and restore it to a module altar at the Oracle beneath the High Council."
 		evt.Subtract("QBits", 165)         -- "Find Memory Crystal Epsilon in Castle Kriegspire and restore it to a module altar at the Oracle beneath the High Council."
 	end
-	evt.SetMessage(90)         --[[ "I am Melian, Guardian of Enroth.  Thank you for replacing my memory modules.  Archibald took them from here when I refused to give him any help in his battle for succession.  Your timing is impeccable.  The Kreegan have invaded our world, and you must try and stop them.  Unfortunately, Archibaldís attempts at extracting information from me have damaged me enough that I cannot help you directly now.  Instead, I can only give you advice.
+	evt.SetMessage(90)         --[[ "I am Melian, Guardian of Enroth.  Thank you for replacing my memory modules.  Archibald took them from here when I refused to give him any help in his battle for succession.  Your timing is impeccable.  The Kreegan have invaded our world, and you must try and stop them.  Unfortunately, Archibald‚Äôs attempts at extracting information from me have damaged me enough that I cannot help you directly now.  Instead, I can only give you advice.
 
 While most of the Kreegan can be slain with ordinary weapons and spells, the elite guards and upper echelon breeders have tougher skin and natural defenses that protect them from anything but very powerful weapons.  In the planetary control center beneath me are the weapons and armor you will need to survive battle with the enemy.  My orders, however, will only permit passage to someone with a Control Cube.  My instruments tell me that the only Control Cube left in Enroth can be found somewhere underground in Dragonsand.  " ]]
 end
@@ -857,7 +857,7 @@ evt.global[77] = function()
 			evt.Add("QBits", 169)         -- NPC
 		end
 	end
-	evt.SetMessage(92)         -- "As I said, the Kreegan are resistant to most of the weapons available in Enroth, but not all.  To rid the world of them, you will need to find where their vessel crashed and destroy the main reactor.  The only problem is that the resulting explosions from the reactor will destroy this planet.  You will need a powerful spell to prevent the explosion from damaging the planet, but no spell like that exists in the world today.  The only person I can think of that would know of such a spell is Archibald, but he is in no condition to teach you.  To make matters worse, the reactor cannot be harmed by normal weapons or spellsñ you will need the ancient weapons in the Control Center to destroy the reactor."
+	evt.SetMessage(92)         -- "As I said, the Kreegan are resistant to most of the weapons available in Enroth, but not all.  To rid the world of them, you will need to find where their vessel crashed and destroy the main reactor.  The only problem is that the resulting explosions from the reactor will destroy this planet.  You will need a powerful spell to prevent the explosion from damaging the planet, but no spell like that exists in the world today.  The only person I can think of that would know of such a spell is Archibald, but he is in no condition to teach you.  To make matters worse, the reactor cannot be harmed by normal weapons or spells‚Äì you will need the ancient weapons in the Control Center to destroy the reactor."
 end
 
 -- "Ancients"
@@ -867,7 +867,7 @@ end
 
 -- "Money"
 evt.global[79] = function()
-	evt.SetMessage(94)         -- "I happen to know that you are amongst a short list of adventurers looking to receive favor from the High Council.  What you want it for I donít know, nor do I care.  Iíll be blunt:  I love money, and I want more.  Much more.  I have a plan to fix the price of shipping in my favor for a time and I need competent agents to carry it out.  Perform this task well and I will give you my support, not to mention a lot of money.  Here is the plan:  Each of the nine shipping companies in the Kingdom must be convinced to charge at least 48 gold per pound per mile of material they transport.  They are all in competition and they know it, so none will want to make a move before the others.  I donít care how you convince themñ just get the job done and report back to me."
+	evt.SetMessage(94)         -- "I happen to know that you are amongst a short list of adventurers looking to receive favor from the High Council.  What you want it for I don‚Äôt know, nor do I care.  I‚Äôll be blunt:  I love money, and I want more.  Much more.  I have a plan to fix the price of shipping in my favor for a time and I need competent agents to carry it out.  Perform this task well and I will give you my support, not to mention a lot of money.  Here is the plan:  Each of the nine shipping companies in the Kingdom must be convinced to charge at least 48 gold per pound per mile of material they transport.  They are all in competition and they know it, so none will want to make a move before the others.  I don‚Äôt care how you convince them‚Äì just get the job done and report back to me."
 	evt.Add("QBits", 116)         -- "Fix the prices of all 9 stables in the Kingdom and return to Lady Fleise in Silver Cove."
 	evt.Set("DaysCounter1", 0)
 	evt.SetNPCTopic{NPC = 14, Index = 0, Event = 80}         -- "Loretta Fleise" : "Money"
@@ -876,10 +876,10 @@ end
 -- "Money"
 evt.global[80] = function()
 	if not evt.Cmp("QBits", 117) then         -- NPC
-		evt.SetMessage(95)         -- "Not all of the companies have agreed to raise their prices!  Why do you return only to report incompetence?  There are large profits I could be reaping if you had done your job and convinced these idiots to raise their prices!  MUST I DO THIS MYSELF?  Should I send someone else?  Why do I surround myself with MORONS?!  So far I have lost a lot of gold because you havenít finished your job!  Iíll deduct these losses from your final payment, you can be sure of that!"
+		evt.SetMessage(95)         -- "Not all of the companies have agreed to raise their prices!  Why do you return only to report incompetence?  There are large profits I could be reaping if you had done your job and convinced these idiots to raise their prices!  MUST I DO THIS MYSELF?  Should I send someone else?  Why do I surround myself with MORONS?!  So far I have lost a lot of gold because you haven‚Äôt finished your job!  I‚Äôll deduct these losses from your final payment, you can be sure of that!"
 		return
 	end
-	evt.SetMessage(96)         -- "At last!  Thought you would never finish.  Maybe youíre good for something after all.  You have won my support in the council, and of course, your payment. "
+	evt.SetMessage(96)         -- "At last!  Thought you would never finish.  Maybe you‚Äôre good for something after all.  You have won my support in the council, and of course, your payment. "
 	if evt.Cmp("DaysCounter1", 31) then
 		evt.Add("Gold", 5000)
 	else
@@ -916,7 +916,7 @@ end
 
 -- "Great Druids"
 evt.global[82] = function()
-	evt.SetMessage(98)         -- "Although it may be hard to believe, I happen to be one of the top druids in the land.  As such I am empowered to promote druids to great and arch druid status, provided they prove themselves worthy.  To be promoted to great druid status, you must perform the Ceremony of the Sun.  Pray at the center of the Circle of Stone during any equinox or solsticeñ March 20th, June 21st, September 23rd, or December 21st.  If you are there at that time, I will contact you magically and lead you through the Ceremony, thus promoting you to great druid.  Those among you who are not druids will be granted honorary great druid status, and I am sure the experience will be worthwhile."
+	evt.SetMessage(98)         -- "Although it may be hard to believe, I happen to be one of the top druids in the land.  As such I am empowered to promote druids to great and arch druid status, provided they prove themselves worthy.  To be promoted to great druid status, you must perform the Ceremony of the Sun.  Pray at the center of the Circle of Stone during any equinox or solstice‚Äì March 20th, June 21st, September 23rd, or December 21st.  If you are there at that time, I will contact you magically and lead you through the Ceremony, thus promoting you to great druid.  Those among you who are not druids will be granted honorary great druid status, and I am sure the experience will be worthwhile."
 	evt.Add("QBits", 118)         -- "Visit the Altar of the Sun in the circle of stones north of Silver Cove on an equinox or solstice (HINT:  March 20th is an equinox)."
 	evt.SetNPCTopic{NPC = 14, Index = 1, Event = 83}         -- "Loretta Fleise" : "Great Druids"
 end
@@ -945,7 +945,7 @@ end
 
 -- "Winter"
 evt.global[87] = function()
-	evt.SetMessage(105)         -- "I grow tired of winter.  In my lands, winter seems to last year round.  As a matter of fact, for the last few years, summer didnít arrive at all.  I have come to believe that something is wrong with the weather, and I want something done about it.  I know your reputation, and I hear you can do anything.  I have a deal for you.  End the winter in my land and I will give you my support in the High Council when it comes time for you to ask for it.  If it's any help at all, I hear there is hermit on a mountaintop somewhere west of here who has studied the weather in detail."
+	evt.SetMessage(105)         -- "I grow tired of winter.  In my lands, winter seems to last year round.  As a matter of fact, for the last few years, summer didn‚Äôt arrive at all.  I have come to believe that something is wrong with the weather, and I want something done about it.  I know your reputation, and I hear you can do anything.  I have a deal for you.  End the winter in my land and I will give you my support in the High Council when it comes time for you to ask for it.  If it's any help at all, I hear there is hermit on a mountaintop somewhere west of here who has studied the weather in detail."
 	evt.Add("QBits", 120)         -- "End winter for Lord Stromgard at Castle Stromgard, and return to him with the good news."
 	evt.SetNPCTopic{NPC = 15, Index = 0, Event = 88}         -- "Erik Von Stromgard" : "Winter"
 	evt.SetNPCTopic{NPC = 19, Index = 0, Event = 96}         -- "The Hermit on the Mountain" : "Winter"
@@ -991,7 +991,7 @@ end
 
 -- "Battle Mages"
 evt.global[91] = function()
-	evt.SetMessage(109)         -- "20 years ago, I won the annual archery competition held at Castle Ironfist, and I have held the championship ever since.  This gives me the right to promote archers to the title of battle mage and warrior mage as I see fit.  Iíll grant the title of battle mage to all the archers amongst you if you do me a little favor. I need the key to the old Dragon Towers set up near every major settlement in Enroth to shoot down flying creatures.  I think that they can be set to shoot down only monsters, instead of shooting anything flying through the air. Since this is something of a pet project, I will reward honorary battle mage status to the rest of you.  The key is in my old keep near the southern entrance to my lands.  I had to leave it there when the ogres and their companions took it from me a few years ago.  Return with that key and be rewarded.  And I wonít be crying in my beer if you kill a lot of those monsters while youíre at it.  They took my keep!"
+	evt.SetMessage(109)         -- "20 years ago, I won the annual archery competition held at Castle Ironfist, and I have held the championship ever since.  This gives me the right to promote archers to the title of battle mage and warrior mage as I see fit.  I‚Äôll grant the title of battle mage to all the archers amongst you if you do me a little favor. I need the key to the old Dragon Towers set up near every major settlement in Enroth to shoot down flying creatures.  I think that they can be set to shoot down only monsters, instead of shooting anything flying through the air. Since this is something of a pet project, I will reward honorary battle mage status to the rest of you.  The key is in my old keep near the southern entrance to my lands.  I had to leave it there when the ogres and their companions took it from me a few years ago.  Return with that key and be rewarded.  And I won‚Äôt be crying in my beer if you kill a lot of those monsters while you‚Äôre at it.  They took my keep!"
 	evt.Add("QBits", 121)         -- "Retrieve the key to the Dragon Towers from Icewind Keep south of Whitecap, and bring it to Lord Stromgard at Castle Stromgard."
 	evt.SetNPCTopic{NPC = 15, Index = 1, Event = 92}         -- "Erik Von Stromgard" : "Battle Mages"
 end
@@ -1000,7 +1000,7 @@ end
 evt.global[92] = function()
 	evt.ForPlayer("All")
 	if not evt.Cmp("Inventory", 486) then         -- "Dragon Tower Keys"
-		evt.SetMessage(110)         -- "No keyóNo reward.  Our deal is simple and straightforward.  Fetch the key from my old keep and return once you have it.  "
+		evt.SetMessage(110)         -- "No key‚ÄîNo reward.  Our deal is simple and straightforward.  Fetch the key from my old keep and return once you have it.  "
 		return
 	end
 	evt.SetMessage(111)         -- "Very good!  You got the key, and hopefully slew a large number of those loathsome beasts.  I hereby promote all archers to the status of battle mage, and all non-archers to honorary battle mage."
@@ -1022,7 +1022,7 @@ end
 
 -- "Warrior Mages"
 evt.global[93] = function()
-	evt.SetMessage(112)         -- "The reason I wanted the key was to open the Dragon Towers and make the adjustments to prevent them from shooting flyers indiscriminately.  There is a way to adjust the towers to shoot at only large objects, and I want all of them adjusted for the good of the Kingdom.  Magic is becoming more common, as are stories of young Sorcerers getting shot from the sky because they didnít know the function of the towers.  You have the key.  If you adjust all of the towers to shoot at only large objects, I will promote all battle mages amongst you to warrior mages and promote any honorary battle Mages to honorary warrior mages."
+	evt.SetMessage(112)         -- "The reason I wanted the key was to open the Dragon Towers and make the adjustments to prevent them from shooting flyers indiscriminately.  There is a way to adjust the towers to shoot at only large objects, and I want all of them adjusted for the good of the Kingdom.  Magic is becoming more common, as are stories of young Sorcerers getting shot from the sky because they didn‚Äôt know the function of the towers.  You have the key.  If you adjust all of the towers to shoot at only large objects, I will promote all battle mages amongst you to warrior mages and promote any honorary battle Mages to honorary warrior mages."
 	evt.Add("QBits", 122)         -- "Reset all of the Dragon Towers at each town and return to Lord Stromgard in Castle Stromgard."
 	evt.SetNPCTopic{NPC = 15, Index = 1, Event = 100}         -- "Erik Von Stromgard" : "Warrior Mages"
 end
@@ -1039,7 +1039,7 @@ evt.global[100] = function()
 					if not evt.Cmp("QBits", 161) then         -- NPC
 						goto _11
 					end
-					evt.SetMessage(115)         -- "I knew my faith in you was well placed!  You have fixed a major problem in our kingdom, not to mention doing yourself a favoróItís now safe to fly above towns.  It is my pleasure to promote all battle mages to warrior mages, and all honorary battle mages to honorary warrior mages.  "
+					evt.SetMessage(115)         -- "I knew my faith in you was well placed!  You have fixed a major problem in our kingdom, not to mention doing yourself a favor‚ÄîIt‚Äôs now safe to fly above towns.  It is my pleasure to promote all battle mages to warrior mages, and all honorary battle mages to honorary warrior mages.  "
 					evt.Add("ReputationIs", 100)
 					evt.Subtract("QBits", 122)         -- "Reset all of the Dragon Towers at each town and return to Lord Stromgard in Castle Stromgard."
 					evt.ForPlayer("All")
@@ -1079,12 +1079,12 @@ end
 
 -- "Winter"
 evt.global[95] = function()
-	evt.SetMessage(117)         -- "I like it up here.  Itís as though I can watch the world turn from up high and all alone.  Serene.  Untouchable.  AlmostÖProphetic.  I can see the clouds churn and travel, break apart and mix together.  I can predict the weather almost perfectly.  <Smiling> Right now, I predict more snow."
+	evt.SetMessage(117)         -- "I like it up here.  It‚Äôs as though I can watch the world turn from up high and all alone.  Serene.  Untouchable.  Almost‚Ä¶Prophetic.  I can see the clouds churn and travel, break apart and mix together.  I can predict the weather almost perfectly.  <Smiling> Right now, I predict more snow."
 end
 
 -- "Winter"
 evt.global[96] = function()
-	evt.SetMessage(118)         -- "So, Stromgard needs a miracle with the weather, eh?  All this time I thought he was the one responsible for making it snow continually.  I can break the enchantment on the weather easily, and if you hurry back to him, Iím sure you can claim responsibility."
+	evt.SetMessage(118)         -- "So, Stromgard needs a miracle with the weather, eh?  All this time I thought he was the one responsible for making it snow continually.  I can break the enchantment on the weather easily, and if you hurry back to him, I‚Äôm sure you can claim responsibility."
 	evt.Set("QBits", 228)         -- NPC
 	evt.SetNPCTopic{NPC = 15, Index = 0, Event = 89}         -- "Erik Von Stromgard" : "Winter"
 	evt.SetNPCTopic{NPC = 19, Index = 0, Event = 97}         -- "The Hermit on the Mountain" : "Winter"
@@ -1102,7 +1102,7 @@ end
 
 -- "Silvertongue's Refusal"
 evt.global[101] = function()
-	evt.SetMessage(177)         -- "Slicker Silvertongue refused my order?  This must be treason!  Still, I've known him so long, and he's never disobeyed an order beforeÖperhaps he is suffering from delusions.  Yes, that's it.  He's been spending so much time investigating that horrible Baa cult that it's affected his mindñ I even found one of their cloaks in his room.  Perhaps you can find a cure for him.  They must surely know what they've done to him!  I would start at their headquarters east of Castle Kriegspire.  Here, take the cloakñ perhaps you can find some use for it."
+	evt.SetMessage(177)         -- "Slicker Silvertongue refused my order?  This must be treason!  Still, I've known him so long, and he's never disobeyed an order before‚Ä¶perhaps he is suffering from delusions.  Yes, that's it.  He's been spending so much time investigating that horrible Baa cult that it's affected his mind‚Äì I even found one of their cloaks in his room.  Perhaps you can find a cure for him.  They must surely know what they've done to him!  I would start at their headquarters east of Castle Kriegspire.  Here, take the cloak‚Äì perhaps you can find some use for it."
 	evt.Set("QBits", 200)         -- "Find a cure for Slicker Silvertongue in the Superior Temple of Baa east of Castle Kriegspire and return to Wilbur Humphrey with the good news."
 	evt.Add("Inventory", 485)         -- "Cloak of Baa"
 	evt.SetNPCTopic{NPC = 4, Index = 0, Event = 102}         -- "Wilbur Humphrey" : "Silvertongue's Cure"
@@ -1139,7 +1139,7 @@ evt.global[105] = function()
 	if evt.Cmp("TotalCircusPrize", 30) then
 		evt.Set("MapVar70", 40)
 		evt.Add("Inventory", 472)         -- "Golden Pyramid"
-		evt.SetMessage(184)         -- "Congratulations!  You win a golden pyramid!  Good workñ remember there are no limits on the prizes, so keep playing!"
+		evt.SetMessage(184)         -- "Congratulations!  You win a golden pyramid!  Good work‚Äì remember there are no limits on the prizes, so keep playing!"
 	else
 		if not evt.Cmp("TotalCircusPrize", 10) then
 			evt.SetMessage(182)         -- "I'm sorry, but you don't have 10 points yet.  Why don't you try a few more games?"
@@ -1212,13 +1212,13 @@ evt.global[107] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1233,10 +1233,10 @@ evt.global[107] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1254,7 +1254,7 @@ evt.global[107] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1335,13 +1335,13 @@ evt.global[108] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1356,10 +1356,10 @@ evt.global[108] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1377,7 +1377,7 @@ evt.global[108] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1458,13 +1458,13 @@ evt.global[109] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1479,10 +1479,10 @@ evt.global[109] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1500,7 +1500,7 @@ evt.global[109] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1581,13 +1581,13 @@ evt.global[110] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1602,10 +1602,10 @@ evt.global[110] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1623,7 +1623,7 @@ evt.global[110] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1704,13 +1704,13 @@ evt.global[111] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1725,10 +1725,10 @@ evt.global[111] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1746,7 +1746,7 @@ evt.global[111] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1827,13 +1827,13 @@ evt.global[112] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 4 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1848,10 +1848,10 @@ evt.global[112] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 3 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1869,7 +1869,7 @@ evt.global[112] = function()
 		i = Game.Rand() % 6
 		if i == 1 then
 			evt.Add("Inventory", 477)         -- "Four Leaf Clover"
-			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prizeñ a four leaf clover!"
+			evt.SetMessage(189)         -- "Incredible!  Are you sure you didn't cheat?  Well, a rule's a rule.  Here's your prize‚Äì a four leaf clover!"
 		elseif i == 2 then
 			evt.Add("Inventory", 471)         -- "Harpy Feather"
 			evt.SetMessage(188)         -- "Excellent work, you win a harpy feather!"
@@ -1996,7 +1996,7 @@ evt.global[115] = function()
 		if evt.Cmp("Inventory", 470) then         -- "Lodestone"
 			evt.Subtract("Inventory", 470)         -- "Lodestone"
 			evt.Add("Gold", 5)
-			evt.SetMessage(195)         -- "Thank you!  You're too generousñ this will make a lovely gift.  Here's the 5 gold I owe you."
+			evt.SetMessage(195)         -- "Thank you!  You're too generous‚Äì this will make a lovely gift.  Here's the 5 gold I owe you."
 			return
 		end
 	end
@@ -2004,7 +2004,7 @@ evt.global[115] = function()
 	if evt.Cmp("Inventory", 470) then         -- "Lodestone"
 		evt.Subtract("Inventory", 470)         -- "Lodestone"
 		evt.Add("Gold", 5)
-		evt.SetMessage(195)         -- "Thank you!  You're too generousñ this will make a lovely gift.  Here's the 5 gold I owe you."
+		evt.SetMessage(195)         -- "Thank you!  You're too generous‚Äì this will make a lovely gift.  Here's the 5 gold I owe you."
 	else
 		evt.SetMessage(194)         -- "Many people aren't able to visit the circus, so I'm collecting circus prizes to give away to those not able to visit it themselves.  I'll buy lodestones for 5 gold each if you want to part with them."
 	end
@@ -2163,13 +2163,13 @@ evt.global[123] = function()
 		evt.SetNPCTopic{NPC = 330, Index = 0, Event = 0}         -- "Terry Ros"
 		evt.MoveNPC{NPC = 330, HouseId = 0}         -- "Terry Ros"
 	else
-		evt.SetMessage(376)         -- "There's no rush in destroying the book.  If you manage it, come back and talk to me.  I'm not sure it's even possible to get to the book and destroy itñ there are far too many evil creatures in that castle."
+		evt.SetMessage(376)         -- "There's no rush in destroying the book.  If you manage it, come back and talk to me.  I'm not sure it's even possible to get to the book and destroy it‚Äì there are far too many evil creatures in that castle."
 	end
 end
 
 -- "Welcome"
 evt.global[124] = function()
-	evt.SetMessage(440)         -- "Welcome to my Desert Resort!  You'll notice we don't have the riff-raff associated with the towns and villages of the lands here.  Take a moment to relax and enjoy the serenity of the desert, my friends.  If you're interested, we have a few traders here that will trade rare items for weapons and armorñ it may be worth your while to check them out."
+	evt.SetMessage(440)         -- "Welcome to my Desert Resort!  You'll notice we don't have the riff-raff associated with the towns and villages of the lands here.  Take a moment to relax and enjoy the serenity of the desert, my friends.  If you're interested, we have a few traders here that will trade rare items for weapons and armor‚Äì it may be worth your while to check them out."
 end
 
 -- "Fountain of Youth"
@@ -2402,7 +2402,7 @@ end
 
 -- "Rexella"
 evt.global[267] = function()
-	evt.SetMessage(274)         -- "Very few people even know that these weapons exist.  The only other person I've ever seen using an ancient weapon is Rexella, but she was last living in Paradise Valleyñ I'm not sure she's even there anymore."
+	evt.SetMessage(274)         -- "Very few people even know that these weapons exist.  The only other person I've ever seen using an ancient weapon is Rexella, but she was last living in Paradise Valley‚Äì I'm not sure she's even there anymore."
 end
 
 -- "Bronwyn Meck"
@@ -2517,7 +2517,7 @@ end
 
 -- "Quest"
 evt.global[290] = function()
-	evt.SetMessage(297)         -- "The King of the Dwarves, Snergle, usurped Rocklin for leadership of the dwarven clans.  Now Rocklin is in exile somewhere and Snergle is in charge.  Most dwarves donít like Snergle and would like to see Rocklin back in power.  Unfortunately, Snergle has claimed both Rocklinís caverns and the largest dwarven Iron Mine.  Snergle, fearing treachery near home, has removed me, the Dwarven Weaponmaster, from my position.  We need someone to get Snergle out of power by any means necessary.  Iíd even consider training you humans how to use an axe like a true dwarf if youíll help us."
+	evt.SetMessage(297)         -- "The King of the Dwarves, Snergle, usurped Rocklin for leadership of the dwarven clans.  Now Rocklin is in exile somewhere and Snergle is in charge.  Most dwarves don‚Äôt like Snergle and would like to see Rocklin back in power.  Unfortunately, Snergle has claimed both Rocklin‚Äôs caverns and the largest dwarven Iron Mine.  Snergle, fearing treachery near home, has removed me, the Dwarven Weaponmaster, from my position.  We need someone to get Snergle out of power by any means necessary.  I‚Äôd even consider training you humans how to use an axe like a true dwarf if you‚Äôll help us."
 	evt.Add("QBits", 124)         -- "Kill Snergle in Snergle's Caverns and return with his axe to Avinril Smythers at The Haunt tavern in the Mire of the Damned."
 	evt.SetNPCTopic{NPC = 32, Index = 0, Event = 291}         -- "Avinril Smythers " : "Quest"
 end
@@ -2526,7 +2526,7 @@ end
 evt.global[291] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 498) then         -- "Snergle's Axe"
-		evt.SetMessage(299)         -- "Oh, glorious day!  With Snergleís passing, we can now search for Rocklin to put him back in power.  Eternal thanks to you for this, and dwarves everywhere owe you a debt of gratitude."
+		evt.SetMessage(299)         -- "Oh, glorious day!  With Snergle‚Äôs passing, we can now search for Rocklin to put him back in power.  Eternal thanks to you for this, and dwarves everywhere owe you a debt of gratitude."
 		evt.Add("Awards", 37)         -- "Killed Snergle"
 		evt.Add("Experience", 20000)
 		evt.ForPlayer("Current")
@@ -2535,13 +2535,13 @@ evt.global[291] = function()
 		evt.Add("ReputationIs", 100)
 		evt.SetNPCTopic{NPC = 32, Index = 0, Event = 207}         -- "Avinril Smythers " : "Master Axe Fighting"
 	else
-		evt.SetMessage(298)         -- "I need proof that Snergle has been defeated.  Iím sorry, but I just canít take your word for it.  Bring back some personal item of his, like his axe maybe."
+		evt.SetMessage(298)         -- "I need proof that Snergle has been defeated.  I‚Äôm sorry, but I just can‚Äôt take your word for it.  Bring back some personal item of his, like his axe maybe."
 	end
 end
 
 -- "Quest"
 evt.global[292] = function()
-	evt.SetMessage(300)         -- "The Mayor here in Mist is considering allowing the Fraternal Order of Silver to police the town in their battle against evil.  I know the Silver Helm Persecution Squads have murdered innocents in their misguided crusade against ëevil,í but there are no living witnesses to their atrocities.  I need you to storm their outpost to the south of here to find proof so that I can convince the mayor to ban them from Mist."
+	evt.SetMessage(300)         -- "The Mayor here in Mist is considering allowing the Fraternal Order of Silver to police the town in their battle against evil.  I know the Silver Helm Persecution Squads have murdered innocents in their misguided crusade against ‚Äòevil,‚Äô but there are no living witnesses to their atrocities.  I need you to storm their outpost to the south of here to find proof so that I can convince the mayor to ban them from Mist."
 	evt.Add("QBits", 125)         -- "Storm the Silver Helm Outpost near Mist and return with evidence of their corruption to the Constable of Mist."
 	evt.SetNPCTopic{NPC = 37, Index = 0, Event = 293}         -- "Charles D'Sorpigal" : "Quest"
 end
@@ -2550,7 +2550,7 @@ end
 evt.global[293] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 503) then         -- "Enemies List"
-		evt.SetMessage(302)         -- "Just as I suspected!  Iím surprised the Mayor was number three on their enemies list.  I suppose he IS a tad incompetent, but heís not a bad person.  Thanks again, please accept this gold and my gratitude as your reward."
+		evt.SetMessage(302)         -- "Just as I suspected!  I‚Äôm surprised the Mayor was number three on their enemies list.  I suppose he IS a tad incompetent, but he‚Äôs not a bad person.  Thanks again, please accept this gold and my gratitude as your reward."
 		evt.Subtract("Inventory", 503)         -- "Enemies List"
 		evt.Add("Awards", 38)         -- "Saved the Mayor of Mist"
 		evt.Add("Experience", 5000)
@@ -2561,23 +2561,23 @@ evt.global[293] = function()
 		evt.SetNPCTopic{NPC = 37, Index = 0, Event = 0}         -- "Charles D'Sorpigal"
 		evt.SetNPCTopic{NPC = 46, Index = 0, Event = 295}         -- "Bertrand Scrivner" : "Silver Helms"
 	else
-		evt.SetMessage(301)         -- "Keep searchingñ the lives of the mayor and myself could very well be in your hands.  We canít take action against them without proof."
+		evt.SetMessage(301)         -- "Keep searching‚Äì the lives of the mayor and myself could very well be in your hands.  We can‚Äôt take action against them without proof."
 	end
 end
 
 -- "Silver Helms"
 evt.global[294] = function()
-	evt.SetMessage(303)         -- "I think I might just allow the Fraternal Order of Silver to police the areas around Mist.  Maybe theyíd be able to hunt down all the evil people and leave this island a paradise."
+	evt.SetMessage(303)         -- "I think I might just allow the Fraternal Order of Silver to police the areas around Mist.  Maybe they‚Äôd be able to hunt down all the evil people and leave this island a paradise."
 end
 
 -- "Silver Helms"
 evt.global[295] = function()
-	evt.SetMessage(304)         -- "I canít believe those Silver Helms wanted to kill me!  Iíve never done anything wrong in my life!  Well, nothing more wrong than any other mayor at least.  Thank you again for stopping them."
+	evt.SetMessage(304)         -- "I can‚Äôt believe those Silver Helms wanted to kill me!  I‚Äôve never done anything wrong in my life!  Well, nothing more wrong than any other mayor at least.  Thank you again for stopping them."
 end
 
 -- "Quest"
 evt.global[296] = function()
-	evt.SetMessage(305)         -- "Could you do the Temple of Baa a favor?  It appears that my brethren left the old temple to the northwest of here in a little too much of a hurry, and a candelabra necessary for some of our rituals was left behind.  None of the Baa priests want to go back because theyíre afraid of whatever curse has been placed on the temple.  If you were to bring back the candelabra to me, however, I could reward you in their place."
+	evt.SetMessage(305)         -- "Could you do the Temple of Baa a favor?  It appears that my brethren left the old temple to the northwest of here in a little too much of a hurry, and a candelabra necessary for some of our rituals was left behind.  None of the Baa priests want to go back because they‚Äôre afraid of whatever curse has been placed on the temple.  If you were to bring back the candelabra to me, however, I could reward you in their place."
 	evt.Add("QBits", 126)         -- "Retrieve the candelabra from the Abandoned Temple for Andover Potbello in New Sorpigal."
 	evt.SetNPCTopic{NPC = 1, Index = 1, Event = 297}         -- "Andover Potbello" : "Quest"
 end
@@ -2596,47 +2596,47 @@ evt.global[297] = function()
 		evt.Subtract("QBits", 126)         -- "Retrieve the candelabra from the Abandoned Temple for Andover Potbello in New Sorpigal."
 		evt.SetNPCTopic{NPC = 1, Index = 1, Event = 0}         -- "Andover Potbello"
 	else
-		evt.SetMessage(306)         -- "Did the curse frighten you away as well?  I can understand.  Baa is patient, however.  Should you work up the courage to find the candelabra, Iím still prepared to compensate you for it."
+		evt.SetMessage(306)         -- "Did the curse frighten you away as well?  I can understand.  Baa is patient, however.  Should you work up the courage to find the candelabra, I‚Äôm still prepared to compensate you for it."
 	end
 end
 
 -- "Fraternal Order of Silver"
 evt.global[298] = function()
-	evt.SetMessage(308)         -- "Who would have thought that the evil I sought to fight all across Enroth would be found so close to my own home?  Gerrard Blackames was once my second in command.  Not long before he murdered me he began corresponding with the Temple of Baa, and they began to feed him targets for our Order.  I ended up being one of the targets, and Gerrard took control of the Order.  Now, the Silver Helms are as evil as the people they hunt.  Iím certain the Temple of Baa is responsible for the corruption of our Order.  At the same time, Gerrardís brother, Marcus the Sorcerer, has been supplying the Silver Helms with high quality equipment.  The last I heard, Marcus was assisting someone in a forge on an island to the southeast."
+	evt.SetMessage(308)         -- "Who would have thought that the evil I sought to fight all across Enroth would be found so close to my own home?  Gerrard Blackames was once my second in command.  Not long before he murdered me he began corresponding with the Temple of Baa, and they began to feed him targets for our Order.  I ended up being one of the targets, and Gerrard took control of the Order.  Now, the Silver Helms are as evil as the people they hunt.  I‚Äôm certain the Temple of Baa is responsible for the corruption of our Order.  At the same time, Gerrard‚Äôs brother, Marcus the Sorcerer, has been supplying the Silver Helms with high quality equipment.  The last I heard, Marcus was assisting someone in a forge on an island to the southeast."
 end
 
 -- "Melody"
 evt.global[299] = function()
 	if evt.Cmp("QBits", 127) then         -- NPC
-		evt.SetMessage(310)         -- "Thank you for saving my niece.  Behind this wall is a secret area Iíve kept hidden from even Gerrard all these years.  You are welcome to take whatever you want; Iíd prefer you have this than Gerrard."
+		evt.SetMessage(310)         -- "Thank you for saving my niece.  Behind this wall is a secret area I‚Äôve kept hidden from even Gerrard all these years.  You are welcome to take whatever you want; I‚Äôd prefer you have this than Gerrard."
 	else
-		evt.SetMessage(309)         -- "My niece, Melody, has been kidnapped from her home in Mist and locked in a Silver Helm outpost near there.  Sheís one of the few people who know that Iíve been murdered.  Iím sure Gerrard has her locked up for that reason, but I believe he wants to force her into marriage to eliminate any opposition to his leadership of the Fraternal Order of Silver."
+		evt.SetMessage(309)         -- "My niece, Melody, has been kidnapped from her home in Mist and locked in a Silver Helm outpost near there.  She‚Äôs one of the few people who know that I‚Äôve been murdered.  I‚Äôm sure Gerrard has her locked up for that reason, but I believe he wants to force her into marriage to eliminate any opposition to his leadership of the Fraternal Order of Silver."
 	end
 end
 
 -- "Ankh"
 evt.global[300] = function()
-	evt.SetMessage(311)         -- "Gerrard has an ankh inscribed with his name given to him by the priests of Baa.  Iím not sure exactly what the ankh is used for, but he may use it to identify himself as a friend of Baa."
+	evt.SetMessage(311)         -- "Gerrard has an ankh inscribed with his name given to him by the priests of Baa.  I‚Äôm not sure exactly what the ankh is used for, but he may use it to identify himself as a friend of Baa."
 	evt.SetNPCTopic{NPC = 14, Index = 2, Event = 362}         -- "Loretta Fleise" : "Ankh"
 	evt.SetNPCTopic{NPC = 16, Index = 2, Event = 363}         -- "Anthony Stone" : "Ankh"
 end
 
 -- "Snergle's Key"
 evt.global[301] = function()
-	evt.SetMessage(312)         -- "You want to defeat Snergle, do you?  Well, he knows how he stands among most dwarves.  Heís holed up in Rocklinís old caverns surrounded by a horde of his loyal dwarves.  If anything were to happen in there, heíd just immediately lock himself in his private room and let his followers handle it.  Youíll need a key to get into his room; thereís no way youíll bash down a high quality dwarven door.  I was a steward for Rocklinñ I know that room well and I happen to still have a key to it hidden on me.  Fortunately for you, Iím in this cell because of Snergle, and thereís nothing Iíd rather see than his reign put to a quick end.  Hereís the keyñ think of it as payment for letting me out of this cell."
+	evt.SetMessage(312)         -- "You want to defeat Snergle, do you?  Well, he knows how he stands among most dwarves.  He‚Äôs holed up in Rocklin‚Äôs old caverns surrounded by a horde of his loyal dwarves.  If anything were to happen in there, he‚Äôd just immediately lock himself in his private room and let his followers handle it.  You‚Äôll need a key to get into his room; there‚Äôs no way you‚Äôll bash down a high quality dwarven door.  I was a steward for Rocklin‚Äì I know that room well and I happen to still have a key to it hidden on me.  Fortunately for you, I‚Äôm in this cell because of Snergle, and there‚Äôs nothing I‚Äôd rather see than his reign put to a quick end.  Here‚Äôs the key‚Äì think of it as payment for letting me out of this cell."
 	evt.SetNPCTopic{NPC = 66, Index = 0, Event = 0}         -- "Ghim Hammond"
 	evt.MoveNPC{NPC = 66, HouseId = 0}         -- "Ghim Hammond"
 end
 
 -- "Hidden Passages"
 evt.global[302] = function()
-	evt.SetMessage(313)         -- "Thank you for releasing me.  The only thing keeping the Silver Helms from killing me was the fact Iím a priest.  Frankly, Iím surprised they would show me any mercy at all.  Listen, Iíve heard some strange sounds coming from around hereÖ I think there might be a hidden passage near here.  In any event, I should probably be leaving now; I donít want to stay in this cell any longer."
+	evt.SetMessage(313)         -- "Thank you for releasing me.  The only thing keeping the Silver Helms from killing me was the fact I‚Äôm a priest.  Frankly, I‚Äôm surprised they would show me any mercy at all.  Listen, I‚Äôve heard some strange sounds coming from around here‚Ä¶ I think there might be a hidden passage near here.  In any event, I should probably be leaving now; I don‚Äôt want to stay in this cell any longer."
 	evt.MoveNPC{NPC = 74, HouseId = 0}         -- "Oliver Wendell"
 end
 
 -- "Quest"
 evt.global[303] = function()
-	evt.SetMessage(314)         -- "The Dragoons that have been plaguing the roads around here recently stole a harp of mine from one of my caravans.  Iím not strong enough to get it back from them, but Iím willing to pay someone capable to do it for me.  Find the harp and return it, and Iíll reward you."
+	evt.SetMessage(314)         -- "The Dragoons that have been plaguing the roads around here recently stole a harp of mine from one of my caravans.  I‚Äôm not strong enough to get it back from them, but I‚Äôm willing to pay someone capable to do it for me.  Find the harp and return it, and I‚Äôll reward you."
 	evt.Add("QBits", 128)         -- "Retrieve the harp from the Dragoon's Caverns south of Castle Ironfist and return it to Andrew Besper in Castle Ironfist."
 	evt.SetNPCTopic{NPC = 77, Index = 0, Event = 304}         -- "Andrew Besper" : "Quest"
 end
@@ -2645,7 +2645,7 @@ end
 evt.global[304] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 479) then         -- "Harp"
-		evt.SetMessage(316)         -- "My gratitude!  My wife loves this harp; Iím so glad you were able to recover it!  Here, take this as a reward.  Iíve heard rumors that the Dragoons were working with the Shadow Guild.  If thatís the case, Iím sure the Mayor of New Sorpigal would love to see proof of it.  Thank you again for your assistance."
+		evt.SetMessage(316)         -- "My gratitude!  My wife loves this harp; I‚Äôm so glad you were able to recover it!  Here, take this as a reward.  I‚Äôve heard rumors that the Dragoons were working with the Shadow Guild.  If that‚Äôs the case, I‚Äôm sure the Mayor of New Sorpigal would love to see proof of it.  Thank you again for your assistance."
 		evt.Subtract("Inventory", 479)         -- "Harp"
 		evt.Add("Awards", 40)         -- "Retrieved Andrew's Harp"
 		evt.Add("Experience", 10000)
@@ -2655,7 +2655,7 @@ evt.global[304] = function()
 		evt.Subtract("QBits", 128)         -- "Retrieve the harp from the Dragoon's Caverns south of Castle Ironfist and return it to Andrew Besper in Castle Ironfist."
 		evt.SetNPCTopic{NPC = 77, Index = 0, Event = 0}         -- "Andrew Besper"
 	elseif evt.Cmp("Inventory", 478) then         -- "Flute"
-		evt.SetMessage(317)         -- "Well, this IS a musical instrument, but itís not a harp.  Let me explain the difference:  You brought back a flute.  A flute is a pipe with holes in it.  A harp has strings.  Does that help?  Iím sure they still have the harp and I will reward you well for its return."
+		evt.SetMessage(317)         -- "Well, this IS a musical instrument, but it‚Äôs not a harp.  Let me explain the difference:  You brought back a flute.  A flute is a pipe with holes in it.  A harp has strings.  Does that help?  I‚Äôm sure they still have the harp and I will reward you well for its return."
 	else
 		evt.SetMessage(315)         -- "My harp is still lost, so the reward is still available for it.  I know the Dragoons base their operations to the south of here near the coast.  Please bring back my harp."
 	end
@@ -2663,7 +2663,7 @@ end
 
 -- "Quest"
 evt.global[305] = function()
-	evt.SetMessage(318)         -- "I have a few theories about the undead that I would very much like to prove.  What I really need is the remains of an undead creature, preferably a powerful one.  Actually, what I really need is the remains of the FIRST lich, Ethric the Mad.  I am a scholar, however, and donít have the means to gain such a specimen.  I do have some money saved up, and Iíd be willing to pay you well for Ethricís remains."
+	evt.SetMessage(318)         -- "I have a few theories about the undead that I would very much like to prove.  What I really need is the remains of an undead creature, preferably a powerful one.  Actually, what I really need is the remains of the FIRST lich, Ethric the Mad.  I am a scholar, however, and don‚Äôt have the means to gain such a specimen.  I do have some money saved up, and I‚Äôd be willing to pay you well for Ethric‚Äôs remains."
 	evt.Add("QBits", 129)         -- "Retrieve Ethric's skull from his tomb west of Free Haven for Gabriel Cartman in Free Haven."
 	evt.SetNPCTopic{NPC = 171, Index = 0, Event = 306}         -- "Gabriel Cartman" : "Quest"
 end
@@ -2688,7 +2688,7 @@ end
 
 -- "Quest"
 evt.global[308] = function()
-	evt.SetMessage(321)         -- "Our town is periodically plagued by giant spiders.  Iím pretty sure that if the spider queen were killed, the rest of the spiders would go away.  Currently, Iím offering a reward to the person that can kill the spider queen."
+	evt.SetMessage(321)         -- "Our town is periodically plagued by giant spiders.  I‚Äôm pretty sure that if the spider queen were killed, the rest of the spiders would go away.  Currently, I‚Äôm offering a reward to the person that can kill the spider queen."
 	evt.Add("QBits", 130)         -- "Kill the Queen of the Spiders in the Abandoned Temple in New Sorpigal and return with her heart to Buford T. Allman in New Sorpigal."
 	evt.SetNPCTopic{NPC = 207, Index = 0, Event = 309}         -- "Buford T. Allman" : "Quest"
 end
@@ -2697,7 +2697,7 @@ end
 evt.global[309] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 481) then         -- "Spider Queen's Heart"
-		evt.SetMessage(323)         -- "What a gruesome trophy!  This heart proves youíve defeated the wicked spider queen.  Hopefully now the spiders wonít plague New Sorpigal anymore.  Here is the reward I promised."
+		evt.SetMessage(323)         -- "What a gruesome trophy!  This heart proves you‚Äôve defeated the wicked spider queen.  Hopefully now the spiders won‚Äôt plague New Sorpigal anymore.  Here is the reward I promised."
 		evt.Subtract("Inventory", 481)         -- "Spider Queen's Heart"
 		evt.Add("Awards", 42)         -- "Killed the Spider Queen"
 		evt.Add("Experience", 3000)
@@ -2706,13 +2706,13 @@ evt.global[309] = function()
 		evt.Subtract("QBits", 130)         -- "Kill the Queen of the Spiders in the Abandoned Temple in New Sorpigal and return with her heart to Buford T. Allman in New Sorpigal."
 		evt.SetNPCTopic{NPC = 207, Index = 0, Event = 0}         -- "Buford T. Allman"
 	else
-		evt.SetMessage(322)         -- "No one has returned with proof that theyíve killed the spider queen, so the reward is still available."
+		evt.SetMessage(322)         -- "No one has returned with proof that they‚Äôve killed the spider queen, so the reward is still available."
 	end
 end
 
 -- "Quest"
 evt.global[310] = function()
-	evt.SetMessage(324)         -- "Cedric Druthers and his Celestial Order have taken over the Monolith, an ancient place sacred to druids.  Their dark rituals are corrupting the Monolith and they need to be stoppedñ whatever altar they use as the center of their ceremonies needs to be defaced.  Do this for us and we will compensate you for your time and services."
+	evt.SetMessage(324)         -- "Cedric Druthers and his Celestial Order have taken over the Monolith, an ancient place sacred to druids.  Their dark rituals are corrupting the Monolith and they need to be stopped‚Äì whatever altar they use as the center of their ceremonies needs to be defaced.  Do this for us and we will compensate you for your time and services."
 	evt.Add("QBits", 131)         -- "Deface the altar in the Monolith west of Silver Cove and return to Eleanor Vanderbilt in Silver Cove."
 	evt.SetNPCTopic{NPC = 267, Index = 0, Event = 311}         -- "Eleanor Vanderbilt" : "Quest"
 end
@@ -2730,7 +2730,7 @@ evt.global[311] = function()
 		evt.SetNPCTopic{NPC = 267, Index = 0, Event = 0}         -- "Eleanor Vanderbilt"
 		evt.MoveNPC{NPC = 267, HouseId = 0}         -- "Eleanor Vanderbilt"
 	else
-		evt.SetMessage(325)         -- "Iím glad to see you again, but the Celestial Order is still in the Monolith."
+		evt.SetMessage(325)         -- "I‚Äôm glad to see you again, but the Celestial Order is still in the Monolith."
 	end
 end
 
@@ -2741,7 +2741,7 @@ evt.global[312] = function()
 		if evt.Cmp("Inventory", 474) then         -- "Cobra Egg"
 			evt.Subtract("Inventory", 474)         -- "Cobra Egg"
 			evt.Add("Gold", 300)
-			evt.SetMessage(328)         -- "Excellent specimen!  I should be able to hatch this in no time and help my flagging business.  Here is my payment for this wonderful egg.  Iíll buy any more cobra eggs you have as long as they are in demand."
+			evt.SetMessage(328)         -- "Excellent specimen!  I should be able to hatch this in no time and help my flagging business.  Here is my payment for this wonderful egg.  I‚Äôll buy any more cobra eggs you have as long as they are in demand."
 			return
 		end
 	end
@@ -2749,9 +2749,9 @@ evt.global[312] = function()
 	if evt.Cmp("Inventory", 474) then         -- "Cobra Egg"
 		evt.Subtract("Inventory", 474)         -- "Cobra Egg"
 		evt.Add("Gold", 300)
-		evt.SetMessage(328)         -- "Excellent specimen!  I should be able to hatch this in no time and help my flagging business.  Here is my payment for this wonderful egg.  Iíll buy any more cobra eggs you have as long as they are in demand."
+		evt.SetMessage(328)         -- "Excellent specimen!  I should be able to hatch this in no time and help my flagging business.  Here is my payment for this wonderful egg.  I‚Äôll buy any more cobra eggs you have as long as they are in demand."
 	else
-		evt.SetMessage(327)         -- "I am a collector of rare and exotic creatures, and I make a living by selling some of these creatures as pets.  Currently, cobras are in great demand, and I donít have many cobras left to sell.  Therefore, Iím willing to pay handsomely for any cobra eggs you might have.  Remember, if you find any cobra eggs, Iíll give you the best prices."
+		evt.SetMessage(327)         -- "I am a collector of rare and exotic creatures, and I make a living by selling some of these creatures as pets.  Currently, cobras are in great demand, and I don‚Äôt have many cobras left to sell.  Therefore, I‚Äôm willing to pay handsomely for any cobra eggs you might have.  Remember, if you find any cobra eggs, I‚Äôll give you the best prices."
 	end
 end
 
@@ -2765,7 +2765,7 @@ end
 
 -- "Quest"
 evt.global[315] = function()
-	evt.SetMessage(332)         -- "Near here is a temple dedicated to the Order of the Fist.  I once belonged to that order, but recently they uncovered a powerful evil crystal.  They hope to use the crystal as a bargaining chip to be accepted into the Temple of Baa.  I donít want to see the crystal fall into Baaís handsñ it must be destroyed.  Please infiltrate the temple and destroy the crystal."
+	evt.SetMessage(332)         -- "Near here is a temple dedicated to the Order of the Fist.  I once belonged to that order, but recently they uncovered a powerful evil crystal.  They hope to use the crystal as a bargaining chip to be accepted into the Temple of Baa.  I don‚Äôt want to see the crystal fall into Baa‚Äôs hands‚Äì it must be destroyed.  Please infiltrate the temple and destroy the crystal."
 	evt.Add("QBits", 134)         -- "Destroy the crystal in the Temple of the Fist and return to Winston Schezar in Bootleg Bay."
 	evt.SetNPCTopic{NPC = 290, Index = 0, Event = 316}         -- "Winston Schezar" : "Quest"
 end
@@ -2773,7 +2773,7 @@ end
 -- "Quest"
 evt.global[316] = function()
 	if evt.Cmp("QBits", 21) then         -- 21 T2, Given when evil crystal is destroyed
-		evt.SetMessage(334)         -- "Good work!  Iím glad you made it in time.  I donít like to think about what Baa would have done with that crystal.  You have done all of Enroth a great service."
+		evt.SetMessage(334)         -- "Good work!  I‚Äôm glad you made it in time.  I don‚Äôt like to think about what Baa would have done with that crystal.  You have done all of Enroth a great service."
 		evt.Subtract("QBits", 134)         -- "Destroy the crystal in the Temple of the Fist and return to Winston Schezar in Bootleg Bay."
 		evt.Add("Gold", 3000)
 		evt.Add("ReputationIs", 50)
@@ -2783,13 +2783,13 @@ evt.global[316] = function()
 		evt.SetNPCTopic{NPC = 290, Index = 0, Event = 0}         -- "Winston Schezar"
 		evt.MoveNPC{NPC = 290, HouseId = 0}         -- "Winston Schezar"
 	else
-		evt.SetMessage(333)         -- "You must hurry and destroy the crystal before Baa claims it.  Iím not sure how long it will take, so time is of the essence."
+		evt.SetMessage(333)         -- "You must hurry and destroy the crystal before Baa claims it.  I‚Äôm not sure how long it will take, so time is of the essence."
 	end
 end
 
 -- "Quest"
 evt.global[317] = function()
-	evt.SetMessage(335)         -- "My husband, Emmanuel, went to Star Island a few weeks ago with a few friends hoping to find some treasure.  I havenít seen him since, and Iím worried about him.  I donít dare go to the island; itís rumored to be the home of medusas!  If you could find him and bring him home, I would be very grateful."
+	evt.SetMessage(335)         -- "My husband, Emmanuel, went to Star Island a few weeks ago with a few friends hoping to find some treasure.  I haven‚Äôt seen him since, and I‚Äôm worried about him.  I don‚Äôt dare go to the island; it‚Äôs rumored to be the home of medusas!  If you could find him and bring him home, I would be very grateful."
 	evt.Add("QBits", 136)         -- "Rescue Emmanuel from the Temple of the Snake near Blackshire and return him to Joanne Cravitz in Blackshire."
 	evt.SetNPCTopic{NPC = 118, Index = 0, Event = 318}         -- "Joanne Cravitz" : "Quest"
 end
@@ -2797,7 +2797,7 @@ end
 -- "Quest"
 evt.global[318] = function()
 	if evt.Cmp("NPCs", 108) then         -- "Emmanuel Cravitz"
-		evt.SetMessage(337)         -- "Oh, thank you for bringing Emmanuel back to me!  Nothing in this world means as much to me as him!  Please take this as a reward.  I know itís not much, but you deserve it for bringing him back to me."
+		evt.SetMessage(337)         -- "Oh, thank you for bringing Emmanuel back to me!  Nothing in this world means as much to me as him!  Please take this as a reward.  I know it‚Äôs not much, but you deserve it for bringing him back to me."
 		evt.Subtract("NPCs", 108)         -- "Emmanuel Cravitz"
 		evt.Subtract("QBits", 136)         -- "Rescue Emmanuel from the Temple of the Snake near Blackshire and return him to Joanne Cravitz in Blackshire."
 		evt.Add("Gold", 500)
@@ -2808,18 +2808,18 @@ evt.global[318] = function()
 		evt.SetNPCTopic{NPC = 108, Index = 0, Event = 0}         -- "Emmanuel Cravitz"
 		evt.SetNPCTopic{NPC = 118, Index = 0, Event = 0}         -- "Joanne Cravitz"
 	else
-		evt.SetMessage(336)         -- "No luck?  He must be in grave danger if you did not find him.  If you do happen to find him, please bring him back here.  Iíll be waiting for him."
+		evt.SetMessage(336)         -- "No luck?  He must be in grave danger if you did not find him.  If you do happen to find him, please bring him back here.  I‚Äôll be waiting for him."
 	end
 end
 
 -- "Greeting"
 evt.global[319] = function()
-	evt.SetMessage(338)         -- "Thank you for turning me back to normal. Iíd love to stay and chat, but I really should be getting out of here."
+	evt.SetMessage(338)         -- "Thank you for turning me back to normal. I‚Äôd love to stay and chat, but I really should be getting out of here."
 end
 
 -- "Greeting"
 evt.global[320] = function()
-	evt.SetMessage(339)         -- "Thank you for turning me back to normal. Iíd love to stay and chat, but I really should be getting out of here."
+	evt.SetMessage(339)         -- "Thank you for turning me back to normal. I‚Äôd love to stay and chat, but I really should be getting out of here."
 end
 
 -- "Blackshire"
@@ -2830,7 +2830,7 @@ end
 
 -- "Quest"
 evt.global[322] = function()
-	evt.SetMessage(341)         -- "An explorer friend of mine recently uncovered a powerful artifact, Mordred, in his travels.  He wanted to sell it to me, and shipped it here for me to decide if I wanted it.  Unfortunately, raiders attacked the caravan it was on and stole the artifact.  They were last seen headed to an area west of Castle Temper; Iím sure they must have some sort of base there.  If you bring back Mordred for me, Iíll give you a cut of what Iím paying my friend for it."
+	evt.SetMessage(341)         -- "An explorer friend of mine recently uncovered a powerful artifact, Mordred, in his travels.  He wanted to sell it to me, and shipped it here for me to decide if I wanted it.  Unfortunately, raiders attacked the caravan it was on and stole the artifact.  They were last seen headed to an area west of Castle Temper; I‚Äôm sure they must have some sort of base there.  If you bring back Mordred for me, I‚Äôll give you a cut of what I‚Äôm paying my friend for it."
 	evt.Add("QBits", 137)         -- "Find the lost artifact in the Dragoons' Keep near Castle Temper and return it to Zoltan Phelps in Free Haven."
 	evt.SetNPCTopic{NPC = 76, Index = 0, Event = 323}         -- "Zoltan Phelps" : "Quest"
 end
@@ -2839,7 +2839,7 @@ end
 evt.global[323] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 400) then         -- "Mordred"
-		evt.SetMessage(343)         -- "So this is the legendary Mordred, eh?  Interesting, I was expecting something much grander.  I donít think I want it, actually.  Why donít you keep it, and Iíll deal with my friend on the cost."
+		evt.SetMessage(343)         -- "So this is the legendary Mordred, eh?  Interesting, I was expecting something much grander.  I don‚Äôt think I want it, actually.  Why don‚Äôt you keep it, and I‚Äôll deal with my friend on the cost."
 		evt.Add("Awards", 47)         -- "Found Zoltan's Artifact"
 		evt.Add("Experience", 10000)
 		evt.ForPlayer("Current")
@@ -2849,13 +2849,13 @@ evt.global[323] = function()
 		evt.SetNPCTopic{NPC = 76, Index = 0, Event = 0}         -- "Zoltan Phelps"
 		evt.MoveNPC{NPC = 76, HouseId = 0}         -- "Zoltan Phelps"
 	else
-		evt.SetMessage(342)         -- "Hello again.  No one has found Mordred yet, so our deal is still good.  Iíll give you part of the selling price for the artifact if you return it."
+		evt.SetMessage(342)         -- "Hello again.  No one has found Mordred yet, so our deal is still good.  I‚Äôll give you part of the selling price for the artifact if you return it."
 	end
 end
 
 -- "Quest"
 evt.global[324] = function()
-	evt.SetMessage(344)         -- "Members of the Shadow Guild have moved down south recently, and have been trying to exert their influence over merchants in the area.  I refused them access to our town, so they kidnapped Sharry Carnegie, an old healer loved by the townspeople, in an attempt to ëconvinceí me to let them operate here.  I canít believe that their extortion has moved so far south, I thought I was safe from that down here.  Please rescue Sharryñ I can offer you some money as a reward, and Iím sure the townsfolk would appreciate her return."
+	evt.SetMessage(344)         -- "Members of the Shadow Guild have moved down south recently, and have been trying to exert their influence over merchants in the area.  I refused them access to our town, so they kidnapped Sharry Carnegie, an old healer loved by the townspeople, in an attempt to ‚Äòconvince‚Äô me to let them operate here.  I can‚Äôt believe that their extortion has moved so far south, I thought I was safe from that down here.  Please rescue Sharry‚Äì I can offer you some money as a reward, and I‚Äôm sure the townsfolk would appreciate her return."
 	evt.Add("QBits", 138)         -- "Rescue Sharry from the Shadow Guild Hideout and return with her to Frank Fairchild in New Sorpigal."
 	evt.SetNPCTopic{NPC = 3, Index = 0, Event = 325}         -- "Frank Fairchild" : "Quest"
 end
@@ -2863,7 +2863,7 @@ end
 -- "Quest"
 evt.global[325] = function()
 	if evt.Cmp("NPCs", 193) then         -- "Sharry Carnegie"
-		evt.SetMessage(346)         -- "Thank you so much for saving Sharry!  I canít tell you how much this means to both New Sorpigal and myself.  You have our gratitude forever."
+		evt.SetMessage(346)         -- "Thank you so much for saving Sharry!  I can‚Äôt tell you how much this means to both New Sorpigal and myself.  You have our gratitude forever."
 		evt.Subtract("NPCs", 193)         -- "Sharry Carnegie"
 		evt.Subtract("QBits", 138)         -- "Rescue Sharry from the Shadow Guild Hideout and return with her to Frank Fairchild in New Sorpigal."
 		evt.Add("Gold", 2000)
@@ -2872,7 +2872,7 @@ evt.global[325] = function()
 		evt.Add("Experience", 10000)
 		evt.SetNPCTopic{NPC = 3, Index = 0, Event = 0}         -- "Frank Fairchild"
 	else
-		evt.SetMessage(345)         -- "Have you found Sharry yet?  No?  Iím sure sheís wherever the Shadow Guild is hiding out.  Find them and youíll find her."
+		evt.SetMessage(345)         -- "Have you found Sharry yet?  No?  I‚Äôm sure she‚Äôs wherever the Shadow Guild is hiding out.  Find them and you‚Äôll find her."
 	end
 end
 
@@ -2880,7 +2880,7 @@ end
 evt.global[326] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 504) then         -- "Orders from the Shadow Guild"
-		evt.SetMessage(347)         -- "Interesting.  The Dragoons were hired by the Shadow Guild.  Iím certain Anthony Stone will want to hear about this.  Iíll present this letter when I see him next. Thank you for this.  Iím sure he will want to take action against the Shadow Guild now that we have some proof of their deeds."
+		evt.SetMessage(347)         -- "Interesting.  The Dragoons were hired by the Shadow Guild.  I‚Äôm certain Anthony Stone will want to hear about this.  I‚Äôll present this letter when I see him next. Thank you for this.  I‚Äôm sure he will want to take action against the Shadow Guild now that we have some proof of their deeds."
 		evt.Subtract("Inventory", 504)         -- "Orders from the Shadow Guild"
 		evt.Add("Experience", 5000)
 		evt.ForPlayer("Current")
@@ -2894,7 +2894,7 @@ end
 
 -- "New Sorpigal"
 evt.global[327] = function()
-	evt.SetMessage(348)         -- "Thank you for rescuing me from these horrible ruffians!  Iíd like to go back home to New Sorpigal now."
+	evt.SetMessage(348)         -- "Thank you for rescuing me from these horrible ruffians!  I‚Äôd like to go back home to New Sorpigal now."
 	--	evt.SummonMonsters{TypeIndexInMapStats = 2, Level = 2, Count = 2, X = -113, Y = 1158, Z = 0}
 	--  evt.SummonMonsters{TypeIndexInMapStats = 2, Level = 3, Count = 2, X = -1175, Y = 1158, Z = 0}
 	evt.Set("NPCs", 193)         -- "Sharry Carnegie"
@@ -2902,7 +2902,7 @@ end
 
 -- "Quest"
 evt.global[328] = function()
-	evt.SetMessage(349)         -- "Oh dear, can you help me?  My daughter Angela is missing!  I think she may have wandered into the abandoned temple near town, and if she did she could be in terrible dangerñ who knows what kind of horrible things are lurking in that cursed place!  Please find her and bring her back to me."
+	evt.SetMessage(349)         -- "Oh dear, can you help me?  My daughter Angela is missing!  I think she may have wandered into the abandoned temple near town, and if she did she could be in terrible danger‚Äì who knows what kind of horrible things are lurking in that cursed place!  Please find her and bring her back to me."
 	evt.Add("QBits", 139)         -- "Rescue Angela from the Abandoned Temple and return her to Violet Dawson in New Sorpigal."
 	evt.SetNPCTopic{NPC = 154, Index = 0, Event = 329}         -- "Violet Dawson" : "Quest"
 end
@@ -2910,7 +2910,7 @@ end
 -- "Quest"
 evt.global[329] = function()
 	if evt.Cmp("NPCs", 195) then         -- "Angela Dawson"
-		evt.SetMessage(351)         -- "Sheís alive!  Thank you so much for finding Angela!  If I werenít so happy to see her, sheíd be in a lot of trouble.  Please take this as a reward for all youíve done."
+		evt.SetMessage(351)         -- "She‚Äôs alive!  Thank you so much for finding Angela!  If I weren‚Äôt so happy to see her, she‚Äôd be in a lot of trouble.  Please take this as a reward for all you‚Äôve done."
 		evt.MoveNPC{NPC = 195, HouseId = 471}         -- "Angela Dawson" -> "House"
 		evt.Subtract("NPCs", 195)         -- "Angela Dawson"
 		evt.Subtract("QBits", 139)         -- "Rescue Angela from the Abandoned Temple and return her to Violet Dawson in New Sorpigal."
@@ -2922,13 +2922,13 @@ evt.global[329] = function()
 		evt.SetNPCTopic{NPC = 154, Index = 0, Event = 0}         -- "Violet Dawson"
 		evt.SetNPCTopic{NPC = 195, Index = 0, Event = 0}         -- "Angela Dawson"
 	else
-		evt.SetMessage(350)         -- "You didnít find poor Angela?  Something horrible must have happened to her!"
+		evt.SetMessage(350)         -- "You didn‚Äôt find poor Angela?  Something horrible must have happened to her!"
 	end
 end
 
 -- "Help!"
 evt.global[330] = function()
-	evt.SetMessage(352)         -- "I think I'm lostÖ<sob>ÖI want to go home!"
+	evt.SetMessage(352)         -- "I think I'm lost‚Ä¶<sob>‚Ä¶I want to go home!"
 	evt.Set("NPCs", 195)         -- "Angela Dawson"
 	local mon = SummonMonster(160, 1626, 4494, -861, true)
 	local mon = SummonMonster(160, 1473, 4720, -849, true)
@@ -2937,7 +2937,7 @@ end
 
 -- "Quest"
 evt.global[331] = function()
-	evt.SetMessage(353)         -- "A good friend of mine, Sherell, went with a group of friends to the islands in Bootleg Bay to explore an old temple rumored to be there.  Her friends returned and said she was captured by cannibals on the island and taken to some ancient temple.  Iím sure she doesnít have much time before they do something dreadful to her, please rescue her!"
+	evt.SetMessage(353)         -- "A good friend of mine, Sherell, went with a group of friends to the islands in Bootleg Bay to explore an old temple rumored to be there.  Her friends returned and said she was captured by cannibals on the island and taken to some ancient temple.  I‚Äôm sure she doesn‚Äôt have much time before they do something dreadful to her, please rescue her!"
 	evt.Add("QBits", 140)         -- "Rescue Sherell from the cannibals on the islands east of Free Haven and return with her to Carlo Tormini in Free Haven."
 	evt.SetNPCTopic{NPC = 200, Index = 0, Event = 332}         -- "Carlo Tormini" : "Quest"
 end
@@ -2945,7 +2945,7 @@ end
 -- "Quest"
 evt.global[332] = function()
 	if evt.Cmp("NPCs", 155) then         -- "Sherell Ivanaveh"
-		evt.SetMessage(355)         -- "Wonderful!  Sheís not dead after all!  Thank you for all your trouble.  I hope you will accept this token of my gratitude."
+		evt.SetMessage(355)         -- "Wonderful!  She‚Äôs not dead after all!  Thank you for all your trouble.  I hope you will accept this token of my gratitude."
 		evt.MoveNPC{NPC = 155, HouseId = 297}         -- "Sherell Ivanaveh" -> "House"
 		evt.Subtract("NPCs", 155)         -- "Sherell Ivanaveh"
 		evt.Subtract("QBits", 140)         -- "Rescue Sherell from the cannibals on the islands east of Free Haven and return with her to Carlo Tormini in Free Haven."
@@ -2956,19 +2956,19 @@ evt.global[332] = function()
 		evt.Add("Awards", 50)         -- "Rescued Sherell"
 		evt.SetNPCTopic{NPC = 200, Index = 0, Event = 0}         -- "Carlo Tormini"
 	else
-		evt.SetMessage(354)         -- "Oh dear!  You havenít found her yet?  Surely she must have been sacrificed or eaten or something.  Please try to find her, or at least avenge her death."
+		evt.SetMessage(354)         -- "Oh dear!  You haven‚Äôt found her yet?  Surely she must have been sacrificed or eaten or something.  Please try to find her, or at least avenge her death."
 	end
 end
 
 -- "Escape"
 evt.global[333] = function()
-	evt.SetMessage(356)         -- "Hello!  Please, oh please, get me out of this temple.  I donít want to die!"
+	evt.SetMessage(356)         -- "Hello!  Please, oh please, get me out of this temple.  I don‚Äôt want to die!"
 	evt.Set("NPCs", 155)         -- "Sherell Ivanaveh"
 end
 
 -- "Quest"
 evt.global[334] = function()
-	evt.SetMessage(357)         -- "Our town is under a terrible curse, though most people donít believe it.  Under a full moon, we all change into werewolves.  Although none of us are truly evil, we donít really know what sort of horrible things we do as werewolves.  We canít approach our lord, Acton Spindler about the problem because he doesnít realize that we are the werewolves.  Please find a way to turn us back to normal!"
+	evt.SetMessage(357)         -- "Our town is under a terrible curse, though most people don‚Äôt believe it.  Under a full moon, we all change into werewolves.  Although none of us are truly evil, we don‚Äôt really know what sort of horrible things we do as werewolves.  We can‚Äôt approach our lord, Acton Spindler about the problem because he doesn‚Äôt realize that we are the werewolves.  Please find a way to turn us back to normal!"
 	evt.Add("QBits", 141)         -- "Destroy the Werewolf's altar in the Lair of the Wolf and return to Maria Trepan in Blackshire."
 	evt.SetNPCTopic{NPC = 212, Index = 0, Event = 335}         -- "Maria Trepan" : "Quest"
 end
@@ -2976,7 +2976,7 @@ end
 -- "Quest"
 evt.global[335] = function()
 	if evt.Cmp("QBits", 17) then         -- 17 D17, given when wolf altar is destroyed.
-		evt.SetMessage(359)         -- "Thank you!  We can now sleep at night without worrying about what kinds of foul acts we will commit as monsters!  Itís a tragedy that our lord was a werewolf himself; heíll be sorely missed.  Please accept this for your help, and for believing in us."
+		evt.SetMessage(359)         -- "Thank you!  We can now sleep at night without worrying about what kinds of foul acts we will commit as monsters!  It‚Äôs a tragedy that our lord was a werewolf himself; he‚Äôll be sorely missed.  Please accept this for your help, and for believing in us."
 		evt.Subtract("QBits", 141)         -- "Destroy the Werewolf's altar in the Lair of the Wolf and return to Maria Trepan in Blackshire."
 		evt.Add("Gold", 4000)
 		evt.Add("ReputationIs", 100)
@@ -2986,7 +2986,7 @@ evt.global[335] = function()
 		evt.SetNPCTopic{NPC = 212, Index = 0, Event = 0}         -- "Maria Trepan"
 		evt.MoveNPC{NPC = 212, HouseId = 0}         -- "Maria Trepan"
 	else
-		evt.SetMessage(358)         -- "Is there no hope for us?  Please promise me youíll keep searching for a way to reverse the curse and turn us back to normal people."
+		evt.SetMessage(358)         -- "Is there no hope for us?  Please promise me you‚Äôll keep searching for a way to reverse the curse and turn us back to normal people."
 	end
 end
 
@@ -3030,7 +3030,7 @@ end
 evt.global[342] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 459) then         -- "Pearl of Purity"
-		evt.SetMessage(367)         -- "Whatís this?  You have the Pearl of Purity?  I thought Balthasarñ oh, heís dead is he?  Iíll keep it for now, then, as per his last wishes.  Thank you on behalf of both him and me."
+		evt.SetMessage(367)         -- "What‚Äôs this?  You have the Pearl of Purity?  I thought Balthasar‚Äì oh, he‚Äôs dead is he?  I‚Äôll keep it for now, then, as per his last wishes.  Thank you on behalf of both him and me."
 		evt.Subtract("Inventory", 459)         -- "Pearl of Purity"
 		evt.Add("Experience", 10000)
 		evt.ForPlayer("Current")
@@ -3053,12 +3053,12 @@ end
 
 -- "Advice"
 evt.global[349] = function()
-	evt.SetMessage(374)         -- "Hello again, my pupils!  I'm afraid there is nothing more I can teach youñ your experiences must guide you from this point on.  I know nothing more than you do about the devils that destroyed Sweet Water, but I know who you need to ask.  The Oracle in Free Haven will know what to do to rid Enroth of the terrible devils.  Unfortunately, you will need the approval of the six High Council members, each of which represents one of the lords of Enroth.  You must do whatever necessary to speak to the Oracle in Free Haven and rid Enroth of the devils."
+	evt.SetMessage(374)         -- "Hello again, my pupils!  I'm afraid there is nothing more I can teach you‚Äì your experiences must guide you from this point on.  I know nothing more than you do about the devils that destroyed Sweet Water, but I know who you need to ask.  The Oracle in Free Haven will know what to do to rid Enroth of the terrible devils.  Unfortunately, you will need the approval of the six High Council members, each of which represents one of the lords of Enroth.  You must do whatever necessary to speak to the Oracle in Free Haven and rid Enroth of the devils."
 end
 
 -- "Quest"
 evt.global[351] = function()
-	evt.SetMessage(379)         -- "Iíve discovered a way to reverse the effects of time and make myself young again.  This requires a complex magical ritual, which Iíve worked out.  The problem is that I need to place magical statuettes on various pedestals. The tiger statuette goes on the pedestal near Sweet Water, the bear statuette in Kriegspire, the eagle statuette in Dragonsand, the wolf statuette in the Mire of the Damned, and the dragon statuette in Bootleg Bay.  The distances are too far for me to travel in my old age, and in the meantime I need to prepare the ritual itself.  There is no way I can do all of this on my own; I need your help.  The statuettes are in the chest outside my house.  Place them on the pedestals and return to me.  Even if the ritual is a failure, I'll pay you for your efforts."
+	evt.SetMessage(379)         -- "I‚Äôve discovered a way to reverse the effects of time and make myself young again.  This requires a complex magical ritual, which I‚Äôve worked out.  The problem is that I need to place magical statuettes on various pedestals. The tiger statuette goes on the pedestal near Sweet Water, the bear statuette in Kriegspire, the eagle statuette in Dragonsand, the wolf statuette in the Mire of the Damned, and the dragon statuette in Bootleg Bay.  The distances are too far for me to travel in my old age, and in the meantime I need to prepare the ritual itself.  There is no way I can do all of this on my own; I need your help.  The statuettes are in the chest outside my house.  Place them on the pedestals and return to me.  Even if the ritual is a failure, I'll pay you for your efforts."
 	evt.Add("QBits", 219)         -- "Place the statuettes in Sweet Water, Kriegspire, Dragonsand, Mire of the Damned, and Bootleg Bay and return to Twillen in Blackshire."
 	evt.Add("QBits", 220)         -- NPC
 	evt.SetNPCTopic{NPC = 87, Index = 0, Event = 352}         -- "Twillen" : "Quest"
@@ -3066,17 +3066,17 @@ end
 
 -- "Quest"
 evt.global[352] = function()
-	evt.SetMessage(407)         -- "I have almost prepared the entire ritualñ all that is left is to place the statuettes."
+	evt.SetMessage(407)         -- "I have almost prepared the entire ritual‚Äì all that is left is to place the statuettes."
 end
 
 -- "Archibald"
 evt.global[353] = function()
-	evt.SetMessage(378)         -- "I was once the court magician, long ago.  That all ended when ArchibaldÖ disruptedÖ things.  Archibald had acquired some skill as a sorcerer and had knowledge of spells beyond that taught to magicians today, and therefore didnít require my services.  Since then, Iíve lived in this little shack, conducted my own research, and have grown old."
+	evt.SetMessage(378)         -- "I was once the court magician, long ago.  That all ended when Archibald‚Ä¶ disrupted‚Ä¶ things.  Archibald had acquired some skill as a sorcerer and had knowledge of spells beyond that taught to magicians today, and therefore didn‚Äôt require my services.  Since then, I‚Äôve lived in this little shack, conducted my own research, and have grown old."
 end
 
 -- "Quest"
 evt.global[354] = function()
-	evt.SetMessage(408)         -- "Good work!  I have my youth again, thanks to youñ have you ever thought about assisting me full-time?  I could certainly use reliable help.  I've managed to collect a variety of trinkets over the years, so please help yourself to a few of these in the chest outside as payment for your services.  I need to clean up a few things here, but I think I'll head back to Castle Ironfist and see if there's an opening for a court magician."
+	evt.SetMessage(408)         -- "Good work!  I have my youth again, thanks to you‚Äì have you ever thought about assisting me full-time?  I could certainly use reliable help.  I've managed to collect a variety of trinkets over the years, so please help yourself to a few of these in the chest outside as payment for your services.  I need to clean up a few things here, but I think I'll head back to Castle Ironfist and see if there's an opening for a court magician."
 	evt.Subtract("QBits", 219)         -- "Place the statuettes in Sweet Water, Kriegspire, Dragonsand, Mire of the Damned, and Bootleg Bay and return to Twillen in Blackshire."
 	evt.Add("QBits", 221)         -- NPC
 	evt.ForPlayer("All")
@@ -3088,7 +3088,7 @@ end
 
 -- "Quest"
 evt.global[355] = function()
-	evt.SetMessage(380)         -- "I was one of the mages studying at Kriegspire when the creatures there went completely out of control.  In my escape from the castle, I left a valuable item behind, a jeweled egg.  This egg is a family heirloom that goes back in my family as far as the Silence.  I have tried a few times to get it back, but the creatures there are too powerful for me.  Iíd gladly trade a generous sum of money to get my egg back."
+	evt.SetMessage(380)         -- "I was one of the mages studying at Kriegspire when the creatures there went completely out of control.  In my escape from the castle, I left a valuable item behind, a jeweled egg.  This egg is a family heirloom that goes back in my family as far as the Silence.  I have tried a few times to get it back, but the creatures there are too powerful for me.  I‚Äôd gladly trade a generous sum of money to get my egg back."
 	evt.Add("QBits", 144)         -- "Retrieve the jewelled egg from Castle Kriegspire and return it to Emil Lime in Kriegspire village."
 	evt.SetNPCTopic{NPC = 201, Index = 0, Event = 356}         -- "Emil Lime" : "Quest"
 end
@@ -3097,7 +3097,7 @@ end
 evt.global[356] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 480) then         -- "Jeweled Egg"
-		evt.SetMessage(382)         -- "Thank you for returning this egg to me; itís the most precious thing I have."
+		evt.SetMessage(382)         -- "Thank you for returning this egg to me; it‚Äôs the most precious thing I have."
 		evt.Subtract("Inventory", 480)         -- "Jeweled Egg"
 		evt.Add("Awards", 55)         -- "Retrieved Emil's Egg"
 		evt.Add("Experience", 50000)
@@ -3108,7 +3108,7 @@ evt.global[356] = function()
 		evt.SetNPCTopic{NPC = 201, Index = 0, Event = 0}         -- "Emil Lime"
 		evt.MoveNPC{NPC = 201, HouseId = 0}         -- "Emil Lime"
 	else
-		evt.SetMessage(381)         -- "Kriegspire is the castle inside the volcano.  We mages were forced to raise the earth around the castle to try and prevent the creatures from overrunning the surrounding towns.  Now theyíre contained inside, and thatís where the egg is."
+		evt.SetMessage(381)         -- "Kriegspire is the castle inside the volcano.  We mages were forced to raise the earth around the castle to try and prevent the creatures from overrunning the surrounding towns.  Now they‚Äôre contained inside, and that‚Äôs where the egg is."
 	end
 end
 
@@ -3121,12 +3121,12 @@ end
 
 -- "Servants"
 evt.global[358] = function()
-	evt.SetMessage(384)         -- "If you get lost in the caverns, you may find assistance from my servants.  If you have a piece of amber, they will assume you are under my care and will teleport you back to me if you talk to them.  If you do not have any amber, they will drain with some of your life force as payment for teleporting you back up here.  Donít worry, they rarely kill anyone."
+	evt.SetMessage(384)         -- "If you get lost in the caverns, you may find assistance from my servants.  If you have a piece of amber, they will assume you are under my care and will teleport you back to me if you talk to them.  If you do not have any amber, they will drain with some of your life force as payment for teleporting you back up here.  Don‚Äôt worry, they rarely kill anyone."
 end
 
 -- "Creature"
 evt.global[359] = function()
-	evt.SetMessage(385)         -- "The doors became warded when a strange creature came to reside here.  I am not familiar with this type of being, and Iíve seen many types in my long time here in Enroth.  I do not know why it chose this place as its home, or why there is only one, but I would like to see it destroyed for the trouble it has caused me. "
+	evt.SetMessage(385)         -- "The doors became warded when a strange creature came to reside here.  I am not familiar with this type of being, and I‚Äôve seen many types in my long time here in Enroth.  I do not know why it chose this place as its home, or why there is only one, but I would like to see it destroyed for the trouble it has caused me. "
 end
 
 -- "Quest"
@@ -3150,7 +3150,7 @@ end
 evt.global[362] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 448) then         -- "Ankh"
-		evt.SetMessage(389)         -- "So, Sir John was murdered and the Silver Helms were bought off by the Temple of Baa?  That explains a great deal.  Good work on bringing this to me, but youíll need to collect your reward from Anthony Stone."
+		evt.SetMessage(389)         -- "So, Sir John was murdered and the Silver Helms were bought off by the Temple of Baa?  That explains a great deal.  Good work on bringing this to me, but you‚Äôll need to collect your reward from Anthony Stone."
 		evt.Subtract("Inventory", 448)         -- "Ankh"
 		evt.Add("Experience", 10000)
 		evt.ForPlayer("Current")
@@ -3186,7 +3186,7 @@ end
 
 -- "Ceremony of the Sun"
 evt.global[365] = function()
-	evt.SetMessage(100)         -- "<Loretta Fleise contacts you via a telepathy spell> Welcome to the Ceremony of the Sun.  Stand ye in the circle of life and face the north while no shadows stretch before thee.  Meditate upon this truth:  ìMoney is everything.  I have no truer a friend than moneyÖî <grinning> Just kidding.  Now, close your eyes, and meditate as you stand at the center of the world and time for just this one, sublime momentÖ <long, silent pause>  Open your eyes.  I hereby promote all druids to great druids and all non-druids to honorary druids. <Loretta fades away> "
+	evt.SetMessage(100)         -- "<Loretta Fleise contacts you via a telepathy spell> Welcome to the Ceremony of the Sun.  Stand ye in the circle of life and face the north while no shadows stretch before thee.  Meditate upon this truth:  ‚ÄúMoney is everything.  I have no truer a friend than money‚Ä¶‚Äù <grinning> Just kidding.  Now, close your eyes, and meditate as you stand at the center of the world and time for just this one, sublime moment‚Ä¶ <long, silent pause>  Open your eyes.  I hereby promote all druids to great druids and all non-druids to honorary druids. <Loretta fades away> "
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Druid) then
@@ -3240,7 +3240,7 @@ end
 evt.global[376] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Awards", 6) then         -- "Fixed the Stable Prices"
-		evt.SetMessage(125)         -- "You have my vote, in Lorettaís name, to visit the Oracle."
+		evt.SetMessage(125)         -- "You have my vote, in Loretta‚Äôs name, to visit the Oracle."
 	else
 		evt.SetMessage(124)         -- "Lady Fleise could not possibly care less about your problems and I will therefore not even consider your request."
 	end
@@ -3292,7 +3292,7 @@ evt.global[380] = function()
 	end
 	evt.MoveNPC{NPC = 304, HouseId = 0}         -- "Slicker Silvertongue"
 	evt.Subtract("Inventory", 502)         -- "Letter from Zenofex"
-	evt.SetMessage(134)         -- "Do not believe you have won!  Soon the Iron Fist will lose its grip, and I will be your king!  And you can be sure I won't forget youÖ"
+	evt.SetMessage(134)         -- "Do not believe you have won!  Soon the Iron Fist will lose its grip, and I will be your king!  And you can be sure I won't forget you‚Ä¶"
 	evt.Add("ReputationIs", 200)
 	evt.Set("QBits", 168)         -- NPC
 	evt.ForPlayer("All")
@@ -3332,56 +3332,56 @@ end
 
 -- "Barrel of Red liquid"
 evt.global[411] = function()
-	evt.StatusText(411)         -- "+1 Might permanent"
-	evt.Add("BaseMight", 1)
+	Game.ShowStatusText("+5 Might permanent")        -- "+1 Might permanent"
+	evt.Add("BaseMight", 5)
 	evt.Set("AutonotesBits", 117)         -- "Red liquid grants Might."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Yellow liquid"
 evt.global[412] = function()
-	evt.StatusText(412)         -- "+1 Accuracy permanent"
-	evt.Add("BaseAccuracy", 1)
+	Game.ShowStatusText("+5 Accuracy permanent")         -- "+1 Accuracy permanent"
+	evt.Add("BaseAccuracy", 5)
 	evt.Set("AutonotesBits", 121)         -- "Yellow liquid grants Accuracy."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Blue liquid"
 evt.global[413] = function()
-	evt.StatusText(413)         -- "+1 Personality permanent"
-	evt.Add("BasePersonality", 1)
+	Game.ShowStatusText("+5 Personality permanent")         -- "+1 Personality permanent"
+	evt.Add("BasePersonality", 5)
 	evt.Set("AutonotesBits", 119)         -- "Blue liquid grants Personality."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Orange liquid"
 evt.global[414] = function()
-	evt.StatusText(414)         -- "+1 Intellect permanent"
-	evt.Add("BaseIntellect", 1)
+	Game.ShowStatusText("+5 Intellect permanent")         -- "+1 Intellect permanent"
+	evt.Add("BaseIntellect", 5)
 	evt.Set("AutonotesBits", 118)         -- "Orange liquid grants Intellect."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Green liquid"
 evt.global[415] = function()
-	evt.StatusText(415)         -- "+1 Endurance permanent"
-	evt.Add("BaseEndurance", 1)
+	Game.ShowStatusText("+5 Endurance permanent")         -- "+1 Endurance permanent"
+	evt.Add("BaseEndurance", 5)
 	evt.Set("AutonotesBits", 120)         -- "Green liquid grants Endurance."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Purple liquid"
 evt.global[416] = function()
-	evt.StatusText(416)         -- "+1 Speed permanent"
-	evt.Add("BaseSpeed", 1)
+	Game.ShowStatusText("+5 Speed permanent")         -- "+1 Speed permanent"
+	evt.Add("BaseSpeed", 5)
 	evt.Set("AutonotesBits", 122)         -- "Purple liquid grants Speed."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of White liquid"
 evt.global[417] = function()
-	evt.StatusText(417)         -- "+1 Luck permanent"
-	evt.Add("BaseLuck", 1)
+	Game.ShowStatusText("+5 Luck permanent")         -- "+1 Luck permanent"
+	evt.Add("BaseLuck", 5)
 	evt.Set("AutonotesBits", 123)         -- "White liquid grants Luck."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
@@ -3393,40 +3393,40 @@ end
 
 -- "Steaming Brew"
 evt.global[419] = function()
-	evt.StatusText(419)         -- "+1 Fire resistance permanent"
-	evt.Add("FireResistance", 1)
+	Game.ShowStatusText("+5 Fire resistance permanent")         -- "+1 Fire resistance permanent"
+	evt.Add("FireResistance", 5)
 	evt.Set("AutonotesBits", 124)         -- "Steaming liquid grants Fire Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Frosty Brew"
 evt.global[420] = function()
-	evt.StatusText(420)         -- "+1 Cold resistance permanent"
-	evt.Add("ColdResistance", 1)
+	Game.ShowStatusText("+5 Cold resistance permanent")         -- "+1 Cold resistance permanent"
+	evt.Add("ColdResistance", 5)
 	evt.Set("AutonotesBits", 125)         -- "Frosty liquid grants Cold Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Shocking Brew"
 evt.global[421] = function()
-	evt.StatusText(421)         -- "+1 Electric resistance permanent"
-	evt.Add("ElecResistance", 1)
+	Game.ShowStatusText("+5 Electric resistance permanent")         -- "+1 Electric resistance permanent"
+	evt.Add("ElecResistance", 5)
 	evt.Set("AutonotesBits", 126)         -- "Shocking liquid grants Electricity Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Noxious Brew"
 evt.global[422] = function()
-	evt.StatusText(422)         -- "+1 Poison resistance permanent"
-	evt.Add("PoisonResistance", 1)
+	Game.ShowStatusText("+5 Poison resistance permanent")         -- "+1 Poison resistance permanent"
+	evt.Add("PoisonResistance", 5)
 	evt.Set("AutonotesBits", 127)         -- "Noxious liquid grants Poison Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Magical Brew"
 evt.global[423] = function()
-	evt.StatusText(423)         -- "+1 Magic resistance permanent"
-	evt.Add("MagicResistance", 1)
+	Game.ShowStatusText("+5 Magic resistance permanent")         -- "+1 Magic resistance permanent"
+	evt.Add("MagicResistance", 5)
 	evt.Set("AutonotesBits", 128)         -- "Magical liquid grants Magic Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end

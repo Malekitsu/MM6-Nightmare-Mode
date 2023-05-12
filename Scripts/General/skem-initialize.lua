@@ -17,6 +17,23 @@ local PRESETS = {
 	["GlobalMapResetDays"] = "default",
 	["DifficultyModifier"] = 1.00,
 	HomingProjectiles = true,
+	["KnightAsBloodKnight"] = false,
+	["KnightAsGreyKnight"] = false,
+	["ArcherAsAssassin"] = false,
+	["ArcherAsAshikari"] = false,
+	["PaladinAsBerseker"] = false,
+	["SorcererAsNecromancer"] = false,
+	["ClericAsSeraphin"] = false,
+	["Mastery"] = true,
+	["SorcererAsShadow"] = false,
+	["DruidAsHerbalist"] = false,
+	["DruidAsShaman"] = false,
+	["EqualizedMode"] = false,
+	["ItemRework"] = true,
+	["StatsRework"] = true,
+	["ShowDamageTaken"] = false,
+	["StatusRework"] = true,
+	["ReworkedMagicDamageCalculation"] = true
 }
 
 SETTINGS = { }
