@@ -40,6 +40,17 @@ table.copy(TXT, evt.str, true)
 
 evt.map[100] = function()
 	if mapvars.spawn ~= 1 then 
+	mapvars.event=true
+	
+	vars.portal=vars.portal or {}
+	for i=0,3 do
+		if Party[i].Spells[31]==true then
+			Party[i].Spells[31]=false
+			vars.portal[i]=true
+		end
+	end
+
+		
 	evt.StatusText(32)
 	mapvars.spawn =  1
 	evt.SetDoorState{Id = 2, State = 0}
@@ -87,7 +98,13 @@ evt.map[102] = function()
 			Message("The lich powers flow through your body")
 			evt.ForPlayer("All")
 			evt.Add("Experience", 20000)
-		mapvars.powers = 1
+			mapvars.powers = 1			
+			for i=0,3 do
+				if vars.portal[i]==true then
+					Party[i].Spells[31]=true
+				end
+			end
+		
 		end	
 	end
 end

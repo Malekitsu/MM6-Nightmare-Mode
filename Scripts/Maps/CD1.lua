@@ -33,6 +33,14 @@ evt.map[100] = function()
 		evt.StatusText(22)
 		if mapvars.alert == nil then
 		mapvars.alert = 1
+		vars.portal=vars.portal or {}
+		mapvars.event=true
+		for i=0,3 do
+			if Party[i].Spells[31]==true then
+				Party[i].Spells[31]=false
+				vars.portal[i]=true
+			end
+		end
 		evt.SetDoorState{Id = 10, State = 0}
 		Sleep(500)
 		pseudoSpawnpoint{monster = 91, x = 1318, y = 1166, z = 245, count = 1, powerChances = {100, 00, 0}, radius = 64, group = 255, ShowOnMap = true}
@@ -62,7 +70,13 @@ evt.map[100] = function()
 		pseudoSpawnpoint{monster = 91, x = 1318, y = 1166, z = 245, count = 1, powerChances = {0, 0, 100}, radius = 64, group = 255}	
 		Message("A dark presence is approaching the door")
 		Sleep(3000)
-		pseudoSpawnpoint{monster = 88, x = 1318, y = 1166, z = 245, count = 5, powerChances = {0, 0, 100}, radius = 64, group = 255}			
+		pseudoSpawnpoint{monster = 88, x = 1318, y = 1166, z = 245, count = 5, powerChances = {0, 0, 100}, radius = 64, group = 255}
+		for i=0,3 do
+			if vars.portal[i]==true then
+				Party[i].Spells[31]=true
+			end
+		end		
+		mapvars.event=false
 		end	
 	end
 end

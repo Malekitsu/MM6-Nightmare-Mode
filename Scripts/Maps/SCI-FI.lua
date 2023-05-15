@@ -59,6 +59,7 @@ if vars.endDoor==nil then
 		Party[i].Spells[31]=false
 		Party[i].Spells[33]=false
 	end
+	mapvars.event=true
 	Sleep(250)
 	Message("???:\nYou are not supposed to be here, I will not let you interfere with my plans, I exile you to another dimension")
 	Sleep(250)
@@ -739,3 +740,25 @@ function events.CalcDamageToMonster(t)
 	Message("As the Creator die, a path to a new dimension has been opened somewhere, you are now free to leave, but first let's report to Oracle")
 	end
 end
+
+
+function events.CanSaveGame(t)
+	if mapvars.event then
+	t.Result=false
+	Game.ShowStatusText("Can't save now")
+	else
+	t.Result=true
+	end
+end
+
+function events.CanCastLloyd(t)
+	if mapvars.event then
+	t.Result=false
+	Sleep(1)
+	Game.ShowStatusText("Can't teleport now")
+	else
+	t.Result=true
+	end
+end
+
+mapvars.event=false

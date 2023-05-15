@@ -51,6 +51,7 @@ evt.map[3] = function()
 evt.SetMessage(2)   
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("3")
 		Sleep(100)
@@ -88,6 +89,7 @@ evt.SetMessage(2)
 		pseudoSpawnpoint{monster = 40, x = 5200, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
 		pseudoSpawnpoint{monster = 40, x = 3800, y = 8468, z = 500, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(180)(mon); mon.Name="Celestial Blue Dragon" mon.TreasureGold= 0 mon.TreasureItemPercent = 100 mon.TreasureGold= 0 mon.Item = 579  mon.Experience = 36000 end}
 		pseudoSpawnpoint{monster = 40, x = 2400, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+		mapvars.event=false
 	else 
 		Game.ShowStatusText("Choose carefully")
 	end
@@ -99,6 +101,7 @@ evt.map[4] = function()
 evt.SetMessage(5)   
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("3")
 		Sleep(100)
@@ -147,6 +150,7 @@ evt.SetMessage(5)
 		pseudoSpawnpoint{monster = 40, x = 3800, y = 8468, z = 200, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(180)(mon); mon.Name="Celestial Blue Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
 		pseudoSpawnpoint{monster = 40, x = 2400, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Red Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
 		pseudoSpawnpoint{monster = 40, x = 3800, y = 8468, z = 600, count = 1, powerChances = {0, 0, 100}, radius = 0, group = 255, transform = function(mon) genericTransform(200)(mon); mon.Name="Celestial Gold Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+		mapvars.event=false
 	else 
 		Game.ShowStatusText("Choose carefully")
 	end   
@@ -156,8 +160,9 @@ end
 evt.hint[5] = "third trial"
 evt.map[5] = function()   
 evt.SetMessage(6)   
-	if evt.Question{Question = 3, Answer1 = 4} then      
+	if evt.Question{Question = 3, Answer1 = 4} then  
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("Let the fight start!")
 		Sleep(50)
@@ -202,6 +207,7 @@ evt.SetMessage(6)
 		pseudoSpawnpoint{monster = 166, x = 4780, y = 9497, z = 0, count = 1, powerChances = {0, 100, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(220)(mon); mon.Name="Celestial Divine Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}	
 		Sleep(1000)
 		pseudoSpawnpoint{monster = 166, x = 3780, y = 9497, z = 0, count = 1, powerChances = {0, 0, 100}, radius = 256, group = 255, transform = function(mon) genericTransform(250)(mon); mon.Name="Champion of the Gods" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}		
+		mapvars.event=false
 	else 
 		Game.ShowStatusText("Choose carefully")
 	end 

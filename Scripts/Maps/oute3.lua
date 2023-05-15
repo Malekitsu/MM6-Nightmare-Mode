@@ -621,6 +621,7 @@ end
 evt.map[666] = function()  -- Timer(<function>, 5*const.Minute)
 	if vars.Endoftheworld then
 		Game.PlayTrack(1)
+		mapvars.event=true
 		vars.EndoftheworldStarted=true
 		vars.Endoftheworld=false
 		vars.noStable=true
@@ -673,6 +674,17 @@ end
 
 Timer(evt.map[666].last, 3*const.Minute)
 
+if vars.Endoftheworld then
+	mapvars.event=true
+end
+
+if mapvars.event then
+	Game.FlyCeiling=0
+	else
+	Game.FlyCeiling=3000
+end
+
+
 
 evt.hint[131] = evt.str[7]  -- "Drink from Fountain"
 evt.map[131] = function()
@@ -723,6 +735,7 @@ evt.map[131] = function()
 		Message("Mortal, the gods have taken notice of your actions and find you worthy of a great challenge. You shall be tested in the celestial arena, where your true value shall be determined.\nDo not fear, for you have been chosen for a reason. Your strength, courage, and wisdom have not gone unnoticed, and the gods have faith that you will succeed in this challenge.")
 		vars.Endfight=false
 		vars.noStable=false
+		mapvars.event=false
 		evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
 		end
 	end
