@@ -597,26 +597,83 @@ end
 
 function applyAdaptiveMonsterOverrides(monsterID, monsterArray, adaptive_level)
 
+
 	genericForm = Game.MonstersTxt[monsterArray["Id"]]
 
 	oldLevel = math.max(genericForm["Level"],1)
 	offset = calculateTierLevelOffset(genericForm)
-	newLevel = math.max(1, adaptive_level + offset)
-	monsterArray["Level"] = newLevel
+	Mlevel = monsterArray["Level"]
 	
-	levelMultiplier = (newLevel) / (oldLevel)
+	if Mlevel == oldLevel or adaptive_level > (Mlevel*0.7-5) then
 	
-	local damageMultiplier, rankMultiplier = calculateMonsterDamageMultipliers(monsterArray, easy_flag)
-	applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMultiplier, easy_flag)
+	xLevel = (adaptive_level+2+offset/4*adaptive_level^0.2) *((57+math.random(1,30)+math.random(1,30))/100)
+	newLevel = math.max(1, xLevel)
+ItemMod = 1
+if SETTINGS["ItemRework"]==true	then	
+	ItemMod = (newLevel^1.15-1)/1000+1
+			end
+	if SETTINGS["StatsRework"]==true then
+ItemMod = ItemMod * (newLevel^1.15-1)/1000+1
+end
 
-	monsterArray["FullHP"] = genericForm["FullHP"] * levelMultiplier
+	levelMultiplier = (newLevel+1) / (oldLevel+1)
 
-	monsterArray["HP"] = monsterArray["FullHP"]
+	bonusx1 = genericForm["Attack1"]["DamageAdd"]
+	dicex1 = genericForm["Attack1"]["DamageDiceCount"]
+	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
+	
+	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
+	sidesx1 = math.max(1, (sidesx1  * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod))
+	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5)*ItemMod)
+
+	if bonusx1 > 250 then
+	sidesx1 = sidesx1 + (bonusx1 - 250) / dicex1 * 2
+	bonusx1 =250
+	end
+	
+	monsterArray["Attack1"]["DamageAdd"] = bonusx1
+	monsterArray["Attack1"]["DamageDiceCount"] = dicex1
+	monsterArray["Attack1"]["DamageDiceSides"] = sidesx1
+
+	if not (monsterArray["Attack2Chance"] == 0)
+	then
+
+	bonusx2 = genericForm["Attack2"]["DamageAdd"]
+	dicex2 = genericForm["Attack2"]["DamageDiceCount"]
+	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
+	
+	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod))
+	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5*ItemMod))
+
+	if bonusx2 > 250 then
+	sidesx2 = sidesx2 + (bonusx2 - 250) / dicex2 * 2
+	bonusx2 =250
+	end
+	
+	monsterArray["Attack2"]["DamageAdd"] = bonusx2
+	monsterArray["Attack2"]["DamageDiceCount"] = dicex2
+	monsterArray["Attack2"]["DamageDiceSides"] = sidesx2
+
+
+	elseif not (monsterArray["SpellChance"] == 0)
+	then
+		r,m = SplitSkill(genericForm["SpellSkill"])
+		r = math.max(1, math.round(r * levelMultiplier/1.5*ItemMod))
+		monsterArray["SpellSkill"] = JoinSkill(r,m)
+	end
+
+
+	monsterArray["FullHP"] = math.round(newLevel*(newLevel/10+3)) * 2 * ItemMod
+
+	monsterArray["HP"] = math.round(newLevel*(newLevel/10+3)) * 2 * ItemMod
 
 	monsterArray["ArmorClass"] = genericForm["ArmorClass"] * levelMultiplier
-
-	monsterArray["Experience"] = genericForm["Experience"] * levelMultiplier
-	monsterArray["TreasureDiceCount"] = genericForm["TreasureDiceCount"] * levelMultiplier
+	monsterArray["Level"] = newLevel
+	monsterArray["Experience"] = math.round(newLevel*(newLevel+10))
+	monsterArray["TreasureDiceCount"] = genericForm["TreasureDiceCount"] * levelMultiplier^1.2
+	monsterArray["TreasureItemPercent"] = genericForm["TreasureItemPercent"]*levelMultiplier
+	monsterArray["TreasureItemLevel"] = genericForm["TreasureItemLevel"]+newLevel^0.4-oldLevel^0.39
 	
 	if (adaptive_level > genericForm["Level"])
 	then
@@ -625,14 +682,137 @@ function applyAdaptiveMonsterOverrides(monsterID, monsterArray, adaptive_level)
 			if not (k == "Energy")
 			then
 				key = k .. "Resistance"
-				value = monsterArray[key]
-				value = value * (adaptive_level + 100)/(genericForm["Level"] + 100) + (adaptive_level - genericForm["Level"])/2
+				value = genericForm[key]
+				value = value * (adaptive_level + 100)/(genericForm["Level"] + 100) + (adaptive_level - genericForm["Level"])/5
 				monsterArray[key] = value
 			end
 		end
 	end
 	
 	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
+end
+end
+
+function applyAdaptiveMonsterOverrides100(monsterID, monsterArray, adaptive_level)
+
+
+	genericForm = Game.MonstersTxt[monsterArray["Id"]]
+	oldLevel = math.max(genericForm["Level"],1)
+	offset = calculateTierLevelOffset(genericForm)
+	Mlevel = monsterArray["Level"]
+
+	if Mlevel == oldLevel or Mlevel == (200 + oldLevel) then
+	xLevel = oldLevel * 1.5 + 100
+	newLevel = math.max(1, xLevel)
+ItemMod = 1
+if SETTINGS["ItemRework"]==true	then	
+	ItemMod = (newLevel^1.15-1)/1000+1
+			end
+	if SETTINGS["StatsRework"]==true then
+ItemMod = ItemMod * (newLevel^1.15-1)/1000+1
+end
+
+	levelMultiplier = (100+2) / (oldLevel+2)
+	
+
+	bonusx1 = genericForm["Attack1"]["DamageAdd"]
+	dicex1 = genericForm["Attack1"]["DamageDiceCount"]
+	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
+	damax1 = dicex1 *(1+sidesx1) / 2 + bonusx1
+	
+	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)) *(newLevel/100)*ItemMod)
+	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+
+	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Phys) or (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
+	bonusx1 = bonusx1 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax1)^0.8)
+	sidesx1 = sidesx1 * (60 - newLevel / 13 ) /100 * math.max(1, (oldLevel/damax1)^0.8)
+	end	
+
+	if bonusx1 > 250 then
+	sidesx1 = sidesx1 + (bonusx1 - 250) / dicex1 * 2
+	bonusx1 =250
+	end
+				
+	if sidesx1 > 250 then
+	dicex1 = dicex1 + (sidesx1 - 250) * dicex1 / 250
+	sidesx1 = 250
+	end
+	
+	monsterArray["Attack1"]["DamageAdd"] = bonusx1
+	monsterArray["Attack1"]["DamageDiceCount"] = dicex1
+	monsterArray["Attack1"]["DamageDiceSides"] = sidesx1
+
+	if not (monsterArray["Attack2Chance"] == 0)
+	then
+
+	bonusx2 = genericForm["Attack2"]["DamageAdd"]
+	dicex2 = genericForm["Attack2"]["DamageDiceCount"]
+	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
+	damax2 = dicex2 *(1+sidesx2) / 2 + bonusx2
+			
+	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75) *(newLevel/100)*ItemMod))
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+
+	if newLevel>35 and (genericForm["Attack2"]["Type"] == const.Damage.Phys) or (genericForm["Attack2"]["Type"] == const.Damage.Energy) then
+
+	bonusx2 = bonusx2 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax2)^0.8)
+	sidesx2 = sidesx2 * (60 - newLevel / 13 ) /100 * math.max(1, (oldLevel/damax2)^0.8)
+
+	end
+
+	if bonusx2 > 250 then
+	sidesx2 = sidesx2 + (bonusx2 - 250) / dicex2 *2
+	bonusx2 =250
+	end
+	
+	if sidesx2 > 250 then
+	dicex2 = dicex2 + (sidesx2 - 250) * dicex2 / 250
+	sidesx2 = 250
+	end	
+			
+	monsterArray["Attack2"]["DamageAdd"] = bonusx2
+	monsterArray["Attack2"]["DamageDiceCount"] = dicex2
+	monsterArray["Attack2"]["DamageDiceSides"] = sidesx2
+
+
+	elseif not (monsterArray["SpellChance"] == 0)
+	then
+		r,m = SplitSkill(genericForm["SpellSkill"])
+		r = math.max(1, math.round(r*ItemMod))
+		monsterArray["SpellSkill"] = JoinSkill(r,m)
+	end
+
+
+	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125
+
+	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125
+
+	monsterArray["ArmorClass"] = genericForm["ArmorClass"] * levelMultiplier * newLevel / 100
+	monsterArray["Level"] = newLevel
+	monsterArray["Experience"] = math.round(newLevel*(newLevel+10)/3)
+	monsterArray["TreasureDiceCount"] = genericForm["TreasureDiceCount"] * levelMultiplier
+	monsterArray["TreasureDiceSides"] = genericForm["TreasureDiceSides"] * (newLevel / 100) * levelMultiplier
+	monsterArray["TreasureItemPercent"] = (100-genericForm["TreasureItemPercent"])/5+genericForm["TreasureItemPercent"]
+	monsterArray["TreasureItemLevel"] = genericForm["TreasureItemLevel"]+math.random(0,6-genericForm["TreasureItemLevel"])
+	
+	if (adaptive_level > 0)
+	then
+		for k,_ in pairs(resistanceTypes)
+		do
+			if not (k == "Energy")
+			then
+				key = k .. "Resistance"
+				value = genericForm[key]
+				value = value * 200/(genericForm["Level"]+100) + (120+genericForm["Level"]-value)/4
+				monsterArray[key] = value
+			end
+		end
+	end
+	monsterArray["Magic".."Resistance"] = monsterArray["Magic".."Resistance"] + (255 - monsterArray["Magic".."Resistance"])/5
+	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
+end
 end
 
 mem.asmpatch(0x431A7D, [[
