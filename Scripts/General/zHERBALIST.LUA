@@ -47,8 +47,8 @@ if FHPx > from then
 			if mastery>=64 then
 			mastery=mastery-64
 			end
-chance=mastery^0.3*10
-			if math.random(1,1000)/10<chance then
+chance=mastery*3+5
+			if math.random(1,200)<chance then
 					heal=t.Result-t.Player.LevelBase*0.5-t.Player.HP
 					evt[t.PlayerIndex].Add("HP",heal)
 			Game.ShowStatusText("Forces of Nature saves you from lethal damage")
@@ -69,4 +69,4 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Spirit] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
 end
 end
-end
+--end

@@ -1,26 +1,6 @@
 SERAPHIN=SETTINGS["ClericAsSeraphin"]
 if SERAPHIN==true then
 
---light magic will increase damage done melee
-function events.CalcDamageToMonster(t)
-	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) and t.DamageKind==0 and data.Object==nil then
-		mastery=data.Player.Skills[const.Skills.Light]
-		rankBonus=1
-		if mastery>=64 then 
-		mastery=mastery-64
-		rankBonus=1.5
-		end
-		if mastery>=64 then
-		mastery=mastery-64
-		rankBonus=2
-		end
-		t.Result=t.Result+2*mastery*rankBonus
-	end
-end
-
-
-
 --body magic will increase healing done on attack
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
@@ -30,11 +10,11 @@ function events.CalcDamageToMonster(t)
 		rankBonus=1
 		if body>=64 then 
 		body=body-64
-		rankBonus=1
+		rankBonus=1.5
 		end
 		if body>=64 then
 		body=body-64
-		rankBonus=1
+		rankBonus=2
 		end
 		--get mastery
 		mastery=data.Player.Skills[const.Skills.Thievery]
@@ -44,6 +24,13 @@ function events.CalcDamageToMonster(t)
 		if mastery>=64 then
 		mastery=mastery-64
 		end
+		rankBonusMH=1
+if data.Player.Class==const.Class.Priest then
+		rankBonusMH=2
+end
+if data.Player.Class==const.Class.HighPriest then
+		rankBonusMH=3
+end
 				--get light
 		light=data.Player.Skills[const.Skills.Light]
 		rankBonus=1
@@ -104,7 +91,7 @@ function events.CalcDamageToMonster(t)
 		min_index = indexof({a, b, c, d}, min_value)
 		min_index = min_index - 1
 		--Calculate heal value and apply
-		healValue=2*body*rankBonus+mastery*3+math.max(4*spirit-2*light-mastery*2+body, 0)
+		healValue=body*rankBonus+mastery*rankBonusMH+math.max(4*spirit-2*light-mastery*2+body, 0)
 		evt[min_index].Add("HP",healValue)		
 		--bug fix
 		if Party[min_index].HP>0 then
@@ -124,11 +111,11 @@ function events.CalcDamageToMonster(t)
 		rankBonus=1
 		if light>=64 then 
 		light=light-64
-		rankBonus=1
+		rankBonus=1.5
 		end
 		if light>=64 then
 		light=light-64
-		rankBonus=1
+		rankBonus=2
 		end
 		--get mastery
 		mastery=data.Player.Skills[const.Skills.Thievery]
@@ -138,7 +125,16 @@ function events.CalcDamageToMonster(t)
 		if mastery>=64 then
 		mastery=mastery-64
 		end
-		t.Result=t.Result+2*light*rankBonus+(mastery*4)
+		rankBonusMD=1
+if data.Player.Class==const.Class.Priest then
+		rankBonusMD=2
+end
+if data.Player.Class==const.Class.HighPriest then
+		rankBonusMD=4
+end
+
+
+		t.Result=t.Result+light*rankBonus+(mastery*rankBonusMD)
 		end
 end
 

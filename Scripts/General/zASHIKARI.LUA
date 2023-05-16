@@ -44,9 +44,9 @@ function events.CalcDamageToMonster(t)
 		if m5>=64 then
 		m5=m5-64
 		end
-m6=m2+m3+m4+m5+m1
+m6=math.max(m2, m3, m4, m5, m1)
 		data.Player.SP=data.Player.SP+t.Result*20/100
-			t.Result=t.Result*0.85+m6
+			t.Result=t.Result*0.85+m6*2
 
 end
 end
@@ -69,7 +69,7 @@ end
 modif = data.Player.LevelBase
 	modik = data.Player.Exp
 	modit = modik-modif *(modif-1)*500
-t.Result = t.Result + modit^(mastery^0.5/10)
+t.Damage = t.Damage + modit^(mastery^0.5/10)
 end
 	
 end
@@ -94,9 +94,9 @@ function events.GameInitialized2()
 Game.ClassNames[const.Class.Archer]="Ashikari"
 Game.ClassNames[const.Class.BattleMage]="Rune Master"
 Game.ClassNames[const.Class.WarriorMage]="Hex Lord"
-Game.ClassDescriptions[const.Class.Archer] = "Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 1 for every rank in every magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 0.5 pr level, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)." 
-Game.ClassDescriptions[const.Class.BattleMage] ="Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 1 for every rank in every magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 0.5 pr level, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)." 
-Game.ClassDescriptions[const.Class.WarriorMage] ="Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 1 for every rank in every magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 0.5 pr level, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)."
+Game.ClassDescriptions[const.Class.Archer] = "Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 2 for every rank in your highest magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 3 pr rank in mastery, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)." 
+Game.ClassDescriptions[const.Class.BattleMage] ="Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 1 for every rank in every magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 3 pr rank in mastery, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)." 
+Game.ClassDescriptions[const.Class.WarriorMage] ="Ashikaris are mystical warriors covered in magical tatoos. Physical attacks are increased by 1 for every rank in every magic skill. Their mana is low but melee attacks regenerate mana (20% of damage done). In addition their damage with spells is increased by about 3 pr rank in mastery, depending how much XP they have more than required for current level (the more extra XP, the higher bonus damage)."
 
 end
 end

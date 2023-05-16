@@ -54,7 +54,7 @@ function events.CalcDamageToPlayer(t)
 	end
 
 	modi = t.Player.LevelBase+3
-	t.Player.SP=t.Player.SP+t.Result/modi
+	t.Player.SP=t.Player.SP+t.Result/modi*mastery
 	t.Result=t.Result/100*mastery
 	Game.ShowStatusText("Absorbed")
 	end
@@ -78,6 +78,18 @@ function events.CalcSpellDamage(t)
 
 	modik = data.Player.LevelBase
 	t.Result = math.max(t.Result - modik^0.7 * (2.5 - 0.5 * mastery), 1)
+	end
+end
+
+function events.CalcStatBonusByItems(t)
+	if (t.Player.Class==const.Class.ArchMage or t.Player.Class==const.Class.Wizard or t.Player.Class==const.Class.Sorcerer) and t.Stat == const.Stats.SP then
+	t.Result=t.Result^0.67
+	end
+end
+
+function events.CalcStatBonusByItems(t)
+	if (t.Player.Class==const.Class.ArchMage or t.Player.Class==const.Class.Wizard or t.Player.Class==const.Class.Sorcerer) and t.Stat == const.Stats.HP then
+	t.Result=t.Result^0.67
 	end
 end
 
