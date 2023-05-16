@@ -702,7 +702,7 @@ function applyAdaptiveMonsterOverrides100(monsterID, monsterArray, adaptive_leve
 	Mlevel = monsterArray["Level"]
 
 	if Mlevel == oldLevel or Mlevel == (200 + oldLevel) then
-	xLevel = oldLevel * 1.5 + 100
+	xLevel = oldLevel * 1.25 + 100
 	newLevel = math.max(1, xLevel)
 ItemMod = 1
 if SETTINGS["ItemRework"]==true	then	
