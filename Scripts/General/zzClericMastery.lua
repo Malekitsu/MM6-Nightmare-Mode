@@ -14,7 +14,6 @@ function events.HealingSpellPower(t)
 	mastery=mastery-64
 	rank=3
 	end
-if t.spell
 XSP = t.Caster.SP * mastery * 0.001
 t.Caster.SP = t.Caster.SP - XSP
 t.Result =t.Result+XSP^0.7*mastery
