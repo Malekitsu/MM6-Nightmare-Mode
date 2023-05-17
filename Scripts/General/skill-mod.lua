@@ -303,22 +303,22 @@ local newWeaponSkillResistanceBonuses =
 local newArmorSkillACBonuses =
 {
 	[const.Skills.Shield]	= {1, 2, 3, },
-	[const.Skills.Leather]	= {3, 3, 3, },
-	[const.Skills.Chain]	= {3, 3, 3, },
-	[const.Skills.Plate]	= {3, 3, 3, },
+	[const.Skills.Leather]	= {1, 2, 3, },
+	[const.Skills.Chain]	= {2, 3, 5, },
+	[const.Skills.Plate]	= {3, 5, 7, },
 }
 
 -- armor skill resistance bonuses (by rank)
 
 local newArmorSkillResistanceBonuses =
 {
-	[const.Skills.Leather]	= {3, 3, 6, },
-	[const.Skills.Chain]	= {3, 3, 3, },
-	[const.Skills.Plate]	= {0, 0, 0, },
+	[const.Skills.Leather]	= {2, 4, 6, },
+	[const.Skills.Chain]	= {2, 3, 4, },
+	[const.Skills.Plate]	= {0, 1, 2, },
 }
 
--- armor skill damage reduction exponential multiplier (by rank)
-
+-- armor skill damage reduction exponential multiplier (by rank) 
+--NOT USED ANYMORE
 local newArmorSkillDamageMultiplier =
 {
 	[const.Skills.Leather]	= {1.00, 1.00, 1.00, },
@@ -780,12 +780,12 @@ local function getWeaponRecoveryCorrection(equipmentData1, equipmentData2, playe
 		
 		-- class bonus
 		
---		if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
---			local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
---			if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
---				newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
---			end
---		end
+		if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
+			local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
+			if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
+				newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
+			end
+		end
 		
 		-- replace old with new bonus
 
@@ -1436,7 +1436,7 @@ end
 
 
 
-
+--[[
 function events.CalcDamageToPlayer(t)
 
 	local equipmentData = getPlayerEquipmentData(t.Player)
@@ -1460,6 +1460,7 @@ function events.CalcDamageToPlayer(t)
 	end
 	
 end
+--]]
 
 -- applySpecialWeaponSkill
 
@@ -2041,8 +2042,8 @@ local function BBHook(amountReg)
 			end
 		return end
 		if m > 2 then
-		d[amountReg] = amount + s^2 - 6 * s
-		end		
+		d[amountReg] = amount + s^2 - s * 6
+			end
 		if SETTINGS["StatsRework"]==true then
 		d[amountReg] = d[amountReg] * (1+enduranceBonus)
 		end
@@ -2882,9 +2883,16 @@ if SETTINGS["StatsRework"]==true then
 		--luck/accuracy bonus
 			luck=data.Player:GetLuck()
 			accuracy=data.Player:GetAccuracy()
-			critDamage=accuracy/250
-			critChance=5+luck/10
-			roll=math.random(1, 100)
+				if (data.Object==nil or data.Object.Spell==100) then
+				critDamage=accuracy/250
+				else
+				personality=data.Player:GetPersonality()
+				intellect=data.Player:GetIntellect()
+				bonus=math.max(personality,intellect)
+				critDamage=bonus/500
+				end
+			critChance=50+luck
+			roll=math.random(1, 1000)
 			if roll <= critChance then
 				t.Result=t.Result*(1.5+critDamage)
 				crit2=true
@@ -3472,3 +3480,4 @@ damage1=0
 		end
 	end
 end
+
