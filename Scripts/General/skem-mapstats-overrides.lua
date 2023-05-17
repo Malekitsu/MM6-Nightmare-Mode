@@ -131,7 +131,7 @@ end
 
 localResets = {
 	[MapIDs["The Arena"]] = 0,
-	[MapIDs["zddb09.blv"]] = 0,
+	[MapIDs["zddb09.blv"]] = 7,
 	[MapIDs["New Sorpigal"]] = 672,
 }
 
