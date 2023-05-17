@@ -2,7 +2,7 @@ if SETTINGS["ItemRework"]==true then
 function events.GenerateItem(t)
 	--get party average level
 	partyExperience = 0
-	
+	Handled = false
 	for i = 0, 3 do
 		partyExperience = partyExperience + Party.Players[i].Experience
 	end
@@ -12,13 +12,13 @@ function events.GenerateItem(t)
 	partyLevel = math.floor((1 + math.sqrt(1 + (4 * averagePlayerExperience / 500))) / 2)
 	
 	--buff if item is weak
-	if t.Strength*20<partyLevel then
+	if t.Strength*20<partyLevel and t.Strength<6 then
 		roll=math.random(1,t.Strength*20)
 		if roll<(partyLevel-t.Strength*20) then
 			t.Strength=math.min(t.Strength+1,6)
 		end
 		
-		if partyLevel>t.Strength*20+20 then
+		if partyLevel>t.Strength*20+20 and t.Strength<6 then
 		roll=math.random(1,t.Strength*20+20)
 			if roll<(partyLevel-(t.Strength*20+20)) then
 				t.Strength=math.min(t.Strength+1,6)
@@ -35,12 +35,18 @@ function events.GenerateItem(t)
 			t.Strength=t.Strength-1
 		end
 	end
+				if t.Item.Number>580 then
+	t.Item.Number=0
+	end
+
 end
 
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
 
-		
+						if t.Item.Number>580 then
+	t.Item.Number=0
+	end
 		
 		--give bonus a chance to proc even if bonus2 is already in the item
 		if t.Item.Bonus2~=0 then
@@ -83,6 +89,9 @@ function events.ItemGenerated(t)
 				t.Item.ExtraData=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
+				if t.Item.Number>=94 and t.Item.Number<=99 then
+				t.Item.Charges=2000+math.random(40,50)
+				end
 			end
 		end
 		
@@ -97,6 +106,10 @@ function events.ItemGenerated(t)
 				else
 				t.Item.Bonus2=41
 			end
+			--crowns/hats
+			if t.Item.Number>=94 and t.Item.Number<=99 then
+			t.Item.Charges=2050
+			end
 		end	
 		--buff to hp and mana items
 		if t.Item.Bonus==8 or t.Item.Bonus==9 then
@@ -106,8 +119,28 @@ function events.ItemGenerated(t)
 			t.Item.ExtraData=t.Item.ExtraData+14*math.ceil(t.Item.ExtraData/14)
 		end
 		
+		--CROWNS & HATS
+		if t.Item.Number>=94 and t.Item.Number<=99 and (t.Item.Bonus~=0 or t.Item.Bonus2~=0) and t.Item.Charges==0 then
+			hatpower={}
+			hatpower[1]=math.random(4,8)
+			hatpower[2]=math.random(6,12)
+			hatpower[3]=math.random(10,18)
+			hatpower[4]=math.random(15,25)
+			hatpower[5]=math.random(20,32)
+			hatpower[6]=math.random(25,40)
+			roll=math.random(1,100)
+			if roll<=25 then
+			t.Item.Charges=hatpower[t.Strength]+2000
+			else if t.Item.Number>=94 and t.Item.Number<=96 then
+				t.Item.Charges=hatpower[t.Strength]
+				else
+				t.Item.Charges=hatpower[t.Strength]+1000
+				end
+			end
+		end
 	end
 end
+
 
 
 --apply extra data effect
@@ -122,38 +155,61 @@ function events.CalcStatBonusByItems(t)
 		end
 	end
 end
+
+--apply crown effect
+function events.CalcSpellDamage(t)
+data=WhoHitMonster()
+	if data.Player then
+		it=data.Player:GetActiveItem(4)
+		bonus=it.Charges
+		if it.Charges<1000 or it.Charges>2000 then
+		t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+		end
+	end
+end
+
+function events.HealingSpellPower(t)
+	it=t.Caster:GetActiveItem(4)
+	if it.Charges>1000 then
+		t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+	end
+end
+
+
+
 ----------------------
 --weapon rework
 ----------------------
 function events.GameInitialized2()
 --2h dice bonus
 for i = 6, 8 do
-	Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13))
+	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
 end
 for i = 28, 41 do
-	Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13))
+	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
 end
 
 --2h artifacts bonus
-Game.ItemsTxt[402].Mod1DiceSides = Game.ItemsTxt[402].Mod1DiceSides^(2^(1*Game.ItemsTxt[402].Mod2/13))
-Game.ItemsTxt[417].Mod1DiceSides = Game.ItemsTxt[417].Mod1DiceSides^(2^(1*Game.ItemsTxt[417].Mod2/13))
-Game.ItemsTxt[419].Mod1DiceSides = Game.ItemsTxt[419].Mod1DiceSides^(2^(1*Game.ItemsTxt[419].Mod2/13))
+Game.ItemsTxt[402].Mod1DiceSides = math.round(Game.ItemsTxt[402].Mod1DiceSides^(2^(1*Game.ItemsTxt[402].Mod2/13)))
+Game.ItemsTxt[417].Mod1DiceSides = math.round(Game.ItemsTxt[417].Mod1DiceSides^(2^(1*Game.ItemsTxt[417].Mod2/13)))
+Game.ItemsTxt[419].Mod1DiceSides = math.round(Game.ItemsTxt[419].Mod1DiceSides^(2^(1*Game.ItemsTxt[419].Mod2/13)))
 
 --weapon bonus
 for i = 1, 63 do
-	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
 end
 
 for i = 400, 405 do
-	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
 end
 
 for i = 415, 420 do
-	Game.ItemsTxt[i].Mod2=Game.ItemsTxt[i].Mod2^1.4
+	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
 end
 ------------
 --Change item drop%
 ------------
+--[[ REMOVED AS IT CAUSES ITEMS BUG
 Game.ItemsTxt[4].ChanceByLevel[3]=0
 Game.ItemsTxt[11].ChanceByLevel[4]=0
 Game.ItemsTxt[14].ChanceByLevel[3]=0
@@ -162,7 +218,7 @@ Game.ItemsTxt[37].ChanceByLevel[2]=0
 Game.ItemsTxt[37].ChanceByLevel[3]=2
 Game.ItemsTxt[40].ChanceByLevel[3]=2
 Game.ItemsTxt[40].ChanceByLevel[4]=10
-
+--]]
 --armors fix
 Game.ItemsTxt[71].Mod2=2
 Game.ItemsTxt[72].Mod2=7
@@ -198,43 +254,151 @@ Game.ItemsTxt[423].Mod2=61
 ------------
 --tooltips
 ------------
-Game.SpcItemsTxt[3].BonusStat="Adds 9-12 points of Cold damage."
+Game.SpcItemsTxt[3].BonusStat="Adds 6-8 points of Cold damage."
 Game.SpcItemsTxt[4].BonusStat="Adds 18-24 points of Cold damage."
-Game.SpcItemsTxt[5].BonusStat="Adds 27-36 points of Cold damage."
-Game.SpcItemsTxt[6].BonusStat="Adds 6-15 points of Electrical damage."
+Game.SpcItemsTxt[5].BonusStat="Adds 36-48 points of Cold damage."
+Game.SpcItemsTxt[6].BonusStat="Adds 4-10 points of Electrical damage."
 Game.SpcItemsTxt[7].BonusStat="Adds 12-30 points of Electrical damage."
-Game.SpcItemsTxt[8].BonusStat="Adds 18-45 points of Electrical damage."
-Game.SpcItemsTxt[9].BonusStat="Adds 3-18 points of Fire damage."
+Game.SpcItemsTxt[8].BonusStat="Adds 24-60 points of Electrical damage."
+Game.SpcItemsTxt[9].BonusStat="Adds 2-12 points of Fire damage."
 Game.SpcItemsTxt[10].BonusStat="Adds 6-36 points of Fire damage."
-Game.SpcItemsTxt[11].BonusStat="Adds 9-54 points of Fire damage."
-Game.SpcItemsTxt[12].BonusStat="Adds 15 points of Poison damage."
+Game.SpcItemsTxt[11].BonusStat="Adds 12-72 points of Fire damage."
+Game.SpcItemsTxt[12].BonusStat="Adds 10 points of Poison damage."
 Game.SpcItemsTxt[13].BonusStat="Adds 24 points of Poison damage."
-Game.SpcItemsTxt[14].BonusStat="Adds 36 points of Poison damage."
+Game.SpcItemsTxt[14].BonusStat="Adds 48 points of Poison damage."
 
 end
 
 --ENCHANTS HERE
+--MELEE bonuses
+enchantbonusdamage = {}
+enchantbonusdamage[4] = 2
+enchantbonusdamage[5] = 3
+enchantbonusdamage[6] = 4
+enchantbonusdamage[7] = 2
+enchantbonusdamage[8] = 3
+enchantbonusdamage[9] = 4
+enchantbonusdamage[10] = 2
+enchantbonusdamage[11] = 3
+enchantbonusdamage[12] = 4
+enchantbonusdamage[13] = 2
+enchantbonusdamage[14] = 3
+enchantbonusdamage[15] = 4
+enchantbonusdamage[46] = 4
 
 function events.CalcDamageToMonster(t)
-local data = WhoHitMonster()
-	if data.Player and t.DamageKind~=0 and data.Object==nil then
-		for it in data.Player:EnumActiveItems() do
-			if t.DamageKind==2 then
-				fix=math.random(0,math.round(t.Result))
-				t.Result=t.Result-(fix*0.875)
-			end
-			if it.Bonus2 >= 4 and it.Bonus2 <= 15 or it.Bonus2 == 46 then
-				t.Result = t.Result * 3	
-				break
-			end
-			--rough fix for bugged enchant
+    local data = WhoHitMonster()
+    if data.Player and t.DamageKind ~= 0 and data.Object == nil then
+	n=1
+	bonusDamage2=1
+        for i = 0,1 do
+			it=data.Player:GetActiveItem(i)
+			
+			--generate randoms
 
-		end		
-	end	
+			bonusDamage=0
+			-- calculation
+			if it then
+				if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+				local bonusDamage1 = bonusDamage+enchantbonusdamage[it.Bonus2] or 0
+				bonusDamage2=(bonusDamage2*bonusDamage1)^(1/n)
+				n=n+1
+				end
+			end
+        end	
+		
+		if n~=0 and bonusDamage2~=0 then
+		t.Result = bonusDamage2*t.Result
+		end
+    end
+end
+
+--bows 
+
+function events.CalcDamageToMonster(t)
+    local data = WhoHitMonster()
+    if data.Player and t.DamageKind ~= 0 and data.Object~=nil then
+			if data.Object.Spell==100 then
+			it=data.Player:GetActiveItem(2)
+			-- calculation
+			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+			local bonusDamage = enchantbonusdamage[it.Bonus2] or 0
+			t.Result=t.Result*bonusDamage
+			end	
+		end
+	end
+ end
+
+spellbonusdamage={}
+
+spellbonusdamage[13] = 10
+spellbonusdamage[14] = 24
+spellbonusdamage[15] = 48
+
+aoespells = {6, 7, 8, 9, 10, 15, 22, 26, 32, 41, 43, 84, 92, 97, 98, 99}
+function events.CalcSpellDamage(t)
+data=WhoHitMonster()
+	if data.Player then
+		it=data.Player:GetActiveItem(1)
+		if it then
+			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+				spellbonusdamage[4] = math.random(6, 8)
+				spellbonusdamage[5] = math.random(18, 24)
+				spellbonusdamage[6] = math.random(36, 48)
+				spellbonusdamage[7] = math.random(4, 10)
+				spellbonusdamage[8] = math.random(12, 30)
+				spellbonusdamage[9] = math.random(24, 60)
+				spellbonusdamage[10] = math.random(2, 12)
+				spellbonusdamage[11] = math.random(6, 36)
+				spellbonusdamage[12] = math.random(12, 72)
+				spellbonusdamage[46] = math.random(40, 80)
+				buffed=0
+				bonusDamage = spellbonusdamage[it.Bonus2] or 0
+				for i = 1, #aoespells do
+					if aoespells[i] == t.Spell then
+						t.Result = t.Result+bonusDamage/5
+						buffed=1
+						break
+					end
+				end
+				if buffed==0 then
+				t.Result = t.Result+bonusDamage
+				end
+			end
+		end
+	end
 end
 
 
 
+--[[
+function events.CalcDamageToMonster(t)
+    local data = WhoHitMonster()
+    if data.Player and data.Object ~= nil and data.Object.Spell<100 then
+		
+		it=data.Player:GetActiveItem(0)
+			
+		--generate randoms
+		enchantbonusdamage = {}
+		enchantbonusdamage[4] = math.random(6, 8)
+		enchantbonusdamage[5] = math.random(18, 24)
+		enchantbonusdamage[6] = math.random(36, 48)
+		enchantbonusdamage[7] = math.random(4, 10)
+		enchantbonusdamage[8] = math.random(12, 30)
+		enchantbonusdamage[9] = math.random(24, 60)
+		enchantbonusdamage[10] = math.random(2, 12)
+		enchantbonusdamage[11] = math.random(6, 36)
+		enchantbonusdamage[12] = math.random(12, 72)
+		enchantbonusdamage[46] = math.random(20, 80)
+		-- calculation
+		if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+		bonusDamage2 = enchantbonusdamage[it.Bonus2] or 0
+		t.Damage = t.Damage+bonusDamage2
+		debug.Message(dump(t.Damage))
+		end
+    end	
+end
+--]]
 ---------------------
 --multiple enchant tooltip
 ---------------------
@@ -258,7 +422,7 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 --change tooltip
 function events.GameInitialized2()
 	itemName = {}
-	
+	itemDesc = {}
 	Game.ItemsTxt[580].NotIdentifiedName="Reality Scroll"
 	Game.ItemsTxt[580].Notes="The Reality Scroll is an ancient artifact of immense power, said to possess the ability to restore reality itself.\nAccording to the legend, it went long gone, stolen by Kreegans. The scroll must be brought to a special fountain created by the gods, which possesses the power to purify anything that touches its waters.\nTo activate the scroll's power, one must immerse it in the fountain's waters and recite the ancient incantation inscribed upon it. However, be warned that the ritual might summon the force of dark.\nOnly those who can pass a series of trials testing their strength, cunning, and purity of heart will be granted access to strongest relic. With the power of the Reality Scroll, one can hope to manipulate the fabric of reality and save the world from chaos."
 	Game.ItemsTxt[579].NotIdentifiedName="Celestial Amulet"
@@ -272,12 +436,17 @@ function events.GameInitialized2()
 	for i = 1, 578 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
+	
+	for i = 94, 99 do
+	  itemDesc[i] = Game.ItemsTxt[i].Notes
+	end
+	
 	itemName[580] = "Reality Scroll"
 	itemName[579] = "Celestial Dragon Amulet"
 	--fix long tooltips causing crash 
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
 	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
-	Game.SpcItemsTxt[45].BonusStat= "Adds 30-60 points of Fire damage, +25 Might."
+	Game.SpcItemsTxt[45].BonusStat= "Adds 40-80 points of Fire damage, +25 Might."
 	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
 	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
 	Game.SpcItemsTxt[53].BonusStat=" +15 Endurance and Regenerate HP over time."
@@ -317,6 +486,20 @@ if (item.Item.BonusStrength==40 and (item.Item.Bonus<8 or item.Item.Bonus>9) or 
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
 	end
 
+--Crowns and HATS
+	if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.Charges>0 then
+		local statbonus=item.Item.Charges
+			if statbonus>2000 then
+			statbonus="Damage and Healing"
+			else if statbonus>1000 then
+				statbonus="Healing"
+				else statbonus="Damage"
+			end
+		end			
+		Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.Charges%1000,"%",itemDesc[item.Item.Number])
+		else
+		Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+	end
 end
 
 -----------------------------
