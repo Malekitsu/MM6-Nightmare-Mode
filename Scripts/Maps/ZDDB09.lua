@@ -48,9 +48,11 @@ end
 --difficulty 1
 evt.hint[3] = "first trial"
 evt.map[3] = function()
+if not mapvars.event1 then
 evt.SetMessage(2)   
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event1=true
 		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("3")
@@ -94,13 +96,16 @@ evt.SetMessage(2)
 		Game.ShowStatusText("Choose carefully")
 	end
 end
+end
 
 --difficulty 2
 evt.hint[4] = "second trial"
 evt.map[4] = function() 
 evt.SetMessage(5)   
+if not mapvars.event2 then
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event2=true
 		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("3")
@@ -155,13 +160,16 @@ evt.SetMessage(5)
 		Game.ShowStatusText("Choose carefully")
 	end   
 end
+end
 
 --difficulty 3
 evt.hint[5] = "third trial"
 evt.map[5] = function()   
 evt.SetMessage(6)   
+if not mapvars.event3 then
 	if evt.Question{Question = 3, Answer1 = 4} then  
 		Game.ShowStatusText("Let it be, prepare yourself") 
+		mapvars.event3=true
 		mapvars.event=true
 		Sleep(500)
 		Game.ShowStatusText("Let the fight start!")
@@ -211,6 +219,7 @@ evt.SetMessage(6)
 	else 
 		Game.ShowStatusText("Choose carefully")
 	end 
+	end
 end
 
 --Barrel 1
