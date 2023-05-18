@@ -60,6 +60,7 @@ function events.CalcSpellDamage(t)
 m8=math.max(m2, m3, m4, m5, m1, m6)
 
 t.Result =t.Result*(1+m8^0.7*m7^0.7/100)
+--t.Result =t.Result
 end
 end
 
@@ -124,9 +125,25 @@ local data = WhoHitMonster()
 		if m7>=64 then
 		m7=m7-64
 		end
-m8=math.max(m2, m3, m4, m5, m1, m6, m7)
+	m9=data.Player.Skills[const.Skills.Bow]
+		if m9>=64 then 
+		m9=m9-64
+		end
+		if m9>=64 then
+		m9=m9-64
+		end
+	m19=data.Player.Skills[const.Skills.Dagger]
+		if m19>=64 then 
+		m19=m19-64
+		end
+		if m19>=64 then
+		m19=m19-64
+		end
+m111 = (m9 + m19)/2
+m18=math.max(m2, m3, m4, m5, m1, m6, m7, m111)
 
-t.Result =t.Result*(1+m8^0.7*mastery^0.7/100)
+t.Result =t.Result*(1+m18^0.7*mastery^0.7/100)
+--t.Result =t.Result
 
 end
 end

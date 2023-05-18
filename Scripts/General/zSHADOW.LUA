@@ -52,10 +52,20 @@ function events.CalcDamageToPlayer(t)
 	mastery=mastery-64
 	rank=3
 	end
+	Boddy=t.Player.Skills[const.Skills.Bodybuilding]
+	if Boddy>=64 then 
+	Boddy=Boddy-64
+	rank=2
+	end
+	if Boddy>=64 then
+	Boddy=Boddy-64
+	rank=3
+	end
+Boddy = math.max(0, Boddy - 7)
 
 	modi = t.Player.LevelBase+3
 	t.Player.SP=t.Player.SP+t.Result/modi*mastery
-	t.Result=t.Result/100*mastery
+	t.Result=t.Result/100*(mastery+Boddy)
 	Game.ShowStatusText("Absorbed")
 	end
 end
