@@ -138,22 +138,22 @@ d2=0
 	end
 MissHP = a + b + c + d
 surplus = a2 + b2 + c2 + d2
-if a > surplus * a / MissHP * 0.75 then
+if a < surplus * a / MissHP * 0.75 then
 a3 = a
 else
 a3 = surplus * b / MissHP * 0.75
 end
-if b > surplus * b / MissHP * 0.75 then
+if b < surplus * b / MissHP * 0.75 then
 b3 = b
 else
 b3 = surplus * b / MissHP * 0.75
 end
-if c > surplus * c / MissHP * 0.75 then
+if c < surplus * c / MissHP * 0.75 then
 c3 = c
 else
 c3 = surplus * c / MissHP * 0.75
 end
-if d > surplus * d / MissHP * 0.75 then
+if d < surplus * d / MissHP * 0.75 then
 d3 = d
 else
 d3 = surplus * d / MissHP * 0.75
