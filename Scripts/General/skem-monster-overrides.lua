@@ -381,6 +381,8 @@ function calculateMonsterHealth(monsterArray)
 	--HEALTH FIX FOR ITEM/STATS REWORK
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	reworkMult = 1 * (1+level/200)
+		else
+		reworkMult = 1
 	end
 	-----------------------------------
 	lookupID = monsterArray["Id"]
