@@ -780,12 +780,12 @@ local function getWeaponRecoveryCorrection(equipmentData1, equipmentData2, playe
 		
 		-- class bonus
 		
-		if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
-			local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
-			if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
-				newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
-			end
-		end
+--		if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
+--			local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
+--			if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
+--				newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
+--			end
+--		end
 		
 		-- replace old with new bonus
 
