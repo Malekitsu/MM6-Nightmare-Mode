@@ -868,13 +868,16 @@ function events.LoadMap()
 			monsterArray = Map.Monsters[monsterID]
 			if not (monsterArray.Name == "Peasant")
 			then
+			if (ADAPTIVE == "100") then
+				applyAdaptiveMonsterOverrides100(monsterID, monsterArray, adaptive_level)
+			else
 				applyAdaptiveMonsterOverrides(monsterID, monsterArray, adaptive_level)
 			end
 		end
 --		 debug.Message("Adaptive Mode:  "..ADAPTIVE..", using Adaptive Level " .. adaptive_level)
 	end
 end
-
+end
 --[[ monster power spawn event
 local idsToBasePics = {}
 function events.GameInitialized2()
