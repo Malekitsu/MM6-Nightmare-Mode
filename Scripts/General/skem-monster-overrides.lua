@@ -1002,14 +1002,15 @@ end
 --]]
 
 --fix for item/stats rework
-function events.LoadMap()	
-if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+function events.AfterLoadMap()	
+if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.boosted==nil then
 	for i=0, Map.Monsters.High do
-	if not (Map.Monsters[i].Ally == 2) and mapvars.boosted==nil and not (Map.Monsters[i].Name == Game.MonstersTxt[Map.Monsters[i].Id].Name) or not (Map.Monsters[i].FullHitPoints == Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
-			Map.Monsters[i].Ally = 2
+	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
+			
+			Map.Monsters[i].Ally = 1
 			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
 			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
-		
+				
 	-- bonus damage
 				
 				DamageMultiplier=(Map.Monsters[i].Level^1.6-1)/1000+1
