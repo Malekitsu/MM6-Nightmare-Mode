@@ -161,17 +161,21 @@ function events.CalcSpellDamage(t)
 data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(4)
+		if it then
 		bonus=it.Charges
-		if it.Charges<1000 or it.Charges>2000 then
-		t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+			if it.Charges<1000 or it.Charges>2000 then
+			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+			end
 		end
 	end
 end
 
 function events.HealingSpellPower(t)
 	it=t.Caster:GetActiveItem(4)
-	if it.Charges>1000 then
-		t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+	if it then
+		if it.Charges>1000 then
+			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+		end
 	end
 end
 
