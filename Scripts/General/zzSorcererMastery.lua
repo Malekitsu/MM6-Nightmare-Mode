@@ -17,17 +17,16 @@ function events.CalcSpellDamage(t)
 	mastery=mastery-64
 	rank=3
 	end
-			if  t.Spell == 6 or 8 or 15 or 26 or 41 or 92 or 97 then
+			if  t.Spell == 6 or t.Spell == 8 or t.Spell == 15 or t.Spell == 26 or t.Spell == 41 or t.Spell == 92 or t.Spell == 97 then
 				YSP = data.Player.SP * mastery * 0.001
-				data.Player.SP = data.Player.SP - YSP / 4
-				t.Result = t.Result+YSP^0.7*mastery^0.7/4
-			elseif t.Spell == 9 or 10 or 22 or 84 or 7 or 96 or 32 or 98 then
+				data.Player.SP = math.floor(data.Player.SP - YSP / 4)
+				t.Result = t.Result+YSP^0.7*mastery^0.7/4+mastery/4
+			elseif t.Spell == 9 or t.Spell == 10 or t.Spell == 22 or t.Spell == 84 or t.Spell == 7 or t.Spell == 96 or t.Spell == 32 or t.Spell == 98 then
 				t.Result = t.Result*(1+mastery/100)
 				else
+				YSP = math.floor(data.Player.SP * mastery * 0.001)
 				data.Player.SP = data.Player.SP - YSP
-				YSP = data.Player.SP * mastery * 0.001
-				data.Player.SP = data.Player.SP - YSP
-				t.Result = t.Result+YSP^0.7*mastery^0.7
+				t.Result = t.Result+YSP^0.7*mastery^0.7+mastery
 			end
 		end
 	end
@@ -44,7 +43,7 @@ function events.CalcDamageToPlayer(t)
 	rank=3
 	end
 WSP = t.Result-t.Result*0.97^mastery
-t.Player.SP = t.Player.SP - WSP / mastery^0.5
+t.Player.SP = t.Player.SP - math.floor(WSP / mastery^0.5)
 t.Result=t.Result*0.97^mastery
 
 end
