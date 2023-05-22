@@ -135,7 +135,7 @@ function events.ShowStatDescription(t)
 	i=Game.CurrentPlayer
 	speed=Party[i]:GetSpeed()
 	ac=Party[i]:GetArmorClass()
-	Game.StatsDescriptions[5]=string.format("%s\n\nDodge chance: %s%s\n\nPhysical damage reduction from AC: %s%s",Game.StatsDescriptionsRework[5],math.floor(1000-0.995^(speed/5)*1000)/10,"%",math.round(100-100/math.max(ac^0.85/100+0.5,1)),"%")
+	Game.StatsDescriptions[5]=string.format("%s\n\nDodge chance: %s%s\n\nPhysical damage reduction from AC: %s%s",Game.StatsDescriptionsRework[5],math.floor(1000-0.995^(speed/5)*1000)/10,"%",math.round(1000-1000/math.max(ac^0.85/100+0.5,1))/10,"%")
 	end
 	if t.Stat==6 then
 	i=Game.CurrentPlayer
