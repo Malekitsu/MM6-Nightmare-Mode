@@ -14,8 +14,8 @@ function events.HealingSpellPower(t)
 	mastery=mastery-64
 	rank=3
 	end
-XSP = math.floor(t.Caster.SP* mastery * 0.001)
-t.Caster.SP = t.Caster.SP - XSP
+XSP = t.Caster.SP* mastery * 0.001
+t.Caster.SP = t.Caster.SP - math.floor(XSP)
 t.Result =t.Result+XSP^0.7*mastery+mastery
 end
 end
@@ -32,8 +32,8 @@ function events.CalcSpellDamage(t)
 	mastery=mastery-64
 	rank=3
 	end
-YSP = math.floor(data.Player.SP * mastery * 0.001)
-data.Player.SP = data.Player.SP - YSP
+YSP = data.Player.SP * mastery * 0.001
+data.Player.SP = data.Player.SP - math.floor(YSP)
 t.Result =t.Result+YSP^0.7*mastery^0.7+mastery
 end
 end

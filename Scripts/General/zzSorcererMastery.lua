@@ -24,9 +24,9 @@ function events.CalcSpellDamage(t)
 			elseif t.Spell == 9 or t.Spell == 10 or t.Spell == 22 or t.Spell == 84 or t.Spell == 7 or t.Spell == 96 or t.Spell == 32 or t.Spell == 98 then
 				t.Result = t.Result*(1+mastery/100)
 				else
-				YSP = math.floor(data.Player.SP * mastery * 0.001)
-				data.Player.SP = data.Player.SP - YSP
-				t.Result = t.Result+YSP^0.7*mastery^0.7+mastery
+				YSP = data.Player.SP * mastery * 0.001
+				data.Player.SP = data.Player.SP - math.floor(YSP)
+				t.Result = t.Result+mastery+YSP^0.7*mastery^0.7
 			end
 		end
 	end
