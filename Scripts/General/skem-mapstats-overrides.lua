@@ -235,14 +235,14 @@ end
 
 function events.GameInitialized2()
 Game.MapStats[62].Monster1Pic = "Minotaur"
-Game.MapStats[62].Monster2Pic = "Lich"
+Game.MapStats[62].Monster2Pic = "Cleric"
 Game.MapStats[62].Monster3Pic = "KnightPlate"
-Game.MapStats[62].Mon1Low = 6
-Game.MapStats[62].Mon1High = 8
-Game.MapStats[62].Mon2Low = 4
-Game.MapStats[62].Mon2High= 6
-Game.MapStats[62].Mon3Low = 3
-Game.MapStats[62].Mon3High= 5
+Game.MapStats[62].Mon1Low = 4
+Game.MapStats[62].Mon1High = 6
+Game.MapStats[62].Mon2Low = 2
+Game.MapStats[62].Mon2High= 4
+Game.MapStats[62].Mon3Low = 2
+Game.MapStats[62].Mon3High= 4
 Game.MapStats[62].Name="Unknown"
 Game.MapStats[62].Mon1Dif = 5
 Game.MapStats[62].Mon2Dif = 5
