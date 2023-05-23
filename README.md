@@ -73,7 +73,7 @@ The Mastery skills enhance the abilities and effectiveness of each class, allowi
 - To compensate for immense power from items, monsters will now be much more dangerous, especially at high levels.
 
 
-
+#   
 # Nightmare Mode features
 
 ## **Nightmare Mode**
