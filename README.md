@@ -65,7 +65,9 @@ Note to users
 ## Monster Scaling Boost
 - To compensate for immense power from items, monsters will now be much more dangerous, especially at high levels.
 
-#Nightmare Mode features
+
+
+# Nightmare Mode features
 
 ## **Nightmare Mode**
 
