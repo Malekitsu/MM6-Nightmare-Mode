@@ -780,12 +780,12 @@ local function getWeaponRecoveryCorrection(equipmentData1, equipmentData2, playe
 		
 		-- class bonus
 		
---		if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
---			local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
---			if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
---				newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
---			end
---		end
+		--if equipmentData1.skill == const.Skills.Bow or (blastersUseClassMultipliers and equipmentData1.skill == const.Skills.Blaster) then
+		--	local rangedWeaponSkillSpeedBonusMultiplier = classRangedWeaponSkillSpeedBonusMultiplier[player.Class]
+		--	if rangedWeaponSkillSpeedBonusMultiplier ~= nil then
+		--		newRecoveryBonus = newRecoveryBonus * rangedWeaponSkillSpeedBonusMultiplier
+		--	end
+		--end
 		
 		-- replace old with new bonus
 
@@ -1097,7 +1097,6 @@ function events.CalcStatBonusBySkills(t)
 			
 			-- recalculate bonus
 			
-			t.Result = t.Result - oldBonus + newBonus
 			
 		end
 		
@@ -1817,15 +1816,16 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	
 	Game.SkillDescriptions[const.Skills.Plate] = Game.SkillDescriptions[const.Skills.Plate] ..
 		string.format(
-			"\n\nPlate armor is the strongest one.\n\nPlate wearer is percieved as a true battle hero who can learn swift maneuvering on a battlefield shielding the rest of the team from melee attackers.\n\nBonus increment per skill level and recovery penalty and cover chance\n------------------------------------------------------------\n          AC | recovery penalty | cover chance |"
+			"\n\nPlate armor is the strongest one.\n\nPlate wearer is percieved as a true battle hero who can learn swift maneuvering on a battlefield shielding the rest of the team from melee attackers.\n\nBonus increment per skill level and recovery penalty and cover chance\n------------------------------------------------------------\n          AC | rec. pen. | cover chance | resistance"
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Plate] =
 			string.format(
-				" %s |                 %s |              %s |",
+				" %s |                 %s |              %s |        %s",
 				formatSkillRankNumber(newArmorSkillACBonuses[const.Skills.Plate][rank], 77),
-				formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Plate + 1] * (rank == const.Novice and 1 or (rank == const.Expert and 0.5 or 0)), 209),
-				formatSkillRankNumber(plateCoverChances[rank] * 100, 316)
+				formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Plate + 1] * (rank == const.Novice and 1 or (rank == const.Expert and 0.5 or 0)), 156),
+				formatSkillRankNumber(plateCoverChances[rank] * 100, 263),
+				formatSkillRankNumber(newArmorSkillResistanceBonuses[const.Skills.Plate][rank], 316)
 			)
 	end
 	
