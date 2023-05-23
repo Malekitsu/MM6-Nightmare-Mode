@@ -70,10 +70,12 @@ The Mastery skills enhance the abilities and effectiveness of each class, allowi
 - This change ensures that resistances provide effective protection against spells and magical attacks, enhancing the survivability of players against magical threats.
 
 ## Monster Scaling Boost
-- To compensate for immense power from items, monsters will now be much more dangerous, especially at high levels.
+To compensate for the immense power provided by items, monsters have received a significant scaling boost, particularly at high levels. This means that battles against monsters will be much more dangerous and challenging.
 
-
-#   
+- Poor itemization choices will make your life harder as you face tougher opponents.
+- However, with good itemization and dedicated farming, the benefits will be noticeably rewarding.
+- It is now crucial to strategize and optimize your gear to overcome the heightened difficulty of monster encounters.
+#    
 # Nightmare Mode features
 
 ## **Nightmare Mode**
