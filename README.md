@@ -44,8 +44,7 @@ Note to users
 - There's a very small chance to find a "Primordial" item, which has perfect rolls.
 
 ## Mastery
-- @RawSugar
-- PLIZ :linguaccia:.
+- description upcoming
 
 ## End Game Quest and New Game+
 - A new end chain quest has been added with epic events that ultimately unlock the New Game+ mode.
