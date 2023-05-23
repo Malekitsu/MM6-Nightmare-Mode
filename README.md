@@ -44,7 +44,15 @@ Note to users
 - There's a very small chance to find a "Primordial" item, which has perfect rolls.
 
 ## Mastery
-- description upcoming
+- Many new classes have been added to the game, with more to come.
+- All classes now have a new skill called Mastery, which provides unique bonuses based on the class.
+- Original classes also have their own Mastery skills:
+  - Knight: Each rank in Mastery grants 1% damage and toughness.
+  - Archer/Paladin: Each rank in Mastery grants approximately 3% damage at the cost of skill points. The bonus is larger when spellcasting and weaponskills are ranked more equally.
+  - Sorcerer/Cleric/Druid: Each rank in Mastery provides approximately 3% reduced damage from physical attacks and 2% increased damage at the cost of mana.
+  
+The Mastery skills enhance the abilities and effectiveness of each class, allowing players to further specialize and customize their gameplay experience.
+
 
 ## End Game Quest and New Game+
 - A new end chain quest has been added with epic events that ultimately unlock the New Game+ mode.
@@ -244,21 +252,21 @@ Master: Skill added to Armor Class (triple effect)
 
 Leather is now really good to resist magic damage
 
-Novice: Increases 3 Class Armor and 3 to all Resistances per point of skill
+Novice: Increases 1 Class Armor and 2 to all Resistances per point of skill
 
-Expert: Recovery penalty reduced
+Expert: Increases 2 Class Armor and 4 to all Resistances per point of skill, Recovery penalty reduced
 
-Master: Recovery penalty eliminated, double resistances bonus
+Master: Increases 3 Class Armor and 6 to all Resistances per point of skill, Recovery penalty eliminated
 
 **Mail**
 
 Mail now has reduces physical damage by 1% per skill level in addition to reduce some magic damage
 
-Novice: Increases 3 Class Armor and 3 to all Resistances per point of skill
+Novice: Increases 2 Class Armor and 2 to all Resistances per point of skill
 
-Expert: Recovery penalty reduced, each point of skill reduces meele damage taken by 1%
+Expert: Increases 3 Class Armor and 3 to all Resistances per point of skill, Recovery penalty reduced
 
-Master: Recovery penalty eliminated
+Master: Increases 5 Class Armor and 4 to all Resistances per point of skill, Recovery penalty eliminated
 
 **Plate**
 
