@@ -133,7 +133,18 @@ Party[0].HP = math.min(Party[0]:GetFullHP(), Party[0].HP + surplus * a / MissHP,
 Party[1].HP = math.min(Party[1]:GetFullHP(), Party[1].HP + surplus * b / MissHP, 32767)
 Party[2].HP = math.min(Party[2]:GetFullHP(), Party[2].HP + surplus * c / MissHP, 32767)
 Party[3].HP = math.min(Party[3]:GetFullHP(), Party[3].HP + surplus * d / MissHP, 32767)
-
+if Party[0].HP > Party[0]:GetFullHP() then
+Party[0].HP = Party[0]:GetFullHP()
+end
+if Party[1].HP > Party[1]:GetFullHP() then
+Party[1].HP = Party[1]:GetFullHP()
+end
+if Party[2].HP > Party[2]:GetFullHP() then
+Party[2].HP = Party[2]:GetFullHP()
+end
+if Party[3].HP > Party[3]:GetFullHP() then
+Party[3].HP = Party[3]:GetFullHP()
+end
 --t.Result = t.Result * 4
 end
 end
