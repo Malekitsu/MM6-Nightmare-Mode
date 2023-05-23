@@ -25,7 +25,7 @@ Note to users
 - The likelihood of obtaining 3 affixes increases with higher loot levels.
 - Crowns will have a 4th enchant, increasing spell damage and/or healing.
 - HP/SP (Health Points/Spell Points) will have double the value on items.
-- Weapon elemental damage enchants are significantly stronger, dealing up to 4 times the damage.
+- Weapon elemental damage enchants are significantly stronger, dealing up to 4 times the damage and will work also on spells.
 - A single enchant can now provide dual immunities from the following pairs:
   - Disease and Curse Immunity
   - Insanity and Fear Immunity
