@@ -75,7 +75,7 @@ To compensate for the immense power provided by items, monsters have received a 
 - Poor itemization choices will make your life harder as you face tougher opponents.
 - However, with good itemization and dedicated farming, the benefits will be noticeably rewarding.
 - It is now crucial to strategize and optimize your gear to overcome the heightened difficulty of monster encounters.
-#    
+## End of patch 2.0 notes
 # Nightmare Mode features
 
 ## **Nightmare Mode**
