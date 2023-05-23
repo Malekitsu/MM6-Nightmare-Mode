@@ -7,11 +7,71 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 
 Note to users
 
+# PATCH 2.0
+
+## Stats Rework
+- Breakpoints occur every 5 points, granting 1 effect.
+- The vanilla effect remains unchanged, but you now receive additional bonuses based on specific stat thresholds:
+  - Every 5 points in Strength grants 1% melee and bow damage.
+  - Every 5 points in Intelligence/Perception grants 1% spell damage and 1% spell critical damage (only the highest bonus will be used).
+  - Every 5 points in Accuracy grants 2% melee and bow critical damage.
+  - Every 5 points in Endurance grants 1% maximum HP.
+  - Every 5 points in Speed grants 0.5% dodge chance.
+  - Every 5 points in Luck grants 0.5% critical chance.
+- AC (Armor Class) reduces the physical damage you take.
+
+## Enchants Rework
+- Items can now have up to 3 enchants simultaneously.
+- The likelihood of obtaining 3 affixes increases with higher loot levels.
+- Crowns will have a 4th enchant, increasing spell damage and/or healing.
+- HP/SP (Health Points/Spell Points) will have double the value on items.
+- Weapon elemental damage enchants are significantly stronger, dealing up to 4 times the damage.
+- A single enchant can now provide dual immunities from the following pairs:
+  - Disease and Curse Immunity
+  - Insanity and Fear Immunity
+  - Paralysis and SP Drain Immunity
+  - Poison and Weakness Immunity
+  - Sleep and Unconscious Immunity
+  - Stone and Premature Ageing Immunity
+  - Death and Eradication Immunity (+5 Levels)
+- Poison will now deal damage over time, depending on poison level and player base HP instead of decreasing stats.
+
+## Item & Loot Rework
+- Weapons and shields become more powerful as their tier increases.
+- Loot level is influenced by the party's level, with low-level parties finding up to tier 4 items and high-level parties finding at least tier 3 items.
+- Keep in mind that chest loot is loaded upon entering the map, so entering a map when low level might downgrade some loot; it's NOT recommended to enter high-level maps if you plan to clear them within reset time.
+- There's a chance to obtain "Ancient" items, which have 3 enchants and can have up to 40 stats.
+- There's a very small chance to find a "Primordial" item, which has perfect rolls.
+
+## Mastery
+- @RawSugar
+- PLIZ :linguaccia:.
+
+## End Game Quest and New Game+
+- A new end chain quest has been added with epic events that ultimately unlock the New Game+ mode.
+- New Game+ features stronger monsters, items, and quest resets.
+
+## Body Building (BB) Change
+- Body building will give proportionally more HP to lower base HP classes.
+
+## Mail/Plate Damage Reduction Removal
+- Due to the changes in AC, the physical damage reduction provided by mail and plate armor has been removed and AC gained increased; up to 5 for mail and up to 7 for plates.
+- Plate will now provide up to 2 resistance per skill level.
+
+## Spell Resistance Formula Rework
+- The spell resistance formula for players has been changed, making resistance stats more useful and reliable even at higher levels.
+- This change ensures that resistances provide effective protection against spells and magical attacks, enhancing the survivability of players against magical threats.
+
+## Monster Scaling Boost
+- To compensate for immense power from items, monsters will now be much more dangerous, especially at high levels.
+
+#Nightmare Mode features
+
 ## **Nightmare Mode**
 
 This mod will feature:
 
-2 new dungeons, Even Harder monsters, Epic boss fights, Epic loot.
+4 new dungeons, Even Harder monsters, Epic boss fights, Epic loot.
 
 Identify Item and Repair are learned in Goblinwatch and Abandoned temple. Good luck finding them.
 
