@@ -56,6 +56,9 @@ function events.HealingSpellPower(t)
 		end
 
 m8=math.max(m2, m3, m4, m5, m1, m6)
+if t.Spell == 54 then
+t.Result = t.Result + 9 * t.Skill * (m8^0.7*m7^0.7/100)
+end
 
 t.Result =t.Result*(1+m8^0.7*m7^0.7/100)
 end
