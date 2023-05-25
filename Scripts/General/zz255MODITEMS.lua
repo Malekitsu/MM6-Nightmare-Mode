@@ -73,7 +73,10 @@ function events.ItemGenerated(t)
 				t.Item.ExtraData=0
 			end
 		end
-		
+		--fix for standard bonus
+		if t.Item.BonusStrength<26 then
+			t.Item.BonusStrength=(t.Item.BonusStrength+35)*1.2
+		end
 		--of x spell proc chance
 		if t.Item.Number>=120 and t.Item.Number<=134 and t.Item.Bonus2~=0 and t.Strength < 6 then
 			roll=math.random(1,100)
@@ -511,13 +514,13 @@ if item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8 then
 	extrabonus=extrabonus/2
 end
 	
-if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
+if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
 	else 
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s", itemName[item.Item.Number])
 end
 
-if bonus==40 and extrabonus==40 then
+if bonus==100 and extrabonus==100 then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
 	end
 
