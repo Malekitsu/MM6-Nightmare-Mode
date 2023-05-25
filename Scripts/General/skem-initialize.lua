@@ -34,7 +34,8 @@ local PRESETS = {
 	["ShowDamageTaken"] = false,
 	["StatusRework"] = true,
 	["ReworkedMagicDamageCalculation"] = true,
-	["PowerCureOverflow"] = false
+	["PowerCureOverflow"] = false,
+	["255MOD"] = false,
 }
 
 SETTINGS = { }
