@@ -2,28 +2,63 @@ PowerCureOverflow=SETTINGS["PowerCureOverflow"]
 function events.HealingSpellPower(t)
   if t.Spell == 54 then
     active = 0
+	t.Result=0
     for i = 0, 3 do
       if Party[i].Dead == 0 and Party[i].Eradicated == 0 and Party[i].Stoned == 0 and Party[i].Unconscious == 0 then
         active = active + 1
+		t.Result=t.Result+Party[i].HP
       end
     end
-
-    SETTEDHP = t.Result / active
-    overflow = 0
-	needheal = 0
-    for i = 0, 3 do
+	settedhp=t.Result/active
+	overflow=0
+	for i = 0, 3 do
       if Party[i].Dead == 0 and Party[i].Eradicated == 0 and Party[i].Stoned == 0 and Party[i].Unconscious == 0 then
-        if SETTEDHP > Party[i]:GetFullHP() then
-          overflow = overflow + (SETTEDHP - Party[i]:GetFullHP())
-		else
-		needheal=needheal+1
-        end
-      end
-    end
-	if needheal>0 and overflow>0 then
-	t.Result=t.Result+overflow*4/needheal
+        if settedhp > Party[i]:GetFullHP() then
+			overflow=overflow+(settedhp-Party[i]:GetFullHP())
+			active=active-1
+		end
+	  end
 	end
+	if active>0 then
+	t.Result=t.Result+overflow*4/active
+	end
+	--bonus from skill items etc
+	
+	personality=t.Caster:GetPersonality()
+	intellect=t.Caster:GetIntellect()
+	bonus=math.max(personality,intellect)
+	luck=t.Caster:GetLuck()
+	roll=math.random(1,1000)
+	crownbonus=1
+	ringbonus=1
+	artifactbonus=1
+	it=t.Caster:GetActiveItem(4)
+	if it then
+		if it.Charges>1000 then
+			crownbonus=(it.Charges%1000)/100+1
+		end
+	end
+	
+	for it in t.Caster:EnumActiveItems() do
+		if it.Bonus2 == 33 then		
+			ringbonus=1.5
+		end
+		if it.Number==413 then
+			artifactbonus=1.5
+		end
+	end
+	
+	
+	if roll<=luck+50 then
+	t.Result = t.Result+9*t.Skill*(1+bonus/500)*(1.5+bonus/500)*crownbonus*ringbonus*artifactbonus
+	Game.ShowStatusText("Critical Heal")
+	else
+	t.Result = t.Result+9*t.Skill*(1+bonus/500)*crownbonus*ringbonus*artifactbonus
+	end
+
 end
+
+
 
 
 if t.Spell == 77 and PowerCureOverflow then
