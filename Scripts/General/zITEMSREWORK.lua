@@ -176,8 +176,6 @@ function events.HealingSpellPower(t)
 		if it.Charges>1000 then
 			if t.Spell ~= 54 then
 			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
-			else
-			t.Result=math.ceil(t.Result+9*t.Skill*((it.Charges%1000)/100+1))
 			end
 		end
 	end
