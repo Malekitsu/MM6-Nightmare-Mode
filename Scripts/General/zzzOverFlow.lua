@@ -40,7 +40,7 @@ function events.HealingSpellPower(t)
 	if active>0 then
 	t.Result=settedhp*4
 	end
-	bonus from skill items etc
+	--bonus from skill items etc
 	
 	personality=t.Caster:GetPersonality()
 	intellect=t.Caster:GetIntellect()
