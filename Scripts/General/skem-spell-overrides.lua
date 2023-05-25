@@ -1231,15 +1231,24 @@ function events.HealingSpellPower(t)
 		else
 			t.Result = Randoms(entry.variableMin, entry.variableMax, s) + math.random(entry.fixedMin or 0, entry.fixedMax or 0)	
 		end
+		
 		if SETTINGS["StatsRework"]==true then
 		personality=t.Caster:GetPersonality()
 		intellect=t.Caster:GetIntellect()
 		bonus=math.max(personality,intellect)
-		t.Result = t.Result*(1+bonus/500)
+			if t.Spell ~= 54 then
+			t.Result = t.Result*(1+bonus/500)
+			else
+			t.Result = t.Result+9*s*(1+bonus/500)
+			end
 		luck=t.Caster:GetLuck()
 		roll=math.random(1,1000)
 			if roll<=luck+50 then
-			t.Result=t.Result*(1.5+bonus/500)
+				if t.Spell ~= 54 then
+				t.Result=t.Result*(1.5+bonus/500)
+				else
+				t.Result = t.Result+9*s*(1.5+bonus/500)
+				end
 			Game.ShowStatusText("Critical Heal")
 			end
 		end
