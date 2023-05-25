@@ -174,7 +174,11 @@ function events.HealingSpellPower(t)
 	it=t.Caster:GetActiveItem(4)
 	if it then
 		if it.Charges>1000 then
+			if t.Spell ~= 54 then
 			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+			else
+			t.Result=math.ceil(t.Result+9*t.Skill*((it.Charges%1000)/100+1))
+			end
 		end
 	end
 end
@@ -450,7 +454,6 @@ function events.GameInitialized2()
 	--fix long tooltips causing crash 
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
 	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
-	Game.SpcItemsTxt[43].BonusStat=" +10 HP and Regenerate HP over time."
 	Game.SpcItemsTxt[45].BonusStat= "Adds 40-80 points of Fire damage, +25 Might."
 	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
 	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
