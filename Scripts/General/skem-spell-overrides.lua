@@ -1238,16 +1238,12 @@ function events.HealingSpellPower(t)
 		bonus=math.max(personality,intellect)
 			if t.Spell ~= 54 then
 			t.Result = t.Result*(1+bonus/500)
-			else
-			t.Result = t.Result+9*s*(1+bonus/500)
 			end
 		luck=t.Caster:GetLuck()
 		roll=math.random(1,1000)
 			if roll<=luck+50 then
 				if t.Spell ~= 54 then
 				t.Result=t.Result*(1.5+bonus/500)
-				else
-				t.Result = t.Result+9*s*(1.5+bonus/500)
 				end
 			Game.ShowStatusText("Critical Heal")
 			end
