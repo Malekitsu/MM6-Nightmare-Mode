@@ -284,7 +284,7 @@ local spellCosts =
 	["Dark Containment"] = {["Master"] = 100},
 	["Poison Spray"] = {["Master"] = 13 + SC},
 	["Sparks"] = {["Master"] = 13 + SC},
-	["Shrap Metal"] = {["Normal"] = 10, ["Expert"] = 30, ["Master"] = 50 + SC^0.65},
+	["Shrapmetal"] = {["Normal"] = 10, ["Expert"] = 30, ["Master"] = 50 + SC^0.65},
 	["Mass Distortion"] = {["Master"] = 30 + SC * 3},
 	["Toxic Cloud"] = {["Normal"] = 4, ["Expert"] = 12, ["Master"] = 30},
 	
