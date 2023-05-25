@@ -33,7 +33,7 @@ local PRESETS = {
 	["StatsRework"] = true,
 	["ShowDamageTaken"] = false,
 	["StatusRework"] = true,
-	["ReworkedMagicDamageCalculation"] = true
+	["ReworkedMagicDamageCalculation"] = true,
 	["PowerCureOverflow"] = false
 }
 
