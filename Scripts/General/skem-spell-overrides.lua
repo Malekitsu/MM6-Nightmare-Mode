@@ -871,10 +871,11 @@ local function modifiedMonsterCalculateDamage(d, def, monsterPointer, attackType
 	local monsterIndex, monster = GetMonster(d.edi)
 if ((ADAPTIVE == "default") or (ADAPTIVE == "disabled")) then 
 	Mlevel = Game.MonstersTxt[monster.Id].Level
+		modi = 1
 else
 Xlevel = Game.MonstersTxt[monster.Id].Level
 Mlevel = monsterArray["Level"]
-Mlevel = monsterArray["Level"] * math.max(1, Mlevel/Xlevel)
+modi =  (1+Mlevel)/(1+Xlevel)
 end
 	-- execute original code
 
@@ -898,9 +899,9 @@ end
 
 	local spellSkill, spellMastery = SplitSkill(monster.SpellSkill)
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.6/1000+1)
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.6/1000+1) * modi
 	else
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75)
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * modi
 	end
 	
 	return damage
