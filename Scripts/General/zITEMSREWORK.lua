@@ -452,6 +452,7 @@ function events.GameInitialized2()
 	--fix long tooltips causing crash 
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
 	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
+	Game.SpcItemsTxt[43].BonusStat=" +10 HP and Regenerate HP over time."
 	Game.SpcItemsTxt[45].BonusStat= "Adds 40-80 points of Fire damage, +25 Might."
 	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
 	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
@@ -481,14 +482,24 @@ function events.ShowItemTooltip(item)
 	end
 	
 --Change item name
+--Change item name
 ancient=0
-if (item.Item.BonusStrength>25 and item.Item.Bonus~=8 and item.Item.Bonus~=9) or (item.Item.BonusStrength>50 and (item.Item.Bonus==8 or item.Item.Bonus==9)) then
+bonus=item.Item.BonusStrength
+if item.Item.Bonus==8 or item.Item.Bonus==9 then
+	bonus=bonus/2
+end
+extrabonus=math.ceil(item.Item.ExtraData/14)
+if item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8 then
+	extrabonus=extrabonus/2
+end
+	
+if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
 	else 
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s", itemName[item.Item.Number])
 end
 
-if (item.Item.BonusStrength==40 and (item.Item.Bonus<8 or item.Item.Bonus>9) or item.Item.BonusStrength==80 and (item.Item.Bonus==8 or item.Item.Bonus==9)) and ((item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8) and math.ceil(item.Item.ExtraData/14)==80) or (math.ceil(item.Item.ExtraData/14)==40 and (item.Item.ExtraData%14~=7 or item.Item.ExtraData%14~=8)) then
+if bonus==40 and extrabonus==40 then
 	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
 	end
 
