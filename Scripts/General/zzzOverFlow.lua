@@ -11,18 +11,36 @@ function events.HealingSpellPower(t)
     end
 	settedhp=t.Result/active
 	overflow=0
-	for i = 0, 3 do
+	
+	--get list with hp ordered
+	hpList = {} 
+	 for i = 0, 3 do
       if Party[i].Dead == 0 and Party[i].Eradicated == 0 and Party[i].Stoned == 0 and Party[i].Unconscious == 0 then
-        if settedhp > Party[i]:GetFullHP() then
-			overflow=overflow+(settedhp-Party[i]:GetFullHP())
-			active=active-1
+        table.insert(hpList, {index = i, hp = Party[i].HP})
+      end
+    end
+	
+	-- Sort the hpList based on HP values in ascending order
+    table.sort(hpList, function(a, b) return a.hp < b.hp end)
+	
+		for v = 1, #hpList do
+		i=hpList[v].index
+		  if Party[i].Dead == 0 and Party[i].Eradicated == 0 and Party[i].Stoned == 0 and Party[i].Unconscious == 0 then
+			if settedhp > Party[i]:GetFullHP() then
+				overflow=(settedhp-Party[i]:GetFullHP())
+				active=math.max(1,active-1)
+				settedhp=settedhp+overflow/active
+				--debug.Message(dump(overflow))
+				--debug.Message(dump(active))
+				--debug.Message(dump(settedhp))
+			end
+		  end
 		end
-	  end
-	end
+
 	if active>0 then
-	t.Result=t.Result+overflow*4/active
+	t.Result=settedhp*4
 	end
-	--bonus from skill items etc
+	bonus from skill items etc
 	
 	personality=t.Caster:GetPersonality()
 	intellect=t.Caster:GetIntellect()
