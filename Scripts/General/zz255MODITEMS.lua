@@ -93,7 +93,7 @@ function events.ItemGenerated(t)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(76,100)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.Charges=2000+math.random(90,100)
+				t.Item.Charges=2000+math.random(60,75)
 				end
 			end
 		end
@@ -111,7 +111,7 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.Charges=2100
+			t.Item.Charges=2075
 			end
 		end	
 		--buff to hp and mana items
@@ -125,12 +125,12 @@ function events.ItemGenerated(t)
 		--CROWNS & HATS
 		if t.Item.Number>=94 and t.Item.Number<=99 and (t.Item.Bonus~=0 or t.Item.Bonus2~=0) and t.Item.Charges==0 then
 			hatpower={}
-			hatpower[1]=math.random(35,41)
-			hatpower[2]=math.random(38,45)
-			hatpower[3]=math.random(41,50)
-			hatpower[4]=math.random(46,57)
-			hatpower[5]=math.random(52,65)
-			hatpower[6]=math.random(60,75)
+			hatpower[1]=math.random(35,37)
+			hatpower[2]=math.random(36,40)
+			hatpower[3]=math.random(38,43)
+			hatpower[4]=math.random(41,47)
+			hatpower[5]=math.random(45,52)
+			hatpower[6]=math.random(50,60)
 			roll=math.random(1,100)
 			if roll<=25 then
 			t.Item.Charges=hatpower[t.Strength]+2000
