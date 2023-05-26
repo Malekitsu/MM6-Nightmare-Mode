@@ -550,10 +550,55 @@ function events.CalcSpellDamage(t)
 		-- custom spell power
 	
 		local spellPower = spellPowers[t.Spell][t.Mastery]
-		t.Result = randomSpellPower(spellPower, t.Skill)
-		
-	end
-	
+		--ring and artifact nerf
+		ringNerf=1
+		artifactNerf=1
+		data=WhoHitMonster()
+		if data.Player then
+			for it in data.Player:EnumActiveItems() do
+				if it.Bonus2 == 34 and t.Spell>22 and t.Spell<=33 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 33 and t.Spell>44 and t.Spell<=55 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 32 and t.Spell>55 and t.Spell<=66 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 31 and t.Spell>77 and t.Spell<=88 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 30 and t.Spell>0 and t.Spell<=11 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 29 and t.Spell>33 and t.Spell<=44 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 28 and t.Spell>88 and t.Spell<=99 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 27 and t.Spell>66 and t.Spell<=77 then		
+					ringNerf=0.8
+				end
+				if it.Bonus2 == 26 and t.Spell>11 and t.Spell<=22 then		
+					ringNerf=0.8
+				end
+				if it.Number==413 and t.Spell>44 and t.Spell<=77 then
+					artifactNerf=0.8
+				end
+				if it.Number==414 and t.Spell>0 and t.Spell<=44 then
+					artifactNerf=0.8
+				end
+				if it.Number==413 and t.Spell>44 and t.Spell<=77 then
+					artifactNerf=0.8
+				end
+				if it.Number==412 and t.Spell>77 and t.Spell<=99 then
+					artifactNerf=0.8
+				end
+			end
+		end
+		t.Result = randomSpellPower(spellPower, t.Skill*ringNerf*artifactNerf)	
+	end	
 end
 
 -- spell buffs
