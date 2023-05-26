@@ -787,9 +787,9 @@ end
 	end
 
 
-	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125
+	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemMod
 
-	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125
+	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemMod
 
 	monsterArray["ArmorClass"] = genericForm["ArmorClass"] * levelMultiplier * newLevel / 100
 	monsterArray["Level"] = newLevel
