@@ -917,7 +917,8 @@ function events.RandomSpawnMonster(t)
 end
 
 
-function events.LoadMap()	
+function events.LoadMap()
+	if ADAPTIVE == "disabled" then
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	for i=0, Map.Monsters.High do
 	if not (Map.Monsters[i].Ally == 1) then
@@ -987,7 +988,7 @@ if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 		end
 	end
 end
-
+end
 --SPARK BUG FIX
 function events.CalcDamageToPlayer(t)
 	local data=WhoHitPlayer()
@@ -1003,6 +1004,7 @@ end
 
 --fix for item/stats rework
 function events.AfterLoadMap()	
+		if ADAPTIVE == "disabled" then
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.boosted==nil then
 	for i=0, Map.Monsters.High do
 	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
@@ -1075,5 +1077,6 @@ if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.bo
 	end
 	
 	mapvars.boosted=true
+end
 end
 end
