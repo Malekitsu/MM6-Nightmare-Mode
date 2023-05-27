@@ -20,15 +20,17 @@ evt.hint[1] = "Training Ground"
 -- "Exit"
 evt.hint[7] = "Exit"
 evt.map[7] = function()
-	if vars.CelestialArena1~=nil then  
-		if vars.GameOver~=nil then
-		evt.MoveToMap{X = 14088, Y = 2800, Z = 96, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "OutD3.Odm"}	
+	if mapvars.event==false then
+		if vars.CelestialArena1~=nil then  
+			if vars.GameOver~=nil then
+			evt.MoveToMap{X = 14088, Y = 2800, Z = 96, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "OutD3.Odm"}	
+			else
+			Message("That's your final battle, I hope you are ready")
+			evt.MoveToMap{evt.MoveToMap{X = -3657, Y =  -387, Z = 1185, Direction = 0, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "sci-fi.blv"}}	
+			end
 		else
-		Message("That's your final battle, I hope you are ready")
-		evt.MoveToMap{evt.MoveToMap{X = -3657, Y =  -387, Z = 1185, Direction = 0, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "sci-fi.blv"}}	
+			Game.ShowStatusText("prove your worth before leaving the Celestial Arena")
 		end
-	else
-		Game.ShowStatusText("prove your worth before leaving the Celestial Arena")
 	end
 end
 
@@ -48,65 +50,70 @@ end
 --difficulty 1
 evt.hint[3] = "first trial"
 evt.map[3] = function()
-if not mapvars.event1 then
-evt.SetMessage(2)   
-	if evt.Question{Question = 3, Answer1 = 4} then      
-		Game.ShowStatusText("Let it be, prepare yourself") 
-		mapvars.event1=true
-		mapvars.event=true
-		Sleep(500)
-		Game.ShowStatusText("3")
-		Sleep(100)
-		Game.ShowStatusText("2")
-		Sleep(100)
-		Game.ShowStatusText("1")
-		Sleep(100)
-		Game.ShowStatusText("Let the fight start!")
-		Sleep(50)
-		--start fight
 
-		--magyars 1
-		pseudoSpawnpoint{monster = 4, x = 1224, y = 3623, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 4, x = 1224, y = 5500, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 4, x = 6460, y = 3623, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 4, x = 6460, y = 5500, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		Sleep(1000)
-		--magyars 2
-		pseudoSpawnpoint{monster = 4, x = 6460, y = 7800, z = 0, count = 5, powerChances = {0, 100, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Warrior" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 4, x = 1224, y = 7800, z = 0, count = 5, powerChances = {0, 100, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Warrior" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		Sleep(1000)
-		--magyars 3
-		pseudoSpawnpoint{monster = 4, x = 2720, y = 9497, z = 0, count = 3, powerChances = {0, 0, 100}, radius = 256, group = 255, transform = function(mon) genericTransform(140)(mon); mon.Name="Celestial Warlord" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 4, x = 4780, y = 9497, z = 0, count = 3, powerChances = {0, 0, 100}, radius = 256, group = 255, transform = function(mon) genericTransform(140)(mon); mon.Name="Celestial Warlord" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		Sleep(1000)
-		--titans
-		pseudoSpawnpoint{monster = 124, x = 6813, y = 3000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 124, x = 6813, y = 6000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 124, x = 864, y = 3000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 124, x = 864, y = 6000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 124, x = 3800, y = 9814, z = 192, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Noble Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 124, x = 3800, y = 9814, z = 192, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Noble Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		Sleep(1000)
-		--dragons
-		pseudoSpawnpoint{monster = 40, x = 5200, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		pseudoSpawnpoint{monster = 40, x = 3800, y = 8468, z = 500, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(180)(mon); mon.Name="Celestial Blue Dragon" mon.TreasureGold= 0 mon.TreasureItemPercent = 100 mon.TreasureGold= 0 mon.Item = 579  mon.Experience = 36000 end}
-		pseudoSpawnpoint{monster = 40, x = 2400, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
-		mapvars.event=false
-	else 
-		Game.ShowStatusText("Choose carefully")
+	if not mapvars.event1 and not vars.firstTrial then
+	evt.SetMessage(2)   
+		if evt.Question{Question = 3, Answer1 = 4} then      
+			Game.ShowStatusText("Let it be, prepare yourself") 
+			mapvars.event1=true
+			mapvars.event=true
+			vars.firstTrial=true
+			Sleep(500)
+			Game.ShowStatusText("3")
+			Sleep(100)
+			Game.ShowStatusText("2")
+			Sleep(100)
+			Game.ShowStatusText("1")
+			Sleep(100)
+			Game.ShowStatusText("Let the fight start!")
+			Sleep(50)
+			--start fight
+
+			--magyars 1
+			pseudoSpawnpoint{monster = 4, x = 1224, y = 3623, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 4, x = 1224, y = 5500, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 4, x = 6460, y = 3623, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 4, x = 6460, y = 5500, z = 0, count = 6, powerChances = {100, 0, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Soldier" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			Sleep(2000)
+			--magyars 2
+			pseudoSpawnpoint{monster = 4, x = 6460, y = 7800, z = 0, count = 5, powerChances = {0, 100, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Warrior" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 4, x = 1224, y = 7800, z = 0, count = 5, powerChances = {0, 100, 0}, radius = 256, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Warrior" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			Sleep(2000)
+			--magyars 3
+			pseudoSpawnpoint{monster = 4, x = 2720, y = 9497, z = 0, count = 3, powerChances = {0, 0, 100}, radius = 256, group = 255, transform = function(mon) genericTransform(140)(mon); mon.Name="Celestial Warlord" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 4, x = 4780, y = 9497, z = 0, count = 3, powerChances = {0, 0, 100}, radius = 256, group = 255, transform = function(mon) genericTransform(140)(mon); mon.Name="Celestial Warlord" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			Sleep(1500)
+			--titans
+			pseudoSpawnpoint{monster = 124, x = 6813, y = 3000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 124, x = 6813, y = 6000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 124, x = 864, y = 3000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 124, x = 864, y = 6000, z = 192, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(100)(mon); mon.Name="Celestial Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 124, x = 3800, y = 9814, z = 192, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Noble Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 124, x = 3800, y = 9814, z = 192, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(120)(mon); mon.Name="Celestial Noble Titan" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			Sleep(1000)
+			--dragons
+			pseudoSpawnpoint{monster = 40, x = 5200, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			pseudoSpawnpoint{monster = 40, x = 3800, y = 8468, z = 500, count = 1, powerChances = {0, 100, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(180)(mon); mon.Name="Celestial Blue Dragon" mon.TreasureGold= 0 mon.TreasureItemPercent = 100 mon.TreasureGold= 0 mon.Item = 579  mon.Experience = 36000 end}
+			pseudoSpawnpoint{monster = 40, x = 2400, y = 8468, z = 500, count = 1, powerChances = {100, 0, 0}, radius = 0, group = 255, transform = function(mon) genericTransform(150)(mon); mon.Name="Celestial Dragon" mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			mapvars.event=false
+		else 
+			Game.ShowStatusText("Choose carefully")
+		end
 	end
-end
+
 end
 
 --difficulty 2
 evt.hint[4] = "second trial"
 evt.map[4] = function() 
 evt.SetMessage(5)   
-if not mapvars.event2 then
+if evt.Cmp("Inventory", 579) then
+if not mapvars.event2 and not vars.secondTrial and mapvars.event==false then
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
 		mapvars.event2=true
 		mapvars.event=true
+		vars.secondTrial=true
 		Sleep(500)
 		Game.ShowStatusText("3")
 		Sleep(100)
@@ -160,17 +167,22 @@ if not mapvars.event2 then
 		Game.ShowStatusText("Choose carefully")
 	end   
 end
+	else
+	Message("You need to complete the first trial before")	
+	end
 end
 
 --difficulty 3
 evt.hint[5] = "third trial"
 evt.map[5] = function()   
 evt.SetMessage(6)   
-if not mapvars.event3 then
+if evt.Cmp("Inventory", 579) then
+if not mapvars.event3 and not vars.thirdTrial and mapvars.event==false then
 	if evt.Question{Question = 3, Answer1 = 4} then  
 		Game.ShowStatusText("Let it be, prepare yourself") 
 		mapvars.event3=true
 		mapvars.event=true
+		vars.thirdTrial=true
 		Sleep(500)
 		Game.ShowStatusText("Let the fight start!")
 		Sleep(50)
@@ -219,6 +231,9 @@ if not mapvars.event3 then
 	else 
 		Game.ShowStatusText("Choose carefully")
 	end 
+	end
+	else
+	Message("You need to complete the first trial before")	
 	end
 end
 
