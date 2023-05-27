@@ -35,6 +35,7 @@ local PRESETS = {
 	["StatusRework"] = true,
 	["ReworkedMagicDamageCalculation"] = true,
 	["PowerCureOverflow"] = false,
+	["ShowTrainerLocations"] = true,
 	["255MOD"] = false,
 }
 
