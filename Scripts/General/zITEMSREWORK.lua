@@ -1,4 +1,4 @@
-if SETTINGS["ItemRework"]==true then
+if SETTINGS["ItemRework"]==true and SETTINGS["255MOD"]~=true then
 function events.GenerateItem(t)
 	--get party average level
 	partyExperience = 0
