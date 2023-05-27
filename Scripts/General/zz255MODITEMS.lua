@@ -75,7 +75,7 @@ function events.ItemGenerated(t)
 		end
 		--fix for standard bonus
 		if t.Item.BonusStrength<26 then
-			t.Item.BonusStrength=(t.Item.BonusStrength+35)*1.2
+			t.Item.BonusStrength=(t.Item.BonusStrength+35)*1.25
 		end
 		--of x spell proc chance
 		if t.Item.Number>=120 and t.Item.Number<=134 and t.Item.Bonus2~=0 and t.Strength < 6 then
