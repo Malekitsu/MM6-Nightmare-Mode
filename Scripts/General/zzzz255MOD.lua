@@ -93,7 +93,7 @@ function events.ItemGenerated(t)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(76,100)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.Charges=2000+math.random(60,75)
+				t.Item.Charges=2000+math.random(90,100)
 				end
 			end
 		end
@@ -111,7 +111,7 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.Charges=2075
+			t.Item.Charges=2100
 			end
 		end	
 		--buff to hp and mana items
@@ -125,12 +125,12 @@ function events.ItemGenerated(t)
 		--CROWNS & HATS
 		if t.Item.Number>=94 and t.Item.Number<=99 and (t.Item.Bonus~=0 or t.Item.Bonus2~=0) and t.Item.Charges==0 then
 			hatpower={}
-			hatpower[1]=math.random(35,37)
-			hatpower[2]=math.random(36,40)
-			hatpower[3]=math.random(38,43)
-			hatpower[4]=math.random(41,47)
-			hatpower[5]=math.random(45,52)
-			hatpower[6]=math.random(50,60)
+			hatpower[1]=math.random(35,41)
+			hatpower[2]=math.random(38,45)
+			hatpower[3]=math.random(41,50)
+			hatpower[4]=math.random(46,57)
+			hatpower[5]=math.random(52,65)
+			hatpower[6]=math.random(60,75)
 			roll=math.random(1,100)
 			if roll<=25 then
 			t.Item.Charges=hatpower[t.Strength]+2000
@@ -656,139 +656,49 @@ end
 
 end
 
--- some spare code, just in case
---[[
-function AfterShowItemTooltip()
-  debug.Message(dump(t))
-end]]
---celestial amulet
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Number == 579 then
-			if t.Thing==16 or t.Thing==14 then
-			t.Allow=false
-				if t.Thing==14 then
-				Game.ShowStatusText(string.format("Celestial Amulet protects %s from death",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Celestial Amulet protects %s from eradication",t.Player.Name))
-				end
-			end
-		end
+---------------------------------------
+--NEW SCALING
+---------------------------------------
+if SETTINGS["255MOD"]==true then
+	function events.GameInitialized2()
+	--knight
+	Game.Classes.HPFactor[0] = Game.Classes.HPFactor[2]
+	Game.Classes.HPFactor[1] = Game.Classes.HPFactor[2]*1.5
+	Game.Classes.HPFactor[2] = Game.Classes.HPFactor[2]*2
+	--cleric
+	Game.Classes.HPFactor[3] = Game.Classes.HPFactor[5]
+	Game.Classes.HPFactor[4] = Game.Classes.HPFactor[5]*1.5
+	Game.Classes.HPFactor[5] = Game.Classes.HPFactor[5]*2
+	Game.Classes.SPFactor[3] = Game.Classes.SPFactor[2]
+	Game.Classes.SPFactor[4] = Game.Classes.SPFactor[2]*1.5
+	Game.Classes.SPFactor[5] = Game.Classes.SPFactor[2]	*2
+	--sorcerer
+	Game.Classes.HPFactor[6] = Game.Classes.HPFactor[8]
+	Game.Classes.HPFactor[7] = Game.Classes.HPFactor[8]*1.5
+	Game.Classes.HPFactor[8] = Game.Classes.HPFactor[8]*2
+	Game.Classes.SPFactor[6] = Game.Classes.SPFactor[5]
+	Game.Classes.SPFactor[7] = Game.Classes.SPFactor[5]*1.5
+	Game.Classes.SPFactor[8] = Game.Classes.SPFactor[5]*2
+	--paladin
+	Game.Classes.HPFactor[9] = Game.Classes.HPFactor[11]
+	Game.Classes.HPFactor[10] = Game.Classes.HPFactor[11]*1.5
+	Game.Classes.HPFactor[11] = Game.Classes.HPFactor[11]*2
+	Game.Classes.SPFactor[9] = Game.Classes.SPFactor[11]
+	Game.Classes.SPFactor[10] = Game.Classes.SPFactor[11]*1.5
+	Game.Classes.SPFactor[11] = Game.Classes.SPFactor[11]*2
+	--archer
+	Game.Classes.HPFactor[12] = Game.Classes.HPFactor[14]
+	Game.Classes.HPFactor[13] = Game.Classes.HPFactor[14]*1.5
+	Game.Classes.HPFactor[14] = Game.Classes.HPFactor[14]*2
+	Game.Classes.SPFactor[12] = Game.Classes.SPFactor[14]
+	Game.Classes.SPFactor[13] = Game.Classes.SPFactor[14]*1.5
+	Game.Classes.SPFactor[14] = Game.Classes.SPFactor[14]*2
+	--druid
+	Game.Classes.HPFactor[15] = Game.Classes.HPFactor[17]
+	Game.Classes.HPFactor[16] = Game.Classes.HPFactor[17]*1.5
+	Game.Classes.HPFactor[17] = Game.Classes.HPFactor[17]*2
+	Game.Classes.SPFactor[15] = Game.Classes.SPFactor[17]
+	Game.Classes.SPFactor[16] = Game.Classes.SPFactor[17]*1.5
+	Game.Classes.SPFactor[17] = Game.Classes.SPFactor[17]*2
 	end
-end
-function events.CalcStatBonusByItems(t)
-	if t.Stat >= const.Stats.Might and t.Stat <= const.Stats.Luck then
-		for it in t.Player:EnumActiveItems() do
-			if it.Number == 579 then
-				t.Result = t.Result + 50
-			end
-		end
-	end
-end
-
-
-
---------------------
---STATUS REWORK (needs to stay after status immunity
---------------------
-if SETTINGS["StatusRework"]==true then
-
-
-function events.LoadMap(wasInGame)
-local function poisonTimer() 
-
-vars.poisonTime=vars.poisonTime or {}
-	for i = 0, 3 do
-		if Party[i].Poison3>0 then
-			if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
-			vars.poisonTime[i]=25
-			end
-			if vars.poisonTime[i]>0 then
-			vars.poisonTime[i]=vars.poisonTime[i]-1
-			end
-			if vars.poisonTime[i]==0 then			
-			Party[i].Poison3=0
-			Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
-			else
-			Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.06)
-			end 
-		else if Party[i].Poison2>0 then
-				if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
-				vars.poisonTime[i]=25
-				end
-				if vars.poisonTime[i]>0 then
-				vars.poisonTime[i]=vars.poisonTime[i]-1
-				end
-				if vars.poisonTime[i]==0 then			
-				Party[i].Poison2=0
-				Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
-				else
-				Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.04)
-				end 
-			else if Party[i].Poison1>0 then
-					if vars.poisonTime[i]==nil or vars.poisonTime[i]==0 then
-					vars.poisonTime[i]=25
-					end
-					if vars.poisonTime[i]>0 then
-					vars.poisonTime[i]=vars.poisonTime[i]-1
-					end
-					if vars.poisonTime[i]==0 then			
-					Party[i].Poison1=0
-					Game.ShowStatusText(string.format("%s's poison effect expired",Party[i].Name))
-					else
-					Party[i].HP=Party[i].HP-math.ceil(Party[i].LevelBase*Game.Classes.HPFactor[Party[i].Class]*0.02)
-					end 
-				else vars.poisonTime[i]=0
-				end
-			end
-		end
-	end
-end
-Timer(poisonTimer, const.Minute) 
-end
-
-function events.DoBadThingToPlayer(t)
-		if (t.Thing==6 or t.Thing==7 or t.Thing==8) and t.Allow then
-		if vars.poisonTime[t.PlayerIndex]==nil or vars.poisonTime[t.PlayerIndex]==0 then
-		vars.poisonTime[t.PlayerIndex]=25
-		else
-		vars.poisonTime[t.PlayerIndex]=math.min(vars.poisonTime[t.PlayerIndex]+5,50)
-		end
-	end
-end
-
---hp and sp regen
-function events.LoadMap(wasInGame)
-local function restoreHPEnchant() 
-	for _, pl in Party do 
-	HPregen=0
-	totHP=pl:GetFullHP()
-		for it in pl:EnumActiveItems() do
-			if it.Bonus2 == 37 or it.Bonus2==44 or it.Bonus2==50 or it.Bonus2==54 then		
-				HPregen=math.max(HPregen+totHP*0.005,HPregen+1)	
-			end
-		end
-	HPregen=math.max(HPregen-1,0)
-	pl.HP=math.min(pl.HP+math.round(HPregen),totHP)
-	end 
-end
-Timer(restoreHPEnchant, const.Minute*5) 
-
-
-local function restoreSPEnchant() 
-	for _, pl in Party do 
-	SPregen=0
-	totSP=pl:GetFullSP()
-		for it in pl:EnumActiveItems() do
-			if it.Bonus2 == 38 or it.Bonus2==47 or it.Bonus2==55 then		
-				SPregen=math.max(SPregen+totSP*0.005,SPregen+1)
-			end
-		end
-	SPregen=math.max(SPregen-1,0)
-	pl.SP=math.min(pl.SP+math.round(SPregen),totSP)
-	end 
-end
-Timer(restoreSPEnchant, const.Minute*5) 
-end
-
 end
