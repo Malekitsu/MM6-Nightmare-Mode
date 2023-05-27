@@ -661,7 +661,7 @@ end
 	elseif not (monsterArray["SpellChance"] == 0)
 	then
 		r,m = SplitSkill(genericForm["SpellSkill"])
-		r = math.max(1, math.round(r * levelMultiplier/1.5*ItemMod))
+		r = math.max(1, math.round(r))
 		monsterArray["SpellSkill"] = JoinSkill(r,m)
 	end
 
@@ -782,7 +782,7 @@ end
 	elseif not (monsterArray["SpellChance"] == 0)
 	then
 		r,m = SplitSkill(genericForm["SpellSkill"])
-		r = math.max(1, math.round(r*ItemMod))
+		r = math.max(1, math.round(r))
 		monsterArray["SpellSkill"] = JoinSkill(r,m)
 	end
 
