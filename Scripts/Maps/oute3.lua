@@ -708,29 +708,28 @@ evt.map[131] = function()
 		Game.ShowStatusText("You start the Reality Scroll Ritual, it will take a while")
 		
 			Sleep(150)
-			pseudoSpawnpoint{monster = 25, x = Party.X+1000, y = Party.Y, z = Party.Z, count = 1, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-1000, y = Party.Y, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 173, x = Party.X, y = Party.Y+1000, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 64, group = 255
-			, transform = function(mon) mon.FullHP = mon.FullHP * 6 mon.HP = mon.FullHP end
-			}
-			pseudoSpawnpoint{monster = 25, x = Party.X, y = Party.Y-1000, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+3000, y = Party.Y, z = Party.Z, count = 1, powerChances = {50, 10, 40}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-3000, y = Party.Y, z = Party.Z, count = 2, powerChances = {50, 10, 40}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 173, x = Party.X, y = Party.Y+3000, z = Party.Z, count = 1, powerChances = {100, 0, 0}, radius = 64, group = 255
+			, transform = function(mon) mon.FullHP = mon.FullHP * 6 mon.HP = mon.FullHP end}
+			pseudoSpawnpoint{monster = 25, x = Party.X, y = Party.Y-3000, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
 			
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 2, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y+2250, z = Party.Z, count = 2, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y+2250, z = Party.Z, count = 2, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y-2250, z = Party.Z, count = 2, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y-2250, z = Party.Z, count = 2, powerChances = {60, 10, 30}, radius = 64, group = 255}
 			Sleep(5000)
 			Game.ShowStatusText("Ritual is halfway through, we must survive until the end")
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 3, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y+2250, z = Party.Z, count = 3, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y+2250, z = Party.Z, count = 3, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y-2250, z = Party.Z, count = 3, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y-2250, z = Party.Z, count = 3, powerChances = {60, 10, 30}, radius = 64, group = 255}
 			Sleep(3000)
 			Game.ShowStatusText("Ritual is almost complete")
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y+750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y+750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X-750, y = Party.Y-750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
-			pseudoSpawnpoint{monster = 25, x = Party.X+750, y = Party.Y-750, z = Party.Z, count = 8, powerChances = {50, 30, 20}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y+2250, z = Party.Z, count = 8, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y+2250, z = Party.Z, count = 8, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X-2250, y = Party.Y-2250, z = Party.Z, count = 8, powerChances = {60, 10, 30}, radius = 64, group = 255}
+			pseudoSpawnpoint{monster = 25, x = Party.X+2250, y = Party.Y-2250, z = Party.Z, count = 8, powerChances = {60, 10, 30}, radius = 64, group = 255}
 			Sleep(2000)
 		Message("Mortal, the gods have taken notice of your actions and find you worthy of a great challenge. You shall be tested in the celestial arena, where your true value shall be determined.\nDo not fear, for you have been chosen for a reason. Your strength, courage, and wisdom have not gone unnoticed, and the gods have faith that you will succeed in this challenge.")
 		vars.Endfight=false
