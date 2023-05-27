@@ -726,7 +726,7 @@ end
 	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod^0.5)
 	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
 
-	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Phys) or (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
+	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
 	bonusx1 = bonusx1 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax1)^0.8)
 	sidesx1 = sidesx1 * (60 - newLevel / 13 ) /100 * math.max(1, (oldLevel/damax1)^0.8)
 	end	
