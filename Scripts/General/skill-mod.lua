@@ -3481,3 +3481,245 @@ damage1=0
 	end
 end
 
+-- allow changing mastery learning requirements
+
+-- new scope ("do" block) to allow short local names without name clashes
+do
+	local requirements = {
+		-- examples:
+		--[[
+		[const.Skills.Fire] = {
+			[const.Expert] = {
+				Rank = 12,
+				-- once there is an entry for specific mastery, only requirements listed apply, vanilla ones
+				-- are inactive even if not directly overridden
+				-- so fire expert won't cost any gold
+			},
+			[const.Master] =
+			{
+				Gold = 500000,
+				Stat = {[const.Stats.Intellect] = 500,},
+				Rank = 60,
+				-- set specific requirement/lore text for fire master
+				Text = "Lol you need to have 60 skill, 500 intellect and 500k gold, good luck with that!"
+			}
+		},
+		[const.Skills.Bodybuilding] = {
+			[const.Expert] =
+			{
+				Gold = 15000,
+				Rank = 6,
+				-- Text = ""
+			}
+			-- master has normal requirements
+		},
+		[const.Skills.Body] = {
+			[const.Expert] = {
+				Gold = 50000,
+				Rank = 5
+			},
+			[const.Master] = {
+				Gold = 12,
+				Text = "12 gold and you're set"
+			}
+		}
+		]]
+		
+		--sword
+		[const.Skills.Sword] = {
+			[const.Master] = {
+				Rank = 12,
+				Gold = 10000,
+				Text = "I am amongst the finest swordsmen in the land.  I will teach students free of charge who possess a high degree of skill (Rank 12) and are cavaliers in the eyes of Lord Osric Temper, the greatest swordsman ever to live.  I won't waste my time with anyone else. My fee is 10000 gold"
+			},
+		},			
+		--axe
+		[const.Skills.Axe] = {
+			[const.Expert] = {
+				Rank = 6,
+				Gold = 6000,
+				Text = "Using an axe is trickier than you think.  If you've already had some practice with the axe (Rank 6), I'll be happy to show you the finer points of splitting skulls.  My fee is 6000 gold."
+			},
+			[const.Master] = {
+				Rank = 12,
+				Gold = 30000,
+				Text = "So, you want to train your axe skill the dwarven way?  My tutorage will show you how to dramatically increase the damage you inflict with an axe. If you are skilled enough already (Rank 12), my fee is 30000 gold"
+			}
+		},
+		--spear
+		[const.Skills.Spear] = {
+			[const.Expert] = {
+				Rank = 6,
+				Gold = 4000,
+				Text = "It takes practice to use a spear right.  You have to know how to keep your enemy from getting past the point, and what to do when he does.  If you have enough skill already (Rank 6), I can show you the right moves.  All I want is 4000 gold for my services."
+			},
+			[const.Master] = {
+				Rank = 12,
+				Gold = 25000,
+				Text = "A little practice with the spear keeps you from making deadly mistakes in battle, but a lot more practice will help you get the best results from your spear.  I will teach you the secrets of the masters if you've already had a practice (Rank 12) and have achieved cavalier or honorary cavalier status.  My fee is 25000 gold."
+			},
+		},
+		--mace
+		[const.Skills.Mace] = {
+			[const.Expert] = {
+				Rank = 6,
+				Gold = 3000,
+				Text = "A lot of people think there isn't much finesse in using a mace or hammer, but they're wrong.  Beating something to death with a mace is a lot like playing the drums.  You have to target the hard, bony parts of your enemy so your weapon will bounce back quickly, cocking itself for another strike.  I can teach you this technique if you already have a little skill (Rank 6) for 3000 gold."
+			},
+			[const.Master] = {
+				Rank = 12,
+				Gold = 15000,
+				Text = "A master of the mace can strike enemies senseless with a single blow.  I've been practicing this technique for years and have it down to a science.  If you have the strength (Might 40) and the skill (Rank 12), I can teach you my technique for 15000 gold."
+			},
+		},
+		
+		
+	}
+
+
+
+	local cs = const.Stats
+	-- you can add additional stats if you wish
+	local statToText = {
+		Might = cs.Might,
+		Personality = cs.Personality,
+		Intellect = cs.Intellect,
+		Endurance = cs.Endurance,
+		Accuracy = cs.Accuracy,
+		Speed = cs.Speed,
+		Luck = cs.Luck,
+	}
+	local textToStat = table.invert(statToText)
+	local invSkill = table.invert(const.Skills)
+	local textToMastery = {[const.Expert] = "Expert", [const.Master] = "Master"}
+	local canShowConsole = true -- don't flood console if error occurs
+	function events.EnterNPC()
+		canShowConsole = true -- only once per npc enter
+	end
+	local function msgf(...)
+		if canShowConsole then
+			debug.Message(string.format(...)) -- if you get this message, pass "Text" argument with custom requirements as in fire master example
+		end
+	end
+
+	-- update npc text for specific mastery of specific skill
+	local function processRequirementTexts(t, req)
+		local newText = t.Text
+		if req.Text then
+			newText = req.Text
+		else
+			local replaced
+			if req.Gold then
+				newText, replaced = newText:gsub("%d*( [Gg]old)", req.Gold .. "%1")
+				if replaced ~= 1 then
+					msgf("Couldn't find gold text to replace for skill %s", invSkill[t.Skill])
+				end
+			end
+			if req.Rank then
+				newText, replaced = newText:gsub("(%([Rr]ank )%d*%)", string.format("%%1%d%%)", req.Rank))
+				if replaced ~= 1 then
+					msgf("Couldn't find rank text to replace for skill %s", invSkill[t.Skill])
+				end
+			end
+			if req.Stat then
+				local replacement = {}
+				for id, val in pairs(req.Stat) do
+					replacement[#replacement + 1] = string.format("%s %d", textToStat[id], val)
+				end
+				local done
+				replacement = table.concat(replacement, ", ")
+				for name, value in pairs(statToText) do
+					newText, replaced = newText:gsub(
+						string.format("%s %%d*", name), replacement
+					)
+					if replaced == 1 then
+						done = true
+						break
+					end
+				end
+				if not done then
+					msgf("Couldn't find stat text to replace for skill %s", invSkill[t.Skill])
+				end
+			end
+		end
+		t.Text = newText
+	end
+
+	function events.GameInitialized2()
+		for skillId, masteries in pairs(requirements) do
+			for mastery, req in pairs(masteries) do
+				local t = {Skill = skillId, Text = Game.NPCText[200 + skillId * 2 + (mastery - 2)]}
+				processRequirementTexts(t, req)
+				Game.NPCText[200 + skillId * 2 + (mastery - 2)] = t.Text
+			end
+		end
+	end
+
+	local cannotTrainTextIds = {
+		gold = 260,
+		other = 261,
+		noSkill = 262,
+		masterFromNovice = 263,
+		unconscious = 264,
+		alreadyExpert = 265,
+		alreadyMaster = 266
+	}
+	
+	function events.CanTeachSkillMastery(t)
+		-- exit if no active player (idk if can happen)
+		if Game.CurrentPlayer == -1 then return end
+		local pl = Party[Game.CurrentPlayer]
+		local req = (requirements[t.Skill] or {})[t.Mastery + 2]
+		if req then -- custom requirements
+			local allow = true
+			local currentS, currentM = SplitSkill(pl.Skills[t.Skill])
+			local trainM = t.Mastery + 2
+			local cannotTrainReason -- nil by default
+			if pl.Unconscious ~= 0 or pl.Eradicated ~= 0 or pl.Paralyzed ~= 0 or pl.Stoned ~= 0 or pl.Dead ~= 0 or pl.Asleep ~= 0 then
+				allow = false
+				cannotTrainReason = cannotTrainTextIds.unconscious
+			elseif currentM == 0 then
+				allow = false
+				cannotTrainReason = cannotTrainTextIds.noSkill
+			elseif currentM == const.Novice and trainM == const.Master then
+				allow = false
+				cannotTrainReason = cannotTrainTextIds.masterFromNovice
+			elseif currentM == trainM then
+				allow = false
+				cannotTrainReason = currentM == const.Expert and cannotTrainTextIds.alreadyExpert or cannotTrainTextIds.alreadyMaster
+			end
+
+			t.Cost = req.Gold or 0
+			if allow and req.Gold then
+				if req.Gold > Party.Gold then
+					allow = false
+					cannotTrainReason = cannotTrainTextIds.gold
+				end
+			end
+			if allow and req.Rank then
+				if req.Rank > currentS then
+					allow = false
+					cannotTrainReason = cannotTrainTextIds.other
+				end
+			end
+			if allow and req.Stat then
+				for id, val in pairs(req.Stat) do
+					if val > pl.Stats[id].Base then
+						allow = false
+						cannotTrainReason = cannotTrainTextIds.other
+						break
+					end
+				end
+			end
+			t.Allow = allow
+			local newText = t.Text
+			if allow then
+				newText = string.format("Become %s in %s for %d gold", textToMastery[trainM], Game.GlobalTxt[271 + t.Skill], t.Cost)
+			elseif cannotTrainReason then
+				newText = Game.NPCText[cannotTrainReason]
+			end
+			t.Text = newText
+			canShowConsole = false
+		end
+	end
+end
