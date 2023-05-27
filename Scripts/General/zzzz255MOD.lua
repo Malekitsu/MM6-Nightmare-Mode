@@ -27,7 +27,7 @@ function events.GenerateItem(t)
 	end
 	--nerf if item is strong
 	if partyLevel<(t.Strength-3)*20 and t.Strength<7 then
-		t.Strength=t.Strength-1
+		t.Strength=math.max(t.Strength-1,1)
 	end
 	if (t.Strength-1)*20>partyLevel and t.Strength>2 and t.Strength<7 then
 		roll=math.random((t.Strength-3)*20,(t.Strength-2)*20)
@@ -35,7 +35,7 @@ function events.GenerateItem(t)
 			t.Strength=t.Strength-1
 		end
 	end
-				if t.Item.Number>580 then
+	if t.Item.Number>580 then
 	t.Item.Number=0
 	end
 
