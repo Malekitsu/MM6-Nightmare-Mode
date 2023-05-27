@@ -19,9 +19,9 @@ local modifiedBookValues =
 	[5] = 2000,
 	[6] = 4000,
 	[7] = 6000,
-	[8] = 20000,
-	[9] = 40000,
-	[10] = 60000,
+	[8] = 8000,
+	[9] = 10000,
+	[10] = 15000,
 }
 
 function skemWeaponOverrides(itemId)
@@ -118,7 +118,7 @@ function skemApplyBookValue(itemID, is_mirror)
 	if (is_mirror == true)
 	then
 		bookBase = 377
-		bookMultiplier = 10
+		bookMultiplier = 2
 	else
 		bookBase = 300
 		bookMultiplier = 1
