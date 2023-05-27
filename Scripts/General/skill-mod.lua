@@ -271,7 +271,22 @@ local newWeaponSkillRecoveryBonuses =
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newWeaponSkillRecoveryBonuses =
+{
+	[const.Skills.Staff]	= {0, 0, 0, },
+	[const.Skills.Sword]	= {2, 2, 3, },
+	[const.Skills.Dagger]	= {1, 1, 2, },
+	[const.Skills.Axe]		= {2, 2, 3, },
+	[const.Skills.Spear]	= {0, 0, 0, },
+	[const.Skills.Bow]		= {2, 2, 3, },
+	[const.Skills.Mace]		= {0, 0, 0, },
+	[const.Skills.Blaster]	= {0, 0, 0, },
+}
+end
 -- weapon skill damage bonuses (by rank)
 -- ranged weapon damage bonus has no effect
 
@@ -298,6 +313,23 @@ local newWeaponSkillDamageBonuses =
 	[const.Skills.Blaster]	= {0, 0, 0, },
 	
 }
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newWeaponSkillDamageBonuses =
+{
+	[const.Skills.Staff]	= {1, 2, 2, },
+	[const.Skills.Sword]	= {1, 2, 2, },
+	[const.Skills.Dagger]	= {0, 1, 1, },
+	[const.Skills.Axe]		= {2, 3, 3, },
+	[const.Skills.Spear]	= {2, 3, 3, },
+	[const.Skills.Bow]		= {6, 6, 6, },
+	[const.Skills.Mace]		= {2, 3, 3, },
+	[const.Skills.Blaster]	= {0, 0, 0, },
+	
+}
+end
 
 -- weapon skill AC bonuses (by rank)
 
@@ -323,7 +355,22 @@ local newWeaponSkillACBonuses =
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newWeaponSkillACBonuses =
+{
+	[const.Skills.Staff]	= {2, 3, 3, },
+	[const.Skills.Sword]	= {0, 0, 0, },
+	[const.Skills.Dagger]	= {0, 0, 0, },
+	[const.Skills.Axe]		= {0, 0, 0, },
+	[const.Skills.Spear]	= {4, 5, 6, },
+	[const.Skills.Bow]		= {0, 0, 0, },
+	[const.Skills.Mace]		= {0, 0, 0, },
+	[const.Skills.Blaster]	= {0, 0, 0, },
+}
+end
 -- weapon skill resistance bonuses (by rank)
 
 local newWeaponSkillResistanceBonuses =
@@ -337,7 +384,22 @@ local newWeaponSkillResistanceBonuses =
 	[const.Skills.Mace]		= {0, 0, 0, },
 	[const.Skills.Blaster]	= {0, 0, 0, },
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newWeaponSkillResistanceBonuses =
+{
+	[const.Skills.Staff]	= {2, 2, 3, },
+	[const.Skills.Sword]	= {0, 0, 0, },
+	[const.Skills.Dagger]	= {0, 0, 0, },
+	[const.Skills.Axe]		= {0, 0, 0, },
+	[const.Skills.Spear]	= {0, 0, 0, },
+	[const.Skills.Bow]		= {0, 0, 0, },
+	[const.Skills.Mace]		= {0, 0, 0, },
+	[const.Skills.Blaster]	= {0, 0, 0, },
+}
+end
 -- armor skill AC bonuses (by rank)
 
 local newArmorSkillACBonuses =
@@ -347,7 +409,18 @@ local newArmorSkillACBonuses =
 	[const.Skills.Chain]	= {2, 3, 5, },
 	[const.Skills.Plate]	= {3, 5, 7, },
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newArmorSkillACBonuses =
+{
+	[const.Skills.Shield]	= {3, 4, 5, },
+	[const.Skills.Leather]	= {3, 4, 5, },
+	[const.Skills.Chain]	= {5, 6, 8, },
+	[const.Skills.Plate]	= {7, 9, 11, },
+}
+end
 -- armor skill resistance bonuses (by rank)
 
 local newArmorSkillResistanceBonuses =
@@ -356,7 +429,17 @@ local newArmorSkillResistanceBonuses =
 	[const.Skills.Chain]	= {2, 3, 4, },
 	[const.Skills.Plate]	= {0, 1, 2, },
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+newArmorSkillResistanceBonuses =
+{
+	[const.Skills.Leather]	= {6, 9, 12, },
+	[const.Skills.Chain]	= {4, 6, 8, },
+	[const.Skills.Plate]	= {2, 3, 4, },
+}
+end
 -- armor skill damage reduction exponential multiplier (by rank) 
 --NOT USED ANYMORE
 local newArmorSkillDamageMultiplier =
@@ -371,7 +454,19 @@ local newArmorSkillDamageMultiplier =
 -- local weaponACBonusByMastery = {[const.Novice] = 4, [const.Expert] = 6, [const.Master] = 8, }
 -- local weaponResistanceBonusByMastery = {[const.Novice] = 0, [const.Expert] = 1, [const.Master] = 2, }
 local twoHandedWeaponDamageBonus = 3
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+twoHandedWeaponDamageBonus = 6
+end
 local twoHandedWeaponDamageBonusByMastery = {[const.Novice] = twoHandedWeaponDamageBonus/3, [const.Expert] = twoHandedWeaponDamageBonus/3*2, [const.Master] = twoHandedWeaponDamageBonus, }
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+twoHandedWeaponDamageBonusByMastery = {[const.Novice] = twoHandedWeaponDamageBonus/2, [const.Expert] = twoHandedWeaponDamageBonus/2*1.5, [const.Master] = twoHandedWeaponDamageBonus, }
+end
 local learningSkillExtraMultiplier = 2
 local learningSkillMultiplierByMastery = {[const.Novice] = 1 + learningSkillExtraMultiplier, [const.Expert] = 2 + learningSkillExtraMultiplier, [const.Master] = 3 + learningSkillExtraMultiplier, }
 
@@ -409,6 +504,23 @@ local classMeleeWeaponSkillDamageBonus =
 	[const.Class.BattleMage] = 0.5,
 	[const.Class.WarriorMage] = 1,
 }
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+classMeleeWeaponSkillDamageBonus =
+{
+	[const.Class.Knight] = 2,
+	[const.Class.Cavalier] = 3,
+	[const.Class.Champion] = 4,
+	[const.Class.Paladin] = 1,
+	[const.Class.Crusader] = 1.5,
+	[const.Class.Hero] = 2,
+	[const.Class.Archer] = 1,
+	[const.Class.BattleMage] = 1.5,
+	[const.Class.WarriorMage] = 2,
+}
+end
 local classRangedWeaponSkillAttackBonusMultiplier =
 {
 	[const.Class.Archer] = 5/3,
@@ -431,10 +543,28 @@ local classRangedWeaponSkillDamageBonus =
 	[const.Class.Cavalier] = 0,
 	[const.Class.Champion] = 1,
 }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+classRangedWeaponSkillDamageBonus =
+{
+	[const.Class.Archer] = 2,
+	[const.Class.BattleMage] = 3,
+	[const.Class.WarriorMage] = 4,
+	[const.Class.Knight] = 1,
+	[const.Class.Cavalier] = 1,
+	[const.Class.Champion] = 2,
+}
+end
 -- plate cover chances by rank
 local plateCoverChances = {[const.Novice] = 0.1, [const.Expert] = 0.2, [const.Master] = 0.3, }
-
+--------------------------
+--255MOD
+--------------------------
+if SETTINGS["255MOD"]==true then
+plateCoverChances = {[const.Novice] = 0.3, [const.Expert] = 0.3, [const.Master] = 0.3, }
+end
 -- shield projectile damage multiplier by mastery
 local shieldProjectileDamageReductionPerLevel = 0.01
 
