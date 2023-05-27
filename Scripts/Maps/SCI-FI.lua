@@ -686,9 +686,18 @@ if evt.Cmp("Awards", 61) then
 		end
 		Party.QBits[81] = true
 		Party.QBits[181] = true
+		
+	--remove 1st promotions
+		evt.SetNPCTopic{NPC = 6, Index = 1, Event = 70}   
+		evt.SetNPCTopic{NPC = 5, Index = 1, Event = 59} 
+		evt.SetNPCTopic{NPC = 4, Index = 1, Event = 17} 
+		evt.SetNPCTopic{NPC = 16, Index = 1, Event = 38} 
+		evt.SetNPCTopic{NPC = 15, Index = 1, Event = 93}
+		evt.SetNPCTopic{NPC = 14, Index = 1, Event = 84}  
+		
 		evt.Set("ReputationIs", 0)
 		Game.Time=Game.Time+250000000
-		evt.MoveToMap{X = -9714, Y = -7508, Z = 0, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "Oute3.odm"}
+		evt.MoveToMap{X = 48, Y = -512, Z = 0, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb04.blv"}
 	end
 
 
