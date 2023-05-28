@@ -365,4 +365,12 @@ end
 function events.GameInitialized2()
 	itemOverrides(RANDO)
 	skemSpellBookValues()
+	--single books cost increased
+	Game.ItemsTxt[308].Value= 40000
+	Game.ItemsTxt[320].Value= 40000
+	Game.ItemsTxt[321].Value= 40000
+	Game.ItemsTxt[330].Value= 20000
+	Game.ItemsTxt[332].Value= 60000
+	Game.ItemsTxt[354].Value= 60000
+
 end
