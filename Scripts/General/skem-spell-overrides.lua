@@ -1400,4 +1400,16 @@ function events.CalcSpellDamage(t)
 	end
 end
 
+--RING OF FIRE FIX, damage will be reduced at distance 256 increasingly up to 512 (10% damage min)
+
+function events.CalcDamageToMonster(t)
+	local data = WhoHitMonster()
+	if data.Player and data.Spell==const.Spells.RingOfFire then
+	distance=((t.Monster.X-Party.X)^2+(t.Monster.Y-Party.Y)^2)^0.5
+		if distance>256 then
+			t.Result=t.Result*math.max(1-((distance-281.6)/256),0.1)
+		end
+	end
+end
+
 
