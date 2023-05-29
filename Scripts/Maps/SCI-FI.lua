@@ -691,11 +691,13 @@ end
 
 function events.CalcDamageToPlayer(t)
 local data=WhoHitPlayer()
-if data.Monster~=nil then
-	if data.Monster.Id==111 then
-	spawnChance=math.random(1,100)
-		if spawnChance>60 then
-			pseudoSpawnpoint{monster = spawnlist[math.random(1,6)], x = (Party.X+data.Monster.X)/2, y = (Party.Y+data.Monster.Y)/2, z = Party.Z, count = 1, powerChances = {34, 33, 23}, radius = 0, group = 255, transform = function(mon) genericTransform(math.random(80,120))(mon); mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+if data then
+	if data.Monster then
+		if data.Monster.Id==111 then
+		spawnChance=math.random(1,100)
+			if spawnChance>60 then
+				pseudoSpawnpoint{monster = spawnlist[math.random(1,6)], x = (Party.X+data.Monster.X)/2, y = (Party.Y+data.Monster.Y)/2, z = Party.Z, count = 1, powerChances = {34, 33, 23}, radius = 0, group = 255, transform = function(mon) genericTransform(math.random(80,120))(mon); mon.TreasureItemPercent = 0 mon.TreasureGold= 0 end}
+			end
 		end
 	end
 end
