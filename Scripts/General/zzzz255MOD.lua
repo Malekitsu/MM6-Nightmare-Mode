@@ -669,16 +669,16 @@ if SETTINGS["255MOD"]==true then
 	Game.Classes.HPFactor[3] = Game.Classes.HPFactor[5]
 	Game.Classes.HPFactor[4] = Game.Classes.HPFactor[5]*1.5
 	Game.Classes.HPFactor[5] = Game.Classes.HPFactor[5]*2
-	Game.Classes.SPFactor[3] = Game.Classes.SPFactor[2]
-	Game.Classes.SPFactor[4] = Game.Classes.SPFactor[2]*1.5
-	Game.Classes.SPFactor[5] = Game.Classes.SPFactor[2]	*2
+	Game.Classes.SPFactor[3] = Game.Classes.SPFactor[5]
+	Game.Classes.SPFactor[4] = Game.Classes.SPFactor[5]*1.5
+	Game.Classes.SPFactor[5] = Game.Classes.SPFactor[5]	*2
 	--sorcerer
 	Game.Classes.HPFactor[6] = Game.Classes.HPFactor[8]
 	Game.Classes.HPFactor[7] = Game.Classes.HPFactor[8]*1.5
 	Game.Classes.HPFactor[8] = Game.Classes.HPFactor[8]*2
-	Game.Classes.SPFactor[6] = Game.Classes.SPFactor[5]
-	Game.Classes.SPFactor[7] = Game.Classes.SPFactor[5]*1.5
-	Game.Classes.SPFactor[8] = Game.Classes.SPFactor[5]*2
+	Game.Classes.SPFactor[6] = Game.Classes.SPFactor[8]
+	Game.Classes.SPFactor[7] = Game.Classes.SPFactor[8]*1.5
+	Game.Classes.SPFactor[8] = Game.Classes.SPFactor[8]*2
 	--paladin
 	Game.Classes.HPFactor[9] = Game.Classes.HPFactor[11]
 	Game.Classes.HPFactor[10] = Game.Classes.HPFactor[11]*1.5
