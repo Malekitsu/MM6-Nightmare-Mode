@@ -700,7 +700,6 @@ if SETTINGS["255MOD"]==true then
 	Game.Classes.SPFactor[15] = Game.Classes.SPFactor[17]
 	Game.Classes.SPFactor[16] = Game.Classes.SPFactor[17]*1.5
 	Game.Classes.SPFactor[17] = Game.Classes.SPFactor[17]*2
-	end
 	
 	--names
 	for i=0,17 do
@@ -713,6 +712,10 @@ if SETTINGS["255MOD"]==true then
 			Game.ClassDescriptions[i]=Game.ClassDescriptions[i+1]
 		end
 	end
+	
+	end
+	
+
 	--items reworked
 	--to do
 end
