@@ -438,7 +438,7 @@ evt.global[38] = function()
 			else
 				evt.Add("Awards", 23)         -- "Received Promotion to Honorary High Priest"
 			end
-		then
+		else
 			if evt.Cmp("ClassIs", const.Class.Cleric) then
 				evt.Set("ClassIs", const.Class.Priest)
 				evt.Add("Awards", 20)         -- "Received Promotion to High Priest"
