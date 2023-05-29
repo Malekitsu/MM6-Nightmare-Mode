@@ -586,7 +586,7 @@ end
 evt.hint[666] = "New World"
 evt.map[666] = function()
 if evt.Cmp("Awards", 61) then
-	Message("In the new World your quests and awards will be resetted, there is no way back. (Installing 255 mod right after entering is strongly recommended)")
+	Message("In the new World your quests and awards will be resetted, there is no way back. (Changing settings to 255 mod is required after entering)")
 	if evt.Question{Question = 20, Answer1 = 21} then   
 
 	for i=1,60 do
@@ -594,55 +594,14 @@ if evt.Cmp("Awards", 61) then
 		evt.Subtract("Awards", i)
 	end
 
-	for _, pl in Party do
-		for i, learn in EnumAvailableSkills(pl.Class) do
-			if learn >= const.Expert then
-				local skill, mastery = SplitSkill(pl.Skills[i]) 
-				mastery = 0  -- learn the mastery
-				pl.Skills[i] = JoinSkill(skill, mastery)
-			end
+	--reset class and skills to base
+	for i= 0,3 do
+		for v= 0,20 do
+			Party[i].Skills[v]=Party[i].Skills[v]%64
 		end
-		
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-			if evt.Cmp("ClassIs", const.Class.Hero) or evt.Cmp("ClassIs", const.Class.Hero) then
-				evt.Set("ClassIs", const.Class.Paladin)
-			end
-		end
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-					if evt.Cmp("ClassIs", const.Class.BattleMage) or evt.Cmp("ClassIs", const.Class.WarriorMage) then
-				evt.Set("ClassIs", const.Class.Archer)
-			end
-		end
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-					if evt.Cmp("ClassIs", const.Class.Cavalier) or evt.Cmp("ClassIs", const.Class.Champion) then
-				evt.Set("ClassIs", const.Class.Knight)
-			end
-		end
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-					if evt.Cmp("ClassIs", const.Class.Wizard) or evt.Cmp("ClassIs", const.Class.ArchMage) then
-				evt.Set("ClassIs", const.Class.Sorcerer)
-			end
-		end
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-					if evt.Cmp("ClassIs", const.Class.HighPriest) or evt.Cmp("ClassIs", const.Class.Priest) then
-				evt.Set("ClassIs", const.Class.Cleric)
-			end
-		end
-		for pl = 0, Party.High do
-			evt.ForPlayer(pl)
-					if evt.Cmp("ClassIs", const.Class.GreatDruid) or evt.Cmp("ClassIs", const.Class.ArchDruid) then
-				evt.Set("ClassIs", const.Class.Druid)
-			end
-		end
-		
+		Party[i].Class=Party[i].Class-Party[i].Class%3
 	end
-
-
+	
 
 	--QUEST ITEM RESET
 	evt.ForPlayer("All")
@@ -652,7 +611,7 @@ if evt.Cmp("Awards", 61) then
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
-	for i=464,580 do
+	for i=464,578 do
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
@@ -660,7 +619,7 @@ if evt.Cmp("Awards", 61) then
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
-	for i=464,580 do
+	for i=464,578 do
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
@@ -668,7 +627,7 @@ if evt.Cmp("Awards", 61) then
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
-	for i=464,580 do
+	for i=464,578 do
 	evt.ForPlayer("All")
 	evt.Subtract("Inventory", i)
 	end
