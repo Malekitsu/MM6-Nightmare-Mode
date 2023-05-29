@@ -450,6 +450,7 @@ function events.GameInitialized2()
 	itemName[580] = "Reality Scroll"
 	itemName[579] = "Celestial Dragon Amulet"
 	--fix long tooltips causing crash 
+
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
 	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
 	Game.SpcItemsTxt[43].BonusStat=" +10 HP and Regenerate HP over time."
@@ -770,4 +771,17 @@ end
 Timer(restoreSPEnchant, const.Minute*5) 
 end
 
+end
+
+--carnage fix
+function events.CalcDamageToMonster(t)
+    local data = WhoHitMonster()
+	if data.Player and data.Object ~= nil then
+		if data.Object.Item.Bonus2==3 then
+			t.Result=t.Result/2
+		end
+	end
+end
+function events.GameInitialized2()
+Game.SpcItemsTxt[2].BonusStat="Explosive Impact! (half damage)"
 end
