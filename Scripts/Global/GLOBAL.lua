@@ -208,11 +208,20 @@ evt.global[16] = function()
 	evt.Subtract("QBits", 185)         -- Quest item bits for seer
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.Crusader) then
-			evt.Set("ClassIs", const.Class.Hero)
-			evt.Add("Awards", 10)         -- "Received Promotion to Hero"
+		if SETTINGS["255MOD"]~=true then
+			if evt.Cmp("ClassIs", const.Class.Crusader) then
+				evt.Set("ClassIs", const.Class.Hero)
+				evt.Add("Awards", 10)         -- "Received Promotion to Hero"
+			else
+				evt.Add("Awards", 11)         -- "Received Promotion to Honorary Hero"
+			end
 		else
-			evt.Add("Awards", 11)         -- "Received Promotion to Honorary Hero"
+			if evt.Cmp("ClassIs", const.Class.Paladin) then
+				evt.Set("ClassIs", const.Class.Crusader)
+				evt.Add("Awards", 8)         -- "Received Promotion to Hero"
+			else
+				evt.Add("Awards", 9)         -- "Received Promotion to Honorary Hero"
+			end		
 		end
 	end
 	evt.Add("ReputationIs", 100)
@@ -422,11 +431,20 @@ evt.global[38] = function()
 	evt.SetMessage(52)         -- "You are successful!  It looks like I will have to keep my promise and make more irregular, early promotions.  I do so with pleasure.  I hereby promote all priests to high priests, and all honorary priests to honorary high priests"
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.Priest) then
-			evt.Set("ClassIs", const.Class.HighPriest)
-			evt.Add("Awards", 22)         -- "Received Promotion to High Priest"
-		else
-			evt.Add("Awards", 23)         -- "Received Promotion to Honorary High Priest"
+		if SETTINGS["255MOD"]~=true then
+			if evt.Cmp("ClassIs", const.Class.Priest) then
+				evt.Set("ClassIs", const.Class.HighPriest)
+				evt.Add("Awards", 22)         -- "Received Promotion to High Priest"
+			else
+				evt.Add("Awards", 23)         -- "Received Promotion to Honorary High Priest"
+			end
+		then
+			if evt.Cmp("ClassIs", const.Class.Cleric) then
+				evt.Set("ClassIs", const.Class.Priest)
+				evt.Add("Awards", 20)         -- "Received Promotion to High Priest"
+			else
+				evt.Add("Awards", 21)         -- "Received Promotion to Honorary High Priest"
+			end		
 		end
 	end
 	evt.Add("ReputationIs", 100)
@@ -651,11 +669,20 @@ evt.global[60] = function()
 	evt.Add("Experience", 30000)
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.Wizard) then
-			evt.Set("ClassIs", const.Class.ArchMage)
-			evt.Add("Awards", 14)         -- "Received Promotion to Archmage"
+		if SETTINGS["255MOD"]~=true then
+			if evt.Cmp("ClassIs", const.Class.Wizard) then
+				evt.Set("ClassIs", const.Class.ArchMage)
+				evt.Add("Awards", 14)         -- "Received Promotion to Archmage"
+			else
+				evt.Add("Awards", 15)         -- "Received Promotion to Honorary Archmage"
+			end
 		else
-			evt.Add("Awards", 15)         -- "Received Promotion to Honorary Archmage"
+			if evt.Cmp("ClassIs", const.Class.Sorcerer) then
+				evt.Set("ClassIs", const.Class.Wizard)
+				evt.Add("Awards", 12)         -- "Received Promotion to Archmage"
+			else
+				evt.Add("Awards", 13)         -- "Received Promotion to Honorary Archmage"
+			end			
 		end
 	end
 	evt.Add("ReputationIs", 100)
@@ -780,11 +807,20 @@ evt.global[71] = function()
 	evt.SetMessage(87)         -- "Good job!  Excellent!  I wasn’t sure you’d make it back alive.  Kergmond had more potential than I realized, but you’re certainly more than a match for an army of Kergmonds.  You’ve proven yourselves worthy of the rank of champion. You must not be afraid to take up arms to defend what is right.  May your enemies fear your approach and your allies rally behind your courage. And now, I promote you to the rank of champion! "
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.Cavalier) then
-			evt.Set("ClassIs", const.Class.Champion)
-			evt.Add("Awards", 18)         -- "Received Promotion to Champion"
+		if SETTINGS["255MOD"]~=true then
+			if evt.Cmp("ClassIs", const.Class.Cavalier) then
+				evt.Set("ClassIs", const.Class.Champion)
+				evt.Add("Awards", 18)         -- "Received Promotion to Champion"
+			else
+				evt.Add("Awards", 19)         -- "Received Promotion to Honorary Champion"
+			end
 		else
-			evt.Add("Awards", 19)         -- "Received Promotion to Honorary Champion"
+			if evt.Cmp("ClassIs", const.Class.Knight) then
+				evt.Set("ClassIs", const.Class.Cavalier)
+				evt.Add("Awards", 16)         -- "Received Promotion to Champion"
+			else
+				evt.Add("Awards", 17)         -- "Received Promotion to Honorary Champion"
+			end
 		end
 	end
 	evt.Add("ReputationIs", 100)
@@ -1045,11 +1081,20 @@ evt.global[100] = function()
 					evt.ForPlayer("All")
 					evt.Add("Experience", 40000)
 					evt.ForPlayer(0)
-					if evt.Cmp("ClassIs", const.Class.BattleMage) then
-						evt.Set("ClassIs", const.Class.WarriorMage)
-						evt.Add("Awards", 30)         -- "Received Promotion to Warrior Mage"
+					if SETTINGS["255MOD"]~=true then					
+						if evt.Cmp("ClassIs", const.Class.BattleMage) then
+							evt.Set("ClassIs", const.Class.WarriorMage)
+							evt.Add("Awards", 30)         -- "Received Promotion to Warrior Mage"
+						else
+							evt.Add("Awards", 31)         -- "Received Promotion to Honorary Warrior Mage"
+						end
 					else
-						evt.Add("Awards", 31)         -- "Received Promotion to Honorary Warrior Mage"
+						if evt.Cmp("ClassIs", const.Class.Archer) then
+							evt.Set("ClassIs", const.Class.BattleMage)
+							evt.Add("Awards", 28)         -- "Received Promotion to Warrior Mage"
+						else
+							evt.Add("Awards", 29)         -- "Received Promotion to Honorary Warrior Mage"
+						end					
 					end
 					goto _24
 				end
@@ -3210,11 +3255,20 @@ evt.global[366] = function()
 	evt.SetMessage(102)         -- "<Loretta Fleise contacts you via a telepathy spell> Welcome to the Ceremony of the Moon.  Stand ye before the altar of the Moon facing south.  Close your eyes and meditate upon the Circle of Seasons and the Wheel of Life.  <long, silent pause>  Open your eyes, my friends.  I hereby promote all great druids to arch druids, and all honorary great druids to honorary arch druids.  <Loretta fades away> "
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.GreatDruid) then
-			evt.Set("ClassIs", const.Class.ArchDruid)
-			evt.Add("Awards", 26)         -- "Received Promotion to Arch Druid"
+		if SETTINGS["255MOD"]~=true then
+			if evt.Cmp("ClassIs", const.Class.GreatDruid) then
+				evt.Set("ClassIs", const.Class.ArchDruid)
+				evt.Add("Awards", 26)         -- "Received Promotion to Arch Druid"
+			else
+				evt.Add("Awards", 27)         -- "Received Promotion to Honorary Arch Druid"
+			end
 		else
-			evt.Add("Awards", 27)         -- "Received Promotion to Honorary Arch Druid"
+			if evt.Cmp("ClassIs", const.Class.Druid) then
+				evt.Set("ClassIs", const.Class.GreatDruid)
+				evt.Add("Awards", 24)         -- "Received Promotion to Arch Druid"
+			else
+				evt.Add("Awards", 25)         -- "Received Promotion to Honorary Arch Druid"
+			end
 		end
 	end
 	evt.Add("ReputationIs", 100)
