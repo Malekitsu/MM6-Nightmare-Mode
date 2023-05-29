@@ -704,11 +704,11 @@ if SETTINGS["255MOD"]==true then
 	
 	--names
 	for i=0,17 do
-		if Game.ClassNames[i]%3==0 then
+		if i%3==0 then
 			Game.ClassNames[i]=Game.ClassNames[i+2]
 			Game.ClassDescriptions[i]=Game.ClassDescriptions[i+2]
 		end
-		if Game.ClassNames[i]%3==1 then
+		if i%3==1 then
 			Game.ClassNames[i]=Game.ClassNames[i+1]
 			Game.ClassDescriptions[i]=Game.ClassDescriptions[i+1]
 		end
