@@ -37,9 +37,20 @@ end
 evt.map[100] = function()
 	if SETTINGS["255MOD"]==true then
 		Message("255 MOD correctly detected, you are ready to go fellow adventurer, you will be teleported to a very dangerous world, good luck and have fun!")
-		evt.MoveToMap{X = -9714, Y = -7508, Z = 0, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "Oute3.odm"}
+		Sleep(100)
+		evt.Add("Items",505)
+		Game.Time=Game.Time+const.Year*3-Game.Time%const.Day+const.Hour*9
+		local seed = vars.Seed
+		local shrine = vars.shrineBlessings
+		vars={}
+		vars.shrineBlessings=shrine
+		vars.Seed=seed
+		for i=0,11 do
+			vars.shrineBlessings[i]=0
+		end
+		evt.MoveToMap{X = -9728, Y = -11319, Z = 0, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "Oute3.odm"}
 	else
 		Message("255 MOD not detected, please save game, go to Might and Magic 6 main folder, open MM6.ini and set 255MOD to true (just like this:  255MOD=true ). Once done, relaunch the game and load game; if done correctly you will be teleported out")
 	end
 end
-Timer(evt.map[1].last, 3*const.Minute)
+Timer(evt.map[100].last, 3*const.Minute)
