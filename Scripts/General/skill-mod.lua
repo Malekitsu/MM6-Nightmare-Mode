@@ -3742,11 +3742,41 @@ do
 				Text = "A master of the mace can strike enemies senseless with a single blow.  I've been practicing this technique for years and have it down to a science.  If you have the strength (Might 40) and the skill (Rank 12), I can teach you my technique for 15000 gold."
 			},
 		},
+
 		
-		
+
 	}
+	
+------------------------------
+---------255 mode-------------
+------------------------------
+	if SETTINGS["255MOD"]==true then
+		requirements = {
+			--weapons
+			[const.Skills.Staff] = {[const.Expert] = {Rank=24, Gold=120000},[const.Master] = {Rank=36, Gold=300000}},
+			[const.Skills.Sword] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Dagger] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Axe] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Spear] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Mace] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},		
+			--armors
+			[const.Skills.Shield] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
+			[const.Skills.Leather] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
+			[const.Skills.Chain] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
+			[const.Skills.Plate] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
 
-
+			--spells
+			[const.Skills.Fire] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Air] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Water] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Earth] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Spirit] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Mind] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Body] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Light] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Dark] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+		}
+	end
 
 	local cs = const.Stats
 	-- you can add additional stats if you wish
@@ -3768,7 +3798,7 @@ do
 	end
 	local function msgf(...)
 		if canShowConsole then
-			debug.Message(string.format(...)) -- if you get this message, pass "Text" argument with custom requirements as in fire master example
+			--debug.Message(string.format(...)) -- if you get this message, pass "Text" argument with custom requirements as in fire master example
 		end
 	end
 
@@ -3890,6 +3920,16 @@ do
 			end
 			t.Text = newText
 			canShowConsole = false
+		end
+	end
+end
+
+--carnage fix
+function events.CalcDamageToMonster(t)
+    local data = WhoHitMonster()
+	if data.Player and data.Object ~= nil then
+		if data.Object.Item.Bonus2==3 then
+			t.Result=t.Result/2
 		end
 	end
 end
