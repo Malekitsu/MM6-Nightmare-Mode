@@ -120,14 +120,13 @@ d2=0
 	end
 
 MissHP = a + b + c + d
-surplus = a2 + b2 + c2 + d2
-surplus = surplus/4
+surplus = (a2 + b2 + c2 + d2)/6
 
 
-Party[0].HP = math.min(Party[0]:GetFullHP(), Party[0].HP + surplus * a / MissHP)
-Party[1].HP = math.min(Party[1]:GetFullHP(), Party[1].HP + surplus * b / MissHP)
-Party[2].HP = math.min(Party[2]:GetFullHP(), Party[2].HP + surplus * c / MissHP)
-Party[3].HP = math.min(Party[3]:GetFullHP(), Party[3].HP + surplus * d / MissHP)
+Party[0].HP = math.min(Party[0]:GetFullHP(), Party[0].HP + surplus * a / MissHP, 32767)
+Party[1].HP = math.min(Party[1]:GetFullHP(), Party[1].HP + surplus * b / MissHP, 32767)
+Party[2].HP = math.min(Party[2]:GetFullHP(), Party[2].HP + surplus * c / MissHP, 32767)
+Party[3].HP = math.min(Party[3]:GetFullHP(), Party[3].HP + surplus * d / MissHP, 32767)
 if Party[0].HP > Party[0]:GetFullHP() then
 Party[0].HP = Party[0]:GetFullHP()
 end
