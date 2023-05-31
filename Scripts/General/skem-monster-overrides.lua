@@ -706,12 +706,20 @@ function applyAdaptiveMonsterOverrides100(monsterID, monsterArray, adaptive_leve
 	if Mlevel == oldLevel or Mlevel == (200 + oldLevel) then
 	xLevel = oldLevel * 1.25 + 100
 	newLevel = math.max(1, xLevel)
+ItemModH = 1
 ItemMod = 1
+ItemModD = 1
 if SETTINGS["ItemRework"]==true	then	
-	ItemMod = (newLevel^1.15-1)/1000+1
+	ItemMod = (newLevel^1.15)/1000+1
 			end
 	if SETTINGS["StatsRework"]==true then
-ItemMod = ItemMod * (newLevel^1.15-1)/1000+1
+ItemMod = ItemMod * ((newLevel^1.15)/1000+1)
+ItemModH = ItemMod
+ItemModD = ItemMod
+end
+if SETTINGS["255MOD"]==true then
+ItemModH = ItemMod * (newLevel/100)^0.75
+ItemModD = ItemMod * (newLevel/100)^1.4
 end
 
 	levelMultiplier = (100+2) / (oldLevel+2)
@@ -722,9 +730,9 @@ end
 	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
 	damax1 = dicex1 *(1+sidesx1) / 2 + bonusx1
 	
-	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)) *(newLevel/100)*ItemMod^0.5)
-	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod^0.5)
-	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)) *(newLevel/100)*ItemModD)
+	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
+	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
 
 	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
 	bonusx1 = bonusx1 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax1)^0.8)
@@ -740,6 +748,10 @@ end
 	dicex1 = dicex1 + (sidesx1 - 250) * dicex1 / 250
 	sidesx1 = 250
 	end
+		
+	if dicex1 > 250 then
+	dicex1 = 250
+	end
 	
 	monsterArray["Attack1"]["DamageAdd"] = bonusx1
 	monsterArray["Attack1"]["DamageDiceCount"] = dicex1
@@ -753,9 +765,9 @@ end
 	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
 	damax2 = dicex2 *(1+sidesx2) / 2 + bonusx2
 			
-	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75) *(newLevel/100)*ItemMod^0.5))
-	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod^0.5)
-	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemMod)
+	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75) *(newLevel/100)*ItemModD))
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
+	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
 
 	if newLevel>35 and (genericForm["Attack2"]["Type"] == const.Damage.Energy) then
 
@@ -765,14 +777,18 @@ end
 	end
 
 	if bonusx2 > 250 then
-	sidesx2 = sidesx2 + (bonusx2 - 250) / dicex2 *2
+	sidesx2 = sidesx2 + (bonusx2 - 250) / dicex2 * 2
 	bonusx2 =250
 	end
 	
 	if sidesx2 > 250 then
 	dicex2 = dicex2 + (sidesx2 - 250) * dicex2 / 250
 	sidesx2 = 250
-	end	
+	end
+	
+	if dicex2 > 250 then
+	dicex2 = 250
+	end
 			
 	monsterArray["Attack2"]["DamageAdd"] = bonusx2
 	monsterArray["Attack2"]["DamageDiceCount"] = dicex2
@@ -782,14 +798,14 @@ end
 	elseif not (monsterArray["SpellChance"] == 0)
 	then
 		r,m = SplitSkill(genericForm["SpellSkill"])
-		r = math.max(1, math.round(r))
+		r = math.max(1, math.round(r*ItemMod))
 		monsterArray["SpellSkill"] = JoinSkill(r,m)
 	end
 
 
-	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemMod
+	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemModH
 
-	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemMod
+	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemModH
 
 	monsterArray["ArmorClass"] = genericForm["ArmorClass"] * levelMultiplier * newLevel / 100
 	monsterArray["Level"] = newLevel
@@ -814,6 +830,107 @@ end
 	end
 	monsterArray["Magic".."Resistance"] = monsterArray["Magic".."Resistance"] + (255 - monsterArray["Magic".."Resistance"])/5
 	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
+end
+	for i=0, Map.Monsters.High do
+	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) then
+			Map.Monsters[i].Ally = 1
+ItemModH = 1
+ItemMod = 1
+ItemModD = 1
+if SETTINGS["ItemRework"]==true	then	
+--	ItemMod = ((120+Map.Monsters[i].Level)^1.27)/1000+1
+			end
+	if SETTINGS["StatsRework"]==true then
+--ItemMod = ItemMod * (((120+Map.Monsters[i].Level)^1.27)/1000+1)
+ItemModH = ItemMod
+ItemModD = ItemMod
+end
+if SETTINGS["255MOD"]==true then
+--ItemModH = ItemMod * ((120+Map.Monsters[i].Level)/100)^1.4
+--ItemModD = ItemMod * ((120+Map.Monsters[i].Level)/100)^1.25
+end
+				DamageMultiplier=Map.Monsters[i].Level+120
+--			Map.Monsters[i].FullHitPoints = math.min(32500, Map.Monsters[i].FullHitPoints * ((4*(120+Map.Monsters[i].Level)+444)^1.25/(5*Map.Monsters[i].Level)^1.25)*ItemModH)
+--			Map.Monsters[i].HitPoints = math.min(32500, Map.Monsters[i].HitPoints * ((4*(120+Map.Monsters[i].Level)+444)^1.25/(5*Map.Monsters[i].Level)^1.25)*ItemModH)
+--				DamageMultiplier=350*((120+Map.Monsters[i].Level)/100)^0.35
+			Map.Monsters[i].FullHitPoints = math.min(32500, Map.Monsters[i].FullHitPoints*7.5+5500)
+			Map.Monsters[i].HitPoints = math.min(32500, Map.Monsters[i].HitPoints*7.5+5500)
+				
+	-- bonus damage
+				
+
+				--attack 1
+				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
+				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier + 1000
+				b=Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
+				Map.Monsters[i].Attack1.DamageDiceSides = Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
+				
+				--attack 2
+				c=Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
+				Map.Monsters[i].Attack2.DamageAdd = Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
+				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
+				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
+				--OVERFLOW FIX
+					--Attack 1 Overflow fix
+					--add damage fix
+					if (a > 250) then
+					Overflow = a - 250
+					Map.Monsters[i].Attack1.DamageAdd = 250
+					b=b + (math.round(2*Overflow/Map.Monsters[i].Attack1.DamageDiceCount))
+					Map.Monsters[i].Attack1.DamageDiceSides = b 
+					end
+					--Dice Sides fix
+					if (b > 250) then
+					Overflow = b / 250
+					Map.Monsters[i].Attack1.DamageDiceSides = 250
+					--checking for dice count overflow
+					e = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
+					Map.Monsters[i].Attack1.DamageDiceCount = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
+					end
+					--Just in case Dice Count fix
+					if not (e == nil) then
+						if (e > 250) then
+						Map.Monsters[i].Attack1.DamageDiceCount = 250
+						end
+					end
+					--Attack 2 Overflow fix, same formula
+					--add damage fix
+					if (c > 250) then
+					Overflow = c - 250
+					Map.Monsters[i].Attack2.DamageAdd = 250
+					d=d + (math.round(2*Overflow/Map.Monsters[i].Attack2.DamageDiceCount))
+					Map.Monsters[i].Attack2.DamageDiceSides = d
+					end
+					--Dice Sides fix
+					if (d > 250) then
+					Overflow = d / 250
+					Map.Monsters[i].Attack2.DamageDiceSides = 250
+					--checking for dice count overflow
+					f=Map.Monsters[i].Attack2.DamageDiceCount * Overflow
+					Map.Monsters[i].Attack2.DamageDiceCount = Map.Monsters[i].Attack2.DamageDiceCount * Overflow
+					end
+					--Just in case Dice Count fix
+					if not (f ==nil) then
+						if (f > 250) then
+						Map.Monsters[i].Attack2.DamageDiceCount = 250
+						end
+					end
+
+--		end
+--	end
+	Map.Monsters[i].ArmorClass = Map.Monsters[i].ArmorClass + 120
+	Map.Monsters[i].TreasureItemPercent = (100-Map.Monsters[i].TreasureItemPercent)/5+Map.Monsters[i].TreasureItemPercent
+	Map.Monsters[i].TreasureItemLevel = Map.Monsters[i].TreasureItemLevel+math.random(0,6-Map.Monsters[i].TreasureItemLevel)
+	Map.Monsters[i].Level = math.min(Map.Monsters[i].Level + 120,250)
+	Map.Monsters[i].Experience = math.round(Map.Monsters[i].Level*(Map.Monsters[i].Level+10)/3)
+for v=0,5 do
+Map.Monsters[i].Resistances[v]=Map.Monsters[i].Resistances[v]+(255-Map.Monsters[i].Resistances[v])/3
+Map.Monsters[i].Resistances[5]=Map.Monsters[i].Resistances[5]+(255-Map.Monsters[i].Resistances[5])/2
+end
+		mapvars.boosted=true
+	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
+
+end
 end
 end
 
