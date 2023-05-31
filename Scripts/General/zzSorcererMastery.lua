@@ -43,7 +43,7 @@ function events.CalcDamageToPlayer(t)
 	rank=3
 	end
 WSP = t.Result-t.Result*0.97^mastery
-t.Player.SP = t.Player.SP - math.floor(WSP / mastery^0.5)
+t.Player.SP = t.Player.SP - math.floor(WSP^(0.85-mastery/100))
 t.Result=t.Result*0.97^mastery
 
 end
