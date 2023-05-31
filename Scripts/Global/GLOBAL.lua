@@ -41,7 +41,7 @@ evt.global[4] = function()
 	if evt.Cmp("Inventory", 543) then         -- "Goblinwatch Code"
 		evt.SetMessage(6)         -- "Ah, thank you for taking care of that little detail for us.  Here's your gold!  Feel free to return to Goblinwatch any time to finish clearing out the rest of the monsters.  We can't pay you, but you can have anything you find there.  "
 		evt.Set("Awards", 53)         -- "Solved the Goblinwatch Combination"
-		evt.Add("Experience", 2000)
+		evt.Add("Experience", 2000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 2000)
 		evt.Add("ReputationIs", 50)
@@ -102,7 +102,7 @@ evt.global[9] = function()
 		evt.Subtract("QBits", 181)         -- Quest item bits for seer
 		evt.Subtract("QBits", 82)         -- "Bring Sulman's letter to Regent Wilbur Humphrey at Castle Ironfist."
 		evt.Subtract("QBits", 81)         -- "Show Sulman's letter to Andover Potbello in New Sorpigal."
-		evt.Add("Experience", 3000)
+		evt.Add("Experience", 3000+XPbonus)
 		evt.SetNPCTopic{NPC = 4, Index = 0, Event = 10}         -- "Wilbur Humphrey" : "Lord Kilburn"
 	else
 		evt.SetMessage(199)         -- "Welcome, adventurers!  Did you have something for me?  I'm a very busy man, you know.  "
@@ -209,7 +209,7 @@ evt.global[16] = function()
 		return
 	end
 	evt.SetMessage(24)         -- "Well done!  One less horrible monster in the world is a good thing.  I hereby officially promote all crusaders to heroes, and all honorary crusaders to the status of honorary hero! May you long continue to live up to the title!"
-	evt.Add("Experience", 30000)
+	evt.Add("Experience", 30000+XPbonus)
 	evt.Subtract("Inventory", 455)         -- "Dragon Claw"
 	evt.Subtract("QBits", 185)         -- Quest item bits for seer
 	for pl = 0, Party.High do
@@ -358,7 +358,7 @@ evt.global[33] = function()
 		evt.Add("Gold", 10000)
 		evt.Add("ReputationIs", 200)
 		evt.ForPlayer("All")
-		evt.Add("Experience", 20000)
+		evt.Add("Experience", 20000+XPbonus/4)
 		evt.Add("Awards", 5)         -- "Captured the Prince of Thieves"
 		evt.Subtract("NPCs", 17)         -- "The Prince of Thieves"
 		evt.SetNPCTopic{NPC = 17, Index = 0, Event = 34}         -- "The Prince of Thieves" : "The High Council"
@@ -580,7 +580,7 @@ evt.global[52] = function()
 	evt.ForPlayer("All")
 	if evt.Cmp("Inventory", 433) then         -- "Hourglass of Time"
 		evt.SetMessage(64)         -- "Now all I have to do is remember how to create the mirror.  I wrote down all the important parts so I wouldn’t forget how to do it.  <stops> Where did I put those notes?  <ponders for a minute> I must have left them somewhere obvious, maybe in the laboratory.  Anyway, your part in this is done, and again I thank you.  You will have my complete support in the council for this.  What were your names again? "
-		evt.Add("Experience", 50000)
+		evt.Add("Experience", 50000+XPbonus)
 		evt.Add("Awards", 3)         -- "Retrieved the Hourglass of Time"
 		evt.Subtract("Inventory", 433)         -- "Hourglass of Time"
 		evt.Subtract("QBits", 183)         -- Quest item bits for seer
@@ -2579,7 +2579,7 @@ evt.global[291] = function()
 	if evt.Cmp("Inventory", 498) then         -- "Snergle's Axe"
 		evt.SetMessage(299)         -- "Oh, glorious day!  With Snergle’s passing, we can now search for Rocklin to put him back in power.  Eternal thanks to you for this, and dwarves everywhere owe you a debt of gratitude."
 		evt.Add("Awards", 37)         -- "Killed Snergle"
-		evt.Add("Experience", 20000)
+		evt.Add("Experience", 20000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Set("QBits", 27)         -- 27 D05, Given when axe is returned (so door can't be opened)
 		evt.Subtract("QBits", 124)         -- "Kill Snergle in Snergle's Caverns and return with his axe to Avinril Smythers at The Haunt tavern in the Mire of the Damned."
