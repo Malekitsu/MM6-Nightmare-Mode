@@ -3923,13 +3923,3 @@ do
 		end
 	end
 end
-
---carnage fix
-function events.CalcDamageToMonster(t)
-    local data = WhoHitMonster()
-	if data.Player and data.Object ~= nil then
-		if data.Object.Item.Bonus2==3 then
-			t.Result=t.Result/2
-		end
-	end
-end
