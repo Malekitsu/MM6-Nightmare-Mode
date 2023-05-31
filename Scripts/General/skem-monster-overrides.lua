@@ -718,7 +718,7 @@ ItemModH = ItemMod
 ItemModD = ItemMod
 end
 if SETTINGS["255MOD"]==true then
-ItemModH = ItemMod * (newLevel/100)^0.75
+ItemModH = ItemMod * (newLevel/100)
 ItemModD = ItemMod * (newLevel/100)^1.4
 end
 
