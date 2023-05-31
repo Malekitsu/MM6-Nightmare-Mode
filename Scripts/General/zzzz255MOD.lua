@@ -275,25 +275,6 @@ Game.SpcItemsTxt[11].BonusStat="Adds 45-270 points of Fire damage."
 Game.SpcItemsTxt[12].BonusStat="Adds 75 points of Poison damage."
 Game.SpcItemsTxt[13].BonusStat="Adds 120 points of Poison damage."
 Game.SpcItemsTxt[14].BonusStat="Adds 180 points of Poison damage."
-
-
-
-
-				spellbonusdamage[4] = math.random(45, 60)
-				spellbonusdamage[5] = math.random(90, 120)
-				spellbonusdamage[6] = math.random(135, 180)
-				spellbonusdamage[7] = math.random(30, 75)
-				spellbonusdamage[8] = math.random(60, 150)
-				spellbonusdamage[9] = math.random(90, 225)
-				spellbonusdamage[10] = math.random(15, 90)
-				spellbonusdamage[11] = math.random(30, 180)
-				spellbonusdamage[12] = math.random(45, 270)
-				spellbonusdamage[46] = math.random(150, 300)
-
-
-
-
-
 end
 
 --ENCHANTS HERE
@@ -702,20 +683,17 @@ if SETTINGS["255MOD"]==true then
 	Game.Classes.SPFactor[17] = Game.Classes.SPFactor[17]*2
 	
 	--names
-	for i=0,17 do
-		if i%3==0 then
-			Game.ClassNames[i]=Game.ClassNames[i+2]
-			Game.ClassDescriptions[i]=Game.ClassDescriptions[i+2]
-		end
-		if i%3==1 then
-			Game.ClassNames[i]=Game.ClassNames[i+1]
-			Game.ClassDescriptions[i]=Game.ClassDescriptions[i+1]
+		for i=0,17 do
+			if i%3==0 then
+				Game.ClassNames[i]=Game.ClassNames[i+2]
+				Game.ClassDescriptions[i]=Game.ClassDescriptions[i+2]
+			end
+			if i%3==1 then
+				Game.ClassNames[i]=Game.ClassNames[i+1]
+				Game.ClassDescriptions[i]=Game.ClassDescriptions[i+1]
+			end
 		end
 	end
-	
-	end
-	
-
 	--items reworked
 	--to do
 end
