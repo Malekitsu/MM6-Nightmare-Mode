@@ -3768,9 +3768,9 @@ do
 			--spells
 			[const.Skills.Fire] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Air] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Water] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Water] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Earth] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Spirit] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Spirit] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Mind] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Body] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Light] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
