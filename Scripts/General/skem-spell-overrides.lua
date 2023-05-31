@@ -922,6 +922,12 @@ Xlevel = Game.MonstersTxt[monster.Id].Level
 Mlevel = monsterArray["Level"]
 modi =  (1+Mlevel)/(1+Xlevel)
 end
+if Mlevel < 1 then
+Mlevel = 1
+end
+if modi < 1 then
+modi = 1
+end
 	-- execute original code
 
 	local damage = def(monsterPointer, attackType)
@@ -944,7 +950,7 @@ end
 
 	local spellSkill, spellMastery = SplitSkill(monster.SpellSkill)
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.6/1000+1) * modi
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.2/1000+1) * modi
 	else
 	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * modi
 	end
