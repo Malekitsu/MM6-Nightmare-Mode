@@ -1,5 +1,11 @@
 Game.GlobalEvtLines.Count = 0  -- Deactivate all standard events
 
+local XPbonus = 0
+local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
+if (ADAPTIVE == "100") then
+XPbonus = 100000
+else
+end
 
 -- "The Letter"
 evt.global[1] = function()
@@ -61,7 +67,7 @@ evt.global[6] = function()
 	if evt.Cmp("Inventory", 475) then         -- "Chime of Harmony"
 		evt.SetMessage(9)         -- "Good work!  Here's your gold!  I can't thank you enough for ruining that temple.  Now the road to Ironfist will be safe for travel again."
 		evt.Subtract("Inventory", 475)         -- "Chime of Harmony"
-		evt.Add("Experience", 15000)
+		evt.Add("Experience", 15000+XPbonus)
 		evt.Add("Awards", 54)         -- "Returned with the Chime of Harmony"
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
@@ -119,7 +125,7 @@ evt.global[11] = function()
 		evt.SetMessage(16)         -- "Ah.  ‘Tis a sad day when so noble a Knight should fall to such foul monsters!  You have done a good thing, bringing his shield to me.  I shall ensure that he and his men receive all the honors due them.  I am in your debt, and you have my favor with the council.  Here is your reward."
 		evt.Subtract("Inventory", 499)         -- "Lord Kilburn's Shield"
 		evt.Subtract("QBits", 182)         -- Quest item bits for seer
-		evt.Add("Experience", 40000)
+		evt.Add("Experience", 40000+XPbonus/10)
 		evt.Add("Awards", 2)         -- "Retrieved Lord Kilburn's Shield"
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
@@ -184,7 +190,7 @@ evt.global[14] = function()
 	evt.Subtract("QBits", 88)         -- "Rescue a Damsel in Distress and return with her to Wilbur Humphrey in Castle Ironfist."
 	evt.Add("ReputationIs", 50)
 	evt.ForPlayer("All")
-	evt.Add("Experience", 5000)
+	evt.Add("Experience", 5000+XPbonus)
 	evt.SetNPCTopic{NPC = 4, Index = 1, Event = 15}         -- "Wilbur Humphrey" : "Heroes"
 end
 
@@ -322,7 +328,7 @@ evt.global[30] = function()
 		evt.Add("QBits", 198)         -- Quest item bits for seer
 		evt.ForPlayer("All")
 		evt.Subtract("ReputationIs", 1000)
-		evt.Add("Experience", 50000)
+		evt.Add("Experience", 50000+XPbonus/2)
 		evt.MoveNPC{NPC = 12, HouseId = 0}         -- "Archibald Ironfist"
 	end
 end
@@ -398,7 +404,7 @@ evt.global[36] = function()
 	evt.SetNPCTopic{NPC = 16, Index = 1, Event = 37}         -- "Anthony Stone" : "High Priests"
 	evt.Add("ReputationIs", 50)
 	evt.ForPlayer("All")
-	evt.Add("Experience", 15000)
+	evt.Add("Experience", 15000+XPbonus/2)
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Cleric) then
@@ -450,7 +456,7 @@ evt.global[38] = function()
 	evt.Add("ReputationIs", 100)
 	evt.Subtract("QBits", 107)         -- "Take the Sacred Chalice from the monks in their island temple east of Free Haven, return it to Temple Stone in Free Haven, and then return to Lord Stone at Castle Stone."
 	evt.ForPlayer("All")
-	evt.Add("Experience", 30000)
+	evt.Add("Experience", 30000+XPbonus/2)
 	evt.SetNPCTopic{NPC = 16, Index = 1, Event = 39}         -- "Anthony Stone" : "High Priests"
 end
 
@@ -636,7 +642,7 @@ end
 evt.global[58] = function()
 	evt.SetMessage(70)         -- "You have done well in finding the Fountain.  It’s location and powers are a secret, do not spread its location around.  Now, let me show you the secrets of the wizard."
 	evt.ForPlayer("All")
-	evt.Add("Experience", 10000)
+	evt.Add("Experience", 10000+XPbonus/10)
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Sorcerer) then
@@ -666,7 +672,7 @@ evt.global[60] = function()
 		return
 	end
 	evt.SetMessage(73)         -- "Great news!  I remember what you need to find!  The Crystal of Terrax!  Oh, you seem to have found it already.  Well, perfect!  I can train you to arch mage, then.  The first arch mage, Terrax, used this Crystal to master the elements.  Fire, earth, water, and air all formed together to make it, and from analyzing it he learned a great deal about elemental magic.  In addition, its effect on light led him to his discoveries of light and dark magic.  Since that time, the study of this crystal has guided every new arch mage.  Let me show you the secrets of the crystal, arch magi. "
-	evt.Add("Experience", 30000)
+	evt.Add("Experience", 30000+XPbonus)
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if SETTINGS["255MOD"]~=true then
@@ -707,7 +713,7 @@ evt.global[62] = function()
 		evt.SetMessage(76)         -- "Did you fail in your mission?  You didn’t allow the demons to escape, did you?  That post MUST be destroyed for any large attack against them to be successful.  As long as that post exists, your mission still stands. "
 	else
 		evt.SetMessage(77)         -- "Good job!  With the information you’ve brought back, we now have the intelligence we need to stage an attack on the devils, and with that post out of the way, we can hit them when they won’t expect it. I give you my full support in the council– hopefully the council will actually DO something for once."
-		evt.Add("Experience", 40000)
+		evt.Add("Experience", 40000+XPbonus/2)
 		evt.Add("Awards", 4)         -- "Destroyed the Devil's Post"
 		evt.Subtract("Inventory", 506)         -- "Devil Plans"
 		evt.Subtract("QBits", 184)         -- Quest item bits for seer
@@ -776,7 +782,7 @@ evt.global[69] = function()
 	evt.Subtract("QBits", 114)         -- "Get Knight's nomination from Chadwick and return to Lord Osric Temper at Castle Temper."
 	evt.Add("ReputationIs", 50)
 	evt.ForPlayer("All")
-	evt.Add("Experience", 15000)
+	evt.Add("Experience", 15000+XPbonus/10)
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Knight) then
@@ -826,7 +832,7 @@ evt.global[71] = function()
 	evt.Add("ReputationIs", 100)
 	evt.Subtract("QBits", 115)         -- "Defeat the Warlord and bring proof to Osric Temper"
 	evt.ForPlayer("All")
-	evt.Add("Experience", 40000)
+	evt.Add("Experience", 40000+XPbonus)
 	evt.Subtract("Inventory", 508)         -- "Discharge Papers"
 	evt.Subtract("QBits", 187)         -- Quest item bits for seer
 	evt.SetNPCTopic{NPC = 6, Index = 1, Event = 72}         -- "Osric Temper" : "Champions"
@@ -1052,7 +1058,7 @@ evt.global[92] = function()
 	evt.Subtract("QBits", 121)         -- "Retrieve the key to the Dragon Towers from Icewind Keep south of Whitecap, and bring it to Lord Stromgard at Castle Stromgard."
 	evt.Add("ReputationIs", 50)
 	evt.ForPlayer("All")
-	evt.Add("Experience", 15000)
+	evt.Add("Experience", 15000+XPbonus)
 	evt.SetNPCTopic{NPC = 15, Index = 1, Event = 93}         -- "Erik Von Stromgard" : "Warrior Mages"
 end
 
@@ -2200,7 +2206,7 @@ evt.global[123] = function()
 	if evt.Cmp("QBits", 9) then         --  9, CD2, given when you destroy Lich book
 		evt.SetMessage(377)         -- "Incredible!  I didn't expect you'd be able to do it.  Now that the Book of Liches is gone, the Necromancers' Guild here in Enroth will slowly fade away.  This is all thanks to you!  Here, take this as a reward and accept my gratitude as well."
 		evt.Add("Awards", 60)         -- "Destroyed the Book of Liches"
-		evt.Add("Experience", 50000)
+		evt.Add("Experience", 50000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
 		evt.Add("ReputationIs", 100)
@@ -2598,7 +2604,7 @@ evt.global[293] = function()
 		evt.SetMessage(302)         -- "Just as I suspected!  I’m surprised the Mayor was number three on their enemies list.  I suppose he IS a tad incompetent, but he’s not a bad person.  Thanks again, please accept this gold and my gratitude as your reward."
 		evt.Subtract("Inventory", 503)         -- "Enemies List"
 		evt.Add("Awards", 38)         -- "Saved the Mayor of Mist"
-		evt.Add("Experience", 5000)
+		evt.Add("Experience", 5000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 3000)
 		evt.Add("ReputationIs", 50)
@@ -2634,7 +2640,7 @@ evt.global[297] = function()
 		evt.SetMessage(307)         -- "Excellent!  Baa be praised!  I see you were not frightened of the curse after all.  Here is your reward and thank you again for your assistance."
 		evt.Subtract("Inventory", 449)         -- "Candelabra"
 		evt.Add("Awards", 39)         -- "Retrieved the Baa Candelabra"
-		evt.Add("Experience", 2000)
+		evt.Add("Experience", 2000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 1000)
 		evt.Subtract("ReputationIs", 200)
@@ -2693,7 +2699,7 @@ evt.global[304] = function()
 		evt.SetMessage(316)         -- "My gratitude!  My wife loves this harp; I’m so glad you were able to recover it!  Here, take this as a reward.  I’ve heard rumors that the Dragoons were working with the Shadow Guild.  If that’s the case, I’m sure the Mayor of New Sorpigal would love to see proof of it.  Thank you again for your assistance."
 		evt.Subtract("Inventory", 479)         -- "Harp"
 		evt.Add("Awards", 40)         -- "Retrieved Andrew's Harp"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
 		evt.Add("ReputationIs", 50)
@@ -2720,7 +2726,7 @@ evt.global[306] = function()
 		evt.SetMessage(320)         -- "Good work! Now I can conclude my research.  If I can learn how the Ritual of Endless Night works, perhaps I can find a way to reverse the process.  Here is the reward I promised you. "
 		evt.Subtract("Inventory", 464)         -- "Ethric's Skull"
 		evt.Add("Awards", 41)         -- "Retrieved Ethric's Skull"
-		evt.Add("Experience", 15000)
+		evt.Add("Experience", 15000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 7500)
 		evt.Subtract("QBits", 129)         -- "Retrieve Ethric's skull from his tomb west of Free Haven for Gabriel Cartman in Free Haven."
@@ -2745,7 +2751,7 @@ evt.global[309] = function()
 		evt.SetMessage(323)         -- "What a gruesome trophy!  This heart proves you’ve defeated the wicked spider queen.  Hopefully now the spiders won’t plague New Sorpigal anymore.  Here is the reward I promised."
 		evt.Subtract("Inventory", 481)         -- "Spider Queen's Heart"
 		evt.Add("Awards", 42)         -- "Killed the Spider Queen"
-		evt.Add("Experience", 3000)
+		evt.Add("Experience", 3000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 1000)
 		evt.Subtract("QBits", 130)         -- "Kill the Queen of the Spiders in the Abandoned Temple in New Sorpigal and return with her heart to Buford T. Allman in New Sorpigal."
@@ -2771,7 +2777,7 @@ evt.global[311] = function()
 		evt.Add("Gold", 3000)
 		evt.ForPlayer("All")
 		evt.Add("Awards", 43)         -- "Saved the Monolith"
-		evt.Add("Experience", 15000)
+		evt.Add("Experience", 15000+XPbonus)
 		evt.SetNPCTopic{NPC = 267, Index = 0, Event = 0}         -- "Eleanor Vanderbilt"
 		evt.MoveNPC{NPC = 267, HouseId = 0}         -- "Eleanor Vanderbilt"
 	else
@@ -2824,7 +2830,7 @@ evt.global[316] = function()
 		evt.Add("ReputationIs", 50)
 		evt.ForPlayer("All")
 		evt.Add("Awards", 45)         -- "Destroyed the Wicked Crystal"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.SetNPCTopic{NPC = 290, Index = 0, Event = 0}         -- "Winston Schezar"
 		evt.MoveNPC{NPC = 290, HouseId = 0}         -- "Winston Schezar"
 	else
@@ -2848,7 +2854,7 @@ evt.global[318] = function()
 		evt.Add("Gold", 500)
 		evt.ForPlayer("All")
 		evt.Add("Awards", 46)         -- "Rescued Emmanuel"
-		evt.Add("Experience", 20000)
+		evt.Add("Experience", 20000+XPbonus)
 		evt.MoveNPC{NPC = 108, HouseId = 254}         -- "Emmanuel Cravitz" -> "House"
 		evt.SetNPCTopic{NPC = 108, Index = 0, Event = 0}         -- "Emmanuel Cravitz"
 		evt.SetNPCTopic{NPC = 118, Index = 0, Event = 0}         -- "Joanne Cravitz"
@@ -2886,7 +2892,7 @@ evt.global[323] = function()
 	if evt.Cmp("Inventory", 400) then         -- "Mordred"
 		evt.SetMessage(343)         -- "So this is the legendary Mordred, eh?  Interesting, I was expecting something much grander.  I don’t think I want it, actually.  Why don’t you keep it, and I’ll deal with my friend on the cost."
 		evt.Add("Awards", 47)         -- "Found Zoltan's Artifact"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 30000)
 		evt.Add("ReputationIs", 100)
@@ -2914,7 +2920,7 @@ evt.global[325] = function()
 		evt.Add("Gold", 2000)
 		evt.ForPlayer("All")
 		evt.Add("Awards", 48)         -- "Rescued Sharry"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.SetNPCTopic{NPC = 3, Index = 0, Event = 0}         -- "Frank Fairchild"
 	else
 		evt.SetMessage(345)         -- "Have you found Sharry yet?  No?  I’m sure she’s wherever the Shadow Guild is hiding out.  Find them and you’ll find her."
@@ -2927,7 +2933,7 @@ evt.global[326] = function()
 	if evt.Cmp("Inventory", 504) then         -- "Orders from the Shadow Guild"
 		evt.SetMessage(347)         -- "Interesting.  The Dragoons were hired by the Shadow Guild.  I’m certain Anthony Stone will want to hear about this.  I’ll present this letter when I see him next. Thank you for this.  I’m sure he will want to take action against the Shadow Guild now that we have some proof of their deeds."
 		evt.Subtract("Inventory", 504)         -- "Orders from the Shadow Guild"
-		evt.Add("Experience", 5000)
+		evt.Add("Experience", 5000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
 		evt.Add("ReputationIs", 50)
@@ -2963,7 +2969,7 @@ evt.global[329] = function()
 		evt.Add("Food", 10)
 		evt.ForPlayer("All")
 		evt.Add("Awards", 49)         -- "Rescued Angela"
-		evt.Add("Experience", 1000)
+		evt.Add("Experience", 1000+XPbonus)
 		evt.SetNPCTopic{NPC = 154, Index = 0, Event = 0}         -- "Violet Dawson"
 		evt.SetNPCTopic{NPC = 195, Index = 0, Event = 0}         -- "Angela Dawson"
 	else
@@ -2997,7 +3003,7 @@ evt.global[332] = function()
 		evt.SetNPCTopic{NPC = 155, Index = 0, Event = 0}         -- "Sherell Ivanaveh"
 		evt.Add("Gold", 1500)
 		evt.ForPlayer("All")
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.Add("Awards", 50)         -- "Rescued Sherell"
 		evt.SetNPCTopic{NPC = 200, Index = 0, Event = 0}         -- "Carlo Tormini"
 	else
@@ -3026,7 +3032,7 @@ evt.global[335] = function()
 		evt.Add("Gold", 4000)
 		evt.Add("ReputationIs", 100)
 		evt.ForPlayer("All")
-		evt.Add("Experience", 20000)
+		evt.Add("Experience", 20000+XPbonus)
 		evt.Add("Awards", 52)         -- "Killed the Werewolf Leader"
 		evt.SetNPCTopic{NPC = 212, Index = 0, Event = 0}         -- "Maria Trepan"
 		evt.MoveNPC{NPC = 212, HouseId = 0}         -- "Maria Trepan"
@@ -3060,7 +3066,7 @@ evt.global[341] = function()
 	if evt.Cmp("Inventory", 458) then         -- "Pearl of Putrescence"
 		evt.SetMessage(366)         -- "Thank you for defeating the werewolf leader.  I wish that I had been strong enough to stop this from happening.  Please accept my thanks for allowing my spirit to move on.  I will take the pearl away so that it may no longer cause any harm to the people of Enroth."
 		evt.Subtract("Inventory", 458)         -- "Pearl of Putrescence"
-		evt.Add("Experience", 5000)
+		evt.Add("Experience", 5000+XPbonus)
 		evt.Add("Awards", 51)         -- "Broke the Blackshire Curse"
 		evt.ForPlayer("Current")
 		evt.Subtract("QBits", 143)         -- "Find the Pearl of Putrescence in the Lair of the Wolf and bring it to the Ghost of Balthasar, also in the Lair of the Wolf."
@@ -3077,7 +3083,7 @@ evt.global[342] = function()
 	if evt.Cmp("Inventory", 459) then         -- "Pearl of Purity"
 		evt.SetMessage(367)         -- "What’s this?  You have the Pearl of Purity?  I thought Balthasar– oh, he’s dead is he?  I’ll keep it for now, then, as per his last wishes.  Thank you on behalf of both him and me."
 		evt.Subtract("Inventory", 459)         -- "Pearl of Purity"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Subtract("QBits", 142)         -- NPC
 		evt.SetNPCTopic{NPC = 4, Index = 2, Event = 0}         -- "Wilbur Humphrey"
@@ -3185,7 +3191,7 @@ evt.global[360] = function()
 			evt.Add("QBits", 359)         -- NPC
 			evt.ForPlayer("All")
 			evt.Add("Awards", 57)         -- "Aided the Lord of Fire"
-			evt.Add("Experience", 10000)
+			evt.Add("Experience", 10000+XPbonus)
 			evt.SetNPCTopic{NPC = 298, Index = 2, Event = 0}         -- "Lord of Fire"
 		end
 	end
@@ -3197,7 +3203,7 @@ evt.global[362] = function()
 	if evt.Cmp("Inventory", 448) then         -- "Ankh"
 		evt.SetMessage(389)         -- "So, Sir John was murdered and the Silver Helms were bought off by the Temple of Baa?  That explains a great deal.  Good work on bringing this to me, but you’ll need to collect your reward from Anthony Stone."
 		evt.Subtract("Inventory", 448)         -- "Ankh"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.SetNPCTopic{NPC = 16, Index = 2, Event = 364}         -- "Anthony Stone" : "Ankh"
 		evt.SetNPCTopic{NPC = 14, Index = 2, Event = 0}         -- "Loretta Fleise"
@@ -3212,7 +3218,7 @@ evt.global[363] = function()
 	if evt.Cmp("Inventory", 448) then         -- "Ankh"
 		evt.SetMessage(390)         -- "I should have known Baa was behind this, they seem to be behind everything.  Thank you for bringing this to me.  It answers the questions I had about the Fraternal Order of Silver."
 		evt.Subtract("Inventory", 448)         -- "Ankh"
-		evt.Add("Experience", 10000)
+		evt.Add("Experience", 10000+XPbonus)
 		evt.ForPlayer("Current")
 		evt.Add("Gold", 5000)
 		evt.SetNPCTopic{NPC = 16, Index = 2, Event = 0}         -- "Anthony Stone"
@@ -3275,7 +3281,7 @@ evt.global[366] = function()
 	evt.ForPlayer("All")
 	evt.Subtract("QBits", 119)         -- "Visit the Altar of the Moon in the Temple of the Moon at midnight of a full moon."
 	evt.Add("QBits", 174)         -- NPC
-	evt.Add("Experience", 40000)
+	evt.Add("Experience", 40000+XPbonus)
 	evt.SetNPCTopic{NPC = 306, Index = 0, Event = 0}         -- "Loretta Fleise"
 	evt.SetNPCTopic{NPC = 14, Index = 1, Event = 86}         -- "Loretta Fleise" : "Arch Druids"
 end
