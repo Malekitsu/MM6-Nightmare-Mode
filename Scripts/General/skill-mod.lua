@@ -558,7 +558,7 @@ classRangedWeaponSkillDamageBonus =
 }
 end
 -- plate cover chances by rank
-local plateCoverChances = {[const.Novice] = 0.1, [const.Expert] = 0.2, [const.Master] = 0.3, }
+local plateCoverChances = {[const.Novice] = 0.2, [const.Expert] = 0.2, [const.Master] = 0.2, }
 --------------------------
 --255MOD
 --------------------------
