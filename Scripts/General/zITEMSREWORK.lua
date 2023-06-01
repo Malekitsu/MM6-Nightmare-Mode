@@ -187,44 +187,62 @@ end
 --weapon rework
 ----------------------
 function events.GameInitialized2()
---2h dice bonus
-for i = 6, 8 do
-	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
+--Weapon upscaler 
+
+
+for i=1,65 do
+upTierDifference=0
+downTierDifference=0
+downDamage=0
+--set goal damage for weapons (end game weapon damage)
+goalDamage=50
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
 end
-for i = 28, 41 do
-	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
+currentDamage = (Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i].Mod2 
+
+	for v=1,4 do
+		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
+		upTierDifference=upTierDifference+1
+		end
+		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
+		downTierDifference=downTierDifference+1
+		downDamage = (Game.ItemsTxt[i-v].Mod1DiceCount *Game.ItemsTxt[i-v]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i-v].Mod2
+		elseif downTierDifference==0 then
+				downDamage = currentDamage
+		end
+	end
+
+--calculate expected value
+tierRange=upTierDifference+downTierDifference+1
+damageRange=goalDamage-downDamage
+expectedDamageIncrease=damageRange^(downTierDifference/(tierRange-1))
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (expectedDamageIncrease / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=expectedDamageIncrease/2
+
+end 
+
+for i=400,405 do
+goalDamage=75
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
+end
+downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
+damageRange=goalDamage-downDamage
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=goalDamage/2
 end
 
---2h artifacts bonus
-Game.ItemsTxt[402].Mod1DiceSides = math.round(Game.ItemsTxt[402].Mod1DiceSides^(2^(1*Game.ItemsTxt[402].Mod2/13)))
-Game.ItemsTxt[417].Mod1DiceSides = math.round(Game.ItemsTxt[417].Mod1DiceSides^(2^(1*Game.ItemsTxt[417].Mod2/13)))
-Game.ItemsTxt[419].Mod1DiceSides = math.round(Game.ItemsTxt[419].Mod1DiceSides^(2^(1*Game.ItemsTxt[419].Mod2/13)))
-
---weapon bonus
-for i = 1, 63 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
+for i=415,420 do
+goalDamage=75
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
 end
-
-for i = 400, 405 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
+downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
+damageRange=goalDamage-downDamage
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=goalDamage/2
 end
-
-for i = 415, 420 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
-end
-------------
---Change item drop%
-------------
---[[ REMOVED AS IT CAUSES ITEMS BUG
-Game.ItemsTxt[4].ChanceByLevel[3]=0
-Game.ItemsTxt[11].ChanceByLevel[4]=0
-Game.ItemsTxt[14].ChanceByLevel[3]=0
-Game.ItemsTxt[14].ChanceByLevel[4]=2
-Game.ItemsTxt[37].ChanceByLevel[2]=0
-Game.ItemsTxt[37].ChanceByLevel[3]=2
-Game.ItemsTxt[40].ChanceByLevel[3]=2
-Game.ItemsTxt[40].ChanceByLevel[4]=10
---]]
 --armors fix
 Game.ItemsTxt[71].Mod2=2
 Game.ItemsTxt[72].Mod2=7
