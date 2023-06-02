@@ -44,9 +44,85 @@ end
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
 
-						if t.Item.Number>580 then
-	t.Item.Number=0
-	end
+		if t.Item.Number>580 then
+			t.Item.Number=0
+		end
+		
+		
+		--------------------------------------------------------
+		--255 MOD, UPSCALE ITEMS MOD 2 FOR WEAPONS AND RANDOMIZE
+		--------------------------------------------------------
+		for i=1,65 do
+			if i==t.Item.Number then
+			upTierDifference=0
+			downTierDifference=0
+			downDamage=0
+			--set goal damage for weapons (end game weapon damage)
+			goalWeaponMultiplier=3
+			currentDamage = Game.ItemsTxt[i].Mod1DiceCount*(Game.ItemsTxt[i].Mod1DiceSides+1)/2+Game.ItemsTxt[i].Mod2 
+				for v=1,4 do
+					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
+					upTierDifference=upTierDifference+1
+					maxWeapon = Game.ItemsTxt[i+v].Mod1DiceCount*(Game.ItemsTxt[i+v].Mod1DiceSides+1)/2+Game.ItemsTxt[i+v].Mod2
+					elseif upTierDifference==0 then
+						maxWeapon = currentDamage
+					end
+					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
+					downTierDifference=downTierDifference+1
+					end
+				end
+
+			--calculate expected value
+			tierRange=upTierDifference+downTierDifference+1
+			damageRange=maxWeapon*2
+			expectedDamageIncrease=goalWeaponMultiplier^((downTierDifference+1)/(tierRange))
+			t.Item.ExtraData=maxWeapon*expectedDamageIncrease-currentDamage
+			end
+		end
+		
+		--ARMORS
+		
+		for i=66,119 do
+			if i==t.Item.Number then
+			upTierDifference=0
+			downTierDifference=0
+			downArmor=0
+			--set goal damage for weapons (end game weapon damage)
+			goalArmorMultiplier=3
+			currentArmor = Game.ItemsTxt[i].Mod1DiceCount+Game.ItemsTxt[i].Mod2 
+				for v=1,4 do
+					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
+					upTierDifference=upTierDifference+1
+					maxArmor = Game.ItemsTxt[i+v].Mod1DiceCount+Game.ItemsTxt[i+v].Mod2
+					elseif upTierDifference==0 then
+						maxArmor = currentArmor
+					end
+					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
+					downTierDifference=downTierDifference+1
+					end
+				end
+
+			--calculate expected value
+			tierRange=upTierDifference+downTierDifference+1
+			armorRange=maxArmor*2
+			expectedArmorIncrease=goalArmorMultiplier^((downTierDifference+1)/(tierRange))
+			t.Item.ExtraData=maxArmor*expectedArmorIncrease-currentArmor
+			end
+		end
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		--give bonus a chance to proc even if bonus2 is already in the item
 		if t.Item.Bonus2~=0 then
@@ -62,15 +138,15 @@ function events.ItemGenerated(t)
 		extraBonusChance={30,40,50,50,50,50}
 		extraBonusPowerLow={35,38,41,46,52,60}
 		extraBonusPowerHigh={40,45,50,57,65,75}
-		extraDataProc=math.random(1,100)
-		if extraDataProc<=extraBonusChance[t.Strength] then
+		ChargesProc=math.random(1,100)
+		if ChargesProc<=extraBonusChance[t.Strength] then
 			lowerLimit=t.Strength
-			t.Item.ExtraData = math.random(14 * extraBonusPowerLow[t.Strength]-13, 14 * extraBonusPowerHigh[t.Strength])
+			t.Item.Charges = math.random(14 * extraBonusPowerLow[t.Strength]-13, 14 * extraBonusPowerHigh[t.Strength])
 			--make it standard bonus if no standard bonus
 			if t.Item.Bonus==0 then
-				t.Item.Bonus=t.Item.ExtraData%14+1
-				t.Item.BonusStrength=math.ceil(t.Item.ExtraData/14)
-				t.Item.ExtraData=0
+				t.Item.Bonus=t.Item.Charges%14+1
+				t.Item.BonusStrength=math.ceil(t.Item.Charges/14)
+				t.Item.Charges=0
 			end
 		end
 		--fix for standard bonus
@@ -89,11 +165,11 @@ function events.ItemGenerated(t)
 		if t.Item.Bonus2~=0 or Game.Map.Name=="zddb10.blv" then 
 			ancient=math.random(1,50)
 			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
-				t.Item.ExtraData=math.random(1064,1400)
+				t.Item.Charges=math.random(1064,1400)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(76,100)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.Charges=2000+math.random(90,100)
+				t.Item.ExtraData=2000+math.random(90,100)
 				end
 			end
 		end
@@ -101,7 +177,7 @@ function events.ItemGenerated(t)
 		--primordial item
 		primordial=math.random(1,200)
 		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
-			t.Item.ExtraData=math.random(1387,1400)
+			t.Item.Charges=math.random(1387,1400)
 			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=100
 			if t.Item.Number>60 then
@@ -111,19 +187,19 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.Charges=2100
+			t.Item.ExtraData=2100
 			end
 		end	
 		--buff to hp and mana items
 		if t.Item.Bonus==8 or t.Item.Bonus==9 then
 			t.Item.BonusStrength=t.Item.BonusStrength*2
 		end
-		if t.Item.ExtraData%14==7 or t.Item.ExtraData%14==8 then
-			t.Item.ExtraData=t.Item.ExtraData+14*math.ceil(t.Item.ExtraData/14)
+		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
+			t.Item.Charges=t.Item.Charges+14*math.ceil(t.Item.Charges/14)
 		end
 		
 		--CROWNS & HATS
-		if t.Item.Number>=94 and t.Item.Number<=99 and (t.Item.Bonus~=0 or t.Item.Bonus2~=0) and t.Item.Charges==0 then
+		if t.Item.Number>=94 and t.Item.Number<=99 then
 			hatpower={}
 			hatpower[1]=math.random(35,41)
 			hatpower[2]=math.random(38,45)
@@ -133,11 +209,11 @@ function events.ItemGenerated(t)
 			hatpower[6]=math.random(60,75)
 			roll=math.random(1,100)
 			if roll<=25 then
-			t.Item.Charges=hatpower[t.Strength]+2000
+			t.Item.ExtraData=hatpower[t.Strength]+2000
 			else if t.Item.Number>=94 and t.Item.Number<=96 then
-				t.Item.Charges=hatpower[t.Strength]
+				t.Item.ExtraData=hatpower[t.Strength]
 				else
-				t.Item.Charges=hatpower[t.Strength]+1000
+				t.Item.ExtraData=hatpower[t.Strength]+1000
 				end
 			end
 		end
@@ -149,9 +225,9 @@ end
 --apply extra data effect
 function events.CalcStatBonusByItems(t)
 	for it in t.Player:EnumActiveItems() do
-		if it.ExtraData ~= nil then
-			stat=it.ExtraData%14
-			bonus=math.ceil(it.ExtraData/14)
+		if it.Charges ~= nil then
+			stat=it.Charges%14
+			bonus=math.ceil(it.Charges/14)
 				if t.Stat==stat then
 				t.Result = t.Result + bonus
 				end				
@@ -165,9 +241,9 @@ data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(4)
 		if it then
-		bonus=it.Charges
-			if it.Charges<1000 or it.Charges>2000 then
-			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+		bonus=it.ExtraData
+			if it.ExtraData<1000 or it.ExtraData>2000 then
+			t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
 			end
 		end
 	end
@@ -176,9 +252,9 @@ end
 function events.HealingSpellPower(t)
 	it=t.Caster:GetActiveItem(4)
 	if it then
-		if it.Charges>1000 then
+		if it.ExtraData>1000 then
 			if t.Spell ~= 54 then
-			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+			t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
 			end
 		end
 	end
@@ -190,44 +266,64 @@ end
 --weapon rework
 ----------------------
 function events.GameInitialized2()
---2h dice bonus
-for i = 6, 8 do
-	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
+--Weapon upscaler 
+
+
+for i=1,65 do
+upTierDifference=0
+downTierDifference=0
+downDamage=0
+--set goal damage for weapons (end game weapon damage)
+goalDamage=50
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
 end
-for i = 28, 41 do
-	Game.ItemsTxt[i].Mod1DiceSides = math.round(Game.ItemsTxt[i].Mod1DiceSides^(2^(1*Game.ItemsTxt[i].Mod2/13)))
+currentDamage = (Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i].Mod2 
+
+	for v=1,4 do
+		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
+		upTierDifference=upTierDifference+1
+		end
+		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
+		downTierDifference=downTierDifference+1
+		downDamage = (Game.ItemsTxt[i-v].Mod1DiceCount *Game.ItemsTxt[i-v]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i-v].Mod2
+		elseif downTierDifference==0 then
+				downDamage = currentDamage
+		end
+	end
+
+--calculate expected value
+tierRange=upTierDifference+downTierDifference+1
+damageRange=goalDamage-downDamage
+expectedDamageIncrease=damageRange^(downTierDifference/(tierRange-1))
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (expectedDamageIncrease / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=expectedDamageIncrease/2
+end 
+
+--do same for artifacts
+for i=400,405 do
+goalDamage=75
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
+end
+downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
+damageRange=goalDamage-downDamage
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=goalDamage/2
 end
 
---2h artifacts bonus
-Game.ItemsTxt[402].Mod1DiceSides = math.round(Game.ItemsTxt[402].Mod1DiceSides^(2^(1*Game.ItemsTxt[402].Mod2/13)))
-Game.ItemsTxt[417].Mod1DiceSides = math.round(Game.ItemsTxt[417].Mod1DiceSides^(2^(1*Game.ItemsTxt[417].Mod2/13)))
-Game.ItemsTxt[419].Mod1DiceSides = math.round(Game.ItemsTxt[419].Mod1DiceSides^(2^(1*Game.ItemsTxt[419].Mod2/13)))
-
---weapon bonus
-for i = 1, 63 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
+for i=415,420 do
+goalDamage=75
+if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
+	goalDamage=goalDamage*2
+end
+downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
+damageRange=goalDamage-downDamage
+Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
+Game.ItemsTxt[i].Mod2=goalDamage/2
 end
 
-for i = 400, 405 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
-end
 
-for i = 415, 420 do
-	Game.ItemsTxt[i].Mod2=math.round(Game.ItemsTxt[i].Mod2^1.4)
-end
-------------
---Change item drop%
-------------
---[[ REMOVED AS IT CAUSES ITEMS BUG
-Game.ItemsTxt[4].ChanceByLevel[3]=0
-Game.ItemsTxt[11].ChanceByLevel[4]=0
-Game.ItemsTxt[14].ChanceByLevel[3]=0
-Game.ItemsTxt[14].ChanceByLevel[4]=2
-Game.ItemsTxt[37].ChanceByLevel[2]=0
-Game.ItemsTxt[37].ChanceByLevel[3]=2
-Game.ItemsTxt[40].ChanceByLevel[3]=2
-Game.ItemsTxt[40].ChanceByLevel[4]=10
---]]
 --armors fix
 Game.ItemsTxt[71].Mod2=2
 Game.ItemsTxt[72].Mod2=7
@@ -257,7 +353,6 @@ Game.ItemsTxt[408].Mod2=38
 Game.ItemsTxt[421].Mod2=60
 Game.ItemsTxt[422].Mod2=77
 Game.ItemsTxt[423].Mod2=61
-
 
 
 ------------
@@ -470,13 +565,13 @@ function events.GameInitialized2()
 end
 
 function events.ShowItemTooltip(item)
-	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData~=0 then
-	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
-		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData==0 then
+	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
+	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
 			Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat, itemStatName[item.Item.Bonus])
-			else if item.Item.Bonus~=0 and item.Item.ExtraData~=0 and item.Item.Bonus2==0 then
-				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
-				else if item.Item.Bonus~=0 and item.Item.ExtraData==0 and item.Item.Bonus2==0 then
+			else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+				else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
 					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
 				end
 			end
@@ -484,14 +579,13 @@ function events.ShowItemTooltip(item)
 	end
 	
 --Change item name
---Change item name
 ancient=0
 bonus=item.Item.BonusStrength
 if item.Item.Bonus==8 or item.Item.Bonus==9 then
 	bonus=bonus/2
 end
-extrabonus=math.ceil(item.Item.ExtraData/14)
-if item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8 then
+extrabonus=math.ceil(item.Item.Charges/14)
+if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
 	extrabonus=extrabonus/2
 end
 	
@@ -506,18 +600,20 @@ if bonus==100 and extrabonus==100 then
 	end
 
 --Crowns and HATS
-	if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.Charges>0 then
-		local statbonus=item.Item.Charges
-			if statbonus>2000 then
-			statbonus="Damage and Healing"
-			else if statbonus>1000 then
-				statbonus="Healing"
-				else statbonus="Damage"
-			end
-		end			
-		Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.Charges%1000,"%",itemDesc[item.Item.Number])
-		else
-		Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+	if item.Item.ExtraData~=nil then
+		if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.ExtraData>0 then
+			local statbonus=item.Item.ExtraData
+				if statbonus>2000 then
+				statbonus="Damage and Healing"
+				else if statbonus>1000 then
+					statbonus="Healing"
+					else statbonus="Damage"
+				end
+			end			
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.ExtraData%1000,"%",itemDesc[item.Item.Number])
+			else
+			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+		end
 	end
 end
 
@@ -698,3 +794,79 @@ if SETTINGS["255MOD"]==true then
 	--to do
 end
 
+--MOD2 CHANGER
+function events.GameInitialized2()
+	listMod2={}
+	for i=1, 119 do
+	listMod2[i]=Game.ItemsTxt[i].Mod2
+	end
+	listDiceSides={}
+	for i=1, 119 do
+	listDiceSides[i]=Game.ItemsTxt[i].Mod1DiceSides
+	end
+end
+itemindex=1
+function events.CalcStatBonusByItems(t)
+--required to correct tooltip of unequipped items
+	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
+	Game.ItemsTxt[i].Mod1DiceSides=listDiceSides[i]
+	itemindex=itemindex+1
+		if itemindex>=119 then
+			itemindex=1
+		end
+		
+	for it in t.Player:EnumActiveItems() do
+		-- fix current item
+		Game.ItemsTxt[it.Number].Mod2=listMod2[it.Number]
+		Game.ItemsTxt[it.Number].Mod1DiceSides=listDiceSides[it.Number]
+		if it.ExtraData ~= nil then
+			if t.Stat==const.Stats.ArmorClass and ((it.Number>=66 and it.Number<=93) or (it.Number>=100 and it.Number<=119)) then
+				t.Result=t.Result+it.ExtraData
+			end
+			--melee
+			if it.Number<=41 or (it.Number<=63 and it.Number>=50) then
+				if t.Stat==const.Stats.MeleeDamageMin or t.Stat==const.Stats.MeleeDamageMax then
+					t.Result=t.Result+it.ExtraData/2
+				end
+				if t.Stat==const.Stats.MeleeDamageMax then
+					t.Result=t.Result+it.ExtraData
+				end
+			end
+			--ranged
+			if it.Number==65 or it.Number==64 or(it.Number>=42 and it.Number<=49) then
+				if t.Stat==const.Stats.RangedDamageMin or t.Stat==const.Stats.RangedDamageMax then
+					t.Result=t.Result+it.ExtraData/2
+				end
+				if t.Stat==const.Stats.RangedDamageMax then
+					t.Result=t.Result+it.ExtraData
+				end
+			end 
+		end
+	end
+end
+
+
+--show extraData
+function events.ShowItemTooltip(item)
+	if item.Item.ExtraData ~=nil then
+		--WEAPONS
+		if item.Item.Number<=65 then
+			Game.ItemsTxt[item.Item.Number].Mod2=listMod2[item.Item.Number]+item.Item.ExtraData/2
+			Game.ItemsTxt[item.Item.Number].Mod1DiceSides=listDiceSides[item.Item.Number]+item.Item.ExtraData/Game.ItemsTxt[item.Item.Number].Mod1DiceCount
+		end
+		--ARMORS
+		if item.Item.Number>=66 and item.Item.Number<=119 then
+		Game.ItemsTxt[item.Item.Number].Mod2=listMod2[item.Item.Number]+item.Item.ExtraData
+		end
+	end
+end
+
+--swapper
+function events.ShowItemTooltip(item)
+	if item.Item.Refundable==false and item.Item.Number<=134 and swapper==true then
+		charges=item.Item.Charges
+		item.Item.Charges=item.Item.ExtraData
+		item.Item.ExtraData=charges
+		item.Item.Refundable=true
+	end
+end
