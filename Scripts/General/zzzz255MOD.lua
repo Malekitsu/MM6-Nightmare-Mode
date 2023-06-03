@@ -158,7 +158,7 @@ function events.ItemGenerated(t)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(76,100)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.ExtraData=2000+math.random(90,100)
+				t.Item.ExtraData=13000+math.random(90,100)
 				end
 			end
 		end
@@ -176,7 +176,7 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.ExtraData=2100
+			t.Item.ExtraData=13100
 			end
 		end	
 		--buff to hp and mana items
@@ -199,11 +199,11 @@ function events.ItemGenerated(t)
 					hatpower[6]=math.random(60,75)
 					roll=math.random(1,100)
 				if roll<=25 then
-				t.Item.ExtraData=hatpower[t.Strength]+2000
+				t.Item.ExtraData=hatpower[t.Strength]+13000
 				else if t.Item.Number>=94 and t.Item.Number<=96 then
-					t.Item.ExtraData=hatpower[t.Strength]
+					t.Item.ExtraData=hatpower[t.Strength]+11000
 					else
-					t.Item.ExtraData=hatpower[t.Strength]+1000
+					t.Item.ExtraData=hatpower[t.Strength]+12000
 					end
 				end
 			end
@@ -404,9 +404,9 @@ if bonus==100 and extrabonus==100 then
 	if item.Item.ExtraData~=nil then
 		if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.ExtraData>0 then
 			local statbonus=item.Item.ExtraData
-				if statbonus>2000 then
+				if statbonus>3000 then
 				statbonus="Damage and Healing"
-				else if statbonus>1000 then
+				else if statbonus>2000 then
 					statbonus="Healing"
 					else statbonus="Damage"
 				end
@@ -560,7 +560,7 @@ function events.ShowItemTooltip(item)
 		Game.ItemsTxt[item.Item.Number].Mod2=listMod2[item.Item.Number]+item.Item.ExtraData
 		end
 		--enchant2
-		if item.Item.ExtraData>0 and item.Item.Bonus2>0 and item.Item.Number<=134 then
+		if ((item.Item.ExtraData>0 and item.Item.ExtraData<1000) or item.Item.ExtraData>10000) and item.Item.Bonus2>0 and item.Item.Number<=134 then
 		Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat=spcEnchTxt255[item.Item.Bonus2-1]
 		elseif item.Item.Bonus2>0 and item.Item.Number<=134 then
 		Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat=spcEnchTxtMaw[item.Item.Bonus2-1]
@@ -607,7 +607,7 @@ function events.CalcStatBonusByItems(t)
     for enchId, data in pairs(effectsToEnchantmentsMap) do
         if table.find(data.stats, t.Stat) then
             for it in t.Player:EnumActiveItems() do
-                if it.Bonus2 == enchId and it.ExtraData>0 then
+                if it.Bonus2 == enchId and (it.ExtraData>0 and it.ExtraData<1000) or it.ExtraData>10000  then
                     t.Result = t.Result + data.effect
                 end
             end
