@@ -45,6 +45,7 @@ evt.map[100] = function()
 		vars={}
 		vars.shrineBlessings=shrine
 		vars.Seed=seed
+		vars.CelestialArena1==true
 		for i=0,11 do
 			vars.shrineBlessings[i]=0
 		end
