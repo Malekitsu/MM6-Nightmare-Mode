@@ -113,20 +113,6 @@ function events.ItemGenerated(t)
 			end
 		end
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		--give bonus a chance to proc even if bonus2 is already in the item
 		if t.Item.Bonus2~=0 then
 		bonusprocChance=math.random(1,100)
@@ -195,28 +181,30 @@ function events.ItemGenerated(t)
 		end	
 		--buff to hp and mana items
 		if t.Item.Bonus==8 or t.Item.Bonus==9 then
-			t.Item.BonusStrength=t.Item.BonusStrength*2
+			t.Item.BonusStrength=t.Item.BonusStrength*4
 		end
 		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
-			t.Item.Charges=t.Item.Charges+14*math.ceil(t.Item.Charges/14)
+			t.Item.Charges=t.Item.Charges+42*math.ceil(t.Item.Charges/14)
 		end
 		
 		--CROWNS & HATS
-		if t.Item.Number>=94 and t.Item.Number<=99 then
-			hatpower={}
-			hatpower[1]=math.random(35,41)
-			hatpower[2]=math.random(38,45)
-			hatpower[3]=math.random(41,50)
-			hatpower[4]=math.random(46,57)
-			hatpower[5]=math.random(52,65)
-			hatpower[6]=math.random(60,75)
-			roll=math.random(1,100)
-			if roll<=25 then
-			t.Item.ExtraData=hatpower[t.Strength]+2000
-			else if t.Item.Number>=94 and t.Item.Number<=96 then
-				t.Item.ExtraData=hatpower[t.Strength]
-				else
-				t.Item.ExtraData=hatpower[t.Strength]+1000
+		if t.Item.ExtraData~=nil then
+			if t.Item.Number>=94 and t.Item.Number<=99 and t.Item.ExtraData==0 then
+					hatpower={}
+					hatpower[1]=math.random(35,41)
+					hatpower[2]=math.random(38,45)
+					hatpower[3]=math.random(41,50)
+					hatpower[4]=math.random(46,57)
+					hatpower[5]=math.random(52,65)
+					hatpower[6]=math.random(60,75)
+					roll=math.random(1,100)
+				if roll<=25 then
+				t.Item.ExtraData=hatpower[t.Strength]+2000
+				else if t.Item.Number>=94 and t.Item.Number<=96 then
+					t.Item.ExtraData=hatpower[t.Strength]
+					else
+					t.Item.ExtraData=hatpower[t.Strength]+1000
+					end
 				end
 			end
 		end
@@ -224,142 +212,6 @@ function events.ItemGenerated(t)
 end
 
 
-
---apply extra data effect
-function events.CalcStatBonusByItems(t)
-	for it in t.Player:EnumActiveItems() do
-		if it.Charges ~= nil then
-			stat=it.Charges%14
-			bonus=math.ceil(it.Charges/14)
-				if t.Stat==stat then
-				t.Result = t.Result + bonus
-				end				
-		end
-	end
-end
-
---apply crown effect
-function events.CalcSpellDamage(t)
-data=WhoHitMonster()
-	if data.Player then
-		it=data.Player:GetActiveItem(4)
-		if it then
-		bonus=it.ExtraData
-			if it.ExtraData<1000 or it.ExtraData>2000 then
-			t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
-			end
-		end
-	end
-end
-
-function events.HealingSpellPower(t)
-	it=t.Caster:GetActiveItem(4)
-	if it then
-		if it.ExtraData>1000 then
-			if t.Spell ~= 54 then
-			t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
-			end
-		end
-	end
-end
-
-
-
-----------------------
---weapon rework
-----------------------
-function events.GameInitialized2()
---Weapon upscaler 
-
-
-for i=1,65 do
-upTierDifference=0
-downTierDifference=0
-downDamage=0
---set goal damage for weapons (end game weapon damage)
-goalDamage=50
-if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
-	goalDamage=goalDamage*2
-end
-currentDamage = (Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i].Mod2 
-
-	for v=1,4 do
-		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
-		upTierDifference=upTierDifference+1
-		end
-		if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
-		downTierDifference=downTierDifference+1
-		downDamage = (Game.ItemsTxt[i-v].Mod1DiceCount *Game.ItemsTxt[i-v]. Mod1DiceSides + 1)/2+Game.ItemsTxt[i-v].Mod2
-		elseif downTierDifference==0 then
-				downDamage = currentDamage
-		end
-	end
-
---calculate expected value
-tierRange=upTierDifference+downTierDifference+1
-damageRange=goalDamage-downDamage
-expectedDamageIncrease=damageRange^(downTierDifference/(tierRange-1))
-Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (expectedDamageIncrease / Game.ItemsTxt[i].Mod1DiceCount)
-Game.ItemsTxt[i].Mod2=expectedDamageIncrease/2
-end 
-
---do same for artifacts
-for i=400,405 do
-goalDamage=75
-if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
-	goalDamage=goalDamage*2
-end
-downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
-damageRange=goalDamage-downDamage
-Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
-Game.ItemsTxt[i].Mod2=goalDamage/2
-end
-
-for i=415,420 do
-goalDamage=75
-if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
-	goalDamage=goalDamage*2
-end
-downDamage=(Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides + 1)/2
-damageRange=goalDamage-downDamage
-Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (damageRange / Game.ItemsTxt[i].Mod1DiceCount)
-Game.ItemsTxt[i].Mod2=goalDamage/2
-end
-
-
---armors fix
-Game.ItemsTxt[71].Mod2=2
-Game.ItemsTxt[72].Mod2=7
-Game.ItemsTxt[73].Mod2=16
-Game.ItemsTxt[74].Mod2=28
-Game.ItemsTxt[75].Mod2=44
-
-Game.ItemsTxt[76].Mod2=8
-Game.ItemsTxt[77].Mod2=24
-Game.ItemsTxt[78].Mod2=60
-
-Game.ItemsTxt[79].Mod2=3
-Game.ItemsTxt[80].Mod2=5
-Game.ItemsTxt[81].Mod2=9
-Game.ItemsTxt[82].Mod2=18
-Game.ItemsTxt[83].Mod2=33
-Game.ItemsTxt[84].Mod2=2
-Game.ItemsTxt[85].Mod2=5
-Game.ItemsTxt[86].Mod2=9
-Game.ItemsTxt[87].Mod2=18
-Game.ItemsTxt[88].Mod2=33
-
-Game.ItemsTxt[406].Mod2=46
-Game.ItemsTxt[407].Mod2=64
-Game.ItemsTxt[408].Mod2=38
-
-Game.ItemsTxt[421].Mod2=60
-Game.ItemsTxt[422].Mod2=77
-Game.ItemsTxt[423].Mod2=61
-
-
-
-end
 
 --ENCHANTS HERE
 --MELEE bonuses
@@ -391,7 +243,7 @@ function events.CalcDamageToMonster(t)
 			bonusDamage=0
 			-- calculation
 			if it then
-				if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+				if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
 				local bonusDamage1 = bonusDamage+enchantbonusdamage[it.Bonus2] or 0
 				bonusDamage2=(bonusDamage2*bonusDamage1)^(1/n)
 				n=n+1
@@ -413,7 +265,7 @@ function events.CalcDamageToMonster(t)
 			if data.Object.Spell==100 then
 			it=data.Player:GetActiveItem(2)
 			-- calculation
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
 			local bonusDamage = enchantbonusdamage[it.Bonus2] or 0
 			t.Result=t.Result*bonusDamage
 			end	
@@ -512,46 +364,6 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 
 
 --change tooltip
-function events.GameInitialized2()
-	itemName = {}
-	itemDesc = {}
-	Game.ItemsTxt[580].NotIdentifiedName="Reality Scroll"
-	Game.ItemsTxt[580].Notes="The Reality Scroll is an ancient artifact of immense power, said to possess the ability to restore reality itself.\nAccording to the legend, it went long gone, stolen by Kreegans. The scroll must be brought to a special fountain created by the gods, which possesses the power to purify anything that touches its waters.\nTo activate the scroll's power, one must immerse it in the fountain's waters and recite the ancient incantation inscribed upon it. However, be warned that the ritual might summon the force of dark.\nOnly those who can pass a series of trials testing their strength, cunning, and purity of heart will be granted access to strongest relic. With the power of the Reality Scroll, one can hope to manipulate the fabric of reality and save the world from chaos."
-	Game.ItemsTxt[579].NotIdentifiedName="Celestial Amulet"
-	Game.ItemsTxt[579].Notes="The celestial dragon amulet is a breathtaking artifact that glimmers with otherworldly radiance. Fashioned from an otherworldly metal that is said to have been forged in the heart of a star, the amulet is adorned with intricate engravings of celestial dragons in mid-flight, their wings outstretched as if to take to the heavens themselves. Wearing this amulet is said to imbue the wielder with immense power, allowing them to channel the energies of the cosmos and bend them to their will. But the amulet's true strength lies in its ability to protect its allies. With a mere thought, the wearer can summon a shield of celestial energy that envelops their comrades, shielding them from harm and granting them the strength to fight on. It is said that only the most noble and righteous of warriors are able to wield the celestial dragon amulet, and that those who do so are blessed with the favor of the Gods themselves. ( +50 to all seven stats, protection to Death and Eradicate)"
-	
-	--FINAL AWARD
-	Game.AwardsTxt[61]="Completed MAW in Nightmare Mode"
-	Game.ItemsTxt[546].Notes="Congratulation, you were able to clear MAW at its highest difficulty!!!"
-	Game.ScrollTxt[546]="To enter the Hall of Fame write me on Discord at Malekith#5670 and send me the save file to verify your run.\nDevs are proud of you" 	
-		
-	for i = 1, 578 do
-	  itemName[i] = Game.ItemsTxt[i].Name
-	end
-	
-	for i = 94, 99 do
-	  itemDesc[i] = Game.ItemsTxt[i].Notes
-	end
-	
-	itemName[580] = "Reality Scroll"
-	itemName[579] = "Celestial Dragon Amulet"
-	--fix long tooltips causing crash 
-	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
-	Game.SpcItemsTxt[41].BonusStat= " +1 to All Statistics."
-	Game.SpcItemsTxt[43].BonusStat=" +10 HP and Regenerate HP over time."
-	Game.SpcItemsTxt[45].BonusStat= "Adds 150-300 points of Fire damage, +25 Might."
-	Game.SpcItemsTxt[46].BonusStat= " +10 Spell points and SP Regeneration."
-	Game.SpcItemsTxt[49].BonusStat= " +30 Fire Resistance and HP Regeneration."	 
-	Game.SpcItemsTxt[53].BonusStat=" +15 Endurance and Regenerate HP over time."
-	--new tooltips
-	Game.SpcItemsTxt[17].BonusStat="Disease and Curse Immunity"
-	Game.SpcItemsTxt[18].BonusStat="Insanity and fear Immunity"
-	Game.SpcItemsTxt[19].BonusStat="Paralysis and SP drain Immunity"
-	Game.SpcItemsTxt[20].BonusStat="Poison and weakness Immunity"
-	Game.SpcItemsTxt[21].BonusStat="Sleep and Unconscious Immunity"
-	Game.SpcItemsTxt[22].BonusStat="Stone and premature ageing Immunity"
-	Game.SpcItemsTxt[24].BonusStat="Death and eradication Immunity, +5 Levels"
-end
 
 function events.ShowItemTooltip(item)
 	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
@@ -606,126 +418,11 @@ if bonus==100 and extrabonus==100 then
 	end
 end
 
------------------------------
----IMMUNITY REWORK
------------------------------
-
---disease/curse
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 18 then
-			if t.Thing==9 or t.Thing==10 or t.Thing==11 or t.Thing==1 then
-			t.Allow=false
-				if t.Thing==9 or t.Thing==10 or t.Thing==11 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from disease",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from curse",t.Player.Name))
-				end
-			end
-		end
-	end
-end
---insanity/drainsp
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 19 then
-			if t.Thing==5 or t.Thing==22 then
-			t.Allow=false
-				if t.Thing==5 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from insanity",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from spell drain",t.Player.Name))
-				end
-
-			end
-		end
-	end
-end
---Paralysis/fear
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 20 then
-			if t.Thing==12 or t.Thing==23 then
-			t.Allow=false
-				if t.Thing==12 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from paralysis",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from fear",t.Player.Name))
-				end
-			end
-		end
-	end
-end
---poison/weak
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 21 then
-			if t.Thing==6 or t.Thing==7 or t.Thing==8 or t.Thing==2 then
-			t.Allow=false
-				if t.Thing==6 or t.Thing==7 or t.Thing==8 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from poison",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from weakness",t.Player.Name))
-				end
-			end
-		end
-	end
-end
---sleep/unconscious
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 22 then
-			if t.Thing==3 or t.Thing==13 then
-			t.Allow=false
-				if t.Thing==3 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from sleep",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from unconscious",t.Player.Name))
-				end
-			end
-		end
-	end
-end
---stone/age
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 23 then
-			if t.Thing==15 or t.Thing==21 then
-			t.Allow=false
-				if t.Thing==15 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from stone",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from premature ageing",t.Player.Name))
-				end
-			end
-		end
-	end
-end
-
---death/erad
-function events.DoBadThingToPlayer(t)
-for it in t.Player:EnumActiveItems() do
-		if it.Bonus2 == 25 then
-			if t.Thing==14 or t.Thing==16 then
-			t.Allow=false
-				if t.Thing==14 then
-				Game.ShowStatusText(string.format("Enchantment protects %s from death",t.Player.Name))
-				else 
-				Game.ShowStatusText(string.format("Enchantment protects %s from eradication",t.Player.Name))
-				end
-			end
-		end
-	end
-end
-
-
-
-end
 
 ---------------------------------------
 --NEW SCALING
 ---------------------------------------
-if SETTINGS["255MOD"]==true then
+
 	function events.GameInitialized2()
 	--knight
 	Game.Classes.HPFactor[0] = Game.Classes.HPFactor[2]
@@ -779,8 +476,8 @@ if SETTINGS["255MOD"]==true then
 			end
 		end
 	end
-	--items reworked
-	--to do
+	
+	
 end
 
 --MOD2 CHANGER
@@ -883,7 +580,7 @@ end
 
 
 --ENCHANTS FOR 255
-local effectsToEnchantmentsMap =
+effectsToEnchantmentsMap =
 {
     [1] = {stats = {10,11,12,13}, effect = 20},
 	[2] = {stats = {0,1,2,3,4,5,6}, effect = 20},
@@ -965,5 +662,4 @@ for i=0,57 do
 end
 
 end
-
 
