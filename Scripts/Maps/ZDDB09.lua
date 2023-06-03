@@ -58,6 +58,10 @@ evt.map[3] = function()
 			mapvars.event1=true
 			mapvars.event=true
 			vars.firstTrial=true
+			evt.Set("MapVar21", 0)
+			evt.Set("MapVar22", 0)
+			evt.Set("MapVar23", 0)
+			evt.Set("MapVar24", 0)
 			Sleep(500)
 			Game.ShowStatusText("3")
 			Sleep(100)
@@ -114,6 +118,10 @@ if not mapvars.event2 and not vars.secondTrial and mapvars.event==false then
 		mapvars.event2=true
 		mapvars.event=true
 		vars.secondTrial=true
+		evt.Set("MapVar21", 0)
+		evt.Set("MapVar22", 0)
+		evt.Set("MapVar23", 0)
+		evt.Set("MapVar24", 0)
 		Sleep(500)
 		Game.ShowStatusText("3")
 		Sleep(100)
@@ -183,6 +191,10 @@ if not mapvars.event3 and not vars.thirdTrial and mapvars.event==false then
 		mapvars.event3=true
 		mapvars.event=true
 		vars.thirdTrial=true
+		evt.Set("MapVar21", 0)
+		evt.Set("MapVar22", 0)
+		evt.Set("MapVar23", 0)
+		evt.Set("MapVar24", 0)
 		Sleep(500)
 		Game.ShowStatusText("Let the fight start!")
 		Sleep(50)
