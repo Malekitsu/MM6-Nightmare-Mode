@@ -736,6 +736,13 @@ evt.map[131] = function()
 		vars.noStable=false
 		mapvars.event=false
 		vars.teleport=true
+		for i = 0, Map.Monsters.High	 do
+			if Map.Monsters[i].Id==25 or Map.Monsters[i].Id==26 or Map.Monsters[i].Id==27 or Map.Monsters[i].Id==172 then
+			Map.Monsters[i].HP=0
+			Sleep(20)
+			end
+		end
+		Sleep(200)
 		evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
 		end
 	end
