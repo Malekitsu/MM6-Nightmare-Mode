@@ -647,6 +647,9 @@ if evt.Cmp("Awards", 61) then
 		Party.QBits[181] = true
 	--move NPCS to older location
 		evt.MoveNPC{NPC = 304, HouseId = 165}
+		evt.MoveNPC{NPC = 195, HouseId = 0}
+		evt.MoveNPC{NPC = 155, HouseId = 0}
+		evt.MoveNPC{NPC = 108, HouseId = 0}
 	--remove 1st promotions
 		evt.SetNPCTopic{NPC = 6, Index = 1, Event = 70}   
 		evt.SetNPCTopic{NPC = 5, Index = 1, Event = 59} 
