@@ -249,6 +249,7 @@ Game.MapStats[62].Mon2Dif = 5
 Game.MapStats[62].Mon3Dif = 5
 Game.MapStats[61].Name = "Celestial Arena"
 Game.MapStats[61].Trap = 0
+Game.MapStats[50].Trap = 0
 Game.MapStats[61].RedbookTrack = 10
 Game.MapStats[56].Name = "Limbo"
 end
