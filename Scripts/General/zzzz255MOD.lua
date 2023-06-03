@@ -82,7 +82,7 @@ function events.ItemGenerated(t)
 		
 		--ARMORS
 		
-		for i=66,119 do
+		for i=66,134 do
 			if i==t.Item.Number then
 			upTierDifference=0
 			downTierDifference=0
@@ -107,6 +107,9 @@ function events.ItemGenerated(t)
 			armorRange=maxArmor*2
 			expectedArmorIncrease=goalArmorMultiplier^((downTierDifference+1)/(tierRange))
 			t.Item.ExtraData=maxArmor*expectedArmorIncrease-currentArmor
+				if t.Item.ExtraData==0 then
+					t.Item.ExtraData=1
+				end
 			end
 		end
 		
@@ -355,21 +358,7 @@ Game.ItemsTxt[422].Mod2=77
 Game.ItemsTxt[423].Mod2=61
 
 
-------------
---tooltips
-------------
-Game.SpcItemsTxt[3].BonusStat="Adds 45-60 points of Cold damage."
-Game.SpcItemsTxt[4].BonusStat="Adds 90-120 points of Cold damage."
-Game.SpcItemsTxt[5].BonusStat="Adds 135-180 points of Cold damage."
-Game.SpcItemsTxt[6].BonusStat="Adds 30-75 points of Electrical damage."
-Game.SpcItemsTxt[7].BonusStat="Adds 60-150 points of Electrical damage."
-Game.SpcItemsTxt[8].BonusStat="Adds 90-225 points of Electrical damage."
-Game.SpcItemsTxt[9].BonusStat="Adds 15-90 points of Fire damage."
-Game.SpcItemsTxt[10].BonusStat="Adds 30-180 points of Fire damage."
-Game.SpcItemsTxt[11].BonusStat="Adds 45-270 points of Fire damage."
-Game.SpcItemsTxt[12].BonusStat="Adds 75 points of Poison damage."
-Game.SpcItemsTxt[13].BonusStat="Adds 120 points of Poison damage."
-Game.SpcItemsTxt[14].BonusStat="Adds 180 points of Poison damage."
+
 end
 
 --ENCHANTS HERE
@@ -873,6 +862,12 @@ function events.ShowItemTooltip(item)
 		if item.Item.Number>=66 and item.Item.Number<=119 then
 		Game.ItemsTxt[item.Item.Number].Mod2=listMod2[item.Item.Number]+item.Item.ExtraData
 		end
+		--enchant2
+		if item.Item.ExtraData>0 and item.Item.Bonus2>0 and item.Item.Number<=134 then
+		Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat=spcEnchTxt255[item.Item.Bonus2-1]
+		elseif item.Item.Bonus2>0 and item.Item.Number<=134 then
+		Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat=spcEnchTxtMaw[item.Item.Bonus2-1]
+		end
 	end
 end
 
@@ -884,6 +879,91 @@ function events.ShowItemTooltip(item)
 		item.Item.ExtraData=charges
 		item.Item.Refundable=true
 	end
+end
+
+
+--ENCHANTS FOR 255
+local effectsToEnchantmentsMap =
+{
+    [1] = {stats = {10,11,12,13}, effect = 20},
+	[2] = {stats = {0,1,2,3,4,5,6}, effect = 20},
+	[25] = {stats = {const.Stats.Level}, effect = 10},
+	[42] = {stats = {1,2,3,4,5,6,7,8,9,10,11,12,13}, effect = 4},
+	[43] = {stats = {3,7,9}, effect = 20},
+	[44] = {stats = {7}, effect = 110},
+	[45] = {stats = {4,5}, effect = 10},
+	[46] = {stats = {0}, effect = 50},
+	[47] = {stats = {8}, effect = 110},
+	[48] = {stats = {3,9}, effect = 15},
+	[49] = {stats = {1,6}, effect = 20},
+	[50] = {stats = {10}, effect = 60},
+	[51] = {stats = {1,5,8}, effect = 20},
+	[52] = {stats = {3,4}, effect = 20},
+	[53] = {stats = {0,2}, effect = 20},
+	[54] = {stats = {3}, effect = 20},
+	[55] = {stats = {6}, effect = 30},
+	[56] = {stats = {0,3}, effect = 20},
+	[57] = {stats = {1,2}, effect = 20},
+}
+
+function events.CalcStatBonusByItems(t)
+    for enchId, data in pairs(effectsToEnchantmentsMap) do
+        if table.find(data.stats, t.Stat) then
+            for it in t.Player:EnumActiveItems() do
+                if it.Bonus2 == enchId then
+                    t.Result = t.Result + data.effect
+                end
+            end
+        end
+    end
+end
+
+--change tooltips
+------------
+--tooltips
+------------
+function events.GameInitialized2()
+spcEnchTxtMaw={}
+for i=0,57 do
+spcEnchTxtMaw[i]=Game.SpcItemsTxt[i].BonusStat
+end
+Game.SpcItemsTxt[3].BonusStat="Adds 45-60 points of Cold damage."
+Game.SpcItemsTxt[4].BonusStat="Adds 90-120 points of Cold damage."
+Game.SpcItemsTxt[5].BonusStat="Adds 135-180 points of Cold damage."
+Game.SpcItemsTxt[6].BonusStat="Adds 30-75 points of Electrical damage."
+Game.SpcItemsTxt[7].BonusStat="Adds 60-150 points of Electrical damage."
+Game.SpcItemsTxt[8].BonusStat="Adds 90-225 points of Electrical damage."
+Game.SpcItemsTxt[9].BonusStat="Adds 15-90 points of Fire damage."
+Game.SpcItemsTxt[10].BonusStat="Adds 30-180 points of Fire damage."
+Game.SpcItemsTxt[11].BonusStat="Adds 45-270 points of Fire damage."
+Game.SpcItemsTxt[12].BonusStat="Adds 75 points of Poison damage."
+Game.SpcItemsTxt[13].BonusStat="Adds 120 points of Poison damage."
+Game.SpcItemsTxt[14].BonusStat="Adds 180 points of Poison damage."
+Game.SpcItemsTxt[0].BonusStat= " +30 to all Resistances."
+Game.SpcItemsTxt[1].BonusStat= " +30 to all Seven Statistics."
+Game.SpcItemsTxt[24].BonusStat= "Death and eradication Immunity, +15 Levels"
+Game.SpcItemsTxt[41].BonusStat= " +5 to All Statistics."
+Game.SpcItemsTxt[42].BonusStat= " +30 to Endurance, Armor, Hit points."
+Game.SpcItemsTxt[43].BonusStat=" +120 HP and Regenerate HP over time."
+Game.SpcItemsTxt[44].BonusStat= " +15 Speed and Accuracy."
+Game.SpcItemsTxt[45].BonusStat= "Adds 150-300 Fire damage, +75 Might."
+Game.SpcItemsTxt[46].BonusStat= " +120 Spell points and SP Regeneration."
+Game.SpcItemsTxt[47].BonusStat= " +30 Endurance and +20 Armor."
+Game.SpcItemsTxt[48].BonusStat= " +30 Intellect and Luck."
+Game.SpcItemsTxt[49].BonusStat= " +90 Fire Resistance and HP Regeneration."	 
+Game.SpcItemsTxt[50].BonusStat= " +30 Spell points, Speed, Intellect."
+Game.SpcItemsTxt[51].BonusStat= " +30 Endurance and Accuracy."
+Game.SpcItemsTxt[52].BonusStat= " +30 Might and Personality."
+Game.SpcItemsTxt[53].BonusStat=" +45 Endurance and Regenerate HP."
+Game.SpcItemsTxt[54].BonusStat= " +45 Luck and Regenerate Spell points."
+Game.SpcItemsTxt[55].BonusStat= " +25 Might and Endurance."
+Game.SpcItemsTxt[56].BonusStat= " +25 Intellect and Personality."
+
+spcEnchTxt255={}
+for i=0,57 do
+	spcEnchTxt255[i]=Game.SpcItemsTxt[i].BonusStat
+end
+
 end
 
 
