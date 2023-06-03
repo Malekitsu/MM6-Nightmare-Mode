@@ -433,7 +433,7 @@ data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(1)
 		if it then
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
 				spellbonusdamage[4] = math.random(45, 60)
 				spellbonusdamage[5] = math.random(90, 120)
 				spellbonusdamage[6] = math.random(135, 180)
