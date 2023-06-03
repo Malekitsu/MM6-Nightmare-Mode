@@ -59,11 +59,11 @@ function events.ItemGenerated(t)
 			downDamage=0
 			--set goal damage for weapons (end game weapon damage)
 			goalWeaponMultiplier=3
-			currentDamage = Game.ItemsTxt[i].Mod1DiceCount*(Game.ItemsTxt[i].Mod1DiceSides+1)/2+Game.ItemsTxt[i].Mod2 
+			currentDamage = Game.ItemsTxt[i].Mod1DiceCount*(listDiceSides[i]+1)/2+listMod2[i]
 				for v=1,4 do
 					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
 					upTierDifference=upTierDifference+1
-					maxWeapon = Game.ItemsTxt[i+v].Mod1DiceCount*(Game.ItemsTxt[i+v].Mod1DiceSides+1)/2+Game.ItemsTxt[i+v].Mod2
+					maxWeapon = Game.ItemsTxt[i+v].Mod1DiceCount*(listDiceSides[i+v]+1)/2+listMod2[i+v]
 					elseif upTierDifference==0 then
 						maxWeapon = currentDamage
 					end
