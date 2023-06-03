@@ -910,7 +910,7 @@ function events.CalcStatBonusByItems(t)
     for enchId, data in pairs(effectsToEnchantmentsMap) do
         if table.find(data.stats, t.Stat) then
             for it in t.Player:EnumActiveItems() do
-                if it.Bonus2 == enchId then
+                if it.Bonus2 == enchId and it.ExtraData>0 then
                     t.Result = t.Result + data.effect
                 end
             end
