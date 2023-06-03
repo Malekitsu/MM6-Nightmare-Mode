@@ -62,15 +62,15 @@ function events.ItemGenerated(t)
 		extraBonusChance={30,40,50,50,50,50}
 		extraBonusPowerLow={1,1,3,6,10,15}
 		extraBonusPowerHigh={3,5,8,12,17,25}
-		extraDataProc=math.random(1,100)
-		if extraDataProc<=extraBonusChance[t.Strength] then
+		ChargesProc=math.random(1,100)
+		if ChargesProc<=extraBonusChance[t.Strength] then
 			lowerLimit=t.Strength
-			t.Item.ExtraData = math.random(14 * extraBonusPowerLow[t.Strength]-13, 14 * extraBonusPowerHigh[t.Strength])
+			t.Item.Charges = math.random(14 * extraBonusPowerLow[t.Strength]-13, 14 * extraBonusPowerHigh[t.Strength])
 			--make it standard bonus if no standard bonus
 			if t.Item.Bonus==0 then
-				t.Item.Bonus=t.Item.ExtraData%14+1
-				t.Item.BonusStrength=math.ceil(t.Item.ExtraData/14)
-				t.Item.ExtraData=0
+				t.Item.Bonus=t.Item.Charges%14+1
+				t.Item.BonusStrength=math.ceil(t.Item.Charges/14)
+				t.Item.Charges=0
 			end
 		end
 		
@@ -86,11 +86,11 @@ function events.ItemGenerated(t)
 		if t.Item.Bonus2~=0 or Game.Map.Name=="zddb10.blv" then 
 			ancient=math.random(1,50)
 			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
-				t.Item.ExtraData=math.random(364,560)
+				t.Item.Charges=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.Charges=2000+math.random(40,50)
+				t.Item.ExtraData=2000+math.random(40,50)
 				end
 			end
 		end
@@ -98,7 +98,7 @@ function events.ItemGenerated(t)
 		--primordial item
 		primordial=math.random(1,200)
 		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
-			t.Item.ExtraData=math.random(547,560)
+			t.Item.Charges=math.random(547,560)
 			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=40
 			if t.Item.Number>60 then
@@ -108,19 +108,19 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.Charges=2050
+			t.Item.ExtraData=2050
 			end
 		end	
 		--buff to hp and mana items
 		if t.Item.Bonus==8 or t.Item.Bonus==9 then
 			t.Item.BonusStrength=t.Item.BonusStrength*2
 		end
-		if t.Item.ExtraData%14==7 or t.Item.ExtraData%14==8 then
-			t.Item.ExtraData=t.Item.ExtraData+14*math.ceil(t.Item.ExtraData/14)
+		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
+			t.Item.Charges=t.Item.Charges+14*math.ceil(t.Item.Charges/14)
 		end
 		
 		--CROWNS & HATS
-		if t.Item.Number>=94 and t.Item.Number<=99 and (t.Item.Bonus~=0 or t.Item.Bonus2~=0) and t.Item.Charges==0 then
+		if t.Item.Number>=94 and t.Item.Number<=99 then
 			hatpower={}
 			hatpower[1]=math.random(4,8)
 			hatpower[2]=math.random(6,12)
@@ -130,11 +130,11 @@ function events.ItemGenerated(t)
 			hatpower[6]=math.random(25,40)
 			roll=math.random(1,100)
 			if roll<=25 then
-			t.Item.Charges=hatpower[t.Strength]+2000
+			t.Item.ExtraData=hatpower[t.Strength]+2000
 			else if t.Item.Number>=94 and t.Item.Number<=96 then
-				t.Item.Charges=hatpower[t.Strength]
+				t.Item.ExtraData=hatpower[t.Strength]
 				else
-				t.Item.Charges=hatpower[t.Strength]+1000
+				t.Item.ExtraData=hatpower[t.Strength]+1000
 				end
 			end
 		end
@@ -146,9 +146,9 @@ end
 --apply extra data effect
 function events.CalcStatBonusByItems(t)
 	for it in t.Player:EnumActiveItems() do
-		if it.ExtraData ~= nil then
-			stat=it.ExtraData%14
-			bonus=math.ceil(it.ExtraData/14)
+		if it.Charges ~= nil then
+			stat=it.Charges%14
+			bonus=math.ceil(it.Charges/14)
 				if t.Stat==stat then
 				t.Result = t.Result + bonus
 				end				
@@ -162,9 +162,11 @@ data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(4)
 		if it then
-		bonus=it.Charges
-			if it.Charges<1000 or it.Charges>2000 then
-			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+			if it.ExtraData~=nil then
+			bonus=it.ExtraData
+				if it.ExtraData<1000 or it.ExtraData>2000 then
+				t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
+				end
 			end
 		end
 	end
@@ -173,9 +175,11 @@ end
 function events.HealingSpellPower(t)
 	it=t.Caster:GetActiveItem(4)
 	if it then
-		if it.Charges>1000 then
-			if t.Spell ~= 54 then
-			t.Result=math.ceil(t.Result*((it.Charges%1000)/100+1))
+		if it.ExtraData~=nil then
+			if it.ExtraData>1000 then
+				if t.Spell ~= 54 then
+				t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
+				end
 			end
 		end
 	end
@@ -487,13 +491,13 @@ function events.GameInitialized2()
 end
 
 function events.ShowItemTooltip(item)
-	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData~=0 then
-	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
-		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.ExtraData==0 then
+	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
+	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
 			Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat, itemStatName[item.Item.Bonus])
-			else if item.Item.Bonus~=0 and item.Item.ExtraData~=0 and item.Item.Bonus2==0 then
-				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.ExtraData%14+1],math.ceil(item.Item.ExtraData/14), itemStatName[item.Item.Bonus])
-				else if item.Item.Bonus~=0 and item.Item.ExtraData==0 and item.Item.Bonus2==0 then
+			else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+				else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
 					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
 				end
 			end
@@ -507,8 +511,8 @@ bonus=item.Item.BonusStrength
 if item.Item.Bonus==8 or item.Item.Bonus==9 then
 	bonus=bonus/2
 end
-extrabonus=math.ceil(item.Item.ExtraData/14)
-if item.Item.ExtraData%14==7 or item.Item.ExtraData%14==8 then
+extrabonus=math.ceil(item.Item.Charges/14)
+if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
 	extrabonus=extrabonus/2
 end
 	
@@ -523,18 +527,20 @@ if bonus==40 and extrabonus==40 then
 	end
 
 --Crowns and HATS
-	if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.Charges>0 then
-		local statbonus=item.Item.Charges
-			if statbonus>2000 then
-			statbonus="Damage and Healing"
-			else if statbonus>1000 then
-				statbonus="Healing"
-				else statbonus="Damage"
-			end
-		end			
-		Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.Charges%1000,"%",itemDesc[item.Item.Number])
-		else
-		Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+	if item.Item.ExtraData~=nil then
+		if item.Item.Number>=94 and item.Item.Number<=99 then
+			local statbonus=item.Item.ExtraData
+				if statbonus>2000 then
+				statbonus="Damage and Healing"
+				else if statbonus>1000 then
+					statbonus="Healing"
+					else statbonus="Damage"
+				end
+			end			
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.ExtraData%1000,"%",itemDesc[item.Item.Number])
+			else
+			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+		end
 	end
 end
 
