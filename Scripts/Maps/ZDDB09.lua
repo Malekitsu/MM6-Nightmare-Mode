@@ -379,3 +379,5 @@ function events.DeathMap(t)
 	Message("You are not worthy, go away, mortal")
 	Game.ExitMapAction=7
 end
+
+vars.teleport==false
