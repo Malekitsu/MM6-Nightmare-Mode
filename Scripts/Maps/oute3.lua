@@ -735,6 +735,7 @@ evt.map[131] = function()
 		vars.Endfight=false
 		vars.noStable=false
 		mapvars.event=false
+		vars.teleport=true
 		evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
 		end
 	end
@@ -742,6 +743,10 @@ end
 
 
 evt.map[667] = function()
+	if vars.teleport==true then
+		Message("Mortal, the gods have taken notice of your actions and find you worthy of a great challenge. You shall be tested in the celestial arena, where your true value shall be determined.\nDo not fear, for you have been chosen for a reason. Your strength, courage, and wisdom have not gone unnoticed, and the gods have faith that you will succeed in this challenge.")
+		evt.MoveToMap{X = 3840, Y = 2880, Z = 192, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb09.blv"}
+	end
 	if vars.Endfight and vars.ritual==nil then
 		evt.DamagePlayer{Player = "All", DamageType = 6, Damage = 100}
 		Game.ShowStatusText("Reality is collapsing")
