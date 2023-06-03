@@ -806,6 +806,8 @@ function events.GameInitialized2()
 	end
 end
 itemindex=1
+
+--increase damage in the tooltip
 function events.CalcStatBonusByItems(t)
 --required to correct tooltip of unequipped items
 	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
@@ -825,7 +827,7 @@ function events.CalcStatBonusByItems(t)
 			end
 			--melee
 			if it.Number<=41 or (it.Number<=63 and it.Number>=50) then
-				if t.Stat==const.Stats.MeleeDamageMin or t.Stat==const.Stats.MeleeDamageMax then
+				if t.Stat==const.Stats.MeleeDamageMin or t.Stat==const.Stats.MeleeDamageMax or t.Stat==const.Stats.MeleeAttack then
 					t.Result=t.Result+it.ExtraData/2
 				end
 				if t.Stat==const.Stats.MeleeDamageMax then
@@ -844,7 +846,20 @@ function events.CalcStatBonusByItems(t)
 		end
 	end
 end
-
+--recalculate actual damage
+function events.ModifyItemDamage(t)
+bonusDamage=0
+	if t.Item.Number<66 then
+		if t.Item.ExtraData~=nil then
+			bonusDamage=Game.ItemsTxt[t.Item.Number].Mod2+t.Item.ExtraData/2
+			--calculate dices
+			for i=1,Game.ItemsTxt[t.Item.Number].Mod1DiceCount do
+				bonusDamage=bonusDamage+math.random(1,Game.ItemsTxt[t.Item.Number].Mod1DiceSides+t.Item.ExtraData/Game.ItemsTxt[t.Item.Number].Mod1DiceCount)
+			end
+		end
+	end
+t.Result=bonusDamage
+end
 
 --show extraData
 function events.ShowItemTooltip(item)
@@ -870,3 +885,5 @@ function events.ShowItemTooltip(item)
 		item.Item.Refundable=true
 	end
 end
+
+
