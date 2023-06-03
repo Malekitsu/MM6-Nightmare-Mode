@@ -380,4 +380,4 @@ function events.DeathMap(t)
 	Game.ExitMapAction=7
 end
 
-vars.teleport==false
+vars.teleport=false
