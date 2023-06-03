@@ -6,7 +6,7 @@ local TXT = Localize{
 	[4] = "Yes",
 	[5] = "The second trial of the Celestial Arena is a true test of one's skill and resolve, far more difficult than the first. The challenges you will face will push you to your limits and require every ounce of your strength to overcome.",
 	[6] = "The third trial of the Celestial Arena is widely regarded as the ultimate challenge, one that even the gods themselves would struggle to overcome. If you can overcome this ultimate test, you will have proven yourself as a true master of the Celestial Arena.",
-	[7] = "Do you wish do some training your skills before leaving?",
+	[7] = "Do you wish do some training before leaving?",
 	[8] = "train",
 	[9] = "leave",
 	[10] = "train/leave"
@@ -20,7 +20,7 @@ evt.hint[1] = "Training Ground"
 -- "Exit"
 evt.hint[7] = "Exit"
 evt.map[7] = function()
-	if mapvars.event==false then
+	if mapvars.event==false or vars.CelestialArena1 then
 		if vars.CelestialArena1~=nil then  
 			if vars.GameOver~=nil then
 			evt.MoveToMap{X = 14088, Y = 2800, Z = 96, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "OutD3.Odm"}	
@@ -111,8 +111,9 @@ end
 evt.hint[4] = "second trial"
 evt.map[4] = function() 
 evt.SetMessage(5)   
+evt.ForPlayer("All")
 if evt.Cmp("Inventory", 579) then
-if not mapvars.event2 and not vars.secondTrial and mapvars.event==false then
+if not mapvars.event2 and not vars.secondTrial and mapvars.event==false or mapvars.event==nil then
 	if evt.Question{Question = 3, Answer1 = 4} then      
 		Game.ShowStatusText("Let it be, prepare yourself") 
 		mapvars.event2=true
@@ -184,8 +185,9 @@ end
 evt.hint[5] = "third trial"
 evt.map[5] = function()   
 evt.SetMessage(6)   
+evt.ForPlayer("All")
 if evt.Cmp("Inventory", 579) then
-if not mapvars.event3 and not vars.thirdTrial and mapvars.event==false then
+if not mapvars.event3 and not vars.thirdTrial and mapvars.event==false or mapvars.event==nil then
 	if evt.Question{Question = 3, Answer1 = 4} then  
 		Game.ShowStatusText("Let it be, prepare yourself") 
 		mapvars.event3=true
@@ -287,7 +289,7 @@ evt.map[23] = function()
 		evt.Set("MapVar23", 1)	
 		Game.ShowStatusText("+2000 Hit Points and Magic Points")
 	else
-	Game.ShowStatusText("Empty")
+		Game.ShowStatusText("Empty")
 	end 
 end
 
@@ -301,7 +303,7 @@ evt.map[24] = function()
 		evt.Set("MapVar24", 1)	
 		Game.ShowStatusText("+2000 Hit Points and Magic Points")
 	else
-	Game.ShowStatusText("Empty")
+		Game.ShowStatusText("Empty")
 	end 
 end
 
