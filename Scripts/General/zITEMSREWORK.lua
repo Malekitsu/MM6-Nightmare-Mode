@@ -90,7 +90,7 @@ function events.ItemGenerated(t)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
 				if t.Item.Number>=94 and t.Item.Number<=99 then
-				t.Item.ExtraData=2000+math.random(40,50)
+				t.Item.ExtraData=3000+math.random(40,50)
 				end
 			end
 		end
@@ -108,7 +108,7 @@ function events.ItemGenerated(t)
 			end
 			--crowns/hats
 			if t.Item.Number>=94 and t.Item.Number<=99 then
-			t.Item.ExtraData=2050
+			t.Item.ExtraData=3050
 			end
 		end	
 		--buff to hp and mana items
@@ -121,7 +121,7 @@ function events.ItemGenerated(t)
 		
 		--CROWNS & HATS
 		if t.Item.ExtraData~=nil then
-			if t.Item.Number>=94 and t.Item.Number<=99 and t.Item.ExtraData==0 then
+			if t.Item.Number>=94 and t.Item.Number<=99 and t.Item.ExtraData==0 and t.Item.ExtraData<10000 then
 			hatpower={}
 			hatpower[1]=math.random(4,8)
 			hatpower[2]=math.random(6,12)
@@ -131,11 +131,11 @@ function events.ItemGenerated(t)
 			hatpower[6]=math.random(25,40)
 			roll=math.random(1,100)
 			if roll<=25 then
-			t.Item.ExtraData=hatpower[t.Strength]+2000
+			t.Item.ExtraData=hatpower[t.Strength]+3000
 			else if t.Item.Number>=94 and t.Item.Number<=96 then
-				t.Item.ExtraData=hatpower[t.Strength]
-				else
 				t.Item.ExtraData=hatpower[t.Strength]+1000
+				else
+				t.Item.ExtraData=hatpower[t.Strength]+2000
 				end
 			end
 		end
@@ -166,7 +166,7 @@ data=WhoHitMonster()
 		if it then
 			if it.ExtraData~=nil then
 			bonus=it.ExtraData
-				if it.ExtraData<1000 or it.ExtraData>2000 then
+				if it.ExtraData%10000<2000 or it.ExtraData%10000>3000 then
 				t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
 				end
 			end
@@ -178,7 +178,7 @@ function events.HealingSpellPower(t)
 	it=t.Caster:GetActiveItem(4)
 	if it then
 		if it.ExtraData~=nil then
-			if it.ExtraData>1000 then
+			if it.ExtraData%10000>2000 then
 				if t.Spell ~= 54 then
 				t.Result=math.ceil(t.Result*((it.ExtraData%1000)/100+1))
 				end
@@ -533,10 +533,10 @@ if SETTINGS["255MOD"]~=true then
 	--Crowns and HATS
 		if item.Item.ExtraData~=nil then
 			if item.Item.Number>=94 and item.Item.Number<=99 then
-				local statbonus=item.Item.ExtraData
-					if statbonus>2000 then
+				local statbonus=item.Item.ExtraData%10000
+					if statbonus>3000 then
 					statbonus="Damage and Healing"
-					else if statbonus>1000 then
+					else if statbonus>2000 then
 						statbonus="Healing"
 						else statbonus="Damage"
 					end
