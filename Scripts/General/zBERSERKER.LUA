@@ -4,8 +4,10 @@ if SETTINGS["ImbaSubClasses"]==false then
 Rebalance = 0.95
 end
 
-BERSERKER=SETTINGS["PaladinAsBerseker"]
+SERAPHIN=SETTINGS["PaladinAsSeraphin"]
+BERSERKER=SETTINGS["PaladinAsBerserker"]
 if BERSERKER==true then
+if SERAPHIN==false then
 
 --removes Raise dead:
 function events.CalcDamageToMonster(t)	
@@ -161,5 +163,5 @@ local function restoreManaWarriorMage()
 end
 Timer(restoreManaWarriorMage, const.Minute/2) 
 end
-
+end
 end
