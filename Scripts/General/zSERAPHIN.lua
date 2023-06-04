@@ -256,15 +256,15 @@ end
 
 
 function events.GameInitialized2()
-Game.ClassKinds.StartingSkills[1][const.Skills.Plate] = 3
-Game.ClassKinds.StartingSkills[1][const.Skills.Light] = 1
-Game.ClassKinds.StartingSkills[1][const.Skills.Sword] = 1
-Game.ClassKinds.StartingSkills[1][const.Skills.Axe] = 0
-Game.ClassKinds.StartingSkills[1][const.Skills.Staff] = 0
-Game.ClassKinds.StartingSkills[1][const.Skills.Leather] = 3
-Game.ClassKinds.StartingSkills[1][const.Skills.Chain] = 2
-Game.ClassKinds.StartingSkills[1][const.Skills.Mace] = 3
-Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
+Game.ClassKinds.StartingSkills[3][const.Skills.Plate] = 3
+Game.ClassKinds.StartingSkills[3][const.Skills.Light] = 1
+Game.ClassKinds.StartingSkills[3][const.Skills.Sword] = 1
+Game.ClassKinds.StartingSkills[3][const.Skills.Axe] = 0
+Game.ClassKinds.StartingSkills[3][const.Skills.Staff] = 0
+Game.ClassKinds.StartingSkills[3][const.Skills.Leather] = 3
+Game.ClassKinds.StartingSkills[3][const.Skills.Chain] = 2
+Game.ClassKinds.StartingSkills[3][const.Skills.Mace] = 3
+Game.ClassKinds.StartingSkills[3][const.Skills.Thievery] = 1
 
 
     Game.Classes.HPFactor[const.Class.Paladin] = 3
