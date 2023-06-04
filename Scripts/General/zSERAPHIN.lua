@@ -246,8 +246,8 @@ end
 ---deactivate offhand weapon
 function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
-	 ind=data.Player:GetIndex()
-		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.ItemExtraHand >= 1 and data.Player.ItemExtraHand <= 14 or (data.Player.ItemExtraHand ==403 or data.Player.ItemExtraHand >= 415) then
+	 item=data.Player:GetActiveItem(0)
+		if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) and (item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415) then
 			t.Result=0
 			Message("Seraphin aren't able to dual wield")
 		end
