@@ -243,10 +243,12 @@ function events.CalcDamageToMonster(t)
 			bonusDamage=0
 			-- calculation
 			if it then
-				if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
-				local bonusDamage1 = bonusDamage+enchantbonusdamage[it.Bonus2] or 0
-				bonusDamage2=(bonusDamage2*bonusDamage1)^(1/n)
-				n=n+1
+				if  it.ExtraData>0 then
+					if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
+					local bonusDamage1 = bonusDamage+enchantbonusdamage[it.Bonus2] or 0
+					bonusDamage2=(bonusDamage2*bonusDamage1)^(1/n)
+					n=n+1
+					end
 				end
 			end
         end	
