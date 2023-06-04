@@ -2,7 +2,7 @@
 	Skill Emphasis Mod - RawSugar's Spell Overrides
 	Supersedes various parts of Core; segments list lines to remove from 0.8.2
 ]]
-
+if SETTINGS["255MOD"]~=true then
 -- set to true to show damage in the spell descriptions as a dice string
 local SHOW_DAMAGE_AS_DICE = SETTINGS["ShowDiceInSpellDescription"]
 local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
@@ -1417,5 +1417,5 @@ function events.CalcDamageToMonster(t)
 		end
 	end
 end
-
+end
 
