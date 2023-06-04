@@ -247,7 +247,7 @@ end
 function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
 	 item=data.Player:GetActiveItem(0)
-		if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) and (item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415) then
+		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and (item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415) then
 			t.Result=0
 			Message("Seraphin aren't able to dual wield")
 		end
