@@ -1,6 +1,6 @@
 SERAPHIN=SETTINGS["PaladinAsSeraphin"]
 BERSERKER=SETTINGS["PaladinAsBerserker"]
-if BERSERKER==false then
+if BERSERKER~=true then
 if SERAPHIN==true then
 
 --body magic will increase healing done on attack
@@ -247,10 +247,12 @@ end
 function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
 	 item=data.Player:GetActiveItem(0)
+	 if item~=nil then
 		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and (item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415) then
 			t.Result=0
 			Message("Seraphin aren't able to dual wield")
 		end
+	end
 end
 
 
