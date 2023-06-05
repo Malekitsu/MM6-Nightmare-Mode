@@ -186,7 +186,7 @@ local spellDescs = {
 		["Description"] = "Cheaply heals a single character. Skill increases the recovery rate of this spell.\nAt Master becomes Final Aid, healing a huge amount of health",									
 		["Normal"] = "Costs 100 SP.\nHeals 100+15/rank HP",									
 		["Expert"] = "Costs 100 SP.\nHeals 100+18/rank HP",									
-		["Master"] = "Final Aid: costs 300 SP.\nHeals 100+25 HP per skill level.",									
+		["Master"] = "Final Aid: costs 250 SP.\nHeals 100+30 HP per skill level.",									
 	},										
 	["Cure Wounds"] = {										
 		["Description"] = "Heals a single character. Potency increases relative to the caster's skill in Body Magic.",									
@@ -1145,7 +1145,7 @@ local healingSpellPowers =
 	{					
 		[const.Novice] = {fixedMin = 100, fixedMax = 100, variableMin = 15, variableMax = 15, },				
 		[const.Expert] = {fixedMin = 100, fixedMax = 100, variableMin = 18, variableMax = 18, },				
-		[const.Master] = {fixedMin = 100, fixedMax = 100, variableMin = 25, variableMax = 25, },				
+		[const.Master] = {fixedMin = 100, fixedMax = 100, variableMin = 30, variableMax = 30, },				
 	},					
 	[const.Spells.RemoveCurse] =					
 	{					
