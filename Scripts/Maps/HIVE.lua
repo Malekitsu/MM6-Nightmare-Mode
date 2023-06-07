@@ -286,7 +286,7 @@ evt.map[60] = function()
 			if evt.All.Cmp("Inventory",580)==false then
 				evt.Add("Inventory",580)
 				Message("A strange scroll materialize in your hands")
-				evt.Set("QBits",248)
+				evt.Set("QBits",238)
 			end
 			evt.EnterHouse(600)         -- Win
 		else
