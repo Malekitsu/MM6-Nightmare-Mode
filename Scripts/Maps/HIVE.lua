@@ -283,8 +283,10 @@ evt.map[60] = function()
 			evt.Subtract("QBits", 198)         -- Quest item bits for seer
 			evt.Subtract("Inventory", 544)         -- "Ritual of the Void"
 			evt.Set("Awards", 36)         -- "Destroyed the Hive and Saved Enroth"
-			if evt.Cmp("Inventory",580)==false then
+			if evt.All.Cmp("Inventory",580)==false then
 				evt.Add("Inventory",580)
+				Message("A strange scroll materialize in your hands")
+				evt.Set("QBits",248)
 			end
 			evt.EnterHouse(600)         -- Win
 		else
