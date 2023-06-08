@@ -3609,9 +3609,9 @@ if SETTINGS["ShowDamageTaken"]==true then
 			else if i==2 then
 			Game.ShowStatusText(string.format("              %s",t.Result))
 				else if i==1 then
-				Game.ShowStatusText(string.format("%s                       ",30))
+				Game.ShowStatusText(string.format("%s                       ",t.Result))
 					else if i==0 then
-					Game.ShowStatusText(string.format("%s                                                             ",30))
+					Game.ShowStatusText(string.format("%s                                                             ",t.Result))
 					end
 				end
 			end
