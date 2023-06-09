@@ -27,8 +27,15 @@ function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()	
 	intellect=data.Player:GetIntellect()	
 	personality=data.Player:GetPersonality()
+	luck=data.Player:GetLuck()
 	bonus=math.max(intellect,personality)
+	critDamage=bonus/500
 	t.Result=t.Result*(1+bonus/500)
+	critChance=50+luck
+	roll=math.random(1, 1000)
+	if roll <= critChance then
+		t.Result=t.Result*(1.5+critDamage)
+	end
 end
 
 function events.CalcDamageToPlayer(t)
