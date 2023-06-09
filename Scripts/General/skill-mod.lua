@@ -3116,7 +3116,6 @@ mem.autohook2(0x431339, function(d)
 		crit2 = false
 		crit = false
 		comboCrit = false
-		return
 	elseif crit or crit2 then
 		d.eax = mem.topointer(CritStrings.attack)		
 		if crit then
@@ -3124,7 +3123,6 @@ mem.autohook2(0x431339, function(d)
 		end
 		crit2 = false
 		crit = false
-		return
 	elseif combo then
 		d.eax = mem.topointer(ComboStrings.attack)
 		combo=false
@@ -3657,37 +3655,7 @@ if SETTINGS["ShowDamageTaken"]==true then
 	end
 end
 
-if SETTINGS["ReworkedMagicDamageCalculation"]==true then
-damage1=0
-	function events.CalcDamageToPlayer(t)
-		if t.DamageKind==1 or t.DamageKind==2 or t.DamageKind==3 or t.DamageKind==4 or t.DamageKind==5 then
-		--get resistances
-			if t.DamageKind==1 then
-			res=t.Player:GetMagicResistance()
-			end
-			if t.DamageKind==2 then
-			res=t.Player:GetFireResistance()
-			end
-			if t.DamageKind==3 then
-			res=t.Player:GetElectricityResistance()
-			end
-			if t.DamageKind==4 then
-			res=t.Player:GetColdResistance()
-			end
-			if t.DamageKind==5 then
-			res=t.Player:GetPoisonResistance()
-			end
-			luck=t.Player:GetLuck()/5
-			--start of new formula
-			roll = 1
-			while (math.random() < (1 - 30/(30 + res + luck))) and (roll <= 4) do
-				damage1 = t.Damage / (1 + 0.5 * roll)
-				roll = roll + 1
-			end
-			t.Result = damage1 * (1 / (1 + (res+luck)^0.7 / 100))
-		end
-	end
-end
+
 
 -- allow changing mastery learning requirements
 
