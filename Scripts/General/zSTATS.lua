@@ -183,13 +183,13 @@ damage1=0
 		local data=WhoHitPlayer()
 		if data then
 			if data.Player then
+				res=res/2
 				it=data.Player:GetActiveItem(4)
 				if it then
 					if it.ExtraData~=nil then
 					bonus=it.ExtraData
 						if it.ExtraData%10000<2000 or it.ExtraData%10000>3000 then
 						t.Damage=math.ceil(t.Damage*((it.ExtraData%1000)/100+1))
-						res=res/2
 						end
 					end
 				end
