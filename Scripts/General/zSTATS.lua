@@ -159,4 +159,58 @@ end
 
 end
 
+function events.CalcDamageToPlayer(t)
+damage1=0
+	if t.DamageKind==1 or t.DamageKind==2 or t.DamageKind==3 or t.DamageKind==4 or t.DamageKind==5 then
+		
+	--get resistances
+		if t.DamageKind==1 then
+		res=t.Player:GetMagicResistance()
+		end
+		if t.DamageKind==2 then
+		res=t.Player:GetFireResistance()
+		end
+		if t.DamageKind==3 then
+		res=t.Player:GetElectricityResistance()
+		end
+		if t.DamageKind==4 then
+		res=t.Player:GetColdResistance()
+		end
+		if t.DamageKind==5 then
+		res=t.Player:GetPoisonResistance()
+		end
+		luck=t.Player:GetLuck()/5
+		local data=WhoHitPlayer()
+		if data then
+			if data.Player then
+				it=data.Player:GetActiveItem(4)
+				if it then
+					if it.ExtraData~=nil then
+					bonus=it.ExtraData
+						if it.ExtraData%10000<2000 or it.ExtraData%10000>3000 then
+						t.Damage=math.ceil(t.Damage*((it.ExtraData%1000)/100+1))
+						res=res/2
+						end
+					end
+				end
+			end
+		end
+		--start of new formula
+		if SETTINGS["ReworkedMagicDamageCalculation"]==true then
+		roll = 1
+		damage1 = t.Damage
+		while (math.random() < (1 - 30/(30 + res + luck))) and (roll <= 4) do
+			damage1 = t.Damage / (1 + 0.5 * roll)
+			roll = roll + 1
+		end
+		t.Result = damage1 * (1 / (1 + (res+luck)^0.7 / 100))
+		else 
+		--vanilla calculation
+			while (math.random() < (1 - 30/(30 + res + luck))) and (roll <= 4) do
+				damage1 = t.Damage / 2 ^ roll
+				roll = roll + 1
+			end
+		end
+	end
+end
 
