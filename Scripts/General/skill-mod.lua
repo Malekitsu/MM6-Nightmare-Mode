@@ -2979,6 +2979,7 @@ local DaggerCritsIgnoreElementalBonuses = false
 -- crit messages
 -- variables need to be global (in table to not pollute namespace) for mem.topointer to always work correctly
 CritStrings = {attack = "%s critically hits %s for %lu damage!", kill = "%s critically inflicts %lu points killing %s!"}
+NormalStrings = {attack = "%s hits %s for %lu damage", kill = "%s inflicts %lu points killing %s!"}
 -- disable old crits
 -- mainhand
 mem.asmpatch(0x47E4F8, "jmp short " .. (0x47E526 - 0x47E4F8))
@@ -3053,19 +3054,30 @@ if SETTINGS["StatsRework"]==true then
 		--luck/accuracy bonus
 			luck=data.Player:GetLuck()
 			accuracy=data.Player:GetAccuracy()
-				if (data.Object==nil or data.Object.Spell==100) then
+			if (data.Object==nil or data.Object.Spell==100) then
 				critDamage=accuracy/250
-				else
-				personality=data.Player:GetPersonality()
-				intellect=data.Player:GetIntellect()
-				bonus=math.max(personality,intellect)
-				critDamage=bonus/500
-				end
+			else
+				critDamage=0
+				return
+			end
+			
 			critChance=50+luck
 			roll=math.random(1, 1000)
 			if roll <= critChance then
 				t.Result=t.Result*(1.5+critDamage)
 				crit2=true
+			end
+			if comboPoint==nil then
+				comboPoint=0
+			end
+			if crit or crit2 then
+				if (data.Player.Class==12 or data.Player.Class==13 or data.Player.Class==14) and SETTINGS["ArcherAsAssassin"]==true then
+					ComboCritStrings = {attack = string.format("%s (%s CP)",CritStrings.attack,math.min(comboPoint+1,5)),kill = string.format("%s (%s CP)",CritStrings.kill,math.min(comboPoint+1,5))} 
+					comboCrit=true
+				end
+			elseif (data.Player.Class==12 or data.Player.Class==13 or data.Player.Class==14) and SETTINGS["ArcherAsAssassin"]==true then
+				ComboStrings = {attack = string.format("%s (%s CP)",NormalStrings.attack,math.min(comboPoint+1,5)),kill = string.format("%s (%s CP)",NormalStrings.kill,math.min(comboPoint+1,5))} 
+				combo=true
 			end
 	end
 else
@@ -3073,23 +3085,49 @@ crit2=false
 end
 
 mem.autohook2(0x431276, function(d)
-	if crit or crit2 then
+	if comboCrit then
+		d.eax = mem.topointer(ComboCritStrings.kill)		
+		if crit then
+			mul = 1
+		end
+		crit2 = false
+		crit = false
+		comboCrit = false
+		return
+	elseif crit or crit2 then
 		d.eax = mem.topointer(CritStrings.kill)		
 		if crit then
 			mul = 1
 		end
 		crit2 = false
 		crit = false
+		return
+	elseif combo then
+		d.eax = mem.topointer(ComboStrings.kill)
+		combo=false
 	end
 end)
 mem.autohook2(0x431339, function(d)
-	if crit or crit2 then
-		d.eax = mem.topointer(CritStrings.attack)
+	if comboCrit then
+		d.eax = mem.topointer(ComboCritStrings.attack)		
 		if crit then
 			mul = 1
 		end
 		crit2 = false
 		crit = false
+		comboCrit = false
+		return
+	elseif crit or crit2 then
+		d.eax = mem.topointer(CritStrings.attack)		
+		if crit then
+			mul = 1
+		end
+		crit2 = false
+		crit = false
+		return
+	elseif combo then
+		d.eax = mem.topointer(ComboStrings.attack)
+		combo=false
 	end
 end)
 
