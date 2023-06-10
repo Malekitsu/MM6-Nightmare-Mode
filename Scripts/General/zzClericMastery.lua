@@ -62,6 +62,9 @@ end
 
 function events.GameInitialized2()
 Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
+	Game.SkillNames[const.Skills.Thievery]="Mastery"
+	Game.SkillNames[const.Skills.Diplomacy]="Diplomacy"
+	Game.SkillDescriptions[const.Skills.Thievery]="Mastery is a skill that allows players to increase their class bonus, making their character more powerful and effective in combat. The mastery skill is unique to each class, and players must invest points into it to improve their character's mastery level.\nRight-click on 'class name' on top of the 'stats' tab to access a wealth of information about your class's unique mastery abilities. "
 
 
 end
