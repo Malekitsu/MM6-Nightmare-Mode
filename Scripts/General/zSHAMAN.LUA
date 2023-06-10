@@ -202,7 +202,7 @@ local data = WhoHitMonster()
 		end
 m8=m2+m3+m4+m5+m1+m6+m7
 data.Player.SP=data.Player.SP+m7
-t.Result=(t.Result+m8*(mastery^0.15-1))*(1+m5/100)+t.Monster.HP*(m3^0.5/500)
+t.Result=t.Result*(1+m5/100)+m8*(1+mastery/20)+t.Monster.HP*(m3^0.5/500)+mastery*2
 data.Player.HP=(data.Player.HP+m6)+m2/100*t.Result
 end
 end
