@@ -662,6 +662,8 @@ spcEnchTxt255={}
 for i=0,57 do
 	spcEnchTxt255[i]=Game.SpcItemsTxt[i].BonusStat
 end
-
+Game.GlobalTxt[433]="Grandmaster"
+Game.GlobalTxt[432]="Ultimate"
+	
 end
 
