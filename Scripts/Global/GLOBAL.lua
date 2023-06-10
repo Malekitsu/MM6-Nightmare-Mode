@@ -2,7 +2,7 @@ Game.GlobalEvtLines.Count = 0  -- Deactivate all standard events
 
 local XPbonus = 0
 local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
-if (ADAPTIVE == "100") then
+if (ADAPTIVE == "100") or SETTINGS["255MOD"]==true then
 XPbonus = 100000
 else
 end
