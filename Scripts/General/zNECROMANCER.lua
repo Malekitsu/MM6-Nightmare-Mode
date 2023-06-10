@@ -1,9 +1,3 @@
-local Rebalance
-Rebalance = 1
-if SETTINGS["ImbaSubClasses"]==false then
-Rebalance = 0.95
-end
-
 NECROMANCER=SETTINGS["SorcererAsNecromancer"]
 if NECROMANCER==true then
 --adds toxic cloud to spellbook	
@@ -14,7 +8,7 @@ function events.NewGameMap()
 		end 
 	end 
 end
---mastery increasing damage by 10% and cost by 5%
+--mastery increasing damage by 5% and cost by 5%
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
 	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
@@ -33,7 +27,7 @@ function events.CalcSpellDamage(t)
 			spellCost=Game.Spells[i]["SpellPointsNormal"]
 			Game.SpellsTxt[i]["SpellPointsNormal"]=spellCost*mastery*0.1
 			data.Player.SP=data.Player.SP-(spellCost*mastery*0.05)
-			t.Result=t.Result*(1+mastery*0.1)
+			t.Result=t.Result*(1+mastery*0.05)
 			end
 		end
 		
