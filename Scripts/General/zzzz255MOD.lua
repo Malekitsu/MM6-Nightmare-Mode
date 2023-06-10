@@ -473,8 +473,12 @@ end
 				Game.ClassDescriptions[i]=Game.ClassDescriptions[i+2]
 			end
 			if i%3==1 then
-				Game.ClassNames[i]=Game.ClassNames[i+1]
+				Game.ClassNames[i]=string.format("Grand %s",Game.ClassNames[i+1])
 				Game.ClassDescriptions[i]=Game.ClassDescriptions[i+1]
+			end
+			if i%3==2 then
+				Game.ClassNames[i]=string.format("Ultimate %s",Game.ClassNames[i])
+				Game.ClassDescriptions[i]=Game.ClassDescriptions[i]
 			end
 		end
 	end
