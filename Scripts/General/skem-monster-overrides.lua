@@ -964,7 +964,7 @@ function events.GameInitialized2()
 end
 
 function events.LoadMap()
-	if not (ADAPTIVE == "disabled")
+	if ((ADAPTIVE == "preset") or (ADAPTIVE == "map") or (ADAPTIVE == "100") or (ADAPTIVE == "party")) or SETTINGS["255MOD"]==true
 	then
 		adaptive_level = getAdaptiveMultiplier(ADAPTIVE)
 		if (ADAPTIVE == "party") 
