@@ -46,7 +46,7 @@ function events.CalcDamageToMonster(t)
 		end
 m6=math.max(m2, m3, m4, m5, m1)
 		data.Player.SP=data.Player.SP+t.Result*20/100
-			t.Result=t.Result*0.85+m6*2
+			t.Result=t.Result+m6*2
 
 end
 end
@@ -69,7 +69,7 @@ end
 modif = data.Player.LevelBase
 	modik = data.Player.Exp
 	modit = modik-modif *(modif-1)*500
-t.Damage = t.Damage + modit^(mastery^0.5/10)
+t.Damage = t.Damage + mastery^2/4 + 1
 end
 	
 end
