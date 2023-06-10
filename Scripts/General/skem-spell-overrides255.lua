@@ -890,14 +890,11 @@ local function modifiedMonsterCalculateDamage(d, def, monsterPointer, attackType
 	-- get monster
 
 	local monsterIndex, monster = GetMonster(d.edi)
-if ((ADAPTIVE == "default") or (ADAPTIVE == "disabled")) then 
-	Mlevel = Game.MonstersTxt[monster.Id].Level
-modi = 1
-else
+
 Xlevel = Game.MonstersTxt[monster.Id].Level
 Mlevel = monsterArray["Level"]
 modi =  (1+Mlevel)/(1+Xlevel)
-end
+
 if Mlevel < 1 then
 Mlevel = 1
 end
