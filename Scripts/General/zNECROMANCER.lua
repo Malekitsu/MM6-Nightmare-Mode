@@ -6,7 +6,14 @@ end
 
 NECROMANCER=SETTINGS["SorcererAsNecromancer"]
 if NECROMANCER==true then
-
+--adds toxic cloud to spellbook	
+function events.NewGameMap() 
+	for i= 0,3 do 
+		if Party[i].Class==6 then 
+		Party[i].Spells[90]=true
+		end 
+	end 
+end
 --mastery increasing damage by 10% and cost by 5%
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
