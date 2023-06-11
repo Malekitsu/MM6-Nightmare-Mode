@@ -458,13 +458,13 @@ function events.GameInitialized2()
 
 	itemStatName[1]=StrColor(255,0,0,"Might")
 	itemStatName[2]=StrColor(255,128,0,"Intellect")
-	itemStatName[3]=StrColor(51,51,255,"Personality")
+	itemStatName[3]=StrColor(0,127,255,"Personality")
 	itemStatName[4]=StrColor(0,255,0,"Endurance")
 	itemStatName[5]=StrColor(255,255,0,"Accuracy")
 	itemStatName[6]=StrColor(127,0,255,"Speed")
 	itemStatName[7]=StrColor(255,255,255,"Luck")
 	itemStatName[8]=StrColor(0,255,0,"Hit Points")
-	itemStatName[9]=StrColor(51,51,255,"Spell Points")
+	itemStatName[9]=StrColor(0,100,255,"Spell Points")
 	itemStatName[10]=StrColor(230,204,128,"Armor Class")
 	itemStatName[11]=StrColor(255,100,100,"Fire Resistance")
 	itemStatName[12]=StrColor(255,255,100,"Elec Resistance")
@@ -566,11 +566,11 @@ if SETTINGS["255MOD"]~=true then
 				Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
 				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
 			elseif bonuses==2 then
-				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,112,221,string.format("%s", itemName[item.Item.Number]))
+				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
 				if item.Item.Bonus2==0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,112,221,enchantAdd[item.Item.Bonus-1])
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
 					elseif item.Item.Bonus2>0 then
-						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,112,221,enchantAdd2[item.Item.Bonus2-1])
+						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
 				end
 			elseif bonuses==1 then
 				Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
