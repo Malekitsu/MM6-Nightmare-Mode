@@ -510,8 +510,19 @@ if SETTINGS["255MOD"]~=true then
 			end
 		end
 		
-	--Change item name
-	--Change item name
+	--Change item name and colour
+	--number of bonuses
+	bonuses=0
+	if item.Item.Bonus~=0 then
+	bonuses=bonuses+1
+	end
+	if item.Item.Charges~=0 then
+	bonuses=bonuses+1
+	end
+	if item.Item.Bonus2~=0 then
+	bonuses=bonuses+1
+	end
+	
 	ancient=0
 	bonus=item.Item.BonusStrength
 	if item.Item.Bonus==8 or item.Item.Bonus==9 then
@@ -523,13 +534,22 @@ if SETTINGS["255MOD"]~=true then
 	end
 		
 	if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
-		Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
-		else 
-		Game.ItemsTxt[item.Item.Number].Name=string.format("%s", itemName[item.Item.Number])
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))
+		--for i=0,13 do
+		--	Game.StdItemsTxt[i].NameAdd=StrColor(255,128,0,Game.StdItemsTxt[i].NameAdd)
+		--end
+		elseif bonuses==3 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
+		elseif bonuses==2 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(0,112,221,string.format("%s", itemName[item.Item.Number]))
+		elseif bonuses==1 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
+		elseif bonuses==0 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
 	end
 
 	if bonus==40 and extrabonus==40 then
-		Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
 		end
 
 	--Crowns and HATS
