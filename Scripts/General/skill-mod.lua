@@ -2705,7 +2705,7 @@ local function getAverageDamageRate(player, ranged, monsterArmorClass)
 	-- set default armor class
 	
 	if monsterArmorClass == nil then
-		monsterArmorClass = 100
+		monsterArmorClass = player.LevelBase
 	end
 
 	-- get combat parameters
@@ -2740,9 +2740,14 @@ local function getAverageDamageRate(player, ranged, monsterArmorClass)
 	
 	-- calculate average damage rate against monster and no physical resistance
 	
-	local chanceToHit = (15 + 2 * attack) / (15 + 2 * attack + 15 + monsterArmorClass)
+	local chanceToHit = (15 + 2 * attack) / (30 + 2 * attack + 15 + monsterArmorClass)
 	local averageDamageRate = math.round(averageDamage * chanceToHit * (100 / recovery))
-	
+	if SETTINGS["StatsRework"]==true then
+		local might = player:GetMight()
+		local accuracy = player:GetAccuracy()
+		local luck = player:GetLuck()
+		local averageDamageRate = averageDamageRate * (1+might/500) * (1+(math.min(0.05+luck/1000,2)*(1.5+accuracy/250)))
+	end
 	-- return value
 	
 	return averageDamageRate
