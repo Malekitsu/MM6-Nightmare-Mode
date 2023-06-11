@@ -478,7 +478,7 @@ function events.GameInitialized2()
 	Game.ItemsTxt[580].NotIdentifiedName="Reality Scroll"
 	Game.ItemsTxt[580].Notes="The Reality Scroll is an ancient artifact of immense power, said to possess the ability to manipulate the fabric of reality.\nAccording to the legend, it went long gone, stolen by Kreegans.\nThere are instructions about a ritual, but its effects are unknown"
 	Game.ItemsTxt[579].NotIdentifiedName="Celestial Amulet"
-	Game.ItemsTxt[579].Notes="The celestial dragon amulet is a breathtaking artifact that glimmers with otherworldly radiance. Fashioned from an otherworldly metal that is said to have been forged in the heart of a star, the amulet is adorned with intricate engravings of celestial dragons in mid-flight, their wings outstretched as if to take to the heavens themselves. Wearing this amulet is said to imbue the wielder with immense power, allowing them to channel the energies of the cosmos and bend them to their will. But the amulet's true strength lies in its ability to protect its allies. With a mere thought, the wearer can summon a shield of celestial energy that envelops their comrades, shielding them from harm and granting them the strength to fight on. It is said that only the most noble and righteous of warriors are able to wield the celestial dragon amulet, and that those who do so are blessed with the favor of the Gods themselves. ( +50 to all seven stats, protection to Death and Eradicate)"
+	Game.ItemsTxt[579].Notes=string.format("The celestial dragon amulet is a breathtaking artifact that glimmers with otherworldly radiance. Fashioned from an otherworldly metal that is said to have been forged in the heart of a star, the amulet is adorned with intricate engravings of celestial dragons in mid-flight, their wings outstretched as if to take to the heavens themselves. Wearing this amulet is said to imbue the wielder with immense power, allowing them to channel the energies of the cosmos and bend them to their will. But the amulet's true strength lies in its ability to protect its allies. With a mere thought, the wearer can summon a shield of celestial energy that envelops their comrades, shielding them from harm and granting them the strength to fight on. It is said that only the most noble and righteous of warriors are able to wield the celestial dragon amulet, and that those who do so are blessed with the favor of the Gods themselves.\n%s",StrColor(255,255,153,"+50 to all seven stats, protection to Death and Eradicate"))
 	
 	--FINAL AWARD
 	Game.AwardsTxt[61]="Completed MAW in Nightmare Mode"
@@ -499,8 +499,8 @@ function events.GameInitialized2()
 		enchantAdd2[i]=Game.SpcItemsTxt[i].NameAdd
 	end
 	--new items	
-	itemName[580] = "Reality Scroll"
-	itemName[579] = "Celestial Dragon Amulet"
+	Game.ItemsTxt[580].Name = "Reality Scroll"
+	Game.ItemsTxt[579].Name = "Celestial Dragon Amulet"
 	--fix long tooltips causing crash 
 
 	Game.SpcItemsTxt[40].BonusStat= "Drain target Life and Increased Weapon speed."
