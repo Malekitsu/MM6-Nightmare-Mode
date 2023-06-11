@@ -426,6 +426,10 @@ end
 ---------------------------------------
 
 	function events.GameInitialized2()
+	--skill masteries
+	Game.GlobalTxt[433]="Grandmaster"
+	Game.GlobalTxt[432]="Ultimate"
+	Game.GlobalTxt[431]="Master"
 	--knight
 	Game.Classes.HPFactor[0] = Game.Classes.HPFactor[2]
 	Game.Classes.HPFactor[1] = Game.Classes.HPFactor[2]*1.5
@@ -481,8 +485,9 @@ end
 				Game.ClassDescriptions[i]=Game.ClassDescriptions[i]
 			end
 		end
-	end
 	
+	end
+		
 	
 end
 
@@ -666,8 +671,6 @@ spcEnchTxt255={}
 for i=0,57 do
 	spcEnchTxt255[i]=Game.SpcItemsTxt[i].BonusStat
 end
-Game.GlobalTxt[433]="Grandmaster"
-Game.GlobalTxt[432]="Ultimate"
-Game.GlobalTxt[431]="Master"	
+
 end
 
