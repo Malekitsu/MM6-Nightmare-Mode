@@ -456,6 +456,8 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 function events.GameInitialized2()
 	itemName = {}
 	itemDesc = {}
+	enchantAdd = {}
+	enchantAdd2 = {}
 	Game.ItemsTxt[580].NotIdentifiedName="Reality Scroll"
 	Game.ItemsTxt[580].Notes="The Reality Scroll is an ancient artifact of immense power, said to possess the ability to restore reality itself.\nAccording to the legend, it went long gone, stolen by Kreegans. The scroll must be brought to a special fountain created by the gods, which possesses the power to purify anything that touches its waters.\nTo activate the scroll's power, one must immerse it in the fountain's waters and recite the ancient incantation inscribed upon it. However, be warned that the ritual might summon the force of dark.\nOnly those who can pass a series of trials testing their strength, cunning, and purity of heart will be granted access to strongest relic. With the power of the Reality Scroll, one can hope to manipulate the fabric of reality and save the world from chaos."
 	Game.ItemsTxt[579].NotIdentifiedName="Celestial Amulet"
@@ -464,16 +466,22 @@ function events.GameInitialized2()
 	--FINAL AWARD
 	Game.AwardsTxt[61]="Completed MAW in Nightmare Mode"
 	Game.ItemsTxt[546].Notes="Congratulation, you were able to clear MAW at its highest difficulty!!!"
-	Game.ScrollTxt[546]="To enter the Hall of Fame write me on Discord at Malekith#5670 and send me the save file to verify your run.\nDevs are proud of you" 	
+	Game.ScrollTxt[546]="Congratulations! To enter the Hall of Fame write me on Discord at Malekith#5670 and send me the save file to verify your run.\nDevs are proud of you" 	
 		
 	for i = 1, 578 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
-	
 	for i = 94, 99 do
 	  itemDesc[i] = Game.ItemsTxt[i].Notes
 	end
-	
+	--copy enchants
+	for i=0,13 do
+		enchantAdd[i]=Game.StdItemsTxt[i].NameAdd
+	end
+	for i=0, 58 do
+		enchantAdd2[i]=Game.SpcItemsTxt[i].NameAdd
+	end
+	--new items	
 	itemName[580] = "Reality Scroll"
 	itemName[579] = "Celestial Dragon Amulet"
 	--fix long tooltips causing crash 
@@ -532,25 +540,44 @@ if SETTINGS["255MOD"]~=true then
 	if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
 		extrabonus=extrabonus/2
 	end
-		
-	if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
-		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))
-		--for i=0,13 do
-		--	Game.StdItemsTxt[i].NameAdd=StrColor(255,128,0,Game.StdItemsTxt[i].NameAdd)
-		--end
-		elseif bonuses==3 then
-			Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
-		elseif bonuses==2 then
-			Game.ItemsTxt[item.Item.Number].Name=StrColor(0,112,221,string.format("%s", itemName[item.Item.Number]))
-		elseif bonuses==1 then
-			Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
-		elseif bonuses==0 then
-			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
+	if item.Item.Number<135 then	
+		if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
+			
+			elseif bonuses==3 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
+			elseif bonuses==2 then
+				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,112,221,string.format("%s", itemName[item.Item.Number]))
+				if item.Item.Bonus2==0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,112,221,enchantAdd[item.Item.Bonus-1])
+					elseif item.Item.Bonus2>0 then
+						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,112,221,enchantAdd2[item.Item.Bonus2-1])
+				end
+			elseif bonuses==1 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
+				if item.Item.Bonus>0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
+					elseif item.Item.Bonus2>0 then
+						Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
+				end
+			elseif bonuses==0 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
+		end
+	end
+	--name colour for artifacts/relics
+	if item.Item.Number>399 and item.Item.Number<430 then
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(230,204,128,string.format("%s", itemName[item.Item.Number]))
 	end
 
 	if bonus==40 and extrabonus==40 then
 		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
+		if item.Item.Bonus>0 then
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(255,0,0,enchantAdd[item.Item.Bonus-1])
 		end
+		end
+		
 
 	--Crowns and HATS
 		if item.Item.ExtraData~=nil then
