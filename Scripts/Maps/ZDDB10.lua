@@ -458,7 +458,7 @@ end
 evt.map[44] = function()
 	evt.ForPlayer("All")
 		if evt.Cmp("Inventory", 495) or vars.Endoftheworld~=nil then
-		Message("???\nYou killed my most loyal servant... I WILL NOT LET YOU LIVE!")
+		Message("???\nYou managed to escape this time, but I will not let you live.")
 		evt.Subtract("Inventory", 495)
 		vars.Endoftheworld=true
 		evt.MoveToMap{X = -9714, Y = -7508, Z = 12370, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "Oute3.odm"}
