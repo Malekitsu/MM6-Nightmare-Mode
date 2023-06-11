@@ -447,13 +447,30 @@ mem.autohook(0x41CE00, function(d)
 end)
 
 
---STAT NAMES for custom tooltip
-itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "Speed", "Luck", "Hit Points", "Spell Points", "Armor Class", "Fire Resistance", "Elec Resistance", "Cold Resistance", "Poison Resistance"}
-
 
 
 --change tooltip
 function events.GameInitialized2()
+	
+	--STAT NAMES for custom tooltip
+	itemStatName = {}
+	--colours
+
+	itemStatName[1]=StrColor(255,0,0,"Might")
+	itemStatName[2]=StrColor(255,128,0,"Intellect")
+	itemStatName[3]=StrColor(51,51,255,"Personality")
+	itemStatName[4]=StrColor(0,255,0,"Endurance")
+	itemStatName[5]=StrColor(255,255,0,"Accuracy")
+	itemStatName[6]=StrColor(127,0,255,"Speed")
+	itemStatName[7]=StrColor(255,255,255,"Luck")
+	itemStatName[8]=StrColor(0,255,0,"Hit Points")
+	itemStatName[9]=StrColor(51,51,255,"Spell Points")
+	itemStatName[10]=StrColor(230,204,128,"Armor Class")
+	itemStatName[11]=StrColor(255,100,100,"Fire Resistance")
+	itemStatName[12]=StrColor(255,255,100,"Elec Resistance")
+	itemStatName[13]=StrColor(153,255,255,"Cold Resistance")
+	itemStatName[14]=StrColor(0,153,0,"Poison Resistance")
+		
 	itemName = {}
 	itemDesc = {}
 	enchantAdd = {}
@@ -471,7 +488,7 @@ function events.GameInitialized2()
 	for i = 1, 578 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
-	for i = 94, 99 do
+	for i = 1, 134 do
 	  itemDesc[i] = Game.ItemsTxt[i].Notes
 	end
 	--copy enchants
@@ -500,15 +517,15 @@ function events.GameInitialized2()
 	Game.SpcItemsTxt[20].BonusStat="Poison and weakness Immunity"
 	Game.SpcItemsTxt[21].BonusStat="Sleep and Unconscious Immunity"
 	Game.SpcItemsTxt[22].BonusStat="Stone and premature ageing Immunity"
-	Game.SpcItemsTxt[24].BonusStat="Death and eradication Immunity, +5 Levels"
+	Game.SpcItemsTxt[24].BonusStat="Death and erad. Immunity, +5 Levels"
 end
 
 if SETTINGS["255MOD"]~=true then
 	function events.ShowItemTooltip(item)
 		if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
-		Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+		Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
 			else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
-				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat, itemStatName[item.Item.Bonus])
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s", itemStatName[item.Item.Bonus])
 				else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
 					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
 					else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
@@ -595,6 +612,14 @@ if SETTINGS["255MOD"]~=true then
 				Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
 			end
 		end
+		
+		--Bonus2
+		if item.Item.Bonus2>0 and item.Item.Bonus>0 then
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
+			else
+			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+		end
+		
 	end
 end
 -----------------------------
