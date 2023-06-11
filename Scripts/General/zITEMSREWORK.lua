@@ -595,7 +595,12 @@ if SETTINGS["255MOD"]~=true then
 		end
 		end
 		
-
+		--Bonus2
+		if item.Item.Bonus2>0 and item.Item.Bonus>0 then
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
+			else
+			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+		end
 	--Crowns and HATS
 		if item.Item.ExtraData~=nil then
 			if item.Item.Number>=94 and item.Item.Number<=99 then
@@ -606,19 +611,18 @@ if SETTINGS["255MOD"]~=true then
 						statbonus="Healing"
 						else statbonus="Damage"
 					end
-				end			
-				Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.ExtraData%1000,"%",itemDesc[item.Item.Number])
-				else
+				end		
+				if item.Item.Bonus2==0 then
+				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s %s %s %s%s\n\n%s",StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+				elseif item.Item.Bonus2>0 then
+					Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n%s %s %s %s%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+				end				
+			else
 				Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
 			end
 		end
 		
-		--Bonus2
-		if item.Item.Bonus2>0 and item.Item.Bonus>0 then
-			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
-			else
-			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
-		end
+
 		
 	end
 end
