@@ -2746,7 +2746,7 @@ local function getAverageDamageRate(player, ranged, monsterArmorClass)
 		local might = player:GetMight()
 		local accuracy = player:GetAccuracy()
 		local luck = player:GetLuck()
-		local averageDamageRate = averageDamageRate * (1+might/500) * (1+(math.min(0.05+luck/1000,2)*(1.5+accuracy/250)))
+				averageDamageRate = averageDamageRate * (1+might/500) * (1+(math.min(0.05+luck/1000,1)*(0.5+accuracy/250)))
 	end
 	-- return value
 	
