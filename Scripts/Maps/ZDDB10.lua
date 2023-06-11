@@ -458,7 +458,8 @@ end
 evt.map[44] = function()
 	evt.ForPlayer("All")
 		if evt.Cmp("Inventory", 495) or vars.Endoftheworld~=nil then
-		evt.Subtract("Inventory", 495)	
+		Message("???\nYou killed my most loyal servant... I WILL NOT LET YOU LIVE!")
+		evt.Subtract("Inventory", 495)
 		vars.Endoftheworld=true
 		evt.MoveToMap{X = -9714, Y = -7508, Z = 12370, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "Oute3.odm"}
 		else
@@ -485,7 +486,7 @@ end
 function events.CalcDamageToPlayer(t)
 local data=WhoHitPlayer()
 if data.Monster~=nil then
-	if data.Monster.Id==111 then
+	if data.Monster.Id==110 then
 	pseudoSpawnpoint{monster = 88, x = (Party.X+data.Monster.X)/2, y = (Party.Y+data.Monster.Y)/2, z = Party.Z, count = 1, powerChances = {50, 30, 20}, radius = 64, group = 255}
 	end
 end
