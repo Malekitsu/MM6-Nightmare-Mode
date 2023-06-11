@@ -46,13 +46,13 @@ evt.map[3] = function()
 	evt.SetDoorState{Id = 3, State = 1}
 end
 
-evt.hint[4] = evt.str[1]  -- "Door"
+evt.hint[4] = "Dimensional Prison" -- "Door"
 evt.map[4] = function()
 if vars.endDoor==nil then
-	if evt.Cmp("Awards", 36) then
+	if evt.Cmp("QBits", 240) then
 	evt.SetDoorState{Id = 4, State = 1}
 	vars.endDoor=1
-	Message("Access Granted")
+	Game.ShowStatusText("Access Granted")
 	for i=0,3 do
 		Party[i].Spells[19]=false
 		Party[i].Spells[21]=false
@@ -61,11 +61,13 @@ if vars.endDoor==nil then
 	end
 	mapvars.event=true
 	Sleep(250)
-	Message("???:\nYou are not supposed to be here, I will not let you interfere with my plans, I exile you to another dimension")
-	Sleep(250)
+	Message("???:\nFINALLY FREE! I've been waiting for Centuries!")
+	Sleep(100)
+	Message("???:\nWho are you? I see, you are here to end my sufferings, what a fool.\nI will not let you interfere with my plans.\n\nI EXILE YOU!")
+	Sleep(150)
 	evt.MoveToMap{X = -512, Y = -1088, Z = -450, Direction = 1536, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb10.blv"}
 	else
-	Message("Access Denied - only who are allowed by the Oracle can access")
+	Message("Access Denied - only those who are allowed by the Oracle can access")
 	end
 end
 end
@@ -711,7 +713,7 @@ function events.CalcDamageToMonster(t)
 	if t.Monster.Id==111 and t.Result>t.Monster.HP then
 	vars.GameOver=true
 	Sleep(200)
-	Message("As the Creator die, a path to a new dimension has been opened somewhere, you are now free to leave, but first let's report to Oracle")
+	Message("As the Creator dies, a path to a new dimension has been opened somewhere, you are now free to leave, but first let's report to Oracle")
 	end
 end
 
