@@ -470,7 +470,26 @@ function events.GameInitialized2()
 	itemStatName[12]=StrColor(255,255,100,"Elec Resistance")
 	itemStatName[13]=StrColor(153,255,255,"Cold Resistance")
 	itemStatName[14]=StrColor(0,153,0,"Poison Resistance")
-		
+	
+	--menu stats
+	if SETTINGS["colouredStats"]==true then
+		Game.GlobalTxt[144]=StrColor(255,0,0,"Might")
+		Game.GlobalTxt[116]=StrColor(255,128,0,"Intellect")
+		Game.GlobalTxt[163]=StrColor(0,127,255,"Personality")
+		Game.GlobalTxt[75]=StrColor(0,255,0,"Endurance")
+		Game.GlobalTxt[1]=StrColor(255,255,0,"Accuracy")
+		Game.GlobalTxt[211]=StrColor(127,0,255,"Speed")
+		Game.GlobalTxt[136]=StrColor(255,255,255,"Luck")
+		Game.GlobalTxt[108]=StrColor(0,255,0,"Hit Points")
+		Game.GlobalTxt[212]=StrColor(0,100,255,"Spell Points")
+		Game.GlobalTxt[12]=StrColor(230,204,128,"Armor Class")
+		Game.GlobalTxt[87]=StrColor(255,100,100,"Fire")
+		Game.GlobalTxt[71]=StrColor(255,255,100,"Elec")
+		Game.GlobalTxt[43]=StrColor(153,255,255,"Cold")
+		Game.GlobalTxt[166]=StrColor(0,153,0,"Poison")
+	end
+	
+	
 	itemName = {}
 	itemDesc = {}
 	enchantAdd = {}
