@@ -705,7 +705,7 @@ evt.map[131] = function()
 		else 
 		vars.ritual=1
 		evt.Subtract("Inventory", 580)
-		Game.ShowStatusText("You start the Reality Scroll Ritual, it will take a while")
+		Game.ShowStatusText("You start the Reality Scroll Ritual, it will take a while, survive until it's over.")
 		
 			Sleep(150)
 			pseudoSpawnpoint{monster = 25, x = Party.X+3000, y = Party.Y, z = Party.Z, count = 1, powerChances = {50, 10, 40}, radius = 64, group = 255}
