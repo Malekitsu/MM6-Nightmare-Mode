@@ -5,7 +5,7 @@ local NGOracle = "newGamePlusOracle"
 vars.Quests = vars.Quests or {} -- just in case, this is the table where quest data is saved by default
 vars.newGameQuest = vars.newGameQuest or {}
 local Q = vars.Quests -- convenient alias
--- helpers for testing
+--[[ helpers for testing
 function goToQueen()
     evt.MoveToMap{Name = "hive.blv", X = 3970, Y = 26861, Z = -2287}
 end
@@ -18,6 +18,7 @@ end
 function goToOracle()
     evt.MoveToMap{Name = "oracle.blv", X = -1415, Y = 1920, Z = -511}
 end
+]]
 function events.AfterLoadMap()
     if Map.Name ~= "oracle.blv" then return end
     evt.Set  {"MapVar6", Value = 1} -- power panel on
