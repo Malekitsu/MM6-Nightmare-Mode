@@ -37,6 +37,7 @@ local PRESETS = {
 	["PowerCureOverflow"] = false,
 	["ShowTrainerLocations"] = true,
 	["255MOD"] = false,
+	["colouredStats"] = false,
 }
 
 SETTINGS = { }
