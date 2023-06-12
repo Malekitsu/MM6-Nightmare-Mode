@@ -1437,9 +1437,9 @@ if SETTINGS["Mastery"]==true then
 		if index>=0 and index<=3 then
 			Mastery=Party[index].Skills[const.Skills.Thievery]%64
 			for i=1,99 do
-				Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery
-				Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery
-				Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery
+				Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
+				Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
+				Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
 			end
 		end
 	end
