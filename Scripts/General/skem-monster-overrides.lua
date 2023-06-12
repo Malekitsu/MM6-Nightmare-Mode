@@ -210,15 +210,21 @@ local monsterInfos =
 	--[114] = {["FullHP"] = 453,["Level"] = 54,["ArmorClass"]=60, ["Attack1"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 20,},["Attack2"] = {["Type"] = const.Damage.Phys, ["DamageDiceCount"] = 9, ["DamageDiceSides"] = 7, ["DamageAdd"] = 50}, ["Experience"]= 3456},
 
 
-	--The Unpeasanting
-	[103] = {["Name"] = "Manservant", ["Level"] = 4,},
-	[104] = {["Name"] = "Craftsman", ["Level"] = 6,},
-	[105] = {["Name"] = "Merchantman", ["Level"] = 10, },
-
-	[124] = {["Name"] = "Maidservant", ["Level"] = 2, },
-	[125] = {["Name"] = "Craftswoman", ["Level"] = 6, },
-	[126] = {["Name"] = "Merchantess", ["Level"] = 10, },
-	
+	--POISONS
+	-- bats
+	[7] = {["Bonus"] = 6, ["BonusMul"] = 1},
+	[8] = {["Bonus"] = 6, ["BonusMul"] = 2},
+	[9] = {["Bonus"] = 7, ["BonusMul"] = 2},
+	--bloodsuckers
+	[13] = {["Bonus"] = 6, ["BonusMul"] = 2},
+	[14] = {["Bonus"] = 6, ["BonusMul"] = 5},
+	[15] = {["Bonus"] = 9, ["BonusMul"] = 1},
+	--fly devils
+	[25] = {["Bonus"] = 8, ["BonusMul"] = 3},
+	--ground devils
+	[28] = {["Bonus"] = 8, ["BonusMul"] = 3},
+	--medusa
+	[100] = {["Bonus"] = 8, ["BonusMul"] = 2},
 	-- reduced phys resist for Dragon
 	[40] = {["PhysResistance"] = 10,},
 	[41] = {["PhysResistance"] = 15,},
