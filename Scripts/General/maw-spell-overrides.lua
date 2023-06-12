@@ -1418,4 +1418,29 @@ function events.CalcDamageToMonster(t)
 	end
 end
 end
+--Mastery Spell Speed
+--create spell speed matrix
+if SETTINGS["Mastery"]==true then
+	function events.GameInitialized2()
+		spellSpeedNormal={}
+		spellSpeedExpert={}
+		spellSpeedMaster={}
+			for i=1,99 do
+			spellSpeedNormal[i] = Game.Spells[i].DelayNormal
+			spellSpeedExpert[i] = Game.Spells[i].DelayExpert
+			spellSpeedMaster[i] = Game.Spells[i].DelayMaster
+			end
+	end
 
+	function events.Tick()
+		index=Game.CurrentPlayer
+		if index>=0 and index<=3 then
+			Mastery=Party[index].Skills[const.Skills.Thievery]%64
+			for i=1,99 do
+				Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery
+				Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery
+				Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery
+			end
+		end
+	end
+end
