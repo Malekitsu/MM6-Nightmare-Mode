@@ -488,8 +488,7 @@ end
 	
 	end
 		
-	
-end
+
 
 --MOD2 CHANGER
 function events.GameInitialized2()
@@ -674,3 +673,5 @@ end
 
 end
 
+	
+end
