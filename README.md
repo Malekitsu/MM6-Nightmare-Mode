@@ -17,7 +17,7 @@ Note to users
   - Every 5 points in Accuracy grants 2% melee and bow critical damage.
   - Every 5 points in Endurance grants 1% maximum HP.
   - Every 5 points in Speed grants 0.5% dodge chance.
-  - Every 10 points in Luck grants 0.5% critical chance.
+  - Every 5 points in Luck grants 0.5% critical chance.
 - AC (Armor Class) reduces the physical damage you take.
 
 ## Enchants Rework
