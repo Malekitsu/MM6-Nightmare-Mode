@@ -1418,29 +1418,122 @@ function events.CalcDamageToMonster(t)
 	end
 end
 end
---Mastery Spell Speed
---create spell speed matrix
-if SETTINGS["Mastery"]==true then
-	function events.GameInitialized2()
-		spellSpeedNormal={}
-		spellSpeedExpert={}
-		spellSpeedMaster={}
-			for i=1,99 do
-			spellSpeedNormal[i] = Game.Spells[i].DelayNormal
-			spellSpeedExpert[i] = Game.Spells[i].DelayExpert
-			spellSpeedMaster[i] = Game.Spells[i].DelayMaster
-			end
-	end
 
-	function events.Tick()
-		index=Game.CurrentPlayer
-		if index>=0 and index<=3 then
-			Mastery=Party[index].Skills[const.Skills.Thievery]%64
-			for i=1,99 do
-				Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
-				Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
-				Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
+local function GetObject(ptr)
+	local i = (ptr - Map.Objects[0]["?ptr"]) / Map.Objects[0]["?size"]
+	return Map.Objects[i], i
+end
+
+mem.autohook2(0x45D80D, function(d)
+	local t = {Object = GetObject(d.esi), Monster = Map.Monsters[d.edi / Map.Monsters[0]["?size"]], Allow = d.eax ~= 0}
+	events.call("MonsterHitByObject", t) -- works only for "non-damage" objects apparently
+	d.eax = t.Allow and 1 or 0
+end)
+
+function events.MonsterHitByObject(t)
+	--coordinates
+	X, Y, Z = XYZ(t.Monster)
+	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Charm" then
+		for i=0,Map.Monsters.high do
+			if Map.Monsters[i].Active then
+			X2, Y2, Z2 = XYZ(Map.Monsters[i])
+			distance=((X-X2)^2+(Y-Y2)^2)^0.5
+			distance=(distance^2+(Z-Z2)^2)^0.5
+				if distance<1024 and distance>=0.05 then
+					Game.SummonObjects(6050,X2,Y2-50,Z2+100,0,1)
+					objectCreated=true
+					owner=t.Object.Owner
+				end
+			end
+		end
+	end	
+	if objectCreated then
+	index=(owner-4)/8
+	skill=Party[index].Skills[const.Skills.Mind]
+	s, m = SplitSkill(skill)
+	m2=m
+	if m==3 then
+		--master has quadruple duration
+		m2=4
+	end
+		for i=0,Map.Objects.high do
+			if Map.Objects[i].Type==6050 then
+			Map.Objects[i].Spell=1
+			Map.Objects[i].SpellLevel=1
+			Map.Objects[i].SpellMastery=m
+			Map.Objects[i].SpellSkill=120*s*m2
+			Map.Objects[i].SpellType=1
+			Map.Objects[i].Owner=owner
+			Map.Objects[i].Visible=true
+			Map.Objects[i].Velocity[0]=0
+			Map.Objects[i].Velocity[1]=1000
+			Map.Objects[i].Velocity[2]=0
 			end
 		end
 	end
+	objectCreated=false
 end
+
+
+
+--create spell speed matrix
+function events.GameInitialized2()
+	spellSpeedNormal={}
+	spellSpeedExpert={}
+	spellSpeedMaster={}
+		for i=1,99 do
+		spellSpeedNormal[i] = Game.Spells[i].DelayNormal
+		spellSpeedExpert[i] = Game.Spells[i].DelayExpert
+		spellSpeedMaster[i] = Game.Spells[i].DelayMaster
+		end
+end
+
+function events.Tick()
+	index=Game.CurrentPlayer
+	if index>=0 and index<=3 then
+		Mastery=Party[index].Skills[const.Skills.Thievery]%64
+		for i=1,99 do
+			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
+			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
+			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
+		end
+	end
+end
+
+--chain lightning at master, for fun only :P
+--[[
+
+function events.CalcDamageToMonster(t)
+	local data = WhoHitMonster()
+	if data.Object then
+		if data.Object.Spell==18 and data.Object.SpellMastery==3 then
+			monsterIndex=getClosestMonsterInRange(t.Monster.X,t.Monster.Y,t.Monster.Z,512)
+			if monsterIndex~=nil then
+				Game.SummonObjects(2060,t.Monster.X,t.Monster.Y,t.Monster.Z+100,0,1)
+				objectCreated=true
+				index=data.Player:GetIndex()
+			end
+		end
+	end
+	if objectCreated then
+	skill=Party[index].Skills[const.Skills.Air]
+	s, m = SplitSkill(skill)
+		for i=0,Map.Objects.high do
+			if Map.Objects[i].Type==2060 then
+			Map.Objects[i].Spell=18
+			Map.Objects[i].SpellLevel=m
+			Map.Objects[i].SpellMastery=3
+			Map.Objects[i].SpellSkill=s
+			Map.Objects[i].SpellType=18
+			Map.Objects[i].Owner=index*8+4
+			Map.Objects[i].Visible=true
+			Map.Objects[i].Velocity[0]=(Map.Monsters[monsterIndex].X-t.Monster.X)*10
+			Map.Objects[i].Velocity[1]=(Map.Monsters[monsterIndex].Y-t.Monster.Y)*10
+			Map.Objects[i].Velocity[2]=(Map.Monsters[monsterIndex].Z-t.Monster.Z)*10
+			end
+		end
+	end
+	objectCreated=false
+end
+
+]]
