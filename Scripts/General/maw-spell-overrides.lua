@@ -1537,3 +1537,51 @@ function events.CalcDamageToMonster(t)
 end
 
 ]]
+
+
+function events.Tick()
+	for i=0,Map.Monsters.high do
+		if Map.Monsters[i].SpellBuffs[1].ExpireTime>0 then
+		Map.Monsters[i].HostileType = 0
+		end
+	end
+end
+
+function events.LoadMap()
+mapvars.monstersVelocity=mapvars.monstersVelocity or {}
+mapvars.immobilized=mapvars.immobilized or {}
+end
+function events.Tick()
+	for i=0,Map.Monsters.high do
+		if Map.Monsters[i].SpellBuffs[4].ExpireTime>0 then
+			if Game.TurnBasedPhase==1 then
+				if mapvars.immobilized[i] and mapvars.immobilized[i]==2 then
+					mapvars.immobilized[i]=3
+				elseif mapvars.immobilized and mapvars.immobilized[i]==nil and Map.Monsters[i].Velocity>0 then
+					mapvars.monstersVelocity[i]=Map.Monsters[i].Velocity
+					mapvars.immobilized[i]=1
+					Map.Monsters[i].Velocity = 0
+				end
+			end
+		end
+	end
+	for i=0,Map.Monsters.high do
+		if Game.TurnBasedPhase==2 and mapvars.immobilized and mapvars.immobilized[i] and mapvars.immobilized[i]==1 then
+			mapvars.immobilized[i]=2
+		elseif Game.TurnBasedPhase==2 and mapvars.immobilized[i] and mapvars.immobilized[i]==3 then
+			Map.Monsters[i].Velocity=mapvars.monstersVelocity[i]
+			Map.Monsters[i].SpellBuffs[4].ExpireTime=0
+			mapvars.immobilized[i]=nil
+		end
+	end
+	if Game.TurnBasedPhase==0 then
+		if mapvars.monstersVelocity then
+			for index, value in pairs(mapvars.monstersVelocity) do
+				if value>0 then
+					Map.Monsters[index].Velocity=value
+				end
+			end
+		end
+	end
+end
+
