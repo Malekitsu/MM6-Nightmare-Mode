@@ -1671,7 +1671,7 @@ function events.MonsterHitByObject(t)
 			Map.Objects[i].Spell=5
 			Map.Objects[i].SpellLevel=3
 			Map.Objects[i].SpellMastery=m
-			Map.Objects[i].SpellSkill=100
+			Map.Objects[i].SpellSkill=300*m2*s
 			Map.Objects[i].SpellType=5
 			Map.Objects[i].Owner=owner
 			Map.Objects[i].Visible=true
@@ -1689,7 +1689,7 @@ function events.MonsterHitByObject(t)
 		--chances will increase by 0.5,1,2% (NEM)
 		skill=t.Object.SpellSkill/1200
 		t.Object.SpellLevel=3
-		t.SpellSkill=100
+		t.SpellSkill=t.SpellSkill/t.Monster.Level^0.7
 		chance=30/(30+t.Monster.Level+t.Monster.MagicResistance)*(1+skill*0.02) 
 		--check for unique monster
 		if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
@@ -1698,6 +1698,5 @@ function events.MonsterHitByObject(t)
 		if math.random()<chance then
 			t.Allow=true
 		end
-		debug.Message(dump(t.Object))
 	end
 end
