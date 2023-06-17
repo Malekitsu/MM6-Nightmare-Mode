@@ -1425,9 +1425,10 @@ local function GetObject(ptr)
 end
 
 mem.autohook2(0x45D80D, function(d)
-	local t = {Object = GetObject(d.esi), Monster = Map.Monsters[d.edi / Map.Monsters[0]["?size"]], Allow = d.eax ~= 0}
+	local t = {Object = GetObject(d.esi), Monster = Map.Monsters[d.edi / Map.Monsters[0]["?size"]], Allow = d.eax ~= 0, SpellSkill = d.ebp}
 	events.call("MonsterHitByObject", t) -- works only for "non-damage" objects apparently
 	d.eax = t.Allow and 1 or 0
+	d.ebp = t.SpellSkill
 end)
 
 function events.MonsterHitByObject(t)
@@ -1435,14 +1436,17 @@ function events.MonsterHitByObject(t)
 	X, Y, Z = XYZ(t.Monster)
 	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Charm" then
 		for i=0,Map.Monsters.high do
-			if Map.Monsters[i].Active then
+		--number of targets, 2 novice, 3 expert, 4 master
+		count=t.Object.SpellMastery
+			if Map.Monsters[i].Active and count>0 then
 			X2, Y2, Z2 = XYZ(Map.Monsters[i])
 			distance=((X-X2)^2+(Y-Y2)^2)^0.5
 			distance=(distance^2+(Z-Z2)^2)^0.5
-				if distance<1024 and distance>=0.05 then
+				if distance<512 and distance>=0.05 then
 					Game.SummonObjects(6050,X2,Y2-50,Z2+100,0,1)
 					objectCreated=true
 					owner=t.Object.Owner
+					count=count-1
 				end
 			end
 		end
@@ -1475,7 +1479,7 @@ function events.MonsterHitByObject(t)
 end
 
 
-
+--MASTERY INCREASING SPELL SPEED
 --create spell speed matrix
 function events.GameInitialized2()
 	spellSpeedNormal={}
@@ -1538,7 +1542,7 @@ end
 
 ]]
 
-
+--charm fix 
 function events.Tick()
 	for i=0,Map.Monsters.high do
 		if Map.Monsters[i].SpellBuffs[1].ExpireTime>0 then
@@ -1547,6 +1551,7 @@ function events.Tick()
 	end
 end
 
+--mass fear fix, monster immobilized instead in turn mode
 function events.LoadMap()
 mapvars.monstersVelocity=mapvars.monstersVelocity or {}
 mapvars.immobilized=mapvars.immobilized or {}
@@ -1585,3 +1590,114 @@ function events.Tick()
 	end
 end
 
+--paralyze fix
+function events.MonsterHitByObject(t)
+	if t.Object.Type==8080 then
+		t.Allow=false
+		skill=t.Object.SpellSkill/180
+		t.SpellSkill=t.Object.SpellSkill/t.Monster.Level^0.7
+		chance=30/(30+t.Monster.Level+t.Monster.MagicResistance)*(1+skill*0.02*t.Object.SpellMastery) 
+		--check for unique monster
+		if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
+			t.SpellSkill=t.Object.SpellSkill/2
+		end
+		if math.random()<chance then
+			t.Allow=true
+		end
+	end
+end
+
+
+
+function events.LoadMap()
+mapvars.paralyzed=mapvars.paralyzed or {}
+end
+--turn mode fix for paralysis
+function events.Tick()
+	for i=0,Map.Monsters.high do
+		if Map.Monsters[i].SpellBuffs[6].ExpireTime>0 then
+			if Game.TurnBasedPhase==1 then
+				if mapvars.paralyzed[i] and mapvars.paralyzed[i]==2 then
+					mapvars.paralyzed[i]=3
+				elseif mapvars.paralyzed and mapvars.paralyzed[i]==nil then
+					mapvars.paralyzed[i]=1
+				end
+			end
+		end
+	end
+	for i=0,Map.Monsters.high do
+		if Game.TurnBasedPhase==2 and mapvars.paralyzed and mapvars.paralyzed[i] and mapvars.paralyzed[i]==1 then
+			mapvars.paralyzed[i]=2
+		elseif Game.TurnBasedPhase==2 and mapvars.paralyzed[i] and mapvars.paralyzed[i]==3 then
+			Map.Monsters[i].SpellBuffs[6].ExpireTime=0
+			mapvars.paralyzed[i]=nil
+		end
+	end
+end
+
+--turn to stone
+
+function events.MonsterHitByObject(t)	
+	--coordinates
+	X, Y, Z = XYZ(t.Monster)
+	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Turn To Stone" then
+	count=t.Object.SpellMastery
+		for i=0,Map.Monsters.high do
+		--number of targets, 2 novice, 3 expert, 4 master
+			if Map.Monsters[i].Active and count>0 then
+			X2, Y2, Z2 = XYZ(Map.Monsters[i])
+			distance=((X-X2)^2+(Y-Y2)^2)^0.5
+			distance=(distance^2+(Z-Z2)^2)^0.5
+				if distance<512 and distance>=0.05 then
+					Game.SummonObjects(4080,X2,Y2-50,Z2+100,0,1)
+					objectCreated=true
+					owner=t.Object.Owner
+					count=count-1
+				end
+			end
+		end
+	end	
+	if objectCreated then
+	index=(owner-4)/8
+	skill=Party[index].Skills[const.Skills.Earth]
+	s, m = SplitSkill(skill)
+	m2=m
+	if m==3 then
+		--master has quadruple duration
+		m2=4
+	end
+		for i=0,Map.Objects.high do
+			if Map.Objects[i].Type==4080 then
+			Map.Objects[i].Spell=5
+			Map.Objects[i].SpellLevel=3
+			Map.Objects[i].SpellMastery=m
+			Map.Objects[i].SpellSkill=100
+			Map.Objects[i].SpellType=5
+			Map.Objects[i].Owner=owner
+			Map.Objects[i].Visible=true
+			Map.Objects[i].Velocity[0]=0
+			Map.Objects[i].Velocity[1]=1000
+			Map.Objects[i].Velocity[2]=0
+			end
+		end
+	end
+	objectCreated=false
+	
+	--set chances
+	if Game.ObjListBin[t.Object.TypeIndex].Name=="Turn To Stone" then
+		t.Allow=false
+		--chances will increase by 0.5,1,2% (NEM)
+		skill=t.Object.SpellSkill/1200
+		t.Object.SpellLevel=3
+		t.SpellSkill=100
+		chance=30/(30+t.Monster.Level+t.Monster.MagicResistance)*(1+skill*0.02) 
+		--check for unique monster
+		if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
+			t.SpellSkill=t.Object.SpellSkill/4
+		end
+		if math.random()<chance then
+			t.Allow=true
+		end
+		debug.Message(dump(t.Object))
+	end
+end
