@@ -1398,6 +1398,31 @@ function events.RemoveConditionBySpell(t)
 	end
 end
 
+--MASTERY INCREASING SPELL SPEED
+--create spell speed matrix
+function events.GameInitialized2()
+	spellSpeedNormal={}
+	spellSpeedExpert={}
+	spellSpeedMaster={}
+		for i=1,99 do
+		spellSpeedNormal[i] = Game.Spells[i].DelayNormal
+		spellSpeedExpert[i] = Game.Spells[i].DelayExpert
+		spellSpeedMaster[i] = Game.Spells[i].DelayMaster
+		end
+end
+
+function events.Tick()
+	index=Game.CurrentPlayer
+	if index>=0 and index<=3 then
+		Mastery=Party[index].Skills[const.Skills.Thievery]%64
+		for i=1,99 do
+			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
+			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
+			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
+		end
+	end
+end
+
 -- MASS DISTORSION Fix
 
 function events.CalcSpellDamage(t)
@@ -1423,7 +1448,9 @@ local function GetObject(ptr)
 	local i = (ptr - Map.Objects[0]["?ptr"]) / Map.Objects[0]["?size"]
 	return Map.Objects[i], i
 end
-
+--------------------------------
+--FIX OBJECTS
+--------------------------------
 mem.autohook2(0x45D80D, function(d)
 	local t = {Object = GetObject(d.esi), Monster = Map.Monsters[d.edi / Map.Monsters[0]["?size"]], Allow = d.eax ~= 0, SpellSkill = d.ebp}
 	events.call("MonsterHitByObject", t) -- works only for "non-damage" objects apparently
@@ -1479,30 +1506,7 @@ function events.MonsterHitByObject(t)
 end
 
 
---MASTERY INCREASING SPELL SPEED
---create spell speed matrix
-function events.GameInitialized2()
-	spellSpeedNormal={}
-	spellSpeedExpert={}
-	spellSpeedMaster={}
-		for i=1,99 do
-		spellSpeedNormal[i] = Game.Spells[i].DelayNormal
-		spellSpeedExpert[i] = Game.Spells[i].DelayExpert
-		spellSpeedMaster[i] = Game.Spells[i].DelayMaster
-		end
-end
 
-function events.Tick()
-	index=Game.CurrentPlayer
-	if index>=0 and index<=3 then
-		Mastery=Party[index].Skills[const.Skills.Thievery]%64
-		for i=1,99 do
-			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
-			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
-			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
-		end
-	end
-end
 
 --chain lightning at master, for fun only :P
 --[[
@@ -1697,6 +1701,39 @@ function events.MonsterHitByObject(t)
 		end
 		if math.random()<chance then
 			t.Allow=true
+		end
+	end
+end
+
+--FINGER OF DEATH FIX
+function events.Tick()
+for i=0,Map.Objects.high do
+		if Map.Objects[i].Type==9060 then
+			Map.Objects[i].Type=4000
+		end
+	end
+end
+--will remove 1/4 hp vs unique monsters, chances above 100 will increase kill chance, but will not be increased by "of dark" enchant
+function events.CalcDamageToMonster(t)
+data=WhoHitMonster()
+	if data.Object and data.Object.Spell==0 then
+		t.Result=0
+		skill=data.Player.Skills[const.Skills.Dark]
+		s, m=SplitSkill(skill)
+		killChance= 30/(30+t.Monster.Level+t.Monster.MagicResistance)*((0.02+m*0.01)*s)
+		roll=math.random()
+		if roll<killChance then
+			data.Object.Type=9060
+			if t.Monster.Name==Game.MonstersTxt[t.Monster.Id].Name then
+				Game.ShowStatusText(string.format("Finger of Deaths hits killing %s",t.Monster.Name))
+				t.Monster.HP=0
+			else
+				t.Monster.HP=t.Monster.HP-t.Monster.FullHP/4
+				Game.ShowStatusText(string.format("%s resists Finger of Deaths losing %s HP",t.Monster.Name,t.Monster.FullHP/4))
+			end
+		else
+			data.Object.Type=9061
+			data.Object.TypeIndex=223
 		end
 	end
 end
