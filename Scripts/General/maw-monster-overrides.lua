@@ -473,8 +473,11 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 	--FIX FOR ITEM/STATS REWORK
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	damageMultiplier = damageMultiplier*((monsterArray.Level^1.6-1)/1000+1)
+	if SETTINGS["255MOD"]==true or ADAPTIVE == 100 then
+	damageMultiplier = 1
 	for i=1,173 do
 	Game.MonstersTxt[i].Ally=2
+	end
 	end
 	end
 	-----------------------------
@@ -621,7 +624,10 @@ if SETTINGS["ItemRework"]==true	then
 	ItemMod = (newLevel^1.15-1)/1000+1
 			end
 	if SETTINGS["StatsRework"]==true then
-ItemMod = ItemMod * (newLevel^1.15-1)/1000+1
+ItemMod = ItemMod * (newLevel^1.25-1)/1000+1
+end
+if SETTINGS["255MOD"] == true then
+ItemMod = ItemMod *newLevel/100
 end
 
 	levelMultiplier = (newLevel+1) / (oldLevel+1)
@@ -631,7 +637,7 @@ end
 	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
 	
 	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
-	sidesx1 = math.max(1, (sidesx1  * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5))
+	sidesx1 = math.max(1, (sidesx1  * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *ItemModD^0.5-1)
 	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5)*ItemMod^0.5)
 
 	if bonusx1 > 250 then
@@ -651,7 +657,7 @@ end
 	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
 	
 	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
-	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5))
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *ItemModD^0.5-1)
 	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5*ItemMod^0.5))
 
 	if bonusx2 > 250 then
@@ -719,13 +725,13 @@ if SETTINGS["ItemRework"]==true	then
 	ItemMod = (newLevel^1.15)/1000+1
 			end
 	if SETTINGS["StatsRework"]==true then
-ItemMod = ItemMod * ((newLevel^1.15)/1000+1)
+ItemMod = ItemMod * ((newLevel^1.25)/1000+1)
 ItemModH = ItemMod
 ItemModD = ItemMod
 end
 if SETTINGS["255MOD"]==true then
 ItemModH = ItemMod * (newLevel/100)
-ItemModD = ItemMod * (newLevel/100)^1.4
+ItemModD = ItemMod * (newLevel/100)
 end
 
 	levelMultiplier = (100+2) / (oldLevel+2)
@@ -737,7 +743,7 @@ end
 	damax1 = dicex1 *(1+sidesx1) / 2 + bonusx1
 	
 	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)) *(newLevel/100)*ItemModD)
-	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
+	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *(newLevel/100)^0.5*ItemModD^0.5-1)
 	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
 
 	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
@@ -772,7 +778,7 @@ end
 	damax2 = dicex2 *(1+sidesx2) / 2 + bonusx2
 			
 	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75) *(newLevel/100)*ItemModD))
-	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *(newLevel/100)^0.5*ItemModD^0.5-1)
 	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
 
 	if newLevel>35 and (genericForm["Attack2"]["Type"] == const.Damage.Energy) then
