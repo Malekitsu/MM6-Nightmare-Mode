@@ -1136,7 +1136,7 @@ end
 --fix for item/stats rework
 function events.AfterLoadMap()	
 		if ADAPTIVE == "disabled" then
-		if SETTINGS["255MOD"]~=true then
+		if not SETTINGS["255MOD"]==true then
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.boosted==nil then
 	for i=0, Map.Monsters.High do
 	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
