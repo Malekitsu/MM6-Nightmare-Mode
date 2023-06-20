@@ -3068,6 +3068,7 @@ if SETTINGS["StatsRework"]==true then
 	function events.CalcDamageToMonster(t)
 		local data = WhoHitMonster()	
 		--luck/accuracy bonus
+		if data and data.Player then
 			luck=data.Player:GetLuck()
 			accuracy=data.Player:GetAccuracy()
 			if (data.Object==nil or data.Object.Spell==100) then
@@ -3095,6 +3096,7 @@ if SETTINGS["StatsRework"]==true then
 				ComboStrings = {attack = string.format("%s (%s CP)",NormalStrings.attack,math.min(comboPoint+1,5)),kill = string.format("%s (%s CP)",NormalStrings.kill,math.min(comboPoint+1,5))} 
 				combo=true
 			end
+		end
 	end
 else
 crit2=false
