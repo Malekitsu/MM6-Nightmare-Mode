@@ -1398,30 +1398,7 @@ function events.RemoveConditionBySpell(t)
 	end
 end
 
---MASTERY INCREASING SPELL SPEED
---create spell speed matrix
-function events.GameInitialized2()
-	spellSpeedNormal={}
-	spellSpeedExpert={}
-	spellSpeedMaster={}
-		for i=1,99 do
-		spellSpeedNormal[i] = Game.Spells[i].DelayNormal
-		spellSpeedExpert[i] = Game.Spells[i].DelayExpert
-		spellSpeedMaster[i] = Game.Spells[i].DelayMaster
-		end
-end
 
-function events.Tick()
-	index=Game.CurrentPlayer
-	if index>=0 and index<=3 then
-		Mastery=Party[index].Skills[const.Skills.Thievery]%64
-		for i=1,99 do
-			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
-			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
-			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
-		end
-	end
-end
 
 -- MASS DISTORSION Fix
 
@@ -1435,7 +1412,7 @@ end
 
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Player and data.Spell==const.Spells.RingOfFire then
+	if data and data.Player and data.Spell==const.Spells.RingOfFire then
 	distance=((t.Monster.X-Party.X)^2+(t.Monster.Y-Party.Y)^2)^0.5
 		if distance>256 then
 			t.Result=t.Result*math.max(1-((distance-281.6)/256),0.1)
@@ -1469,7 +1446,7 @@ function events.MonsterHitByObject(t)
 			X2, Y2, Z2 = XYZ(Map.Monsters[i])
 			distance=((X-X2)^2+(Y-Y2)^2)^0.5
 			distance=(distance^2+(Z-Z2)^2)^0.5
-				if distance<512 and distance>=0.05 then
+				if distance<512 and distance>=0.05 and Map.Monsters[i].SpellBuffs[1].ExpireTime==0 then
 					Game.SummonObjects(6050,X2,Y2-50,Z2+100,0,1)
 					objectCreated=true
 					owner=t.Object.Owner
@@ -1639,6 +1616,37 @@ function events.Tick()
 	end
 end
 
+--slow fix to do damage
+function events.MonsterHitByObject(t)
+	if t.Object.Type==8030 then
+		damage=0
+		local index=(t.Object.Owner-4)/8
+		local skill=Party[index].Skills[const.Skills.Light]
+		s, m = SplitSkill(skill)
+		--calculate damage
+		if m==1 then
+			damage=8
+			for i= 1,s do
+				damage=damage+math.random(1,5)
+			end
+		elseif m==2 then
+			damage=18
+			for i= 1,s do
+				damage=damage+math.random(1,12)
+			end
+		else 
+			damage=27
+			for i= 1,s do
+				damage=damage+math.random(1,18)
+			end	
+		end
+		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
+		t.Monster.HP=math.max(t.Monster.HP-damage,0)
+		Game.ShowStatusText(string.format("Slow hits %s for %s points", t.Monster.Name, damage))
+	end
+end
+
+
 --turn to stone
 
 function events.MonsterHitByObject(t)	
@@ -1648,7 +1656,7 @@ function events.MonsterHitByObject(t)
 	count=t.Object.SpellMastery
 		for i=0,Map.Monsters.high do
 		--number of targets, 2 novice, 3 expert, 4 master
-			if Map.Monsters[i].Active and count>0 then
+			if Map.Monsters[i].Active and count>0 and Map.Monsters[i].SpellBuffs[5].ExpireTime==0 then
 			X2, Y2, Z2 = XYZ(Map.Monsters[i])
 			distance=((X-X2)^2+(Y-Y2)^2)^0.5
 			distance=(distance^2+(Z-Z2)^2)^0.5
@@ -1716,7 +1724,7 @@ end
 --will remove 1/4 hp vs unique monsters, chances above 100 will increase kill chance, but will not be increased by "of dark" enchant
 function events.CalcDamageToMonster(t)
 data=WhoHitMonster()
-	if data.Object and data.Object.Spell==0 then
+	if data and data.Object and data.Object.Spell==0 then
 		t.Result=0
 		skill=data.Player.Skills[const.Skills.Dark]
 		s, m=SplitSkill(skill)
@@ -1734,6 +1742,117 @@ data=WhoHitMonster()
 		else
 			data.Object.Type=9061
 			data.Object.TypeIndex=223
+		end
+	end
+end
+
+--[[dark containment black hole
+function events.CalcDamageToMonster(t)
+data=WhoHitMonster()
+	if data.Object and data.Object.Spell==99 then
+		data.Object.TypeIndex=222
+		monsterData=getMonstersInRange(t.Monster.X,t.Monster.Y,t.Monster.Z,100024)
+		blackHole=true
+		HoleX=data.Object.X
+		HoleY=data.Object.Y
+		HoleZ=data.Object.Z
+	end
+end
+
+function events.Tick()
+	if blackHole then
+		for _, i in pairs(monsterData) do
+			Map.Monsters[i].BodyRadius=Map.Monsters[i].BodyRadius/5
+			Map.Monsters[i].BodyHeight=Map.Monsters[i].BodyHeight/5
+			Map.Monsters[i].VelocityX = HoleX-Map.Monsters[i].X	
+			Map.Monsters[i].VelocityY = HoleY-Map.Monsters[i].Y
+			Map.Monsters[i].VelocityZ = HoleZ-Map.Monsters[i].Z
+		end
+	end
+end
+
+--
+radius = 2000
+function events.Tick()
+	if blackHole then
+		local centerX, centerY, centerZ = HoleX, HoleY, HoleZ
+		radius = math.max(radius-2,0)  -- Adjust the radius as desired
+		local angularSpeed = 0.003  -- Adjust the angular speed as desired
+
+		for _, i in pairs(monsterData) do
+			local angle = (Game.Time * angularSpeed) + (i * 0.1)  -- Adjust the angle multiplier as desired
+			local offsetX = radius * math.cos(angle)
+			local offsetY = radius * math.sin(angle)
+			
+			Map.Monsters[i].BodyRadius = Map.Monsters[i].BodyRadius / 5
+			Map.Monsters[i].BodyHeight = Map.Monsters[i].BodyHeight / 5
+			Map.Monsters[i].X = centerX + offsetX
+			Map.Monsters[i].Y = centerY + offsetY
+			Map.Monsters[i].VelocityX = 0
+			Map.Monsters[i].VelocityY = 0
+			Map.Monsters[i].VelocityZ = centerZ - Map.Monsters[i].Z  -- Assuming a circular motion in the X-Y plane
+		end
+	end
+end
+
+]]
+
+
+--spell delay changes
+function events.GameInitialized2()
+--change buffs speed
+	buffList={1,3,4,5,12,14,16,17,23,27,29,30,31,36,38,46,48,50,51,56,59,69,73,75,78,79}
+	for _, buffId in pairs(buffList) do
+		Game.Spells[buffId].DelayExpert=Game.Spells[buffId].DelayExpert/2
+		Game.Spells[buffId].DelayMaster=Game.Spells[buffId].DelayMaster/4
+	end
+	--change offensive spells
+	Game.Spells[4].DelayMaster=35
+	Game.Spells[18].DelayMaster=65
+	Game.Spells[21].DelayExpert=200
+	Game.Spells[21].DelayMaster=150
+	Game.Spells[28].DelayMaster=50
+	Game.Spells[34].DelayMaster=40
+	Game.Spells[34].DelayMaster=20
+	Game.Spells[37].DelayMaster=45
+	Game.Spells[44].DelayNormal=240
+	Game.Spells[44].DelayMaster=220
+	Game.Spells[44].DelayMaster=200
+	Game.Spells[54].DelayExpert=140
+	Game.Spells[54].DelayMaster=130
+	Game.Spells[55].DelayExpert=600
+	Game.Spells[55].DelayMaster=300
+	Game.Spells[80].DelayMaster=10
+	Game.Spells[91].DelayExpert=90
+	Game.Spells[91].DelayMaster=60
+	Game.Spells[93].DelayExpert=100
+	Game.Spells[93].DelayMaster=80
+	Game.Spells[96].DelayMaster=100
+	Game.Spells[99].DelayExpert=200
+	Game.Spells[99].DelayMaster=100
+end
+
+--MASTERY INCREASING SPELL SPEED
+--create spell speed matrix
+function events.GameInitialized2()
+	spellSpeedNormal={}
+	spellSpeedExpert={}
+	spellSpeedMaster={}
+		for i=1,99 do
+		spellSpeedNormal[i] = Game.Spells[i].DelayNormal
+		spellSpeedExpert[i] = Game.Spells[i].DelayExpert
+		spellSpeedMaster[i] = Game.Spells[i].DelayMaster
+		end
+end
+
+function events.Tick()
+	index=Game.CurrentPlayer
+	if index>=0 and index<=3 then
+		Mastery=Party[index].Skills[const.Skills.Thievery]%64
+		for i=1,99 do
+			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
+			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
+			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
 		end
 	end
 end
