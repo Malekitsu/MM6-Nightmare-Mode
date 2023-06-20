@@ -83,7 +83,7 @@ function events.ItemGenerated(t)
 		end
 		
 		--chance for ancient item, only if bonus 2 is spawned
-		if t.Item.Bonus2~=0 or Game.Map.Name=="zddb10.blv" then 
+		if t.Item.Bonus2~=0 then 
 			ancient=math.random(1,50)
 			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
 				t.Item.Charges=math.random(364,560)
@@ -151,9 +151,13 @@ function events.CalcStatBonusByItems(t)
 		if it.Charges ~= nil then
 			stat=it.Charges%14
 			bonus=math.ceil(it.Charges/14)
-				if t.Stat==stat then
-				t.Result = t.Result + bonus
-				end				
+			if SETTINGS["ReworkedMagicDamageCalculation"]==true then
+				if t.Stat==stat and stat<10 then
+					t.Result = t.Result + bonus
+				end
+			elseif t.Stat==stat then
+					t.Result = t.Result + bonus
+			end
 		end
 	end
 end
@@ -319,7 +323,7 @@ enchantbonusdamage[46] = 4
 
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-    if data.Player and t.DamageKind ~= 0 and data.Object == nil then
+    if data and data.Player and t.DamageKind ~= 0 and data.Object == nil then
 	n=1
 	bonusDamage2=1
         for i = 0,1 do
@@ -350,7 +354,7 @@ end
 
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-    if data.Player and t.DamageKind ~= 0 and data.Object~=nil then
+    if data and data.Player and t.DamageKind ~= 0 and data.Object~=nil then
 			if data.Object.Spell==100 then
 			it=data.Player:GetActiveItem(2)
 			-- calculation
@@ -903,7 +907,7 @@ end
 --carnage fix
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-	if data.Player and data.Object ~= nil then
+	if data and data.Player and data.Object ~= nil then
 		if data.Object.Item.Bonus2==3 then
 			t.Result=t.Result/2
 		end
