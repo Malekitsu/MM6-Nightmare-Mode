@@ -1655,7 +1655,7 @@ function events.MonsterHitByObject(t)
 	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Turn To Stone" then
 	count=t.Object.SpellMastery
 		for i=0,Map.Monsters.high do
-		--number of targets, 2 novice, 3 expert, 4 master
+		--number of targets, 1 novice, 2 expert, 3 master
 			if Map.Monsters[i].Active and count>0 and Map.Monsters[i].SpellBuffs[5].ExpireTime==0 then
 			X2, Y2, Z2 = XYZ(Map.Monsters[i])
 			distance=((X-X2)^2+(Y-Y2)^2)^0.5
@@ -1733,7 +1733,7 @@ data=WhoHitMonster()
 		if roll<killChance then
 			data.Object.Type=9060
 			if t.Monster.Name==Game.MonstersTxt[t.Monster.Id].Name then
-				Game.ShowStatusText(string.format("Finger of Deaths hits killing %s",t.Monster.Name))
+				Game.ShowStatusText(string.format("Finger of Death hits killing %s",t.Monster.Name))
 				t.Monster.HP=0
 			else
 				t.Monster.HP=t.Monster.HP-t.Monster.FullHP/4
