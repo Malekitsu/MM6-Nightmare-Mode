@@ -1213,3 +1213,67 @@ end
 			end
 end
 end
+
+
+--Changes for data tables
+function events.GameInitialized2()
+	--adjust radius to avoid stuck
+	Game.MonListBin[25].Radius=56
+	Game.MonListBin[26].Radius=56
+	Game.MonListBin[27].Radius=56
+	Game.MonListBin[28].Radius=56
+	Game.MonListBin[29].Radius=56
+	Game.MonListBin[30].Radius=56
+	Game.MonListBin[78].Height=179
+	--change paesants into wall titans
+	--titanA
+	Game.MonListBin[124].FramesAttack=Game.MonListBin[166].FramesAttack
+	Game.MonListBin[124].FramesDead= Game.MonListBin[166].FramesDead 
+	Game.MonListBin[124].FramesDie= Game.MonListBin[166].FramesDie 
+	Game.MonListBin[124].FramesFidget= Game.MonListBin[166].FramesFidget 
+	Game.MonListBin[124].FramesShoot= Game.MonListBin[166].FramesShoot 	
+	Game.MonListBin[124].FramesStand= Game.MonListBin[166].FramesStand 
+	Game.MonListBin[124].FramesStun= Game.MonListBin[166].FramesStun 
+	Game.MonListBin[124].FramesWalk= Game.MonListBin[166].FramesWalk 
+	Game.MonListBin[124].Name= "WallTitanA"
+	Game.MonListBin[124].Height= Game.MonListBin[166].Height 
+	Game.MonListBin[124].Radius= Game.MonListBin[166].Radius
+	Game.MonListBin[124].SoundAttack= Game.MonListBin[166].SoundAttack
+	Game.MonListBin[124].SoundDie= Game.MonListBin[166].SoundDie 
+	Game.MonListBin[124].SoundFidget= Game.MonListBin[166].SoundFidget 
+	Game.MonListBin[124].SoundGetHit= Game.MonListBin[166].SoundGetHit 
+	--titanB
+	Game.MonListBin[125].FramesAttack=Game.MonListBin[167].FramesAttack
+	Game.MonListBin[125].FramesDead= Game.MonListBin[167].FramesDead 
+	Game.MonListBin[125].FramesDie= Game.MonListBin[167].FramesDie 
+	Game.MonListBin[125].FramesFidget= Game.MonListBin[167].FramesFidget 
+	Game.MonListBin[125].FramesShoot= Game.MonListBin[167].FramesShoot 	
+	Game.MonListBin[125].FramesStand= Game.MonListBin[167].FramesStand 
+	Game.MonListBin[125].FramesStun= Game.MonListBin[167].FramesStun 
+	Game.MonListBin[125].FramesWalk= Game.MonListBin[167].FramesWalk 
+	Game.MonListBin[125].Name= "WallTitanA"
+	Game.MonListBin[125].Height= Game.MonListBin[167].Height 
+	Game.MonListBin[125].Radius= Game.MonListBin[167].Radius
+	Game.MonListBin[125].SoundAttack= Game.MonListBin[167].SoundAttack
+	Game.MonListBin[125].SoundDie= Game.MonListBin[167].SoundDie 
+	Game.MonListBin[125].SoundFidget= Game.MonListBin[167].SoundFidget 
+	Game.MonListBin[125].SoundGetHit= Game.MonListBin[167].SoundGetHit 
+	--titanC
+	Game.MonListBin[126].FramesAttack=Game.MonListBin[167].FramesAttack
+	Game.MonListBin[126].FramesDead= Game.MonListBin[167].FramesDead 
+	Game.MonListBin[126].FramesDie= Game.MonListBin[167].FramesDie 
+	Game.MonListBin[126].FramesFidget= Game.MonListBin[167].FramesFidget 
+	Game.MonListBin[126].FramesShoot= Game.MonListBin[167].FramesShoot 	
+	Game.MonListBin[126].FramesStand= Game.MonListBin[167].FramesStand 
+	Game.MonListBin[126].FramesStun= Game.MonListBin[167].FramesStun 
+	Game.MonListBin[126].FramesWalk= Game.MonListBin[167].FramesWalk 
+	Game.MonListBin[126].Name= "WallTitanA"
+	Game.MonListBin[126].Height= Game.MonListBin[167].Height 
+	Game.MonListBin[126].Radius= Game.MonListBin[167].Radius
+	Game.MonListBin[126].SoundAttack= Game.MonListBin[167].SoundAttack
+	Game.MonListBin[126].SoundDie= Game.MonListBin[167].SoundDie 
+	Game.MonListBin[126].SoundFidget= Game.MonListBin[167].SoundFidget 
+	Game.MonListBin[126].SoundGetHit= Game.MonListBin[167].SoundGetHit 
+
+end	
+	
