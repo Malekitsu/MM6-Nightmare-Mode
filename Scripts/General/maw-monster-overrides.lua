@@ -1048,7 +1048,7 @@ end
 
 function events.LoadMap()
 	if ADAPTIVE == "disabled" then
-if SETTINGS["255MOD"]~=true then
+if not SETTINGS["255MOD"]==true then
 if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	for i=0, Map.Monsters.High do
 	if not (Map.Monsters[i].Ally == 1) then
