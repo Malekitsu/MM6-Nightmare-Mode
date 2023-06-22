@@ -1185,7 +1185,6 @@ if SETTINGS["255MOD"]==true then
 				dmgMult=dmgMult*((data.Monster.Level^1.25-1)/1000+1)
 			end			
 			t.Result=t.Result
-			Game.ShowStatusText(t.Result)
 		end
 	end
 end
