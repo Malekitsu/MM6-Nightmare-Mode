@@ -1049,6 +1049,16 @@ end
 ------------------------------
 function events.AfterLoadMap()	
 	if SETTINGS["255MOD"]==true and mapvars.boosted==nil then
+		--calculate average level for unique monsters
+		y=0
+		n=0
+		for i=0, Map.Monsters.High do
+			if (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
+				y=Map.Monsters[i].Level+y
+				n=n+1
+			end
+		end
+		avgLvl=y/n
 		for i=0, Map.Monsters.High do
 			if (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
 				mon=Map.Monsters[i]
@@ -1064,7 +1074,7 @@ function events.AfterLoadMap()
 				end
 				mon.FullHP=mon.HP
 				--damage
-				dmgMult=((mon.Level+2)/(oldLevel+2))*(mon.Level/20+1.75)*(mon.Level/100)	
+				dmgMult=(mon.Level/20+1.75)*(mon.Level/(avgLvl+2))	
 				if SETTINGS["ItemRework"]==true  then
 					dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
 				end
@@ -1098,7 +1108,8 @@ function events.AfterLoadMap()
 				c=mon.Attack2.DamageAdd * dmgMult
 				mon.Attack2.DamageAdd = mon.Attack2.DamageAdd * dmgMult
 				d=mon.Attack2.DamageDiceSides * dmgMult
-				mon.Attack2.DamageDiceSides = mon.Attack2.DamageDiceSides * dmgMult
+				mon.Attack2.DamageDiceSides = mon.Attack2.DamageDiceSides * dmgMult^0.5
+				mon.Attack2.DamageDiceCount = mon.Attack2.DamageDiceCount * dmgMult^0.5
 				--OVERFLOW FIX
 				--Attack 1 Overflow fix
 				--add damage fix
