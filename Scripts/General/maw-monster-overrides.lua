@@ -1049,6 +1049,7 @@ end
 ------------------------------
 function events.AfterLoadMap()	
 	if SETTINGS["255MOD"]==true and mapvars.boosted==nil then
+		mapvars.boosted=true
 		--calculate average level for unique monsters
 		y=0
 		n=0
