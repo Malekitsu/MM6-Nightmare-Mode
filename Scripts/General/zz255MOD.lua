@@ -9,7 +9,7 @@ function events.GenerateItem(t)
 	
 	averagePlayerExperience = partyExperience / 4
 	
-	partyLevel = math.floor((1 + math.sqrt(1 + (4 * averagePlayerExperience / 500))) / 2)-100
+	partyLevel = math.floor((1 + math.sqrt(1 + (4 * averagePlayerExperience / 500))) / 2)+100
 	
 	--buff if item is weak
 	if t.Strength*20<partyLevel and t.Strength<6 then
@@ -40,7 +40,7 @@ function events.GenerateItem(t)
 	end
 
 end
-
+asddd=0
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
 
@@ -83,32 +83,34 @@ function events.ItemGenerated(t)
 		--ARMORS
 		
 		for i=66,134 do
-			if i==t.Item.Number then
-			upTierDifference=0
-			downTierDifference=0
-			downArmor=0
-			--set goal damage for weapons (end game weapon damage)
-			goalArmorMultiplier=3
-			currentArmor = Game.ItemsTxt[i].Mod1DiceCount+Game.ItemsTxt[i].Mod2 
-				for v=1,4 do
-					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
-					upTierDifference=upTierDifference+1
-					maxArmor = Game.ItemsTxt[i+v].Mod1DiceCount+Game.ItemsTxt[i+v].Mod2
-					elseif upTierDifference==0 then
-						maxArmor = currentArmor
+			if i<94 or i>99 then
+				if i==t.Item.Number then
+				upTierDifference=0
+				downTierDifference=0
+				downArmor=0
+				--set goal damage for weapons (end game weapon damage)
+				goalArmorMultiplier=3
+				currentArmor = Game.ItemsTxt[i].Mod1DiceCount+Game.ItemsTxt[i].Mod2 
+					for v=1,4 do
+						if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
+						upTierDifference=upTierDifference+1
+						maxArmor = Game.ItemsTxt[i+v].Mod1DiceCount+Game.ItemsTxt[i+v].Mod2
+						elseif upTierDifference==0 then
+							maxArmor = currentArmor
+						end
+						if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
+						downTierDifference=downTierDifference+1
+						end
 					end
-					if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[math.max(i-v,0)].NotIdentifiedName then
-					downTierDifference=downTierDifference+1
-					end
-				end
 
-			--calculate expected value
-			tierRange=upTierDifference+downTierDifference+1
-			armorRange=maxArmor*2
-			expectedArmorIncrease=goalArmorMultiplier^((downTierDifference+1)/(tierRange))
-			t.Item.ExtraData=maxArmor*expectedArmorIncrease-currentArmor
-				if t.Item.ExtraData==0 then
-					t.Item.ExtraData=1
+				--calculate expected value
+				tierRange=upTierDifference+downTierDifference+1
+				armorRange=maxArmor*2
+				expectedArmorIncrease=goalArmorMultiplier^((downTierDifference+1)/(tierRange))
+				t.Item.ExtraData=maxArmor*expectedArmorIncrease-currentArmor
+					if t.Item.ExtraData==0 then
+						t.Item.ExtraData=1
+					end
 				end
 			end
 		end
@@ -149,11 +151,11 @@ function events.ItemGenerated(t)
 				t.Item.Bonus2=math.random(26,34)
 			end
 		end
-		
+		asddd=asddd+1
 		--chance for ancient item, only if bonus 2 is spawned
-		if t.Item.Bonus2~=0 or Game.Map.Name=="zddb10.blv" then 
+		if t.Item.Bonus2~=0 then 
 			ancient=math.random(1,50)
-			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
+			if ancient<=t.Strength-3 then
 				t.Item.Charges=math.random(1064,1400)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(76,100)
@@ -184,7 +186,7 @@ function events.ItemGenerated(t)
 			t.Item.BonusStrength=t.Item.BonusStrength*4
 		end
 		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
-			t.Item.Charges=t.Item.Charges+42*math.ceil(t.Item.Charges/14)
+			t.Item.Charges=t.Item.Charges+4*math.ceil(t.Item.Charges/14)
 		end
 		
 		--CROWNS & HATS
@@ -368,54 +370,107 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 --change tooltip
 
 function events.ShowItemTooltip(item)
-	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
-	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s +%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat,itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
-		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
-			Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s\n%s",Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat, itemStatName[item.Item.Bonus])
-			else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
-				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
-				else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
+	function events.ShowItemTooltip(item)
+		if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
+		Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+			else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s", itemStatName[item.Item.Bonus])
+				else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+					else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
+						Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
+					end
 				end
 			end
 		end
+		
+	--Change item name and colour
+	--number of bonuses
+	bonuses=0
+	if item.Item.Bonus~=0 then
+	bonuses=bonuses+1
+	end
+	if item.Item.Charges~=0 then
+	bonuses=bonuses+1
+	end
+	if item.Item.Bonus2~=0 then
+	bonuses=bonuses+1
 	end
 	
---Change item name
-ancient=0
-bonus=item.Item.BonusStrength
-if item.Item.Bonus==8 or item.Item.Bonus==9 then
-	bonus=bonus/2
-end
-extrabonus=math.ceil(item.Item.Charges/14)
-if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
-	extrabonus=extrabonus/2
-end
-	
-if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
-	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Ancient", itemName[item.Item.Number])
-	else 
-	Game.ItemsTxt[item.Item.Number].Name=string.format("%s", itemName[item.Item.Number])
-end
-
-if bonus==100 and extrabonus==100 then
-	Game.ItemsTxt[item.Item.Number].Name=string.format("%s %s","Primordial", itemName[item.Item.Number])
+	ancient=0
+	bonus=item.Item.BonusStrength
+	if item.Item.Bonus==8 or item.Item.Bonus==9 then
+		bonus=bonus/4
 	end
-
---Crowns and HATS
-	if item.Item.ExtraData~=nil then
-		if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.ExtraData>0 then
-			local statbonus=item.Item.ExtraData
-				if statbonus>3000 then
-				statbonus="Damage and Healing"
-				else if statbonus>2000 then
-					statbonus="Healing"
-					else statbonus="Damage"
+	extrabonus=math.ceil(item.Item.Charges/14)
+	if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
+		extrabonus=extrabonus/2
+	end
+	if item.Item.Number<135 then	
+		if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
+			
+			elseif bonuses==3 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
+			elseif bonuses==2 then
+				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
+				if item.Item.Bonus2==0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
+					elseif item.Item.Bonus2>0 then
+						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
 				end
-			end			
-			Game.ItemsTxt[item.Item.Number].Notes=string.format("Increases spell %s by: %s%s\n\n%s",statbonus,item.Item.ExtraData%1000,"%",itemDesc[item.Item.Number])
+			elseif bonuses==1 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
+				if item.Item.Bonus>0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
+					elseif item.Item.Bonus2>0 then
+						Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
+				end
+			elseif bonuses==0 then
+				Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
+		end
+	end
+	--name colour for artifacts/relics
+	if item.Item.Number>399 and item.Item.Number<430 then
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(230,204,128,string.format("%s", itemName[item.Item.Number]))
+	end
+
+	if bonus==100 and extrabonus==100 then
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
+		if item.Item.Bonus>0 then
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(255,0,0,enchantAdd[item.Item.Bonus-1])
+		end
+		end
+		
+		--Bonus2
+		if item.Item.Bonus2>0 and item.Item.Bonus>0 then
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
 			else
 			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+		end
+	--Crowns and HATS
+		if item.Item.ExtraData~=nil then
+			if item.Item.Number>=94 and item.Item.Number<=99 then
+				local statbonus=item.Item.ExtraData%10000
+					if statbonus>3000 then
+					statbonus="Damage and Healing"
+					else if statbonus>2000 then
+						statbonus="Healing"
+						else statbonus="Damage"
+					end
+				end		
+				if item.Item.Bonus2==0 then
+				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s %s %s %s%s\n\n%s",StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+				elseif item.Item.Bonus2>0 then
+					Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n%s %s %s %s%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+				end				
+			elseif item.Item.Bonus2>0 and item.Item.Bonus>0 then
+				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
+			else
+				Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+			end
 		end
 	end
 end
@@ -670,6 +725,12 @@ spcEnchTxt255={}
 for i=0,57 do
 	spcEnchTxt255[i]=Game.SpcItemsTxt[i].BonusStat
 end
+--add base items description
+itemDesc = {}
+for i = 1, 134 do
+  itemDesc[i] = Game.ItemsTxt[i].Notes
+end
+
 
 end
 
