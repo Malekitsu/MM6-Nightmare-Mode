@@ -426,11 +426,16 @@ function calculateMonsterDamageMultipliers(monsterArray, easy_flag)
 	
 	divisor = 20
 	constant = 1.75
-
+	
 	if (easy_flag == true)
 	then
 		divisor = 25
 		constant = 1.25
+	end
+	
+	if SETTINGS["255MOD"]==true then
+		divisor = 100000000000
+		constant = 1
 	end
 	
 	if (tier == "A")
@@ -473,7 +478,7 @@ function applyMonsterDamageMultipliers(monsterArray, damageMultiplier, rankMulti
 	--FIX FOR ITEM/STATS REWORK
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 	damageMultiplier = damageMultiplier*((monsterArray.Level^1.6-1)/1000+1)
-	if SETTINGS["255MOD"]==true or ADAPTIVE == 100 then
+	if ADAPTIVE == 100 then
 	damageMultiplier = 1
 	for i=1,173 do
 	Game.MonstersTxt[i].Ally=2
@@ -585,11 +590,12 @@ function applyStaticMonsterOverrides(monsterID, easy_flag)
 	end
 	
 	-- other static adjustments
-	monsterArray["Experience"] = calculateMonsterExperience(monsterArray)
-	monsterArray["TreasureDiceCount"], monsterArray["TreasureDiceSides"] = calculateMonsterTreasures(monsterArray, easy_flag)
-	monsterArray["FullHitPoints"] = calculateMonsterHealth(monsterArray)
-	monsterArray["ArmorClass"] = calculateMonsterArmor(monsterArray)
-	
+	if SETTINGS["255MOD"]~=true then
+		monsterArray["Experience"] = calculateMonsterExperience(monsterArray)
+		monsterArray["TreasureDiceCount"], monsterArray["TreasureDiceSides"] = calculateMonsterTreasures(monsterArray, easy_flag)
+		monsterArray["FullHitPoints"] = calculateMonsterHealth(monsterArray)
+		monsterArray["ArmorClass"] = calculateMonsterArmor(monsterArray)
+	end
 	-- these changes are exclusive to easy mode
 	if easy_flag == true
 	then
@@ -626,9 +632,7 @@ if SETTINGS["ItemRework"]==true	then
 	if SETTINGS["StatsRework"]==true then
 ItemMod = ItemMod * (newLevel^1.25-1)/1000+1
 end
-if SETTINGS["255MOD"] == true then
-ItemMod = ItemMod *newLevel/100
-end
+
 
 	levelMultiplier = (newLevel+1) / (oldLevel+1)
 
@@ -707,245 +711,6 @@ end
 end
 end
 
-function applyAdaptiveMonsterOverrides100(monsterID, monsterArray, adaptive_level)
-
-
-	genericForm = Game.MonstersTxt[monsterArray["Id"]]
-	oldLevel = math.max(genericForm["Level"],1)
-	offset = calculateTierLevelOffset(genericForm)
-	Mlevel = monsterArray["Level"]
-
-	if Mlevel == oldLevel or Mlevel == (200 + oldLevel) then
-	xLevel = oldLevel * 1.25 + 100
-	newLevel = math.max(1, xLevel)
-ItemModH = 1
-ItemMod = 1
-ItemModD = 1
-if SETTINGS["ItemRework"]==true	then	
-	ItemMod = (newLevel^1.15)/1000+1
-			end
-	if SETTINGS["StatsRework"]==true then
-ItemMod = ItemMod * ((newLevel^1.25)/1000+1)
-ItemModH = ItemMod
-ItemModD = ItemMod
-end
-if SETTINGS["255MOD"]==true then
-ItemModH = ItemMod * (newLevel/100)
-ItemModD = ItemMod * (newLevel/100)
-end
-
-	levelMultiplier = (100+2) / (oldLevel+2)
-	
-
-	bonusx1 = genericForm["Attack1"]["DamageAdd"]
-	dicex1 = genericForm["Attack1"]["DamageDiceCount"]
-	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
-	damax1 = dicex1 *(1+sidesx1) / 2 + bonusx1
-	
-	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)) *(newLevel/100)*ItemModD)
-	sidesx1 = math.max(1, (sidesx1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *(newLevel/100)^0.5*ItemModD^0.5-1)
-	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
-
-	if newLevel>35 and (genericForm["Attack1"]["Type"] == const.Damage.Energy) then
-	bonusx1 = bonusx1 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax1)^0.8)
-	sidesx1 = sidesx1 * (60 - newLevel / 13 ) /100 * math.max(1, (oldLevel/damax1)^0.8)
-	end	
-
-	if bonusx1 > 250 then
-	sidesx1 = sidesx1 + (bonusx1 - 250) / dicex1 * 2
-	bonusx1 =250
-	end
-				
-	if sidesx1 > 250 then
-	dicex1 = dicex1 + (sidesx1 - 250) * dicex1 / 250
-	sidesx1 = 250
-	end
-		
-	if dicex1 > 250 then
-	dicex1 = 250
-	end
-	
-	monsterArray["Attack1"]["DamageAdd"] = bonusx1
-	monsterArray["Attack1"]["DamageDiceCount"] = dicex1
-	monsterArray["Attack1"]["DamageDiceSides"] = sidesx1
-
-	if not (monsterArray["Attack2Chance"] == 0)
-	then
-
-	bonusx2 = genericForm["Attack2"]["DamageAdd"]
-	dicex2 = genericForm["Attack2"]["DamageDiceCount"]
-	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
-	damax2 = dicex2 *(1+sidesx2) / 2 + bonusx2
-			
-	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75) *(newLevel/100)*ItemModD))
-	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *(newLevel/100)^0.5*ItemModD^0.5-1)
-	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5) *(newLevel/100)^0.5*ItemModD^0.5)
-
-	if newLevel>35 and (genericForm["Attack2"]["Type"] == const.Damage.Energy) then
-
-	bonusx2 = bonusx2 * (60 - newLevel / 13) /100 * math.max(1, (oldLevel/damax2)^0.8)
-	sidesx2 = sidesx2 * (60 - newLevel / 13 ) /100 * math.max(1, (oldLevel/damax2)^0.8)
-
-	end
-
-	if bonusx2 > 250 then
-	sidesx2 = sidesx2 + (bonusx2 - 250) / dicex2 * 2
-	bonusx2 =250
-	end
-	
-	if sidesx2 > 250 then
-	dicex2 = dicex2 + (sidesx2 - 250) * dicex2 / 250
-	sidesx2 = 250
-	end
-	
-	if dicex2 > 250 then
-	dicex2 = 250
-	end
-			
-	monsterArray["Attack2"]["DamageAdd"] = bonusx2
-	monsterArray["Attack2"]["DamageDiceCount"] = dicex2
-	monsterArray["Attack2"]["DamageDiceSides"] = sidesx2
-
-
-	elseif not (monsterArray["SpellChance"] == 0)
-	then
-		r,m = SplitSkill(genericForm["SpellSkill"])
-		r = math.max(1, math.round(r*ItemMod))
-		monsterArray["SpellSkill"] = JoinSkill(r,m)
-	end
-
-
-	monsterArray["FullHP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemModH
-
-	monsterArray["HP"] = math.round(100*(100/10+3)) * 2  * newLevel / 125*ItemModH
-
-	monsterArray["ArmorClass"] = genericForm["ArmorClass"] * levelMultiplier * newLevel / 100
-	monsterArray["Level"] = newLevel
-	monsterArray["Experience"] = math.round(newLevel*(newLevel+10)/3)
-	monsterArray["TreasureDiceCount"] = genericForm["TreasureDiceCount"] * levelMultiplier
-	monsterArray["TreasureDiceSides"] = genericForm["TreasureDiceSides"] * (newLevel / 100) * levelMultiplier
-	monsterArray["TreasureItemPercent"] = (100-genericForm["TreasureItemPercent"])/5+genericForm["TreasureItemPercent"]
-	monsterArray["TreasureItemLevel"] = genericForm["TreasureItemLevel"]+math.random(0,6-genericForm["TreasureItemLevel"])
-	
-	if (adaptive_level > 0)
-	then
-		for k,_ in pairs(resistanceTypes)
-		do
-			if not (k == "Energy")
-			then
-				key = k .. "Resistance"
-				value = genericForm[key]
-				value = value * 200/(genericForm["Level"]+100) + (120+genericForm["Level"]-value)/4
-				monsterArray[key] = value
-			end
-		end
-	end
-	monsterArray["Magic".."Resistance"] = monsterArray["Magic".."Resistance"] + (255 - monsterArray["Magic".."Resistance"])/5
-	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
-end
-	for i=0, Map.Monsters.High do
-	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) then
-			Map.Monsters[i].Ally = 1
-ItemModH = 1
-ItemMod = 1
-ItemModD = 1
-if SETTINGS["ItemRework"]==true	then	
---	ItemMod = ((120+Map.Monsters[i].Level)^1.27)/1000+1
-			end
-	if SETTINGS["StatsRework"]==true then
---ItemMod = ItemMod * (((120+Map.Monsters[i].Level)^1.27)/1000+1)
-ItemModH = ItemMod
-ItemModD = ItemMod
-end
-if SETTINGS["255MOD"]==true then
---ItemModH = ItemMod * ((120+Map.Monsters[i].Level)/100)^1.4
---ItemModD = ItemMod * ((120+Map.Monsters[i].Level)/100)^1.25
-end
-				DamageMultiplier=Map.Monsters[i].Level+120
---			Map.Monsters[i].FullHitPoints = math.min(32500, Map.Monsters[i].FullHitPoints * ((4*(120+Map.Monsters[i].Level)+444)^1.25/(5*Map.Monsters[i].Level)^1.25)*ItemModH)
---			Map.Monsters[i].HitPoints = math.min(32500, Map.Monsters[i].HitPoints * ((4*(120+Map.Monsters[i].Level)+444)^1.25/(5*Map.Monsters[i].Level)^1.25)*ItemModH)
---				DamageMultiplier=350*((120+Map.Monsters[i].Level)/100)^0.35
-			Map.Monsters[i].FullHitPoints = math.min(32500, Map.Monsters[i].FullHitPoints*7.5+5500)
-			Map.Monsters[i].HitPoints = math.min(32500, Map.Monsters[i].HitPoints*7.5+5500)
-				
-	-- bonus damage
-				
-
-				--attack 1
-				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
-				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier + 1000
-				b=Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
-				Map.Monsters[i].Attack1.DamageDiceSides = Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
-				
-				--attack 2
-				c=Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
-				Map.Monsters[i].Attack2.DamageAdd = Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
-				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
-				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
-				--OVERFLOW FIX
-					--Attack 1 Overflow fix
-					--add damage fix
-					if (a > 250) then
-					Overflow = a - 250
-					Map.Monsters[i].Attack1.DamageAdd = 250
-					b=b + (math.round(2*Overflow/Map.Monsters[i].Attack1.DamageDiceCount))
-					Map.Monsters[i].Attack1.DamageDiceSides = b 
-					end
-					--Dice Sides fix
-					if (b > 250) then
-					Overflow = b / 250
-					Map.Monsters[i].Attack1.DamageDiceSides = 250
-					--checking for dice count overflow
-					e = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
-					Map.Monsters[i].Attack1.DamageDiceCount = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
-					end
-					--Just in case Dice Count fix
-					if not (e == nil) then
-						if (e > 250) then
-						Map.Monsters[i].Attack1.DamageDiceCount = 250
-						end
-					end
-					--Attack 2 Overflow fix, same formula
-					--add damage fix
-					if (c > 250) then
-					Overflow = c - 250
-					Map.Monsters[i].Attack2.DamageAdd = 250
-					d=d + (math.round(2*Overflow/Map.Monsters[i].Attack2.DamageDiceCount))
-					Map.Monsters[i].Attack2.DamageDiceSides = d
-					end
-					--Dice Sides fix
-					if (d > 250) then
-					Overflow = d / 250
-					Map.Monsters[i].Attack2.DamageDiceSides = 250
-					--checking for dice count overflow
-					f=Map.Monsters[i].Attack2.DamageDiceCount * Overflow
-					Map.Monsters[i].Attack2.DamageDiceCount = Map.Monsters[i].Attack2.DamageDiceCount * Overflow
-					end
-					--Just in case Dice Count fix
-					if not (f ==nil) then
-						if (f > 250) then
-						Map.Monsters[i].Attack2.DamageDiceCount = 250
-						end
-					end
-
---		end
---	end
-	Map.Monsters[i].ArmorClass = Map.Monsters[i].ArmorClass + 120
-	Map.Monsters[i].TreasureItemPercent = (100-Map.Monsters[i].TreasureItemPercent)/5+Map.Monsters[i].TreasureItemPercent
-	Map.Monsters[i].TreasureItemLevel = Map.Monsters[i].TreasureItemLevel+math.random(0,6-Map.Monsters[i].TreasureItemLevel)
-	Map.Monsters[i].Level = math.min(Map.Monsters[i].Level + 120,250)
-	Map.Monsters[i].Experience = math.round(Map.Monsters[i].Level*(Map.Monsters[i].Level+10)/3)
-for v=0,5 do
-Map.Monsters[i].Resistances[v]=Map.Monsters[i].Resistances[v]+(255-Map.Monsters[i].Resistances[v])/3
-Map.Monsters[i].Resistances[5]=Map.Monsters[i].Resistances[5]+(255-Map.Monsters[i].Resistances[5])/2
-end
-		mapvars.boosted=true
-	Map.Monsters[monsterID] = mergeTables(Map.Monsters[monsterID],monsterArray)
-
-end
-end
-end
-
 mem.asmpatch(0x431A7D, [[
 	mov ecx, dword [esi + 0x64] ; ecx - total experience award, esi - monster pointer, 0x64 - experience field offset
 	jmp short ]] .. (0x431A8C - 0x431A7D)
@@ -976,7 +741,7 @@ function events.GameInitialized2()
 end
 
 function events.LoadMap()
-	if ((ADAPTIVE == "preset") or (ADAPTIVE == "map") or (ADAPTIVE == "100") or (ADAPTIVE == "party")) or SETTINGS["255MOD"]==true
+	if ((ADAPTIVE == "preset") or (ADAPTIVE == "map") or (ADAPTIVE == "100") or (ADAPTIVE == "party")) 
 	then
 		adaptive_level = getAdaptiveMultiplier(ADAPTIVE)
 		if (ADAPTIVE == "party") 
@@ -1007,131 +772,7 @@ function events.LoadMap()
 	end
 end
 end
---[[ monster power spawn event
-local idsToBasePics = {}
-function events.GameInitialized2()
-	local a, c = string.byte("ac", 1, 2)
-	for i, v in Game.MonstersTxt do
-		local pic = v.Picture:lower()
-		if pic:len() > 0 then
-			local byte = string.byte(pic:sub(-1))
-			if byte >= a and byte <= c then
-				pic = pic:sub(1, -2)
-			end
-			idsToBasePics[pic] = idsToBasePics[pic] or i
-		end
-	end
-end
--- function events.RandomSpawnMonster(t)
--- t.Id = monster id
--- t.Power = monster power (1-3), pass 0 to skip this monster
--- supports only random power spawnpoints (doesn't fire on mxa/mxb/mxc spawnpoints, mx only)
-mem.hook(0x455BF4, function(d)
-	local pictureBase = mem.string(d.esp + 0x34):lower()
-	local id = idsToBasePics[pictureBase] or error("Unknown monster pic (Game.MonstersTxt[n].Picture): " .. pictureBase)
-	local t = {Id = id, Power = d.esi}
-	events.call("RandomSpawnMonster", t)
-	if t.Power == 0 then
-		mem.u4[d.esp] = 0x455E76 -- return address
-		return
-	end
-	t.Id = type(t.Id) == "number" and (t.Id - 1):Div(3) * 3 -- id before A variation (with Power it'll be right)
-	local pic = t.Id ~= nil and Game.MonstersTxt[t.Id + t.Power] and Game.MonstersTxt[t.Id + t.Power].Picture or error("Invalid monster id in RandomSpawnMonster() event")
-	mem.copy(d.esp + 0x5C, pic .. string.char(0))
-	mem.u4[d.esp] = 0x455C3A
-end, 6)
 
-function events.RandomSpawnMonster(t)
-	
-end
-
-
-function events.LoadMap()
-	if ADAPTIVE == "disabled" then
-if not SETTINGS["255MOD"]==true then
-if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	for i=0, Map.Monsters.High do
-	if not (Map.Monsters[i].Ally == 1) then
-				Map.Monsters[i].Ally = 1
-			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
-			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
-		
-	-- bonus damage
-				DamageMultiplier=(Map.Monsters[i].Level^1.5-1)/1000+1
-				--attack 1
-				a=Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
-				Map.Monsters[i].Attack1.DamageAdd = Map.Monsters[i].Attack1.DamageAdd * DamageMultiplier
-				b=Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
-				Map.Monsters[i].Attack1.DamageDiceSides = Map.Monsters[i].Attack1.DamageDiceSides * DamageMultiplier
-				
-				--attack 2
-				c=Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
-				Map.Monsters[i].Attack2.DamageAdd = Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
-				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
-				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
-				--OVERFLOW FIX
-					--Attack 1 Overflow fix
-					--add damage fix
-					if (a > 250) then
-					Overflow = a - 250
-					Map.Monsters[i].Attack1.DamageAdd = 250
-					b=b + (math.round(2*Overflow/Map.Monsters[i].Attack1.DamageDiceCount))
-					Map.Monsters[i].Attack1.DamageDiceSides = b 
-					end
-					--Dice Sides fix
-					if (b > 250) then
-					Overflow = b / 250
-					Map.Monsters[i].Attack1.DamageDiceSides = 250
-					--checking for dice count overflow
-					e = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
-					Map.Monsters[i].Attack1.DamageDiceCount = Map.Monsters[i].Attack1.DamageDiceCount * Overflow
-					end
-					--Just in case Dice Count fix
-					if not (e == nil) then
-						if (e > 250) then
-						Map.Monsters[i].Attack1.DamageDiceCount = 250
-						end
-					end
-					--Attack 2 Overflow fix, same formula
-					--add damage fix
-					if (c > 250) then
-					Overflow = c - 250
-					Map.Monsters[i].Attack2.DamageAdd = 250
-					d=d + (math.round(2*Overflow/Map.Monsters[i].Attack2.DamageDiceCount))
-					Map.Monsters[i].Attack2.DamageDiceSides = d
-					end
-					--Dice Sides fix
-					if (d > 250) then
-					Overflow = d / 250
-					Map.Monsters[i].Attack2.DamageDiceSides = 250
-					--checking for dice count overflow
-					f=Map.Monsters[i].Attack2.DamageDiceCount * Overflow
-					Map.Monsters[i].Attack2.DamageDiceCount = Map.Monsters[i].Attack2.DamageDiceCount * Overflow
-					end
-					--Just in case Dice Count fix
-					if not (f ==nil) then
-						if (f > 250) then
-						Map.Monsters[i].Attack2.DamageDiceCount = 250
-						end
-					end
-
-		end
-	end
-end
-end
-end
---SPARK BUG FIX
-function events.CalcDamageToPlayer(t)
-	local data=WhoHitPlayer()
-	if data.Spell==15 then
-		t.Result=0
-		end
-end
-
-
-end
-
---]]
 
 --fix for item/stats rework
 function events.AfterLoadMap()	
@@ -1251,7 +892,7 @@ function events.GameInitialized2()
 	Game.MonListBin[125].FramesStand= Game.MonListBin[167].FramesStand 
 	Game.MonListBin[125].FramesStun= Game.MonListBin[167].FramesStun 
 	Game.MonListBin[125].FramesWalk= Game.MonListBin[167].FramesWalk 
-	Game.MonListBin[125].Name= "WallTitanA"
+	Game.MonListBin[125].Name= "WallTitanB"
 	Game.MonListBin[125].Height= Game.MonListBin[167].Height 
 	Game.MonListBin[125].Radius= Game.MonListBin[167].Radius
 	Game.MonListBin[125].SoundAttack= Game.MonListBin[167].SoundAttack
@@ -1259,21 +900,253 @@ function events.GameInitialized2()
 	Game.MonListBin[125].SoundFidget= Game.MonListBin[167].SoundFidget 
 	Game.MonListBin[125].SoundGetHit= Game.MonListBin[167].SoundGetHit 
 	--titanC
-	Game.MonListBin[126].FramesAttack=Game.MonListBin[167].FramesAttack
-	Game.MonListBin[126].FramesDead= Game.MonListBin[167].FramesDead 
-	Game.MonListBin[126].FramesDie= Game.MonListBin[167].FramesDie 
-	Game.MonListBin[126].FramesFidget= Game.MonListBin[167].FramesFidget 
-	Game.MonListBin[126].FramesShoot= Game.MonListBin[167].FramesShoot 	
-	Game.MonListBin[126].FramesStand= Game.MonListBin[167].FramesStand 
-	Game.MonListBin[126].FramesStun= Game.MonListBin[167].FramesStun 
-	Game.MonListBin[126].FramesWalk= Game.MonListBin[167].FramesWalk 
-	Game.MonListBin[126].Name= "WallTitanA"
-	Game.MonListBin[126].Height= Game.MonListBin[167].Height 
-	Game.MonListBin[126].Radius= Game.MonListBin[167].Radius
-	Game.MonListBin[126].SoundAttack= Game.MonListBin[167].SoundAttack
-	Game.MonListBin[126].SoundDie= Game.MonListBin[167].SoundDie 
-	Game.MonListBin[126].SoundFidget= Game.MonListBin[167].SoundFidget 
-	Game.MonListBin[126].SoundGetHit= Game.MonListBin[167].SoundGetHit 
+	Game.MonListBin[126].FramesAttack=Game.MonListBin[168].FramesAttack
+	Game.MonListBin[126].FramesDead= Game.MonListBin[168].FramesDead 
+	Game.MonListBin[126].FramesDie= Game.MonListBin[168].FramesDie 
+	Game.MonListBin[126].FramesFidget= Game.MonListBin[168].FramesFidget 
+	Game.MonListBin[126].FramesShoot= Game.MonListBin[168].FramesShoot 	
+	Game.MonListBin[126].FramesStand= Game.MonListBin[168].FramesStand 
+	Game.MonListBin[126].FramesStun= Game.MonListBin[168].FramesStun 
+	Game.MonListBin[126].FramesWalk= Game.MonListBin[168].FramesWalk 
+	Game.MonListBin[126].Name= "WallTitanC"
+	Game.MonListBin[126].Height= Game.MonListBin[168].Height 
+	Game.MonListBin[126].Radius= Game.MonListBin[168].Radius
+	Game.MonListBin[126].SoundAttack= Game.MonListBin[168].SoundAttack
+	Game.MonListBin[126].SoundDie= Game.MonListBin[168].SoundDie 
+	Game.MonListBin[126].SoundFidget= Game.MonListBin[168].SoundFidget 
+	Game.MonListBin[126].SoundGetHit= Game.MonListBin[168].SoundGetHit 
 
 end	
 	
+------------------------------------------------------
+--255 MOD MONSTER Changes
+------------------------------------------------------
+if SETTINGS["255MOD"]==true then
+--store levels to center damage
+oldLevels={}
+
+function events.GameInitialized2()
+	for i=1, 58 do
+		table.insert(oldLevels,Game.MonstersTxt[(i*3)-1].Level)
+		table.insert(oldLevels,Game.MonstersTxt[(i*3)-1].Level)
+		table.insert(oldLevels,Game.MonstersTxt[(i*3)-1].Level)
+	end
+	for i=1, 173 do
+		mon=Game.MonstersTxt[i]
+		oldLevel=oldLevels[i]
+		mon.Level=math.min(mon.Level*1.25+100,255)
+		--AC
+		mon.ArmorClass=mon.ArmorClass*1.25+100
+		--HP
+		mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2),32500)-1000
+		if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+			mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)))
+		end
+		mon.FullHP=mon.HP
+		--damage
+		dmgMult=((100+2)/(oldLevel+2))*(mon.Level/20+1.75)*(mon.Level/100)
+		if SETTINGS["ItemRework"]==true  then
+			dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
+		end
+		if SETTINGS["StatsRework"]==true then
+			dmgMult=dmgMult*((mon.Level^1.25-1)/1000+1)
+		end
+		--resistances
+		for v=0,5 do
+		mon.Resistances[v]=math.min(math.round(mon.Level/20)*5+mon.Resistances[v],255)
+		end
+		--magic resistance double bonus
+		mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/20)*5,255)
+		--experience
+		mon.Experience = math.round(mon.Level*(mon.Level+10)/3)
+		--Gold
+		levelMultiplier = (100+2) / (oldLevel+2)
+		mon.TreasureDiceCount=math.min(mon.TreasureDiceCount*levelMultiplier,250)
+		mon.TreasureDiceSides=math.min(mon.TreasureDiceSides*(mon.Level/100)*levelMultiplier,250)
+		
+		-----------------------------------------------------------
+		--DAMAGE COMPUTATION DOWN HERE, FOR BALANCE MODIFY ABOVE^
+		--attack 1
+		a=0
+		b=0
+		c=0
+		d=0
+		e=0
+		f=0
+		a=mon.Attack1.DamageAdd * dmgMult
+		mon.Attack1.DamageAdd = mon.Attack1.DamageAdd * dmgMult
+		b=mon.Attack1.DamageDiceSides * dmgMult^0.5
+		mon.Attack1.DamageDiceSides = mon.Attack1.DamageDiceSides * dmgMult^0.5
+		mon.Attack1.DamageDiceCount = mon.Attack1.DamageDiceCount * dmgMult^0.5
+		--attack 2
+		c=mon.Attack2.DamageAdd * dmgMult
+		mon.Attack2.DamageAdd = mon.Attack2.DamageAdd * dmgMult
+		d=mon.Attack2.DamageDiceSides * dmgMult^0.5
+		mon.Attack2.DamageDiceSides = mon.Attack2.DamageDiceSides * dmgMult^0.5
+		mon.Attack2.DamageDiceCount = mon.Attack2.DamageDiceCount * dmgMult^0.5
+		--OVERFLOW FIX
+		--Attack 1 Overflow fix
+		--add damage fix
+		if (a > 250) then
+		Overflow = a - 250
+		mon.Attack1.DamageAdd = 250
+		b=b + (math.round(2*Overflow/mon.Attack1.DamageDiceCount))
+		mon.Attack1.DamageDiceSides = b 
+		end
+		--Dice Sides fix
+		if (b > 250) then
+		Overflow = b / 250
+		mon.Attack1.DamageDiceSides = 250
+		--checking for dice count overflow
+		e = mon.Attack1.DamageDiceCount * Overflow
+		mon.Attack1.DamageDiceCount = mon.Attack1.DamageDiceCount * Overflow
+		end
+		--Just in case Dice Count fix
+		if not (e == nil) then
+			if (e > 250) then
+			mon.Attack1.DamageDiceCount = 250
+			end
+		end
+		--Attack 2 Overflow fix, same formula
+		--add damage fix
+		if (c > 250) then
+		Overflow = c - 250
+		mon.Attack2.DamageAdd = 250
+		d=d + (math.round(2*Overflow/mon.Attack2.DamageDiceCount))
+		mon.Attack2.DamageDiceSides = d
+		end
+		--Dice Sides fix
+		if (d > 250) then
+		Overflow = d / 250
+		mon.Attack2.DamageDiceSides = 250
+		--checking for dice count overflow
+		f=mon.Attack2.DamageDiceCount * Overflow
+		mon.Attack2.DamageDiceCount = mon.Attack2.DamageDiceCount * Overflow
+		end
+		--Just in case Dice Count fix
+		if not (f ==nil) then
+			if (f > 250) then
+			mon.Attack2.DamageDiceCount = 250
+			end
+		end
+		-------------------------
+		--END DAMAGE CALCULATION
+		-------------------------
+	end
+end
+end
+
+------------------------------
+--255 MODE UNIQUE MONSTERS FIX
+------------------------------
+function events.AfterLoadMap()	
+	if SETTINGS["255MOD"]==true and mapvars.boosted==nil then
+		for i=0, Map.Monsters.High do
+			if (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
+				mon=Map.Monsters[i]
+				--Level
+				oldLevel=mon.Level
+				mon.Level=math.min(mon.Level*1.25+100,255)
+				--AC
+				mon.ArmorClass=mon.ArmorClass*1.25+100
+				--HP
+				mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2),32500)-1000
+				if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+					mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)))
+				end
+				mon.FullHP=mon.HP
+				--damage
+				dmgMult=((mon.Level+2)/(oldLevel+2))*(mon.Level/20+1.75)*(mon.Level/100)	
+				if SETTINGS["ItemRework"]==true  then
+					dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
+				end
+				if SETTINGS["StatsRework"]==true then
+					dmgMult=dmgMult*((mon.Level^1.25-1)/1000+1)
+				end
+				--resistances
+				for v=0,5 do
+				mon.Resistances[v]=math.min(math.round(mon.Level/20)*5+mon.Resistances[v],255)
+				end
+				--magic resistance double bonus
+				mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/20)*5,255)
+				--experience
+				mon.Experience = math.round(mon.Level*(mon.Level+10)/3)
+				--Gold
+				levelMultiplier = (100+2) / (oldLevel+2)
+				mon.TreasureDiceCount=math.min(mon.TreasureDiceCount*levelMultiplier,250)
+				mon.TreasureDiceSides=math.min(mon.TreasureDiceSides*(mon.Level/100)*levelMultiplier,250)
+				
+				
+				
+				-----------------------------------------------------------
+				--DAMAGE COMPUTATION DOWN HERE, FOR BALANCE MODIFY ABOVE^
+				--attack 1
+				a=mon.Attack1.DamageAdd * dmgMult
+				mon.Attack1.DamageAdd = mon.Attack1.DamageAdd * dmgMult
+				b=mon.Attack1.DamageDiceSides * dmgMult^0.5
+				mon.Attack1.DamageDiceSides = mon.Attack1.DamageDiceSides * dmgMult^0.5
+				mon.Attack1.DamageDiceCount = mon.Attack1.DamageDiceCount * dmgMult^0.5
+				--attack 2
+				c=mon.Attack2.DamageAdd * dmgMult
+				mon.Attack2.DamageAdd = mon.Attack2.DamageAdd * dmgMult
+				d=mon.Attack2.DamageDiceSides * dmgMult
+				mon.Attack2.DamageDiceSides = mon.Attack2.DamageDiceSides * dmgMult
+				--OVERFLOW FIX
+				--Attack 1 Overflow fix
+				--add damage fix
+				a=0
+				b=0
+				c=0
+				d=0
+				e=0
+				f=0
+				if (a > 250) then
+				Overflow = a - 250
+				mon.Attack1.DamageAdd = 250
+				b=b + (math.round(2*Overflow/mon.Attack1.DamageDiceCount))
+				mon.Attack1.DamageDiceSides = b 
+				end
+				--Dice Sides fix
+				if (b > 250) then
+				Overflow = b / 250
+				mon.Attack1.DamageDiceSides = 250
+				--checking for dice count overflow
+				e = mon.Attack1.DamageDiceCount * Overflow
+				mon.Attack1.DamageDiceCount = mon.Attack1.DamageDiceCount * Overflow
+				end
+				--Just in case Dice Count fix
+				if not (e == nil) then
+					if (e > 250) then
+					mon.Attack1.DamageDiceCount = 250
+					end
+				end
+				--Attack 2 Overflow fix, same formula
+				--add damage fix
+				if (c > 250) then
+				Overflow = c - 250
+				mon.Attack2.DamageAdd = 250
+				d=d + (math.round(2*Overflow/mon.Attack2.DamageDiceCount))
+				mon.Attack2.DamageDiceSides = d
+				end
+				--Dice Sides fix
+				if (d > 250) then
+				Overflow = d / 250
+				mon.Attack2.DamageDiceSides = 250
+				--checking for dice count overflow
+				f=mon.Attack2.DamageDiceCount * Overflow
+				mon.Attack2.DamageDiceCount = mon.Attack2.DamageDiceCount * Overflow
+				end
+				--Just in case Dice Count fix
+				if not (f ==nil) then
+					if (f > 250) then
+					mon.Attack2.DamageDiceCount = 250
+					end
+				end
+				-------------------------
+				--END DAMAGE CALCULATION
+				-------------------------
+		
+			end
+		end
+	end
+end
