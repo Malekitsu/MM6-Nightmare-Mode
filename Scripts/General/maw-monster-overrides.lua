@@ -935,16 +935,24 @@ function events.GameInitialized2()
 		mon=Game.MonstersTxt[i]
 		oldLevel=oldLevels[i]
 		mon.Level=math.min(mon.Level*1.25+100,255)
+		--adjust for type A and B, making health scales similiar to 1-100
+		if i%3==1 then
+			mon.Level=mon.Level-10
+		end
+		if i%3==2 then
+			mon.Level=mon.Level-5
+		end
 		--AC
 		mon.ArmorClass=mon.ArmorClass*1.25+100
 		--HP
 		mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2),32500)-1000
 		if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-			mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)))
+			mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)/10)*10)
 		end
 		mon.FullHP=mon.HP
 		--damage
-		dmgMult=((100+2)/(oldLevel+2))*(mon.Level/20+1.75)*(mon.Level/100)
+		scaledOldLevel=oldLevel*1.25+100
+		dmgMult=((100+2)/(oldLevel+2))*(scaledOldLevel/20+1.75)*(scaledOldLevel/100)
 		if SETTINGS["ItemRework"]==true  then
 			dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
 		end
@@ -1046,7 +1054,7 @@ function events.AfterLoadMap()
 				mon=Map.Monsters[i]
 				--Level
 				oldLevel=mon.Level
-				mon.Level=math.min(mon.Level*1.25+100,255)
+				mon.Level=math.min(mon.Level*1.25+100,255)		
 				--AC
 				mon.ArmorClass=mon.ArmorClass*1.25+100
 				--HP
