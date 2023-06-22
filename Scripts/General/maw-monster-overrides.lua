@@ -952,7 +952,7 @@ function events.GameInitialized2()
 		mon.FullHP=mon.HP
 		--damage
 		scaledOldLevel=oldLevel*1.25+100
-		dmgMult=((100+2)/(oldLevel+2))*(scaledOldLevel/20+1.75)*(scaledOldLevel/100)
+		dmgMult=(scaledOldLevel/20+1.75)*(scaledOldLevel/(oldLevel+2))
 		if SETTINGS["ItemRework"]==true  then
 			dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
 		end
