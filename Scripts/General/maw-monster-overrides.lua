@@ -1070,15 +1070,17 @@ function events.AfterLoadMap()
 				mon=Map.Monsters[i]
 				--Level
 				oldLevel=mon.Level
+				theorethicalLevel=mon.Level*1.25+100
 				mon.Level=math.min(mon.Level*1.25+100,255)		
 				--AC
 				mon.ArmorClass=mon.ArmorClass*1.25+100
 				--HP
 				--CALCULATE HP RATEO COMPARED TO SAME LVL MONSTERS
 				rateo=mon.HP/math.min(math.round(oldLevel*(oldLevel/10+3)*2),32500)
-				local HP=math.min(math.round((mon.Level*(mon.Level/10+3)-1000)*2*rateo),32500)
-				mon.HP=HP
+				HP=math.round((theorethicalLevel*(theorethicalLevel/10+3)-1000)*2*rateo)
+				mon.HP=math.min(HP,32500)
 				if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
+					HP=(math.round(HP*(1+mon.Level/180)))
 					mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)),32500)
 				end
 				mon.FullHP=mon.HP
@@ -1091,8 +1093,13 @@ function events.AfterLoadMap()
 					dmgMult=dmgMult*((mon.Level^1.25-1)/1000+1)
 				end
 				--resistances
+				if HP>32500 then
+					HPOverflowBonus=HP/32500
+				else
+					HPOverflowBonus=1
+				end
 				for v=0,5 do
-				mon.Resistances[v]=math.min(math.round(mon.Level/20)*5+mon.Resistances[v],255)
+				mon.Resistances[v]=math.min((math.round(mon.Level/20)*5+mon.Resistances[v])*HPOverflowBonus,255)
 				end
 				--magic resistance double bonus
 				mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/20)*5,255)
