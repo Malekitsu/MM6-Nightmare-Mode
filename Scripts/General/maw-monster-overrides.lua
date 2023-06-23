@@ -777,16 +777,15 @@ end
 --fix for item/stats rework
 function events.AfterLoadMap()	
 		if ADAPTIVE == "disabled" then
-		if not SETTINGS["255MOD"]==true then
-if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.boosted==nil then
-	for i=0, Map.Monsters.High do
-	if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
-			
-			Map.Monsters[i].Ally = 1
-			Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
-			Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
-				
-	-- bonus damage
+			if SETTINGS["255MOD"]~=true then
+				if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.boosted==nil then
+					for i=0, Map.Monsters.High do
+						if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
+							Map.Monsters[i].Ally = 1
+							Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
+							Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
+								
+							-- bonus damage
 				
 				DamageMultiplier=(Map.Monsters[i].Level^1.6-1)/1000+1
 				--attack 1
@@ -801,6 +800,12 @@ if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true and mapvars.bo
 				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
 				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
 				--OVERFLOW FIX
+					a=0
+					b=0
+					c=0
+					d=0
+					e=0
+					f=0
 					--Attack 1 Overflow fix
 					--add damage fix
 					if (a > 250) then
@@ -945,9 +950,9 @@ function events.GameInitialized2()
 		--AC
 		mon.ArmorClass=mon.ArmorClass*1.25+100
 		--HP
-		mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2),32500)-1000
+		mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2)-1000,32500)
 		if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-			mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)/10)*10)
+			mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)/10)*10,32500)
 		end
 		mon.FullHP=mon.HP
 		--damage
@@ -1069,9 +1074,12 @@ function events.AfterLoadMap()
 				--AC
 				mon.ArmorClass=mon.ArmorClass*1.25+100
 				--HP
-				mon.HP=math.min(math.round(mon.Level*(mon.Level/10+3)*2),32500)-1000
+				--CALCULATE HP RATEO COMPARED TO SAME LVL MONSTERS
+				rateo=mon.HP/math.min(math.round(oldLevel*(oldLevel/10+3)*2),32500)
+				local HP=math.min(math.round((mon.Level*(mon.Level/10+3)-1000)*2*rateo),32500)
+				mon.HP=HP
 				if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-					mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)))
+					mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)),32500)
 				end
 				mon.FullHP=mon.HP
 				--damage
