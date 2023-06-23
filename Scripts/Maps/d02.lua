@@ -80,3 +80,12 @@ evt.map[105] = function()
 		mapvars.learned = 1
 	end
 end
+
+if mapvars.fix==nil then
+	for i=1,Map.Monsters.High do
+		if Map.Monsters[i].Id==154 or Map.Monsters[i].Id==155 or Map.Monsters[i].Id==156 then
+			Map.Monsters[i].SpellSkill=Map.Monsters[i].SpellSkill^0.6
+		end
+		mapvars.fix=true
+	end
+end
