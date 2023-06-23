@@ -581,7 +581,7 @@ if SETTINGS["255MOD"]~=true then
 		extrabonus=extrabonus/2
 	end
 	if item.Item.Number<135 then	
-		if (bonus>25 and extrabonus>25) or bonus+extrabonus>50 then
+		if (bonus>25 and extrabonus>25) or (bonus+extrabonus>50 and item.Item.Bonus~=0) then
 			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
 			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
 			
