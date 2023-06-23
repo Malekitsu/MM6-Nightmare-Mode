@@ -47,3 +47,11 @@ end
 evt.map[100] = function()
     Message("Trespassers shall die.")
 end
+
+
+function events.CalcDamageToPlayer(t)
+	data=WhoHitPlayer()
+	if data and data.Monster and data.Monster.Id==75 then
+		t.Result=t.Result*0.5
+	end
+end
