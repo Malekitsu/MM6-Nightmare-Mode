@@ -29,7 +29,7 @@ Note to users
   
 ## Hats and Crowns
 - Hats and crowns now have an extra enchantment that increases spell damage or healing (or both if lucky)
-- 
+
 ## Status effects
 - Poison will no longer reduce statistics but will slowly drain HP and will expire after around 20 seconds
 - Further poison application will increase duration (has a capped duration)
