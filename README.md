@@ -8,7 +8,9 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 Note to users
 
 # Patch 2.1 Changelog
-
+## Mod Files merging
+- Many Files have been compressed into one file, if you had a previous version make sure to delete older mod files
+  
 ## Quests and Events
 - Added chain quest that leads you to new game +
 - Fixed many events for improved functionality and performance
