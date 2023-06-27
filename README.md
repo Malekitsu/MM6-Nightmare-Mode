@@ -17,7 +17,6 @@ Note to users
 
 ## User Interface
 - Right clicking Statistics (like Might, AC etc...) will now show extra informations calculated based on current value
-- AC above 100 will now reduce physical damage taken
 - Tooltips will now have colors to improve readability
 - Items are categorized as follows:
   - White: No enchants
