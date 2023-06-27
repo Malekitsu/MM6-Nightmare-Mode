@@ -27,15 +27,6 @@ Note to users
 ## Hats and Crowns
 - Hats and crowns now have an extra enchantment that increases spell damage or healing (or both if lucky)
 
-## Mastery
-- In addition to reworked classes, base classes can now learn mastery as well
-- Make sure to enable mastery upon party creation if you want to play with it
-- Knight: Increases damage dealt and taken by 1%
-- Paladin/Archer: Gain additional damage to weapon and spell based on mastery rank and the rank of the opposite skillset
-  - Bonus calculation: `(MasteryRank^0.7 * Max(WeaponRank/MagicRank)^0.7) / 100`
-  - Example: With 30 ranks in dagger, 10 ranks in a magic school, and 10 in mastery, you would receive a 25% bonus damage to weapons and a 54% bonus to magic. Having 20 ranks in all three skills would result in a 66% bonus to both.
-- Sorcerer/Cleric/Druid: Increases cast speed by 1% and reduces physical damage taken by 1.75%
-
 ## Crowd Control (CC) Rework
 - Charm and Turn to Stone now hit 1-2-3 enemies based on skill level (novice-expert-master)
 - Charm now works in turn mode
