@@ -16,6 +16,8 @@ Note to users
 - Fixed many events for improved functionality and performance
 
 ## User Interface
+- Right clicking Statistics (like Might, AC etc...) will now show extra informations calculated based on current value
+- AC above 100 will now reduce physical damage taken
 - Tooltips will now have colors to improve readability
 - Items are categorized as follows:
   - White: No enchants
@@ -25,7 +27,7 @@ Note to users
   - Orange: Ancient items
   - Red: Primordial items
   - Brownish: Artifacts
-
+  
 ## Hats and Crowns
 - Hats and crowns now have an extra enchantment that increases spell damage or healing (or both if lucky)
 
@@ -38,7 +40,7 @@ Note to users
   - Example: If you level Light and use Paralyze with a duration of 3 minutes (6 seconds in real time), at rank 15 against a level 30 monster, it will last: `3 * 15 / 30^0.7 = 4.16` minutes duration (8 seconds in real time).
 - Finger of Death will now have reduced effects on unique monsters and bosses, but chances exceeding 100% will not be wasted and will contribute to the success percentage.
 - Slow now works as a damaging spell
-
+-Tooltips will be automatically be updated ingame with calculation
 # PATCH 2.0
 
 ## Stats Rework
