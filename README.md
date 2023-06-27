@@ -35,7 +35,7 @@ Note to users
 - Further poison application will increase duration (has a capped duration)
 
 ## Crowd Control (CC) Rework
-Keep in mind that the following skill effects are increased by enchants and artifacts(except Finger of Death:
+Keep in mind that the following skill effects are increased by enchants and artifacts(except Finger of Death):
 - Charm and Turn to Stone now hit 1-2-3 enemies based on skill level (novice-expert-master)
 - Charm now works in turn mode
 - Mass Fear now roots enemies in fear in turn mode
