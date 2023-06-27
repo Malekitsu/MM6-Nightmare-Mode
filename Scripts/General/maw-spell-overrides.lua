@@ -289,7 +289,7 @@ local spellCosts =
 	["Toxic Cloud"] = {["Normal"] = 4, ["Expert"] = 12, ["Master"] = 30},
 	
 	--debuff spells
-	["Slow"] = {["Master"] = 5},
+	["Slow"] = {["Normal"] = 5, ["Expert"] = 15, ["Master"] = 25},
 	["Paralyze"] = {["Master"] = 25},
 	["Mass Curse"] = {["Master"] = 20},
 	["Shrinking Ray"] = {["Master"] = 16},
@@ -1441,7 +1441,7 @@ function events.MonsterHitByObject(t)
 	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Charm" then
 		t.SpellSkill=t.Object.SpellSkill/t.Monster.Level^0.7
 		for i=0,Map.Monsters.high do
-		--number of targets, 2 novice, 3 expert, 4 master
+		--number of targets, 1 novice, 2 expert, 3 master
 		count=t.Object.SpellMastery
 			if Map.Monsters[i].Active and count>0 then
 			X2, Y2, Z2 = XYZ(Map.Monsters[i])
@@ -1855,5 +1855,53 @@ function events.Tick()
 			Game.Spells[i].DelayExpert = math.round(spellSpeedExpert[i] / 1.01^Mastery)
 			Game.Spells[i].DelayMaster = math.round(spellSpeedMaster[i] / 1.01^Mastery)
 		end
+	end
+end
+
+--UPDATED TOOLTIPS
+
+--Store older descriptions
+function events.GameInitialized2()
+desc={}
+	for i=1,99 do
+		desc[i]=Game.SpellsTxt[i].Description
+	end
+end
+
+function events.Tick()
+	i=Game.CurrentPlayer
+	if i>=0 then
+		level=Party[i].LevelBase
+		earthSkill=Party[i].Skills[const.Skills.Earth]
+		es,em=SplitSkill(earthSkill)
+		if em==3 then
+			em=4
+		end
+		mindSkill=Party[i].Skills[const.Skills.Mind]	
+		ms, mm=SplitSkill(mindSkill)
+		if mm==3 then
+			mm=4
+		end
+		lightSkill=Party[i].Skills[const.Skills.Light]
+		ls, lm=SplitSkill(lightSkill)
+		--stone
+		Game.SpellsTxt[42].Description=string.format("%s\nDuration vs same level monster: %s minutes",desc[42], math.round(es/level^0.7*100)*em*2.5/100)
+		Game.SpellsTxt[42].Novice= "Duration 2.5 minutes per point of Skill"
+		Game.SpellsTxt[42].Expert= "Duration 5 minutes per Skill, 2 targets"
+		Game.SpellsTxt[42].Master= "Duration 10 minutes per Skill, 3 targets"
+		--charm
+		Game.SpellsTxt[61].Description=string.format("%s\nDuration vs same level monster: %s minutes",desc[61], math.round(ms/level^0.7*100)*mm*3/100)
+		Game.SpellsTxt[61].Novice= "Duration 3 minutes per point of Skill"
+		Game.SpellsTxt[61].Expert= "Duration 6 minutes per Skill, 2 targets"
+		Game.SpellsTxt[61].Master= "Duration 12 minutes per Skill, 3 targets"
+		--slow
+		Game.SpellsTxt[81].Novice= "Costs 5 and deals 8+1d5 per level of skill"
+		Game.SpellsTxt[81].Expert= "Costs 15 and deals 18+1d12 per level of skill"
+		Game.SpellsTxt[81].Master= "Costs 25 and deals 27+1d18 per level of skill"
+		--paralysis
+		Game.SpellsTxt[86].Description=string.format("%s\nDuration vs same level monster: %s minutes",desc[61], math.round(ls/level^0.7*100)*lm*3/100)
+		Game.SpellsTxt[86].Novice= "Slow Recovery, 2% increased chance per Skill"
+		Game.SpellsTxt[86].Expert= "Fast Recovery, 4% increased chance per Skill"
+		Game.SpellsTxt[86].Master= "Fastest Recovery, 6% increased chance per Skill"
 	end
 end
