@@ -950,9 +950,9 @@ end
 
 	local spellSkill, spellMastery = SplitSkill(monster.SpellSkill)
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.2/1000+1) * modi
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.2/1000+1) 
 	else
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * modi
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) 
 	end
 	
 	return damage
@@ -1439,6 +1439,7 @@ function events.MonsterHitByObject(t)
 	--coordinates
 	X, Y, Z = XYZ(t.Monster)
 	if t.Object.Velocity[1]~=1000 and Game.ObjListBin[t.Object.TypeIndex].Name=="Charm" then
+		t.SpellSkill=t.Object.SpellSkill/t.Monster.Level^0.7
 		for i=0,Map.Monsters.high do
 		--number of targets, 2 novice, 3 expert, 4 master
 		count=t.Object.SpellMastery
@@ -1683,7 +1684,7 @@ function events.MonsterHitByObject(t)
 			Map.Objects[i].Spell=5
 			Map.Objects[i].SpellLevel=3
 			Map.Objects[i].SpellMastery=m
-			Map.Objects[i].SpellSkill=300*m2*s
+			Map.Objects[i].SpellSkill=150*m2*s
 			Map.Objects[i].SpellType=5
 			Map.Objects[i].Owner=owner
 			Map.Objects[i].Visible=true
