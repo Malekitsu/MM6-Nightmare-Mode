@@ -7,6 +7,45 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 
 Note to users
 
+# Patch 2.1 Changelog
+
+## Quests and Events
+- Added chain quest that leads you to new game +
+- Fixed many events for improved functionality and performance
+
+## User Interface
+- Tooltips will now have colors to improve readability
+- Items are categorized as follows:
+  - White: No enchants
+  - Green: 1 enchant
+  - Blue: 2 enchants
+  - Purple: 3 enchants
+  - Orange: Ancient items
+  - Red: Primordial items
+  - Brownish: Artifacts
+
+## Hats and Crowns
+- Hats and crowns now have an extra enchantment that increases spell damage or healing (or both if lucky)
+
+## Mastery
+- In addition to reworked classes, base classes can now learn mastery as well
+- Make sure to enable mastery upon party creation if you want to play with it
+- Knight: Increases damage dealt and taken by 1%
+- Paladin/Archer: Gain additional damage to weapon and spell based on mastery rank and the rank of the opposite skillset
+  - Bonus calculation: `(MasteryRank^0.7 * Max(WeaponRank/MagicRank)^0.7) / 100`
+  - Example: With 30 ranks in dagger, 10 ranks in a magic school, and 10 in mastery, you would receive a 25% bonus damage to weapons and a 54% bonus to magic. Having 20 ranks in all three skills would result in a 66% bonus to both.
+- Sorcerer/Cleric/Druid: Increases cast speed by 1% and reduces physical damage taken by 1.75%
+
+## Crowd Control (CC) Rework
+- Charm and Turn to Stone now hit 1-2-3 enemies based on skill level (novice-expert-master)
+- Charm now works in turn mode
+- Mass Fear now roots enemies in fear in turn mode
+- Paralyze now has an additional 4-5-6% chance per skill level to work (e.g., if you had a 20% chance to hit, at light 10 expert, it becomes 20 + 50% = 30% chance)
+- Most CC durations will be reduced based on monster level^0.7
+  - Example: If you level Light and use Paralyze with a duration of 3 minutes (6 seconds in real time), at rank 15 against a level 30 monster, it will last: `3 * 15 / 30^0.7 = 4.16` minutes duration (8 seconds in real time).
+- Finger of Death will now have reduced effects on unique monsters and bosses, but chances exceeding 100% will not be wasted and will contribute to the success percentage.
+- Slow now works as a damaging spell
+
 # PATCH 2.0
 
 ## Stats Rework
