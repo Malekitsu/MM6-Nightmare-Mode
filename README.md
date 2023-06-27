@@ -44,7 +44,8 @@ Keep in mind that the following skill effects are increased by enchants and arti
   - Example: If you level Light and use Paralyze with a duration of 3 minutes (6 seconds in real time), at rank 15 against a level 30 monster, it will last: `3 * 15 / 30^0.7 = 4.16` minutes duration (8 seconds in real time).
 - Finger of Death will now have reduced effects on unique monsters and bosses, but chances exceeding 100% will not be wasted and will contribute to the success percentage.
 - Slow now works as a damaging spell
--Tooltips will be automatically be updated ingame with calculation
+- Tooltips will be automatically be updated ingame with calculation
+  
 # PATCH 2.0
 
 ## Stats Rework
