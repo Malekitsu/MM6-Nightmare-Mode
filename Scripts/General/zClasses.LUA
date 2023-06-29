@@ -756,10 +756,10 @@ function events.CalcDamageToMonster(t)
 	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get body
 		body=data.Player.Skills[const.Skills.Body]
-		rankBonus=1
+		rankBonus=2
 		if body>=64 then 
 		body=body-64
-		rankBonus=1.5
+		rankBonus=2
 		end
 		if body>=64 then
 		body=body-64
@@ -773,9 +773,9 @@ function events.CalcDamageToMonster(t)
 		if mastery>=64 then
 		mastery=mastery-64
 		end
-		rankBonusMH=1
+		rankBonusMH=3
 if data.Player.Class==const.Class.Crusader then
-		rankBonusMH=2
+		rankBonusMH=3
 end
 if data.Player.Class==const.Class.Hero then
 		rankBonusMH=3
@@ -857,10 +857,10 @@ function events.CalcDamageToMonster(t)
 	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get light
 		light=data.Player.Skills[const.Skills.Light]
-		rankBonus=1
+		rankBonus=2
 		if light>=64 then 
 		light=light-64
-		rankBonus=1.5
+		rankBonus=2
 		end
 		if light>=64 then
 		light=light-64
@@ -874,16 +874,17 @@ function events.CalcDamageToMonster(t)
 		if mastery>=64 then
 		mastery=mastery-64
 		end
-		rankBonusMD=1
+		rankBonusMD=4
 if data.Player.Class==const.Class.Crusader then
-		rankBonusMD=1.5
+		rankBonusMD=4
 end
 if data.Player.Class==const.Class.Hero then
-		rankBonusMD=3
+		rankBonusMD=4
 end
 
-
-		t.Result=t.Result+light*rankBonus+(mastery*rankBonusMD)
+		damage=light*rankBonus+(mastery*rankBonusMD)
+		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
+		t.Result=t.Result+damage
 		end
 end
 
