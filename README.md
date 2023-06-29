@@ -15,6 +15,13 @@ Note to users
 - Added chain quest that leads you to new game +
 - Fixed many events for improved functionality and performance
 
+## Monsters
+ - Reduced early game difficulty a bit to give players the chance to get used to the mod. Mid/late game is unchanged.
+ - Slightly reduced monster speed
+
+## Enchants
+ - HP/SP regen enchants will now stack and regen 0.5% HP/SP
+
 ## User Interface
 - Right clicking Statistics (like Might, AC etc...) will now show extra informations calculated based on current value
 - Tooltips will now have colors to improve readability
