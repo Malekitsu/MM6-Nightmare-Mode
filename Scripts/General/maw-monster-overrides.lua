@@ -281,7 +281,7 @@ function calculateMovespeed(monsterArray)
 	then
 		if (monsterArray["Attack1"]["Missile"] == 0)
 		then
-			speed = (speed + (400 - speed) / 2 + 100) * 101 / 100
+			speed = (speed + (400 - speed) / 2 + 50) 
 		else
 			speed = speed * 99 / 100
 		end
