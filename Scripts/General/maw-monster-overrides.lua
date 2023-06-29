@@ -425,7 +425,7 @@ function calculateMonsterDamageMultipliers(monsterArray, easy_flag)
 	tier = string.sub(pic, -1)
 	
 	divisor = 20
-	constant = 1.75
+	constant = 1.25
 	
 	if (easy_flag == true)
 	then
@@ -640,8 +640,8 @@ end
 	dicex1 = genericForm["Attack1"]["DamageDiceCount"]
 	sidesx1 = genericForm["Attack1"]["DamageDiceSides"]
 	
-	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
-	sidesx1 = math.max(1, (sidesx1  * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *ItemModD^0.5-1)
+	bonusx1 = math.max(1, (bonusx1 * levelMultiplier * (newLevel/18 + 1.25)*ItemMod))
+	sidesx1 = math.max(1, (sidesx1  * levelMultiplier^0.5 * (newLevel/18 + 1.25)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/18 + 1.25)^0.5 *ItemModD^0.5-1)
 	dicex1 = math.max(1, (dicex1 * levelMultiplier^0.5)*ItemMod^0.5)
 
 	if bonusx1 > 250 then
@@ -660,8 +660,8 @@ end
 	dicex2 = genericForm["Attack2"]["DamageDiceCount"]
 	sidesx2 = genericForm["Attack2"]["DamageDiceSides"]
 	
-	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/20 + 1.75)*ItemMod))
-	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/20 + 1.75)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/20 + 1.75)^0.5 *ItemModD^0.5-1)
+	bonusx2 = math.max(1, (bonusx2 * levelMultiplier * (newLevel/18 + 1.25)*ItemMod))
+	sidesx2 = math.max(1, (sidesx2 * levelMultiplier^0.5 * (newLevel/18 + 1.25)*ItemMod^0.5)+levelMultiplier^0.5 * (newLevel/18 + 1.25)^0.5 *ItemModD^0.5-1)
 	dicex2 = math.max(1, (dicex2 * levelMultiplier^0.5*ItemMod^0.5))
 
 	if bonusx2 > 250 then
@@ -957,7 +957,7 @@ function events.GameInitialized2()
 		mon.FullHP=mon.HP
 		--damage
 		scaledOldLevel=oldLevel*1.25+100
-		dmgMult=(scaledOldLevel/20+1.75)*(scaledOldLevel/(oldLevel+2))
+		dmgMult=(scaledOldLevel/18+1.25)*(scaledOldLevel/(oldLevel+2))
 		if SETTINGS["ItemRework"]==true  then
 			dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
 		end
@@ -966,10 +966,10 @@ function events.GameInitialized2()
 		end
 		--resistances
 		for v=0,5 do
-		mon.Resistances[v]=math.min(math.round(mon.Level/20)*5+mon.Resistances[v],255)
+		mon.Resistances[v]=math.min(math.round(mon.Level/18)*5+mon.Resistances[v],255)
 		end
 		--magic resistance double bonus
-		mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/20)*5,255)
+		mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/18)*5,255)
 		--experience
 		mon.Experience = math.round(mon.Level*(mon.Level+10)/3)
 		--Gold
@@ -1085,7 +1085,7 @@ function events.AfterLoadMap()
 				end
 				mon.FullHP=mon.HP
 				--damage
-				dmgMult=(mon.Level/20+1.75)*(mon.Level/(avgLvl+2))	
+				dmgMult=(mon.Level/18+1.25)*(mon.Level/(avgLvl+2))	
 				if SETTINGS["ItemRework"]==true  then
 					dmgMult=dmgMult*((mon.Level^1.15-1)/1000+1)
 				end
@@ -1099,10 +1099,10 @@ function events.AfterLoadMap()
 					HPOverflowBonus=1
 				end
 				for v=0,5 do
-				mon.Resistances[v]=math.min((math.round(mon.Level/20)*5+mon.Resistances[v])*HPOverflowBonus,255)
+				mon.Resistances[v]=math.min((math.round(mon.Level/18)*5+mon.Resistances[v])*HPOverflowBonus,255)
 				end
 				--magic resistance double bonus
-				mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/20)*5,255)
+				mon.Resistances[1]=math.min(mon.Resistances[1]+math.round(mon.Level/18)*5,255)
 				--experience
 				mon.Experience = math.round(mon.Level*(mon.Level+10)/3)
 				--Gold
@@ -1204,3 +1204,4 @@ if SETTINGS["255MOD"]==true then
 		end
 	end
 end
+
