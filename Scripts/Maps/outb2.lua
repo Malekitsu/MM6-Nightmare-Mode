@@ -20,3 +20,15 @@ evt.map[211] = function()
 		end
 	end
 end
+--fix for fireball
+Game.MapEvtLines:RemoveEvent(210)
+
+evt.map[210] = function()  -- Timer(<function>, 5*const.Minute)
+	if not evt.Cmp("QBits", 160) then         -- NPC
+		if evt.Cmp("Flying", 0) then
+			evt.CastSpell{Spell = 6, Mastery = const.Master, Skill = 15, FromX = -41, FromY = 7175, FromZ = 3524, ToX = 0, ToY = 0, ToZ = 0}         -- "Fireball"
+		end
+	end
+end
+
+Timer(evt.map[210].last, 5*const.Minute)
