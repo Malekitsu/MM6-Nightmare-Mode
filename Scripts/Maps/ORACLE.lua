@@ -1,3 +1,4 @@
+if SETTINGS["255MOD"]==true then
 local TXT = Localize{
 	[0] = " ",
 	[1] = "Door",
@@ -788,3 +789,4 @@ evt.map[50] = function()
 	evt.MoveToMap{X = 12182, Y = 5379, Z = 320, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 6, Name = "OutC2.Odm"}
 end
 
+end
