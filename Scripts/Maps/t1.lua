@@ -98,7 +98,8 @@ evt.map[102] = function()
 			Message("The lich powers flow through your body")
 			evt.ForPlayer("All")
 			evt.Add("Experience", 20000)
-			mapvars.powers = 1			
+			mapvars.powers = 1		
+			mapvars.event=false
 			for i=0,3 do
 				if vars.portal[i]==true then
 					Party[i].Spells[31]=true
@@ -109,7 +110,7 @@ evt.map[102] = function()
 	end
 end
 
-
+Game.MapEvtLines:RemoveEvent(23)
 evt.map[23] = function()
 	if evt.Cmp("MapVar19", 1) then
 		evt.OpenChest(0)
