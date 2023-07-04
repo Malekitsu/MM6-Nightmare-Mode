@@ -18,7 +18,6 @@ local PRESETS = {
 	["DifficultyModifier"] = 1.00,
 	HomingProjectiles = true,
 	["KnightAsBloodKnight"] = false,
-	["KnightAsGreyKnight"] = false,
 	["ArcherAsAssassin"] = false,
 	["ArcherAsAshikari"] = false,
 	["PaladinAsBerserker"] = false,
