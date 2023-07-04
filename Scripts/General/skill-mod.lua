@@ -3948,7 +3948,7 @@ do
 	end
 end
 
-
+--[[
 local function getSFTItem(p)
 	local i = (p - Game.SFTBin.Frames["?ptr"]) / Game.SFTBin.Frames[0]["?size"]
 	return Game.SFTBin.Frames[i]
@@ -3963,4 +3963,4 @@ end
 
 mem.autohook(0x46B56D, scaleHook)
 mem.autohook2(0x433D53, scaleHook)
-
+]]
