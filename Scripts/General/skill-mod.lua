@@ -50,7 +50,7 @@ if SETTINGS["ShowTrainerLocations"]==true then
 
 
 	Game.SkillDescriptions[29]="Disarm traps skill is checked automatically when opening a trapped chest or other container.  A higher skill in disarm traps gives a better chance of disarming the trap.  Expert and Master rank doubles and triples the chance to successfully disarm the trap. \n\n--------------------Trainer locations--------------------\nExpert : Castle Ironfist / Free Haven, 500 Gold\nMaster : Frozen Highlands, 2500 Gold (Level 7, Accuracy 30)   \n------------------------------------------------------------\n" 
-	Game.SkillDescriptions[30]="Learning skill directly increases the experience your character receives.  Every point of skill is a percent of awarded experience that is given as a bonus (plus a starting bonus of 9%).  Five skill points would turn a 100 experience point award into a 114 experience point award.  Expert doubles and master triples this bonus, so 10 points of learning at master rank would give a 39% bonus to all experience point gain. \n\n--------------------Trainer locations--------------------\nExpert : New Sorpigal / Castle Ironfist, 2000 Gold\nMaster : Silver Cove, 5000 Gold (Level 7, Intellect 30)   \n------------------------------------------------------------\n" 
+	Game.SkillDescriptions[30]="Learning skill directly increases the experience your character receives.  Every point of skill is a percent of awarded experience that is given as a bonus (plus a starting bonus of 9%).  Five skill points would turn a 100 experience point award into a 114 experience point award.  Capped at Skill Level 10 (Master). \n\n--------------------Trainer locations--------------------\nExpert : New Sorpigal / Castle Ironfist, 2000 Gold\nMaster : Silver Cove, 5000 Gold (Level 7, Intellect 30)   \n------------------------------------------------------------\n" 
 	end
 end
 ----------------------------------------------------------------------------------------------------
@@ -2012,7 +2012,7 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	
 	Game.SkillDescriptions[const.Skills.Learning] =
 		string.format(
-			"Learning skill directly increases the experience your character receives from killed monsters with 9%% starting bonus."
+			"%s",Game.SkillDescriptions[const.Skills.Learning]
 		)
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Learning] =
