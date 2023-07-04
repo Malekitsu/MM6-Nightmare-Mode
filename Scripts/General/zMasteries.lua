@@ -360,7 +360,7 @@ end
 
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-		if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 then
+		if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 then
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -513,7 +513,7 @@ end
 
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 then	
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
