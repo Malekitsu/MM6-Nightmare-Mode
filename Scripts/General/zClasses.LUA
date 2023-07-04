@@ -996,8 +996,9 @@ function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
 	 item=data.Player:GetActiveItem(0)
 	 if item~=nil then
-		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and (item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415) then
+		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and ((item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415)) then
 			t.Result=0
+			debug.Message("ASD")
 			Message("Seraphim aren't able to dual wield")
 		end
 	end
