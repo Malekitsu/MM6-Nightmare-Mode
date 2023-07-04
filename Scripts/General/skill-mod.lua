@@ -2563,7 +2563,7 @@ mem.hookcall(0x0049ED16, 0, 0, modifiedInnRoomPrice)
 -- need to fix: only affects dialog, not actual results. 
 -- re-evaluate pricing based on actual units of food sold?
 ----------------------------------------------------------------------------------------------------
-
+--[[
 local function modifiedInnFoodQuantity(d, def)
 
 	-- call original function
@@ -2580,7 +2580,7 @@ local function modifiedInnFoodQuantity(d, def)
 	
 end
 mem.hookcall(0x0049EEF9, 0, 0, modifiedInnFoodQuantity)
-
+]]
 ----------------------------------------------------------------------------------------------------
 -- inn food price is scaled with party experience level
 -- need to modify this to be relative to amount of food inn is actually selling, so that food price
