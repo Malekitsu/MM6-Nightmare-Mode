@@ -118,7 +118,7 @@ if ASSASSIN==true then
 --Energy Spender, when energy is 30 or more and adds a combo point up to 5
 function events.CalcDamageToMonster(t)		
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and data.Player.SP>=30 and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and data.Player.SP>=30 and t.DamageKind==0 and data.Object==nil then
 	--get mastery
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
@@ -142,7 +142,7 @@ end
 --have a 30% chance to replenish 15 energy when attacking
 function events.CalcDamageToMonster(t)		
 	data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 and data.Object==nil then	
+	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 and data.Object==nil then	
 		if math.random(1,100)<=30 then
 			data.Player.SP=data.Player.SP+15
 		end
@@ -753,7 +753,7 @@ if Seraphim==true then
 --body magic will increase healing done on attack
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get body
 		body=data.Player.Skills[const.Skills.Body]
 		rankBonus=2
@@ -854,7 +854,7 @@ end
 
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get light
 		light=data.Player.Skills[const.Skills.Light]
 		rankBonus=2
@@ -983,8 +983,10 @@ end
 --reduced damage when in divine shield
 function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
-	 ind=data.Player:GetIndex()
-		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and vars.divineShield[ind]==1 then
+	 if data then
+		ind=data.Player:GetIndex()
+	 end
+		if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and vars.divineShield[ind]==1 then
 			t.Result=t.Result/2
 		end
 end
@@ -994,7 +996,9 @@ end
 ---deactivate offhand weapon
 function events.CalcDamageToMonster(t)
 	 data=WhoHitMonster()
-	 item=data.Player:GetActiveItem(0)
+	 if data then
+		item=data.Player:GetActiveItem(0)
+	 end
 	 if item~=nil then
 		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and ((item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415)) then
 			t.Result=0
