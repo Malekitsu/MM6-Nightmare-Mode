@@ -83,8 +83,8 @@ Quest {
     NGOracle,
     NPC = oracle,
     Slot = 2,
-    Gold = 3874, -- gold reward
-    Exp = 4823434, -- exp reward
+    Gold = 200000, -- gold reward
+    Exp = 200000, -- exp reward
     Quest = qBits.controlCenter,
     CheckDone = function()
         return vars.newGameQuest.ccDone
