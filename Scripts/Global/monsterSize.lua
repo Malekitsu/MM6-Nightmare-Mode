@@ -1,3 +1,4 @@
+--[[
 function events.MonsterSpriteScale(t)
 	if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
 	--check for mm6 hd
@@ -8,3 +9,4 @@ function events.MonsterSpriteScale(t)
 		end
 	end
 end
+]]
