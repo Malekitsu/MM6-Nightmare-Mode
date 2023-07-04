@@ -2072,8 +2072,8 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	setProfessionCost(const.NPCProfession.Apprentice, 1500)
 	setProfessionCost(const.NPCProfession.Instructor, 1500)
 	setProfessionCost(const.NPCProfession.Teacher, 800)
-	--setProfessionCost(const.NPCProfession.SpellMaster, 4000)
-	--setProfessionCost(const.NPCProfession.Mystic, 2500)
+	setProfessionCost(const.NPCProfession.SpellMaster, 2000)
+	setProfessionCost(const.NPCProfession.Mystic, 1500)
 	
 	----------------------------------------------------------------------------------------------------
 	-- class starting skills
@@ -3954,9 +3954,13 @@ local function getSFTItem(p)
 	return Game.SFTBin.Frames[i]
 end
 
-mem.autohook(0x46B56D, function(d)
+local function scaleHook(d)
 	local t = {Scale = d.edx, Frame = getSFTItem(d.eax)}
 	t.MonsterIndex, t.Monster = GetMonster(d.edi - 0x80)
 	events.call("MonsterSpriteScale", t)
 	d.edx = t.Scale
-end)
+end
+
+mem.autohook(0x46B56D, scaleHook)
+mem.autohook2(0x433D53, scaleHook)
+
