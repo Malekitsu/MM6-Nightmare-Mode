@@ -6,14 +6,15 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
-# Patch 2.1.1 Changelog
+## Patch 2.1.2 Changelog
 - fixed critical error with oracle's crystals.
 - fixed last quest rewards
 - fixed seraphim dual wield bug
 - fixed hireling price
 - fixed learning tooltip
 - fixed Temple of Baa chest crash
-
+## Patch 2.1.1 Changelog
+- fixed crystals event at oracle
 # Patch 2.1 Changelog
 ## Mod Files merging
 - Many Files have been compressed into one file, if you had a previous version make sure to delete older mod files
