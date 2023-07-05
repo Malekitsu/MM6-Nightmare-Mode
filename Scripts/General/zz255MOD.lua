@@ -561,9 +561,11 @@ itemindex=1
 --increase damage in the tooltip
 function events.CalcStatBonusByItems(t)
 --required to correct tooltip of unequipped items
+	if itemindex>=119 then
 	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
 	Game.ItemsTxt[i].Mod1DiceSides=listDiceSides[i]
 	itemindex=itemindex+1
+	end
 		if itemindex>=119 then
 			itemindex=1
 		end
