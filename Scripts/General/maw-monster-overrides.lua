@@ -1190,7 +1190,7 @@ end
 if SETTINGS["255MOD"]==true then
 	function events.CalcDamageToPlayer(t)
 		data=WhoHitPlayer()
-		if data and data.Object and data.Object.Spell<100 then
+		if data and data.Object and data.Object.Spell<100 and data.Monster then
 			oldLevel=oldLevels[data.Monster.Id]
 			scaledOldLevel=oldLevels[data.Monster.Id]*1.25+100
 			dmgMult=(scaledOldLevel/16+0.75)*(scaledOldLevel/(oldLevel+2))
