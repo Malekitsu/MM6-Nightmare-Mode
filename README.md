@@ -6,6 +6,8 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.3 Changelog
+-several fixes for New Game+
 ## Patch 2.1.2 Changelog
 - fixed critical error with oracle's crystals.
 - fixed last quest rewards
