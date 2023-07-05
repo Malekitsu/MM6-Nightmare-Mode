@@ -358,7 +358,7 @@ function events.CalcDamageToMonster(t)
 			if data.Object.Spell==100 then
 			it=data.Player:GetActiveItem(2)
 			-- calculation
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData==0 then
+			if ((it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46) and it.ExtraData==0 then
 			local bonusDamage = enchantbonusdamage[it.Bonus2] or 0
 			t.Result=t.Result*bonusDamage
 			end	
@@ -378,7 +378,7 @@ data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(1)
 		if it then
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData==0 then
+			if ((it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46) and it.ExtraData==0 then
 				spellbonusdamage[4] = math.random(6, 8)
 				spellbonusdamage[5] = math.random(18, 24)
 				spellbonusdamage[6] = math.random(36, 48)
