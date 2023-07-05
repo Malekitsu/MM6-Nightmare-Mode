@@ -217,20 +217,20 @@ end
 
 --ENCHANTS HERE
 --MELEE bonuses
-enchantbonusdamage = {}
-enchantbonusdamage[4] = 15
-enchantbonusdamage[5] = 15
-enchantbonusdamage[6] = 15
-enchantbonusdamage[7] = 15
-enchantbonusdamage[8] = 15
-enchantbonusdamage[9] = 15
-enchantbonusdamage[10] = 15
-enchantbonusdamage[11] = 15
-enchantbonusdamage[12] = 15
-enchantbonusdamage[13] = 15
-enchantbonusdamage[14] = 15
-enchantbonusdamage[15] = 15
-enchantbonusdamage[46] = 15
+enchantbonusdamage2 = {}
+enchantbonusdamage2[4] = 15
+enchantbonusdamage2[5] = 15
+enchantbonusdamage2[6] = 15
+enchantbonusdamage2[7] = 15
+enchantbonusdamage2[8] = 15
+enchantbonusdamage2[9] = 15
+enchantbonusdamage2[10] = 15
+enchantbonusdamage2[11] = 15
+enchantbonusdamage2[12] = 15
+enchantbonusdamage2[13] = 15
+enchantbonusdamage2[14] = 15
+enchantbonusdamage2[15] = 15
+enchantbonusdamage2[46] = 15
 
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
@@ -247,7 +247,7 @@ function events.CalcDamageToMonster(t)
 			if it then
 				if  it.ExtraData>0 then
 					if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
-					local bonusDamage1 = bonusDamage+enchantbonusdamage[it.Bonus2] or 0
+					local bonusDamage1 = bonusDamage+enchantbonusdamage2[it.Bonus2] or 0
 					bonusDamage2=(bonusDamage2*bonusDamage1)^(1/n)
 					n=n+1
 					end
@@ -269,19 +269,19 @@ function events.CalcDamageToMonster(t)
 			if data.Object.Spell==100 then
 			it=data.Player:GetActiveItem(2)
 			-- calculation
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
-			local bonusDamage = enchantbonusdamage[it.Bonus2] or 0
+			if (it.Bonus2 >= 4 and (it.Bonus2 <= 15) or it.Bonus2 == 46) and it.ExtraData>0 then
+			local bonusDamage = enchantbonusdamage2[it.Bonus2] or 0
 			t.Result=t.Result*bonusDamage
 			end	
 		end
 	end
  end
 
-spellbonusdamage={}
+spellbonusdamage2={}
 
-spellbonusdamage[13] = 75
-spellbonusdamage[14] = 120
-spellbonusdamage[15] = 180
+spellbonusdamage2[13] = 75
+spellbonusdamage2[14] = 120
+spellbonusdamage2[15] = 180
 
 aoespells = {6, 7, 8, 9, 10, 15, 22, 26, 32, 41, 43, 84, 92, 97, 98, 99}
 function events.CalcSpellDamage(t)
@@ -289,19 +289,20 @@ data=WhoHitMonster()
 	if data.Player then
 		it=data.Player:GetActiveItem(1)
 		if it then
-			if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 and it.ExtraData>0 then
-				spellbonusdamage[4] = math.random(45, 60)
-				spellbonusdamage[5] = math.random(90, 120)
-				spellbonusdamage[6] = math.random(135, 180)
-				spellbonusdamage[7] = math.random(30, 75)
-				spellbonusdamage[8] = math.random(60, 150)
-				spellbonusdamage[9] = math.random(90, 225)
-				spellbonusdamage[10] = math.random(15, 90)
-				spellbonusdamage[11] = math.random(30, 180)
-				spellbonusdamage[12] = math.random(45, 270)
-				spellbonusdamage[46] = math.random(150, 300)
+			if (it.Bonus2 >= 4 and (it.Bonus2 <= 15) or it.Bonus2 == 46) and it.ExtraData>0 then
+			debug.Message("asd")
+				spellbonusdamage2[4] = math.random(45, 60)
+				spellbonusdamage2[5] = math.random(90, 120)
+				spellbonusdamage2[6] = math.random(135, 180)
+				spellbonusdamage2[7] = math.random(30, 75)
+				spellbonusdamage2[8] = math.random(60, 150)
+				spellbonusdamage2[9] = math.random(90, 225)
+				spellbonusdamage2[10] = math.random(15, 90)
+				spellbonusdamage2[11] = math.random(30, 180)
+				spellbonusdamage2[12] = math.random(45, 270)
+				spellbonusdamage2[46] = math.random(150, 300)
 				buffed=0
-				bonusDamage = spellbonusdamage[it.Bonus2] or 0
+				bonusDamage = spellbonusdamage2[it.Bonus2] or 0
 				for i = 1, #aoespells do
 					if aoespells[i] == t.Spell then
 						t.Result = t.Result+bonusDamage/5
@@ -327,20 +328,20 @@ function events.CalcDamageToMonster(t)
 		it=data.Player:GetActiveItem(0)
 			
 		--generate randoms
-		enchantbonusdamage = {}
-		enchantbonusdamage[4] = math.random(6, 8)
-		enchantbonusdamage[5] = math.random(18, 24)
-		enchantbonusdamage[6] = math.random(36, 48)
-		enchantbonusdamage[7] = math.random(4, 10)
-		enchantbonusdamage[8] = math.random(12, 30)
-		enchantbonusdamage[9] = math.random(24, 60)
-		enchantbonusdamage[10] = math.random(2, 12)
-		enchantbonusdamage[11] = math.random(6, 36)
-		enchantbonusdamage[12] = math.random(12, 72)
-		enchantbonusdamage[46] = math.random(20, 80)
+		enchantbonusdamage2 = {}
+		enchantbonusdamage2[4] = math.random(6, 8)
+		enchantbonusdamage2[5] = math.random(18, 24)
+		enchantbonusdamage2[6] = math.random(36, 48)
+		enchantbonusdamage2[7] = math.random(4, 10)
+		enchantbonusdamage2[8] = math.random(12, 30)
+		enchantbonusdamage2[9] = math.random(24, 60)
+		enchantbonusdamage2[10] = math.random(2, 12)
+		enchantbonusdamage2[11] = math.random(6, 36)
+		enchantbonusdamage2[12] = math.random(12, 72)
+		enchantbonusdamage2[46] = math.random(20, 80)
 		-- calculation
 		if (it.Bonus2 >= 4 and it.Bonus2 <= 15) or it.Bonus2 == 46 then
-		bonusDamage2 = enchantbonusdamage[it.Bonus2] or 0
+		bonusDamage2 = enchantbonusdamage2[it.Bonus2] or 0
 		t.Damage = t.Damage+bonusDamage2
 		debug.Message(dump(t.Damage))
 		end
