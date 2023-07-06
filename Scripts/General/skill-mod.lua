@@ -3032,6 +3032,9 @@ mem.hook(NewCode, function(d)
 	if daggerAmount > 0 then
 		-- (5 + skill * 1) / 100 is equal to 5% + 1% per skill
 		local chance = 5 + s + (classDaggerCriticalChanceBonus[pl.Class] or 0)
+		if SETTINGS["StatsRework"]==true then
+		 chance=0
+		end
 		if math.random(1, 100) <= chance then
 			local classMul = daggerClassCriticalMultipliers[pl.Class] and daggerClassCriticalMultipliers[pl.Class][daggerAmount + 1]
 			mul = classMul or daggerDefaultCriticalMultipliers[daggerAmount + 1]
@@ -3077,8 +3080,21 @@ if SETTINGS["StatsRework"]==true then
 				critDamage=0
 				return
 			end
-			
 			critChance=50+luck
+			--ADD DAGGER CRIT CHANCE INSTEAD OF CALCULATING 2 TIMES
+			chance=0
+			local s, m = SplitSkill(data.Player.Skills[const.Skills.Dagger])
+			crit = false -- just in case
+			if s == 0 then return end
+			-- returns item struct, not item index
+			local main, off = data.Player:GetActiveItem(const.ItemSlot.MainHand, false), data.Player:GetActiveItem(const.ItemSlot.ExtraHand, false)
+			-- damage multiplier
+			local daggerAmount = (main and main:T().Skill == const.Skills.Dagger and 1 or 0) + (off and off:T().Skill == const.Skills.Dagger and 1 or 0)
+			if daggerAmount > 0 then
+				-- (5 + skill * 1) / 100 is equal to 5% + 1% per skill
+				chance = 5 + s 
+			end
+			critChance=critChance+chance*10
 			roll=math.random(1, 1000)
 			if roll <= critChance then
 				t.Result=t.Result*(1.5+critDamage)
@@ -3099,6 +3115,7 @@ if SETTINGS["StatsRework"]==true then
 		end
 	end
 else
+crit=false
 crit2=false
 end
 
