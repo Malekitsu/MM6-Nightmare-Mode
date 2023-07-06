@@ -69,7 +69,7 @@ end
 modif = data.Player.LevelBase
 	modik = data.Player.Exp
 	modit = modik-modif *(modif-1)*500
-t.Damage = t.Damage + modit^(mastery^0.5/10)
+t.Result = t.Result + modit^(mastery^0.5/10)
 end
 	
 end
