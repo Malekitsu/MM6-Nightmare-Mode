@@ -129,14 +129,17 @@ function events.CalcDamageToMonster(t)
 	mastery=mastery-64
 	rank=3
 	end
-		t.Result=t.Result*(1.2+0.1*mastery)
-		data.Player.SP=data.Player.SP-30
-		    if comboPoint==nil then
-		    comboPoint=0
-				else if comboPoint<5 then
-				comboPoint=comboPoint+1
-				end
+	--2-3-4 damage based on promotion
+	local bonusDamage=mastery*(data.Player.Class%3+2)
+	local bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Phys, damage)
+	t.Result=t.Result*1.2+bonusDamage
+	data.Player.SP=data.Player.SP-30
+		if comboPoint==nil then
+		comboPoint=0
+			else if comboPoint<5 then
+			comboPoint=comboPoint+1
 			end
+		end
 	end
 end
 --have a 30% chance to replenish 15 energy when attacking
@@ -180,13 +183,11 @@ function events.CalcSpellDamage(t)
 				end
 			end
 		end			
-	end
-	if comboPoint<5 then
-        t.Result=t.Result*(1+0.2*comboPoint)*(1+mastery*0.05) 
+	elseif comboPoint<5 then
+        t.Result=t.Result*(1+0.2*comboPoint+mastery*comboPoint)
 		comboPoint=0		
-	end
-	if comboPoint==5 then
-            t.Result=t.Result*2.5*(1+mastery*0.05) 
+	elseif comboPoint==5 then
+            t.Result=t.Result*(2.5+mastery*0.05)
 			comboPoint=0
 	end
 		comboPoint=0
@@ -223,7 +224,7 @@ function events.CalcDamageToPlayer(t)
 	
 		roll=math.random(1, 100)
 		--dodge change=5 base +1% per skill point
-		if roll<=mastery+5 then
+		if roll<=mastery*0.5+5 then
 			t.Result=0
 			Game.ShowStatusText("Dodged")
 			evt.FaceExpression{Player = t.PlayerIndex, Frame = 33}
@@ -255,38 +256,11 @@ function events.GameInitialized2()
 Game.ClassNames[const.Class.Archer]="Rogue"
 Game.ClassNames[const.Class.BattleMage]="Shadow"
 Game.ClassNames[const.Class.WarriorMage]="Assassin"
-Game.ClassDescriptions[const.Class.Archer] = "A rogue is a daring and cunning warrior, skilled in the art of deception and quick thinking. Their agility and speed allow them to strike with deadly precision, always staying one step ahead of their opponents.\n\nStats:\nHP: 2 per level\nEnergy (SP): 100 base, no SP per level\n5% dodge\n\nAbilities:\nCan use Elemental Spells\n\nMelee attacks have a 30% chance to restore 15 energy.\nYou will automatically restore 40 energy every 10 seconds\nMastery will add 1% dodge and 5% combo point skills\n\nAttack:\nConsumes 30 energy to deal 20%+10% per mastery point increased damage (can crit)\nAdds a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 10%, and combo point ability by 5% " 
-Game.ClassDescriptions[const.Class.BattleMage] ="Shadow, the ultimate evolution of the rogue. Masters of deadly precision, they strike with unmatched agility and cunning. Their blades cut through enemies with ease, and their power lies in their ability to manipulate darkness. They are the masters of fear, striking terror into the hearts of their foes. The Shadow is a force to be reckoned with, feared by all who stand in their way.\nStats:\nHP: 3 per level\nEnergy (SP): 100 base, no SP per level\n5% dodge\nAbilities:\nCan use Elemental Spells\nMelee attacks have a 30% chance to restore 15 energy.\nYou will automatically restore 40 energy every 10 seconds\nMastery will add 1% dodge and 5% combo point skills\n\nAttack:\nConsumes 30 energy to deal 20%+10% per mastery point increased damage (can crit)\nAdds a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 10%, and combo point ability by 5% " 
-Game.ClassDescriptions[const.Class.WarriorMage] ="Assassin, the ultimate evolution of the shadow. They strike with ruthless precision and deadly blades, able to eliminate their targets with a single, fatal blow. Their movements are graceful and silent, and their mastery of assassination is unmatched. \n\nStats:\nHP: 4 per level\nEnergy (SP): 100 base, no SP per level\n5% dodge\n\nAbilities:\nCan use Elemental Spells\nMelee attacks have a 30% chance to restore 15 energy.\nYou will automatically restore 40 energy every 10 seconds\nMastery will add 1% dodge and 5% combo point skills\n\nAttack:\nConsumes 30 energy to deal 20%+10% per mastery point increased damage (can crit)\nAdds a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 10%, and combo point ability by 5% "
+Game.ClassDescriptions[const.Class.Archer] = "A rogue is a daring and cunning warrior, skilled in the art of deception and quick thinking. Their agility and speed allow them to strike with deadly precision, always staying one step ahead of their opponents.\n\nStats:\nHP: 2 per level\nEnergy (SP): 100 base, regenerating 2 per second\n5% dodge+0.5% per Mastery point\n\nAbilities:\nCan use Elemental Spells\n\nMelee attacks have a 30% chance to restore 15 energy.\n\nAttack:\nConsumes 30 energy to deal 20% increased damage adding a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 2 per mastery points, and combo point ability by 1% per combo point" 
+Game.ClassDescriptions[const.Class.BattleMage] ="Shadow, the ultimate evolution of the rogue. Masters of deadly precision, they strike with unmatched agility and cunning. Their blades cut through enemies with ease, and their power lies in their ability to manipulate darkness. They are the masters of fear, striking terror into the hearts of their foes. The Shadow is a force feared by all who stand in their way.\nStats:\nHP: 3 per level\nEnergy (SP): 100 base, regenerating 3 per second\n5% dodge+0.5 per Mastery point\nAbilities:\nCan use Elemental Spells\nMelee attacks have a 30% chance to restore 15 energy.\n\nAttack:\nConsumes 30 energy to deal 20% increased damage adding a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 3 per mastery points, and combo point ability by 1% per combo point" 
+Game.ClassDescriptions[const.Class.WarriorMage] ="Assassin, the ultimate evolution of the shadow. They strike with ruthless precision and deadly blades, able to eliminate their targets with a single, fatal blow. Their movements are graceful and silent, and their mastery of assassination is unmatched. \n\nStats:\nHP: 4 per level\nEnergy (SP): 100 base, regenerating 4 per second\n5% dodge+0.5 per Mastery point\n\nAbilities:\nCan use Elemental Spells\nMelee attacks have a 30% chance to restore 15 energy.\n\nAttack:\nConsumes 30 energy to deal 20%+10% per mastery point increased damage (can crit)\nAdds a combo point, up to 5\n\nSpell Cast:\nConsumes all combo points\nDeals 20% increased damage per combo point consumed\nIf 5 combo points are consumed, damage will increase by 250%\nSpell cast with no combo points will do half the damage\n\nMastery\nEach point of mastery will increase damage of energy spender by 10%, and combo point ability by 5% "
 end	
 
---timers
-local function restoreManaArcher() 
-	for _, pl in Party do 
-		if pl.Class == const.Class.Archer then 
-			pl.SP = math.min(pl.SP + 1, pl:GetFullSP()) 
-		end 
-	end 
-end
---Timer(restoreManaArcher, const.Second*30) 
-
-local function restoreManaBattleMage() 
-	for _, pl in Party do 
-		if pl.Class == const.Class.BattleMage then 
-			pl.SP = math.min(pl.SP + 1, pl:GetFullSP()) 
-		end 
-	end 
-end
---Timer(restoreManaBattleMage, const.Second*20) 
-
-local function restoreManaWarriorMage() 
-	for _, pl in Party do 
-		if pl.Class == const.Class.WarriorMage then 
-			pl.SP = math.min(pl.SP + 1, pl:GetFullSP()) 
-		end 
-	end 
-end
---Timer(restoreManaWarriorMage, const.Second*15) 
 
 function events.LoadMap(wasInGame)
 local function restoreManaArcher() 
