@@ -3392,56 +3392,56 @@ end
 
 -- "Barrel of Red liquid"
 evt.global[411] = function()
-	Game.ShowStatusText("+5 Might permanent")        -- "+1 Might permanent"
-	evt.Add("BaseMight", 5)
+	Game.ShowStatusText("+2 Might permanent")        -- "+1 Might permanent"
+	evt.Add("BaseMight", 2)
 	evt.Set("AutonotesBits", 117)         -- "Red liquid grants Might."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Yellow liquid"
 evt.global[412] = function()
-	Game.ShowStatusText("+5 Accuracy permanent")         -- "+1 Accuracy permanent"
-	evt.Add("BaseAccuracy", 5)
+	Game.ShowStatusText("+2 Accuracy permanent")         -- "+1 Accuracy permanent"
+	evt.Add("BaseAccuracy", 2)
 	evt.Set("AutonotesBits", 121)         -- "Yellow liquid grants Accuracy."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Blue liquid"
 evt.global[413] = function()
-	Game.ShowStatusText("+5 Personality permanent")         -- "+1 Personality permanent"
-	evt.Add("BasePersonality", 5)
+	Game.ShowStatusText("+2 Personality permanent")         -- "+1 Personality permanent"
+	evt.Add("BasePersonality", 2)
 	evt.Set("AutonotesBits", 119)         -- "Blue liquid grants Personality."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Orange liquid"
 evt.global[414] = function()
-	Game.ShowStatusText("+5 Intellect permanent")         -- "+1 Intellect permanent"
-	evt.Add("BaseIntellect", 5)
+	Game.ShowStatusText("+2 Intellect permanent")         -- "+1 Intellect permanent"
+	evt.Add("BaseIntellect", 2)
 	evt.Set("AutonotesBits", 118)         -- "Orange liquid grants Intellect."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Green liquid"
 evt.global[415] = function()
-	Game.ShowStatusText("+5 Endurance permanent")         -- "+1 Endurance permanent"
-	evt.Add("BaseEndurance", 5)
+	Game.ShowStatusText("+2 Endurance permanent")         -- "+1 Endurance permanent"
+	evt.Add("BaseEndurance", 2)
 	evt.Set("AutonotesBits", 120)         -- "Green liquid grants Endurance."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of Purple liquid"
 evt.global[416] = function()
-	Game.ShowStatusText("+5 Speed permanent")         -- "+1 Speed permanent"
-	evt.Add("BaseSpeed", 5)
+	Game.ShowStatusText("+2 Speed permanent")         -- "+1 Speed permanent"
+	evt.Add("BaseSpeed", 2)
 	evt.Set("AutonotesBits", 122)         -- "Purple liquid grants Speed."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
 
 -- "Barrel of White liquid"
 evt.global[417] = function()
-	Game.ShowStatusText("+5 Luck permanent")         -- "+1 Luck permanent"
-	evt.Add("BaseLuck", 5)
+	Game.ShowStatusText("+2 Luck permanent")         -- "+1 Luck permanent"
+	evt.Add("BaseLuck", 2)
 	evt.Set("AutonotesBits", 123)         -- "White liquid grants Luck."
 	evt.ChangeEvent(410)         -- "Empty Barrel"
 end
@@ -3453,40 +3453,40 @@ end
 
 -- "Steaming Brew"
 evt.global[419] = function()
-	Game.ShowStatusText("+5 Fire resistance permanent")         -- "+1 Fire resistance permanent"
-	evt.Add("FireResistance", 5)
+	Game.ShowStatusText("+2 Fire resistance permanent")         -- "+1 Fire resistance permanent"
+	evt.Add("FireResistance", 2)
 	evt.Set("AutonotesBits", 124)         -- "Steaming liquid grants Fire Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Frosty Brew"
 evt.global[420] = function()
-	Game.ShowStatusText("+5 Cold resistance permanent")         -- "+1 Cold resistance permanent"
-	evt.Add("ColdResistance", 5)
+	Game.ShowStatusText("+2 Cold resistance permanent")         -- "+1 Cold resistance permanent"
+	evt.Add("ColdResistance", 2)
 	evt.Set("AutonotesBits", 125)         -- "Frosty liquid grants Cold Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Shocking Brew"
 evt.global[421] = function()
-	Game.ShowStatusText("+5 Electric resistance permanent")         -- "+1 Electric resistance permanent"
-	evt.Add("ElecResistance", 5)
+	Game.ShowStatusText("+2 Electric resistance permanent")         -- "+1 Electric resistance permanent"
+	evt.Add("ElecResistance", 2)
 	evt.Set("AutonotesBits", 126)         -- "Shocking liquid grants Electricity Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Noxious Brew"
 evt.global[422] = function()
-	Game.ShowStatusText("+5 Poison resistance permanent")         -- "+1 Poison resistance permanent"
-	evt.Add("PoisonResistance", 5)
+	Game.ShowStatusText("+2 Poison resistance permanent")         -- "+1 Poison resistance permanent"
+	evt.Add("PoisonResistance", 2)
 	evt.Set("AutonotesBits", 127)         -- "Noxious liquid grants Poison Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
 
 -- "Magical Brew"
 evt.global[423] = function()
-	Game.ShowStatusText("+5 Magic resistance permanent")         -- "+1 Magic resistance permanent"
-	evt.Add("MagicResistance", 5)
+	Game.ShowStatusText("+2 Magic resistance permanent")         -- "+1 Magic resistance permanent"
+	evt.Add("MagicResistance", 2)
 	evt.Set("AutonotesBits", 128)         -- "Magical liquid grants Magic Resistance."
 	evt.ChangeEvent(418)         -- "Empty Cauldron"
 end
