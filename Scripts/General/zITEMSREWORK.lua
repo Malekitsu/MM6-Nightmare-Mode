@@ -205,7 +205,7 @@ upTierDifference=0
 downTierDifference=0
 downDamage=0
 --set goal damage for weapons (end game weapon damage)
-goalDamage=50
+goalDamage=35
 if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
 	goalDamage=goalDamage*2
 end
@@ -234,7 +234,7 @@ end
 
 --do same for artifacts
 for i=400,405 do
-goalDamage=75
+goalDamage=50
 if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
 	goalDamage=goalDamage*2
 end
@@ -245,7 +245,7 @@ Game.ItemsTxt[i].Mod2=goalDamage/2
 end
 
 for i=415,420 do
-goalDamage=75
+goalDamage=50
 if Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Axe" or Game.ItemsTxt[i].NotIdentifiedName == "Two-Handed Sword" then
 	goalDamage=goalDamage*2
 end
