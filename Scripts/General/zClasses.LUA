@@ -667,10 +667,9 @@ end
 function events.Tick()
 	if NECROMANCER==true and math.floor(Party[Game.CurrentPlayer].Class/3)==2 then 
 		index=Game.CurrentPlayer
+		if index>=0 and index<=3 then
 		mastery=Party[index].Skills[const.Skills.Thievery]
 		masteryS,MasteryM=SplitSkill(mastery)
-		if index>=0 and index<=3 then
-			Mastery=Party[index].Skills[const.Skills.Thievery]%64
 			for i=1,99 do
 				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
 				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
