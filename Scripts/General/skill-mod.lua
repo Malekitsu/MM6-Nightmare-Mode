@@ -1894,7 +1894,9 @@ function events.GameInitialized2()
 		)
 		]]
 	Game.SkillDescriptions[const.Skills.Dagger] = "While daggers don't do the kind of damage that a sword or an axe can deliver, they are very quick—sometimes letting you get two attacks for every one of your slower opponents'.\n\nMain hand dagger do not get any class damage bonus\n\nDagger can be dual wielded at Novice Level and has 5+1% chance per skill level to deal critical damage, dealing 40% extra damage.\nDual wielding dagger will make your critical hits to deal 150% extra damage, allowing huge critical hits.\n\nBase bonus Attack speed: 40\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |"
-		
+	if SETTINGS["StatsRework"]==true then
+		Game.SkillDescriptions[const.Skills.Dagger] = "While daggers don't do the kind of damage that a sword or an axe can deliver, they are very quick—sometimes letting you get two attacks for every one of your slower opponents'.\n\nMain hand dagger do not get any class damage bonus\n\nDagger can be dual wielded at Novice Level and has 5+1% chance per skill level to deal critical damage, added to critical strike chance from luck.\n\n--------------------Trainer locations--------------------\nExpert : Castle Ironfist / Free Haven, 2000 Gold\nMaster : Frozen Highlands, 5000 Gold (Level 8, Speed 40)   \n------------------------------------------------------------\n\nBase bonus Attack speed: 40\n\nBonus increment per skill level\n------------------------------------------------------------\n          attack | speed |"
+	end
 	for rank = const.Novice, const.Master do
 		SkillDescriptionsRanks[rank][const.Skills.Dagger] =
 			string.format(
