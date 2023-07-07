@@ -628,28 +628,70 @@ end
 --mastery increasing cost by 5% and deal extra damage by mana*spent^0.7*mastery skill
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
-		--get Mastery level
-	mastery=data.Player.Skills[const.Skills.Thievery]
-	masteryS,MasteryM=SplitSkill(mastery)
-		for i = 1,99 do
-			if t.Spell==i then
-			spellCost=Game.Spells[i]["SpellPointsNormal"]
-			Game.SpellsTxt[i]["SpellPointsNormal"]=spellCost*masteryS*0.1
-			data.Player.SP=data.Player.SP-(spellCost*masteryS*0.05)
-			t.Result=t.Result+(spellCost^0.7*masteryS)
+		if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
+			--get Mastery level
+		mastery=data.Player.Skills[const.Skills.Thievery]
+		masteryS,masteryM=SplitSkill(mastery)
+		school=math.ceil(t.Spell/11)+11
+		schoolMastery=data.Player.Skills[school]
+		local s,m=SplitSkill(schoolMastery)
+		if m==1 then
+			spellCost=Game.Spells[t.Spell]["SpellPointsNormal"]
+		elseif m==2 then
+			spellCost=Game.Spells[t.Spell]["SpellPointsExpert"]
+		elseif m==3 then
+			spellCost=Game.Spells[t.Spell]["SpellPointsMaster"]
+		end
+		for i = 1, #aoespells do
+			if aoespells[i] == t.Spell then
+				spellCost = spellCost/2.5
+				break
 			end
 		end
-		
+		t.Result=t.Result+(spellCost^0.7*masteryS)
 	end	
-	
+end
+--spell cost increase dictionary
+function events.GameInitialized2()
+	spellCostNormal={}
+	spellCostExpert={}
+	spellCostMaster={}
+	for i=1,99 do
+	spellCostNormal[i] = Game.SpellsTxt[i]["SpellPointsNormal"]
+	spellCostExpert[i] = Game.SpellsTxt[i]["SpellPointsExpert"]
+	spellCostMaster[i] = Game.SpellsTxt[i]["SpellPointsMaster"]
+	end
 end
 
---leech 3% of damage and replenish 5% mana if spell kills an enemy
+--adjust mana cost
+function events.Tick()
+	if NECROMANCER==true and math.floor(Party[Game.CurrentPlayer].Class/3)==2 then 
+		index=Game.CurrentPlayer
+		mastery=Party[index].Skills[const.Skills.Thievery]
+		masteryS,MasteryM=SplitSkill(mastery)
+		if index>=0 and index<=3 then
+			Mastery=Party[index].Skills[const.Skills.Thievery]%64
+			for i=1,99 do
+				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
+				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
+				Game.SpellsTxt[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
+			end
+		end
+	else
+		for i=1,99 do
+		Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostNormal[i]
+		Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
+		Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
+		end
+	end
+end
+
+--leech 3% of damage and replenish 3% mana if spell kills an enemy
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
 	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
-	data.Player.HP=data.Player.HP+t.Result*0.03
+	fullHP=data.Player:GetFullHP()
+	data.Player.HP=math.min(data.Player.HP+t.Result*0.03,fullHP)
 	--get endurance 
 	endurance=data.Player:GetEndurance()
 	if data.Player.HP>-endurance then
@@ -657,12 +699,13 @@ function events.CalcSpellDamage(t)
 	end
 		if t.Result>t.HP then
 		fullSP=data.Player:GetFullSP()
-		data.Player.SP=data.Player.SP+fullSP*0.05
+		data.Player.SP=math.min(data.Player.SP+fullSP*0.03,fullSP)
 		end
 	end
 end
 
---increases 
+
+
 
 ---25% hp + 50% mana
 function events.GameInitialized2()
@@ -680,9 +723,9 @@ function events.GameInitialized2()
 	Game.ClassNames[const.Class.Sorcerer]="Necromancer"
 	Game.ClassNames[const.Class.Wizard]="Dread Necromancer"
 	Game.ClassNames[const.Class.ArchMage]="Lich"
-	Game.ClassDescriptions[const.Class.Sorcerer] = "A necromancer is a master of the dark arts, wielding the power of life and death itself. They have delved into the forbidden secrets of existence, learning to control the very forces that sustain life. Through their skills in divination and communication with the spirits, they are able to glimpse the hidden workings of the universe and unlock knowledge that is inaccessible to all but the bravest and most reckless. With their power to leech and to destroy, the necromancer is a figure of fear. Their magic is capable of and unspeakable evil. Those who dare to cross a necromancer must be prepared to face the consequences, for their wrath is as potent as their mercy. Whether champion or villain, the necromancer is a force to be reckoned with, and their mastery of the dark arts is a power to be feared and respected.\n\nStats:\nHP per level increases by 1.5 points each level and SP per level increases by 4 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
-	Game.ClassDescriptions[const.Class.Wizard] = "The Dread Necromancer, the evolution of the Necromancer. They have delved even deeper into the forbidden secrets of existence, surpassing the limits of life and death itself. Their power to manipulate the forces of the living and the dead is unparalleled, instilling terror in the hearts of their enemies. Feared for their unquenchable thirst for power and unwavering dedication to achieving their goals. Their mastery of the dark arts is a power to be both feared and respected, as their reign of terror serves as a warning to those who would dare to cross them.\n\nStats:\nHP per level increases by 2.25 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
-	Game.ClassDescriptions[const.Class.ArchMage] = "The Lich is the ultimate evolution of the Dread Necromancer, having achieved an immortal state through the darkest of rituals. Their mastery of necromancy is absolute, granting them unparalleled control over the forces of life and death. Through their mastery of the dark arts, they have transcended the limitations of the mortal body, and are now beings of pure magic. Their power is immense, capable of causing destruction on a scale that defies comprehension.\n\nStats:\nHP per level increases by 3 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.Sorcerer] = "A necromancer is a master of the dark arts, wielding the power of life and death itself. They have delved into the forbidden secrets of existence, learning to control the very forces that sustain life. Through their skills in divination and communication with the spirits, they are able to glimpse the hidden workings of the universe and unlock knowledge that is inaccessible to all but the bravest and most reckless. With their power to leech and to destroy, the necromancer is a figure of fear. Their magic is capable of and unspeakable evil. Those who dare to cross a necromancer must be prepared to face the consequences, for their wrath is as potent as their mercy. Whether champion or villain, the necromancer is a force to be reckoned with, and their mastery of the dark arts is a power to be feared and respected.\n\nStats:\nHP per level increases by 1.5 points each level and SP per level increases by 4 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 3% of the character's total mana.\n\nMastery\nMastery increases spell damage by SpellCost^0.7 (5 damage at cost 10, 11 damage at cost 30, reduced effect for AoE spells) per skill point in mastery but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.Wizard] = "The Dread Necromancer, the evolution of the Necromancer. They have delved even deeper into the forbidden secrets of existence, surpassing the limits of life and death itself. Their power to manipulate the forces of the living and the dead is unparalleled, instilling terror in the hearts of their enemies. Feared for their unquenchable thirst for power and unwavering dedication to achieving their goals. Their mastery of the dark arts is a power to be both feared and respected, as their reign of terror serves as a warning to those who would dare to cross them.\n\nStats:\nHP per level increases by 2.25 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 3% of the character's total mana.\n\nMastery\nMastery increases spell damage by SpellCost^0.7 (5 damage at cost 10, 11 damage at cost 30, reduced effect for AoE spells) per skill point in mastery but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.ArchMage] = "The Lich is the ultimate evolution of the Dread Necromancer, having achieved an immortal state through the darkest of rituals. Their mastery of necromancy is absolute, granting them unparalleled control over the forces of life and death. Through their mastery of the dark arts, they have transcended the limitations of the mortal body, and are now beings of pure magic. Their power is immense, capable of causing destruction on a scale that defies comprehension.\n\nStats:\nHP per level increases by 3 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 3% of the character's total mana.\n\nMastery\nMastery increases spell damage by SpellCost^0.7 (5 damage at cost 10, 11 damage at cost 30, reduced effect for AoE spells) per skill point in mastery but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
 	
 end
 
