@@ -312,18 +312,8 @@ function events.CalcDamageToMonster(t)
 	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and t.DamageKind==0 and data.Object==nil then
 		if data.Player.Spells[53]==true then
 		data.Player.Spells[53]=false
-		Message("Berserkers are known for taking lives rather than giving them. They are not typically associated with the ability to bring the dead back to life. You lost your raise dead ability. Here some gold.")
-		--get merchant skill
-		merchant=data.Player.Skills[const.Skills.Merchant]
-		if merchant<64 then
-		evt.Add("Gold",7000)
-		end
-		if merchant>64 and merchant<128 then
-		evt.Add("Gold",14000)
-		end
-		if merchant>128 and merchant<192 then
-		evt.Add("Gold",20000)
-		end
+		Message("Berserkers are known for taking lives rather than giving them. They are not typically associated with the ability to bring the dead back to life. You lost your raise dead ability.")
+		evt.Add("Items",352)
 		end
 	end
 end
@@ -422,9 +412,9 @@ function events.GameInitialized2()
 	Game.ClassNames[const.Class.Paladin]="Berserker"
 	Game.ClassNames[const.Class.Crusader]="Reaver"
 	Game.ClassNames[const.Class.Hero]="Fury"
-	Game.ClassDescriptions[const.Class.Paladin] ="The Berserker is a combatfocused class that excels in dealing damage and sustaining themselves in battle. They gain health each level and use Rage as a resource to enter Berserker mode, which significantly increases their damage and healing abilities while also consuming mana with each attack.\n\nStats:\nGain 3 HP per level and a fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack increases Rage by 15\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased by 50%, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
-	Game.ClassDescriptions[const.Class.Crusader] ="The Reaver, the ultimate evolution of the Berserker. They are unstoppable forces of destruction, feared for their unparalleled combat prowess. Their attacks deal massive damage and they are able to sustain themselves in battle. Their Rage unleashes devastating abilities, transforming them into a whirlwind of destruction. But beware, their insatiable bloodlust may consume them, leading them to the brink of madness. \n\nStats:\nGain 4.5 HP per level and fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack increases Rage by 15\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased by 50%, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
-	Game.ClassDescriptions[const.Class.Hero]="The Fury, the ultimate evolution of the Reaver. They are the embodiment of rage and fury, feared for their unpredictable and devastating attacks. Their wild, untamed nature and lack of control can lead them to complete madness, entering a state of unstoppable frenzy that tears through anything in their path.\n\nStats:\nGain 6 HP per level and fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack increases Rage by 15\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased by 50%, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
+	Game.ClassDescriptions[const.Class.Paladin] ="The Berserker is a combatfocused class that excels in dealing damage and sustaining themselves in battle. They gain health each level and use Rage as a resource to enter Berserker mode, which significantly increases their damage and healing abilities while also consuming mana with each attack.\n\nStats:\nGain 3 HP per level and a fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack and damage taken will increase the Rage\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
+	Game.ClassDescriptions[const.Class.Crusader] ="The Reaver, the ultimate evolution of the Berserker. They are unstoppable forces of destruction, feared for their unparalleled combat prowess. Their attacks deal massive damage and they are able to sustain themselves in battle. Their Rage unleashes devastating abilities, transforming them into a whirlwind of destruction. But beware, their insatiable bloodlust may consume them, leading them to the brink of madness. \n\nStats:\nGain 4.5 HP per level and fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack and damage taken will increase the Rage\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
+	Game.ClassDescriptions[const.Class.Hero]="The Fury, the ultimate evolution of the Reaver. They are the embodiment of rage and fury, feared for their unpredictable and devastating attacks. Their wild, untamed nature and lack of control can lead them to complete madness, entering a state of unstoppable frenzy that tears through anything in their path.\n\nStats:\nGain 6 HP per level and fixed amount of 100 Spell Points\nCan use Spirit/Mind/Body skills\n\nCombat Mechanics:\nRage decays at a rate of 10 per 10 seconds\nEach attack and damage taken will increase the Rage\nAt 100 or more Rage, melee attacks have a 50% chance to trigger Berserker mode\nIn Berserker mode, Might and damage are increased, attacks heal the Berserker by 10% of damage dealt, and attacks consume 15 mana\nOnce mana is depleted, Berserker mode ends with the next attack\nDamage taken also increases Rage (1% of base health of damage taken = 1% Rage)\nEach point in Mastery increases Might and speed by 10 in Berserker mode\n\nAdditional Details:\nItems that increase SP for other classes will instead increase max Rage by 20% of the effect\nBerserkers cannot learn Raise Dead"
 end
 --Mana items will only account for 1/5 of the effect
 function events.CalcStatBonusByItems(t)
@@ -635,26 +625,19 @@ function events.NewGameMap()
 		end 
 	end 
 end
---mastery increasing damage by 5% and cost by 5%
+--mastery increasing cost by 5% and deal extra damage by mana*spent^0.7*mastery skill
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
 	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 		--get Mastery level
 	mastery=data.Player.Skills[const.Skills.Thievery]
-	if mastery>=64 then 
-	mastery=mastery-64
-	rank=2
-	end
-	if mastery>=64 then
-	mastery=mastery-64
-	rank=3
-	end
+	masteryS,MasteryM=SplitSkill(mastery)
 		for i = 1,99 do
 			if t.Spell==i then
 			spellCost=Game.Spells[i]["SpellPointsNormal"]
-			Game.SpellsTxt[i]["SpellPointsNormal"]=spellCost*mastery*0.1
-			data.Player.SP=data.Player.SP-(spellCost*mastery*0.05)
-			t.Result=t.Result*(1+mastery*0.05)
+			Game.SpellsTxt[i]["SpellPointsNormal"]=spellCost*masteryS*0.1
+			data.Player.SP=data.Player.SP-(spellCost*masteryS*0.05)
+			t.Result=t.Result+(spellCost^0.7*masteryS)
 			end
 		end
 		
@@ -662,11 +645,11 @@ function events.CalcSpellDamage(t)
 	
 end
 
---leech 10% of damage and replenish 5% mana if spell kills an enemy
+--leech 3% of damage and replenish 5% mana if spell kills an enemy
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
 	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
-	data.Player.HP=data.Player.HP+t.Result*0.05
+	data.Player.HP=data.Player.HP+t.Result*0.03
 	--get endurance 
 	endurance=data.Player:GetEndurance()
 	if data.Player.HP>-endurance then
@@ -697,9 +680,9 @@ function events.GameInitialized2()
 	Game.ClassNames[const.Class.Sorcerer]="Necromancer"
 	Game.ClassNames[const.Class.Wizard]="Dread Necromancer"
 	Game.ClassNames[const.Class.ArchMage]="Lich"
-	Game.ClassDescriptions[const.Class.Sorcerer] = "A necromancer is a master of the dark arts, wielding the power of life and death itself. They have delved into the forbidden secrets of existence, learning to control the very forces that sustain life. Through their skills in divination and communication with the spirits, they are able to glimpse the hidden workings of the universe and unlock knowledge that is inaccessible to all but the bravest and most reckless. With their power to leech and to destroy, the necromancer is a figure of fear. Their magic is capable of and unspeakable evil. Those who dare to cross a necromancer must be prepared to face the consequences, for their wrath is as potent as their mercy. Whether champion or villain, the necromancer is a force to be reckoned with, and their mastery of the dark arts is a power to be feared and respected.\n\nStats:\nHP per level increases by 1.5 points each level and SP per level increases by 4 points each level\nSpell damage heals the caster for 5% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
-	Game.ClassDescriptions[const.Class.Wizard] = "The Dread Necromancer, the evolution of the Necromancer. They have delved even deeper into the forbidden secrets of existence, surpassing the limits of life and death itself. Their power to manipulate the forces of the living and the dead is unparalleled, instilling terror in the hearts of their enemies. Feared for their unquenchable thirst for power and unwavering dedication to achieving their goals. Their mastery of the dark arts is a power to be both feared and respected, as their reign of terror serves as a warning to those who would dare to cross them.\n\nStats:\nHP per level increases by 2.25 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 5% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
-	Game.ClassDescriptions[const.Class.ArchMage] = "The Lich is the ultimate evolution of the Dread Necromancer, having achieved an immortal state through the darkest of rituals. Their mastery of necromancy is absolute, granting them unparalleled control over the forces of life and death. Through their mastery of the dark arts, they have transcended the limitations of the mortal body, and are now beings of pure magic. Their power is immense, capable of causing destruction on a scale that defies comprehension.\n\nStats:\nHP per level increases by 3 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 5% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.Sorcerer] = "A necromancer is a master of the dark arts, wielding the power of life and death itself. They have delved into the forbidden secrets of existence, learning to control the very forces that sustain life. Through their skills in divination and communication with the spirits, they are able to glimpse the hidden workings of the universe and unlock knowledge that is inaccessible to all but the bravest and most reckless. With their power to leech and to destroy, the necromancer is a figure of fear. Their magic is capable of and unspeakable evil. Those who dare to cross a necromancer must be prepared to face the consequences, for their wrath is as potent as their mercy. Whether champion or villain, the necromancer is a force to be reckoned with, and their mastery of the dark arts is a power to be feared and respected.\n\nStats:\nHP per level increases by 1.5 points each level and SP per level increases by 4 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.Wizard] = "The Dread Necromancer, the evolution of the Necromancer. They have delved even deeper into the forbidden secrets of existence, surpassing the limits of life and death itself. Their power to manipulate the forces of the living and the dead is unparalleled, instilling terror in the hearts of their enemies. Feared for their unquenchable thirst for power and unwavering dedication to achieving their goals. Their mastery of the dark arts is a power to be both feared and respected, as their reign of terror serves as a warning to those who would dare to cross them.\n\nStats:\nHP per level increases by 2.25 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
+	Game.ClassDescriptions[const.Class.ArchMage] = "The Lich is the ultimate evolution of the Dread Necromancer, having achieved an immortal state through the darkest of rituals. Their mastery of necromancy is absolute, granting them unparalleled control over the forces of life and death. Through their mastery of the dark arts, they have transcended the limitations of the mortal body, and are now beings of pure magic. Their power is immense, capable of causing destruction on a scale that defies comprehension.\n\nStats:\nHP per level increases by 3 points each level and SP per level increases by 8 points each level\nSpell damage heals the caster for 3% of the damage done.\nKilling enemies will replenish 5% of the character's total mana.\n\nMastery\nMastery increases spell damage by 10% but also increases the cost of spells by 5%.\n\nStarting Abilities\nThe character starts with dark magic as their initial ability."
 	
 end
 
@@ -730,52 +713,22 @@ function events.CalcDamageToMonster(t)
 	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get body
 		body=data.Player.Skills[const.Skills.Body]
-		rankBonus=2
-		if body>=64 then 
-		body=body-64
-		rankBonus=2
-		end
-		if body>=64 then
-		body=body-64
-		rankBonus=2
-		end
+		bodyS,bodyM=SplitSkill(body)
 		--get mastery
 		mastery=data.Player.Skills[const.Skills.Thievery]
-		if mastery>=64 then 
-		mastery=mastery-64
-		end
-		if mastery>=64 then
-		mastery=mastery-64
-		end
-		rankBonusMH=3
+		masteryS,masteryM=SplitSkill(mastery)
+		
+		rankBonusM=3
 if data.Player.Class==const.Class.Crusader then
-		rankBonusMH=3
+		rankBonusM=3
 end
 if data.Player.Class==const.Class.Hero then
-		rankBonusMH=3
+		rankBonusM=3
 end
-				--get light
-		light=data.Player.Skills[const.Skills.Light]
-		rankBonus=1
-		if light>=64 then 
-		light=light-64
-		rankBonus=1
-		end
-		if light>=64 then
-		light=light-64
-		rankBonus=1
-		end
+
 		--get spirit
 		spirit=data.Player.Skills[const.Skills.Spirit]
-		rankBonus=1
-		if body>=64 then 
-		spirit=spirit-64
-		rankBonus=1
-		end
-		if spirit>=64 then
-		spirit=spirit-64
-		rankBonus=1
-		end
+		spiritS,spiritM=SplitSkill(spirit)
 		
 		--bunch of code for healing most injured player
 		function indexof(table, value)
@@ -814,7 +767,7 @@ end
 		min_index = indexof({a, b, c, d}, min_value)
 		min_index = min_index - 1
 		--Calculate heal value and apply
-		healValue=body*rankBonus+mastery*rankBonusMH+math.max(4*spirit-2*light-mastery*2+body, 0)
+		healValue=bodyS*2+masteryS*3+spiritS*2
 		evt[min_index].Add("HP",healValue)		
 		--bug fix
 		if Party[min_index].HP>0 then
@@ -831,32 +784,23 @@ function events.CalcDamageToMonster(t)
 	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 		--get light
 		light=data.Player.Skills[const.Skills.Light]
-		rankBonus=2
-		if light>=64 then 
-		light=light-64
-		rankBonus=2
-		end
-		if light>=64 then
-		light=light-64
-		rankBonus=2
-		end
+		lightS,lightM=SplitSkill(light)
 		--get mastery
 		mastery=data.Player.Skills[const.Skills.Thievery]
-		if mastery>=64 then 
-		mastery=mastery-64
+		masteryS,masteryM=SplitSkill(mastery)
+		rankBonusMD=4
+		--get mind
+		mind=data.Player.Skills[const.Skills.Mind]
+		mindS,mindM=SplitSkill(mind)
+		
+		if data.Player.Class==const.Class.Crusader then
+				rankBonusMD=4
 		end
-		if mastery>=64 then
-		mastery=mastery-64
+		if data.Player.Class==const.Class.Hero then
+				rankBonusMD=4
 		end
-		rankBonusMD=4
-if data.Player.Class==const.Class.Crusader then
-		rankBonusMD=4
-end
-if data.Player.Class==const.Class.Hero then
-		rankBonusMD=4
-end
 
-		damage=light*rankBonus+(mastery*rankBonusMD)
+		damage=mindS*2+lightS*2+masteryS*4
 		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
 		t.Result=t.Result+damage
 		end
@@ -889,7 +833,7 @@ function events.CalcDamageToPlayer(t)
 					if mastery>=64 then
 					mastery=mastery-64
 					end
-					heal=(totMana/4)*(1+mastery*0.05)
+					heal=(totMana/2)*(1+mastery*0.05)
 					evt[t.PlayerIndex].Add("HP",heal)
 					vars.divineProtectionCooldown[t.PlayerIndex] = Game.Time + const.Minute * 150
 					Game.ShowStatusText("Divine Protection saves you from lethal damage")
@@ -976,7 +920,6 @@ function events.CalcDamageToMonster(t)
 	 if item~=nil then
 		if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and ((item.Number >= 1 and item.Number <= 14) or (item.Number ==403 or item.Number >= 415)) then
 			t.Result=0
-			debug.Message("ASD")
 			Message("Seraphim aren't able to dual wield")
 		end
 	end
@@ -1010,9 +953,9 @@ Game.ClassKinds.SPBase[3] = Game.ClassKinds.SPBase[3]+10
 Game.ClassNames[const.Class.Paladin]="Seraphim"
 Game.ClassNames[const.Class.Crusader]="Angel"
 Game.ClassNames[const.Class.Hero]="Archangel"
-Game.ClassDescriptions[const.Class.Paladin] = "Seraphim is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphim wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nCan't have swords offhand\n3 HP and 2 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point) - a further 4 points of healing is added pr rank in spirit, however this number is reduced by 2 pr rank in light and masteryand increased by 1 pr rank in Body magic, thus if you rank Body and Spirit and keep Light at minimum and mastery low your attacks will heal a lot but do low damage.\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
-Game.ClassDescriptions[const.Class.Crusader] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n4 HP and 3 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
-Game.ClassDescriptions[const.Class.Hero] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and increased by 4 per mastery point)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and increased by 3 per mastery point)\n\nDivine Protection: converts up to 25% of mana into self-healing when facing lethal attacks (increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. This ability has a cooldown of 3 minutes."
+Game.ClassDescriptions[const.Class.Paladin] = "Seraphim is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphim wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nCan't have swords offhand\n3 HP and 2 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. 3 minutes cooldown."
+Game.ClassDescriptions[const.Class.Crusader] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n4 HP and 3 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery Skill)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. 3 minutes cooldown."
+Game.ClassDescriptions[const.Class.Hero] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\nProficiency in Plate, Sword, Mace, and Shield (offhand must be disabled)\n\nAbilities:\n\nGods Wrath:Attacks deal extra damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery Skill)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants the caster invincibility for 12 seconds, rendering them impervious to all forms of harm, but dealing half damage. 3 minutes cooldown."
 end
 end
 end
