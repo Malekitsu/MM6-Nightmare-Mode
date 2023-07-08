@@ -18,6 +18,7 @@ Note to users
  - Weapons base damage reduced up to 30%
  - Fix to titans in Arena dealing too much damage
  - Bosses are now bigger
+ - Fixed promotion for Heroes and Warrior Mage in New Game+
 
 ## Patch 2.1.3 Changelog
 - several fixes for New Game+
