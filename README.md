@@ -6,6 +6,19 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.4 Changelog
+ - Added a respec npc:
+   - it's found at the Seer, in Ironfist
+   - it costs 50 gold per skill level
+   - Expert-Master are unlearned, but they can relearned for free there if you previously learned them and have the required skill
+ - Several bugfixes
+ - SubClasses (Seraphim, Assassin, Berserker, Necromancer, Blood Knight) adjusted and ready to be played
+ - Daggers will now add their critical chance to base critical chance, instead of being rolled separately
+ - Barrels stats increase reduced from +5 to +2
+ - Weapons base damage reduced up to 30%
+ - Fix to titans in Arena dealing too much damage
+ - Bosses are now bigger
+
 ## Patch 2.1.3 Changelog
 - several fixes for New Game+
 - fix to ashikari error and seraphim starting skill
