@@ -124,7 +124,7 @@ function events.CalcDamageToMonster(t)
 	mastery,masteryM=SplitSkill(mastery)
 	--2-3-4 damage based on promotion
 	bonusDamage=mastery*(data.Player.Class%3+2)
-	bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Phys, bonusDamage)
+	bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Poison, bonusDamage)
 	t.Result=t.Result*1.2+bonusDamage
 	data.Player.SP=data.Player.SP-30
 		if comboPoint==nil then
