@@ -121,17 +121,10 @@ function events.CalcDamageToMonster(t)
 	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and data.Player.SP>=30 and t.DamageKind==0 and data.Object==nil then
 	--get mastery
 	mastery=data.Player.Skills[const.Skills.Thievery]
-	if mastery>=64 then 
-	mastery=mastery-64
-	rank=2
-	end
-	if mastery>=64 then
-	mastery=mastery-64
-	rank=3
-	end
+	mastery,masteryM=SplitSkill(mastery)
 	--2-3-4 damage based on promotion
 	bonusDamage=mastery*(data.Player.Class%3+2)
-	bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Poison, bonusDamage)
+	bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Phys, bonusDamage)
 	t.Result=t.Result*1.2+bonusDamage
 	data.Player.SP=data.Player.SP-30
 		if comboPoint==nil then
@@ -665,22 +658,22 @@ end
 
 --adjust mana cost
 function events.Tick()
-	if NECROMANCER==true and math.floor(Party[Game.CurrentPlayer].Class/3)==2 then 
-		index=Game.CurrentPlayer
-		if index>=0 and index<=3 then
-		mastery=Party[index].Skills[const.Skills.Thievery]
-		masteryS,MasteryM=SplitSkill(mastery)
+	index=Game.CurrentPlayer
+	if index>=0 and index<=3 then
+		if NECROMANCER==true and math.floor(Party[index].Class/3)==2 then 
+			mastery=Party[index].Skills[const.Skills.Thievery]
+			masteryS,MasteryM=SplitSkill(mastery)
 			for i=1,99 do
 				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
 				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
 				Game.SpellsTxt[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
 			end
-		end
-	else
-		for i=1,99 do
-		Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostNormal[i]
-		Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
-		Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
+		else
+			for i=1,99 do
+				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostNormal[i]
+				Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
+				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
+			end
 		end
 	end
 end
