@@ -635,11 +635,12 @@ if evt.Cmp("Awards", 61) then
 	end
 
 	--NPC RESET
-	for i, entry in Game.NPCDataTxt do 
+	for i=0,398 do 
+		Game.NPC[i].House=Game.NPCDataTxt[i].House
 		for j = 0, 2 do Game.NPC[i].Events[j] = Game.NPCDataTxt[i].Events[j] 
 		end 
 	end
-
+	
 	--RESET QBITS CODE
 
 		for i=1, 512 do
@@ -647,15 +648,11 @@ if evt.Cmp("Awards", 61) then
 		end
 		Party.QBits[81] = true
 		Party.QBits[181] = true
-	--move NPCS to older location
-		evt.MoveNPC{NPC = 304, HouseId = 165}
-		evt.MoveNPC{NPC = 195, HouseId = 0}
-		evt.MoveNPC{NPC = 155, HouseId = 0}
-		evt.MoveNPC{NPC = 108, HouseId = 0}
+
 	--remove 1st promotions
 		evt.SetNPCTopic{NPC = 6, Index = 1, Event = 70}   
 		evt.SetNPCTopic{NPC = 5, Index = 1, Event = 59} 
-		evt.SetNPCTopic{NPC = 4, Index = 1, Event = 17} 
+		evt.SetNPCTopic{NPC = 4, Index = 1, Event = 16} 
 		evt.SetNPCTopic{NPC = 16, Index = 1, Event = 38} 
 		evt.SetNPCTopic{NPC = 15, Index = 1, Event = 93}
 		evt.SetNPCTopic{NPC = 14, Index = 1, Event = 84}  
