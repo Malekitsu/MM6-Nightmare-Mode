@@ -1847,8 +1847,10 @@ function events.GameInitialized2()
 end
 
 function events.Tick()
+	--no haste for necromancer
 	index=Game.CurrentPlayer
 	if index>=0 and index<=3 then
+		if NECROMANCER==true and math.floor(Party[index].Class/3)==2 then return end
 		Mastery=Party[index].Skills[const.Skills.Thievery]%64
 		for i=1,99 do
 			Game.Spells[i].DelayNormal = math.round(spellSpeedNormal[i] / 1.01^Mastery)
