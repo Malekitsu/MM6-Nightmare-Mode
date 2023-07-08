@@ -2,11 +2,11 @@ function genericTransform(level)
     return function(mon)
 		oldlevel=mon.Level
 		if mon.Id ==124 then
-			oldlevel=25
+			oldlevel=65
 			else if mon.Id == 125 then
-				oldlevel=30
+				oldlevel=75
 				else if mon.Id == 126 then
-				oldlevel=35
+				oldlevel=95
 				end
 			end
 		end
