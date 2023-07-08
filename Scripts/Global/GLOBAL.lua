@@ -1113,11 +1113,13 @@ evt.global[100] = function()
 ::_24::
 	for pl = 1, Party.High do
 		evt.ForPlayer(pl)
-		if evt.Cmp("ClassIs", const.Class.BattleMage) then
+		if evt.Cmp("ClassIs", const.Class.BattleMage) and SETTINGS["255MOD"]~=true then
 			evt.Set("ClassIs", const.Class.WarriorMage)
 			evt.Add("Awards", 30)         -- "Received Promotion to Warrior Mage"
-		else
+		elseif SETTINGS["255MOD"]~=true then
 			evt.Add("Awards", 31)         -- "Received Promotion to Honorary Warrior Mage"
+		elseif evt.Cmp("ClassIs", const.Class.Archer) and SETTINGS["255MOD"]==true then
+			evt.Set("ClassIs", const.Class.BattleMage)
 		end
 	end
 	evt.SetNPCTopic{NPC = 15, Index = 1, Event = 94}         -- "Erik Von Stromgard" : "Warrior Mages"
