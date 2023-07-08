@@ -3985,6 +3985,6 @@ mem.autohook2(0x433D53, scaleHook)
 
 function events.MonsterSpriteScale(t)
 	if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then				
-		t.Scale=t.Scale*1.4
+		t.Scale=t.Scale*1.25
 	end
 end
