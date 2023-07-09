@@ -151,12 +151,8 @@ function events.CalcStatBonusByItems(t)
 		if it.Charges ~= nil then
 			stat=it.Charges%14
 			bonus=math.ceil(it.Charges/14)
-			if SETTINGS["ReworkedMagicDamageCalculation"]==true then
-				if t.Stat==stat and stat<10 then
-					t.Result = t.Result + bonus
-				end
-			elseif t.Stat==stat then
-					t.Result = t.Result + bonus
+			if t.Stat==stat then
+				t.Result = t.Result + bonus
 			end
 		end
 	end
