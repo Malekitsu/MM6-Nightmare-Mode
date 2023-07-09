@@ -811,6 +811,15 @@ end
 		min_index = min_index - 1
 		--Calculate heal value and apply
 		healValue=bodyS*2+masteryS*3+spiritS*2
+		personality=data.Player:GetPersonality()
+		healValue=healValue*(1+personality/500)
+		--calculate crit
+		critchance=data.Player:GetLuck()+50
+		roll=math.random(1,1000)
+		if roll<critchance then
+			healValue=healValue*(1.5+personality/500)
+		end
+		--apply heal
 		evt[min_index].Add("HP",healValue)		
 		--bug fix
 		if Party[min_index].HP>0 then
