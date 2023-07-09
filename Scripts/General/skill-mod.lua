@@ -3076,7 +3076,7 @@ if SETTINGS["StatsRework"]==true then
 		if data and data.Player then
 			luck=data.Player:GetLuck()
 			accuracy=data.Player:GetAccuracy()
-			if (data.Object==nil or data.Object.Spell==100) then
+			if (data.Object==nil or data.Object.Spell==100) and t.DamageKind==0 then
 				critDamage=accuracy/250
 			else
 				critDamage=0
