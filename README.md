@@ -6,6 +6,10 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.5 Changelog
+ - Several fix to classes
+ - Weapon enchants can no longer crit 
+
 ## Patch 2.1.4 Changelog
  - Added a respec npc:
    - it's found at the Seer, in Ironfist
