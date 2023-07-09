@@ -23,7 +23,6 @@ Note to users
 ## Patch 2.1.3 Changelog
 - several fixes for New Game+
 - fix to ashikari error and seraphim starting skill
-- added respec NPC (at the Seer)
 
 ## Patch 2.1.2 Changelog
 - fixed critical error with oracle's crystals.
