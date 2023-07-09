@@ -124,7 +124,15 @@ function events.CalcDamageToMonster(t)
 	mastery,masteryM=SplitSkill(mastery)
 	--2-3-4 damage based on promotion
 	bonusDamage=mastery*(data.Player.Class%3+2)
-	bonusDamage=t.Monster:CalcTakenDamage(const.Damage.Poison, bonusDamage)
+	res=t.Monster.PoisonResistance 
+	roll = 1
+	while (math.random() < (1 - 30/(30 + res))) and (roll <= 4) do
+		bonusDamage = bonusDamage / 2
+		roll = roll + 1
+	end		
+	if t.Result==0 then 
+		bonusDamage=0 
+	end
 	t.Result=t.Result*1.2+bonusDamage
 	data.Player.SP=data.Player.SP-30
 		if comboPoint==nil then
@@ -836,7 +844,16 @@ function events.CalcDamageToMonster(t)
 		end
 
 		damage=mindS*2+lightS*2+masteryS*4
-		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
+		res=t.Monster.MagicResistance 
+		--simulate rolls and check for immunity
+		roll = 1
+		while (math.random() < (1 - 30/(30 + res))) and (roll <= 4) do
+			damage = damage / 2
+			roll = roll + 1
+		end	
+		if t.Result==0 then 
+			damage=0 
+		end
 		t.Result=t.Result+damage
 		end
 end
