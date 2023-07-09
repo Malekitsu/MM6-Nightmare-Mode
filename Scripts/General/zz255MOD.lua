@@ -399,6 +399,9 @@ function events.ShowItemTooltip(item)
 	
 	ancient=0
 	bonus=item.Item.BonusStrength
+	if item.Item.Bonus==0 then
+		bonus=0
+	end
 	if item.Item.Bonus==8 or item.Item.Bonus==9 then
 		bonus=bonus/4
 	end
