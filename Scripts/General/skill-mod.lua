@@ -4015,9 +4015,19 @@ function events.CalcItemValue(t)
 	if t.Item.Bonus2>0 then
 		bonus2Value=Game.SpcItemsTxt[t.Item.Bonus2-1].Value
 	end
-	if bonus2Value<11 then
-		bonus2Mult=bonus2Value
+	if bonus2Value<11 and t.Item.Bonus2>0 then
+		bonus2Mult=bonus2Value-1
 		bonus2Value=0
 	end
+	--activate to nerf item value
+	--[[
+	if Game.HouseScreen==3 then
+		BonusStr=BonusStr/2
+		chargesStr=chargesStr/2
+		bonus2Value=bonus2Value/2
+		bonus2Mult=bonus2Mult/2
+	end
+	]]
 	t.Value=baseValue+BonusStr*100+chargesStr*100+bonus2Value+baseValue*bonus2Mult
+	
 end
