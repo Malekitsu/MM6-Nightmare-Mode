@@ -6,6 +6,9 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.6 Changelog
+ - Item value is now calculated based on all enchants
+   
 ## Patch 2.1.5 Changelog
  - Several fix to classes
  - Weapon enchants can no longer crit 
