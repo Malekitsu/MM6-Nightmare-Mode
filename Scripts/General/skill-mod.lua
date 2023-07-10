@@ -3984,7 +3984,40 @@ mem.autohook(0x46B56D, scaleHook)
 mem.autohook2(0x433D53, scaleHook)
 
 function events.MonsterSpriteScale(t)
-	if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then				
+	if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then		
 		t.Scale=t.Scale*1.25
 	end
+end
+
+-- adjust item values
+mem.hookfunction(0x448610, 1, 0, function(d, def, itemPtr)
+	local t = {Item = structs.Item:new(itemPtr), Value = def(itemPtr)}
+	events.call("CalcItemValue", t)
+	return t.Value
+end)
+
+function events.CalcItemValue(t)
+	i=t.Item.Number
+	baseValue=Game.ItemsTxt[i].Value
+	BonusStr=t.Item.BonusStrength
+	--fix cost for HP/SP items
+	if t.Item.Bonus==8 or t.Item.Bonus==9 then
+		BonusStr=BonusStr/2
+	end
+	--charges
+	chargesStr=math.ceil(t.Item.Charges/14)
+	if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
+		chargesStr=chargesStr/2
+	end
+	--bonus2
+	bonus2Value=0
+	bonus2Mult=0
+	if t.Item.Bonus2>0 then
+		bonus2Value=Game.SpcItemsTxt[t.Item.Bonus2-1].Value
+	end
+	if bonus2Value<11 then
+		bonus2Mult=bonus2Value
+		bonus2Value=0
+	end
+	t.Value=baseValue+BonusStr*100+chargesStr*100+bonus2Value+baseValue*bonus2Mult
 end
