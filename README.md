@@ -9,6 +9,8 @@ Note to users
 ## Patch 2.1.6 Changelog
  - Item value is now calculated based on all enchants
  - Fix to Cleric promotion in New Game+
+ - Fix to unique monsters in New Game+
+ - Fix to Air, Spirit and Axe Master description in New Game+
    
 ## Patch 2.1.5 Changelog
  - Several fix to classes
