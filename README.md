@@ -8,6 +8,7 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 Note to users
 ## Patch 2.1.6 Changelog
  - Item value is now calculated based on all enchants
+ - Manually repairing crowns and items in new game+ will no longer remove enchants
  - Fix to Cleric promotion in New Game+
  - Fix to unique monsters in New Game+
  - Fix to Air, Spirit and Axe Master description in New Game+
