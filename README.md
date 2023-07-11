@@ -6,6 +6,10 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.7 Changelog
+ - Fix to Celestial Arena loot
+ - Fix to Awards in new game+
+
 ## Patch 2.1.6 Changelog
  - Item value is now calculated based on all enchants
  - Manually repairing crowns and items in new game+ will no longer remove enchants
@@ -14,7 +18,7 @@ Note to users
  - Fix to Air, Spirit and Axe Master description in New Game+
  - Fixed Melody Silver in new game+
  - Fixed Crowns and Hats in new game+
- - Fix to Celestial Arena loot
+
    
 ## Patch 2.1.5 Changelog
  - Several fix to classes
