@@ -13,6 +13,7 @@ Note to users
  - Fix to unique monsters in New Game+
  - Fix to Air, Spirit and Axe Master description in New Game+
  - Fixed Melody Silver in new game+
+ - Fixed Crowns and Hats in new game+
    
 ## Patch 2.1.5 Changelog
  - Several fix to classes
