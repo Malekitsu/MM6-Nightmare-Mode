@@ -1052,9 +1052,9 @@ end
 ------------------------------
 --255 MODE UNIQUE MONSTERS FIX
 ------------------------------
-function events.AfterLoadMap()	
-	if SETTINGS["255MOD"]==true and mapvars.boosted==nil then
-		mapvars.boosted=true
+function events.LoadMap()	
+	if SETTINGS["255MOD"]==true and mapvars.boosted2~=true then
+		mapvars.boosted2=true
 		--calculate average level for unique monsters
 		y=0
 		n=0
@@ -1076,9 +1076,9 @@ function events.AfterLoadMap()
 				mon.ArmorClass=mon.ArmorClass*1.25+100
 				--HP
 				--CALCULATE HP RATEO COMPARED TO SAME LVL MONSTERS
-				rateo=mon.HP/math.min(math.round(oldLevel*(oldLevel/10+3)*2),32500)
+				rateo=(mon.HP/math.min(math.round(oldLevel*(oldLevel/10+3)*2),32500))
 				HP=math.round((theorethicalLevel*(theorethicalLevel/10+3)-1000)*2*rateo)
-				mon.HP=math.min(HP,32500)
+				mon.HP=math.min(HP+2000,32500)
 				if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
 					HP=(math.round(HP*(1+mon.Level/180)))
 					mon.HP=math.min(math.round(mon.HP*(1+mon.Level/180)),32500)
