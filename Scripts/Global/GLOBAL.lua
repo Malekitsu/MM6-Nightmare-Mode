@@ -179,8 +179,10 @@ evt.global[14] = function()
 	for pl = 0, Party.High do
 		evt.ForPlayer(pl)
 		if evt.Cmp("ClassIs", const.Class.Paladin) then
-			evt.Set("ClassIs", const.Class.Crusader)
-			evt.Add("Awards", 8)         -- "Received Promotion to Crusader"
+			if SETTINGS["255MOD"]~=true then
+				evt.Set("ClassIs", const.Class.Crusader)
+				evt.Add("Awards", 8)         -- "Received Promotion to Crusader"
+			end
 		else
 			evt.Add("Awards", 9)         -- "Received Promotion to Honorary Crusader"
 		end
