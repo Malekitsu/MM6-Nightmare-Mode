@@ -3799,7 +3799,7 @@ do
 			[const.Skills.Staff] = {[const.Expert] = {Rank=24, Gold=120000},[const.Master] = {Rank=36, Gold=300000}},
 			[const.Skills.Sword] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Dagger] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Axe] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Axe] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text = "So, you want to train your axe skill the dwarven way?  My tutorage will show you how to dramatically increase the damage you inflict with an axe. If you are skilled enough already (Rank 48), my fee is 300000 gold"}},
 			[const.Skills.Spear] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Mace] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},		
 			--armors
@@ -3810,10 +3810,10 @@ do
 
 			--spells
 			[const.Skills.Fire] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Air] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Air] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text="Air magic is the most subtle and quirky of the elemental magics you can study.  Because of the difficulty involved in learning this skill, I can only teach those who have 48 air magic skill.  My price is 300000 gold."}},
 			[const.Skills.Water] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Earth] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Spirit] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Spirit] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text="The most advanced spells of spirit magic permit the practitioner to raise the dead back to life. The choice of bringing a soul back from its final resting place is a weighty one indeed, and I will only train those who have 48 spirit magic skill.  My fee is 300000 gold."}},
 			[const.Skills.Mind] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Body] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Light] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
@@ -3986,6 +3986,8 @@ mem.autohook2(0x433D53, scaleHook)
 function events.MonsterSpriteScale(t)
 	if t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then		
 		t.Scale=t.Scale*1.25
+		--rescale if mm6HD
+
 	end
 end
 
