@@ -653,7 +653,7 @@ if evt.Cmp("Awards", 61) then
 		evt.SetNPCTopic{NPC = 6, Index = 1, Event = 70}   
 		evt.SetNPCTopic{NPC = 5, Index = 1, Event = 59} 
 		evt.SetNPCTopic{NPC = 4, Index = 1, Event = 16} 
-		evt.SetNPCTopic{NPC = 16, Index = 1, Event = 38} 
+		evt.SetNPCTopic{NPC = 16, Index = 1, Event = 37} 
 		evt.SetNPCTopic{NPC = 15, Index = 1, Event = 93}
 		evt.SetNPCTopic{NPC = 14, Index = 1, Event = 84}  
 		
