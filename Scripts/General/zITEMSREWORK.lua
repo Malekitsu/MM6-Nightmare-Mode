@@ -85,7 +85,7 @@ function events.ItemGenerated(t)
 		--chance for ancient item, only if bonus 2 is spawned
 		if t.Item.Bonus2~=0 then 
 			ancient=math.random(1,50)
-			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
+			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" or Game.Map.Name=="zddb09.blv" then
 				t.Item.Charges=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
@@ -132,13 +132,13 @@ function events.ItemGenerated(t)
 			roll=math.random(1,100)
 			if roll<=25 then
 			t.Item.ExtraData=hatpower[t.Strength]+3000
-			else if t.Item.Number>=94 and t.Item.Number<=96 then
-				t.Item.ExtraData=hatpower[t.Strength]+1000
-				else
-				t.Item.ExtraData=hatpower[t.Strength]+2000
+				else if t.Item.Number>=94 and t.Item.Number<=96 then
+					t.Item.ExtraData=hatpower[t.Strength]+1000
+					else
+					t.Item.ExtraData=hatpower[t.Strength]+2000
+					end
 				end
 			end
-		end
 		end
 	end
 end
