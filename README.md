@@ -11,6 +11,7 @@ Note to users
  - Fix to Cleric promotion in New Game+
  - Fix to unique monsters in New Game+
  - Fix to Air, Spirit and Axe Master description in New Game+
+ - Fixed Melody Silver in new game+
    
 ## Patch 2.1.5 Changelog
  - Several fix to classes
