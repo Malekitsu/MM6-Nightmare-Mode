@@ -595,7 +595,10 @@ if evt.Cmp("Awards", 61) then
 		evt.ForPlayer("All")
 		evt.Subtract("Awards", i)
 	end
-
+	for i=9,31 do
+		evt.ForPlayer("All")
+		evt.Add("Awards", i)
+	end
 	--reset class and skills to base
 	for i= 0,3 do
 		for v= 0,20 do
