@@ -9,6 +9,7 @@ Note to users
 ## Patch 2.1.7 Changelog
  - Fix to Celestial Arena loot
  - Fix to Awards in new game+
+ - Fixed Crowns and Hats in new game+
 
 ## Patch 2.1.6 Changelog
  - Item value is now calculated based on all enchants
@@ -17,8 +18,6 @@ Note to users
  - Fix to unique monsters in New Game+
  - Fix to Air, Spirit and Axe Master description in New Game+
  - Fixed Melody Silver in new game+
- - Fixed Crowns and Hats in new game+
-
    
 ## Patch 2.1.5 Changelog
  - Several fix to classes
