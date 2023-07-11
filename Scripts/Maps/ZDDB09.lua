@@ -340,9 +340,14 @@ end
 --Chest 2
 evt.hint[42] = "Greater Celestial Chest"
 evt.map[42] = function() 
-	evt.ForPlayer("All")
-	if evt.Cmp("Inventory", 299) then  
-	evt.OpenChest(2) 
+	if vars.secondTrial then
+		for i=0,Map.Monsters.High do
+			if Map.Monsters[i].HP>1 then	
+				Game.ShowStatusText("Trial isn't over")
+				return
+			end
+		end	
+		evt.OpenChest(2) 
 	else
 	Game.ShowStatusText("second trial required")
 	end 
@@ -351,9 +356,14 @@ end
 --Chest 3
 evt.hint[43] = "Greater Celestial Chest"
 evt.map[43] = function()  
-evt.ForPlayer("All")
-	if evt.Cmp("Inventory", 299) then    
-	evt.OpenChest(3)
+	if vars.secondTrial then
+		for i=0,Map.Monsters.High do
+			if Map.Monsters[i].HP>1 then	
+				Game.ShowStatusText("Trial isn't over")
+				return
+			end
+		end	
+		evt.OpenChest(3) 
 	else
 	Game.ShowStatusText("second trial required")
 	end
@@ -362,9 +372,14 @@ end
 --Chest 4
 evt.hint[44] = "Gods Treasure"
 evt.map[44] = function()
-evt.ForPlayer("All")
-	if evt.Cmp("Inventory", 399) then      
-	evt.OpenChest(4)
+	if vars.thirdTrial then
+		for i=0,Map.Monsters.High do
+			if Map.Monsters[i].HP>1 then	
+				Game.ShowStatusText("Trial isn't over")
+				return
+			end
+		end	   
+		evt.OpenChest(4)
 	else
 	Game.ShowStatusText("third trial required")
 	end
