@@ -782,8 +782,8 @@ function events.AfterLoadMap()
 					for i=0, Map.Monsters.High do
 						if (Map.Monsters[i].Ally ~= 1) and (Map.Monsters[i].Name ~= Game.MonstersTxt[Map.Monsters[i].Id].Name) or (Map.Monsters[i].FullHitPoints ~= Game.MonstersTxt[Map.Monsters[i].Id].FullHitPoints) then
 							Map.Monsters[i].Ally = 1
-							Map.Monsters[i].FullHitPoints = Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200)
-							Map.Monsters[i].HitPoints = Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200)
+							Map.Monsters[i].FullHitPoints = math.min(Map.Monsters[i].FullHitPoints * (1+Map.Monsters[i].Level/200),32500)
+							Map.Monsters[i].HitPoints = math.min(Map.Monsters[i].HitPoints * (1+Map.Monsters[i].Level/200),32500)
 								
 							-- bonus damage
 				
