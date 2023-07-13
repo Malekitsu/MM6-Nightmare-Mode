@@ -1047,7 +1047,7 @@ Game.ClassNames[const.Class.ArchMage]="Gloom"
 	Game.ClassKinds.StartingSkills[2][const.Skills.Dark] = 1
 	Game.ClassKinds.StartingSkills[2][const.Skills.Meditation] = 0
 	Game.ClassKinds.StartingSkills[2][const.Skills.Perception] = 2
-
+	Game.ClassKinds.StartingSkills[2][const.Skills.Thievery] = 1
     Game.Classes.HPFactor[const.Class.Sorcerer] = 1
 	Game.Classes.SPFactor[const.Class.Sorcerer] = 1
     Game.Classes.HPFactor[const.Class.Wizard] = 1
