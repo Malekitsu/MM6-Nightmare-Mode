@@ -9,7 +9,7 @@ function events.GenerateItem(t)
 	
 	averagePlayerExperience = partyExperience / 4
 	
-	partyLevel = math.floor((1 + math.sqrt(1 + (4 * averagePlayerExperience / 500))) / 2)+100
+	partyLevel = math.floor((1 + math.sqrt(1 + (4 * averagePlayerExperience / 500))) / 2)-100
 	
 	--buff if item is weak
 	if t.Strength*20<partyLevel and t.Strength<6 then
