@@ -4039,16 +4039,17 @@ lastPlayerWhoHitMonster=-1
 consecutiveAttack=0
 function events.CalcDamageToMonster(t)
 	if Game.TurnBasedPhase==2 then
-		data=WhoHitMonster()
+		local data=WhoHitMonster()
+		local index=data.Player:GetIndex()
 		if data and data.Player and (data.Object==nil or data.Object==100) and t.DamageKind==0 then
-			if data.Player:GetIndex()==lastPlayerWhoHitMonster then
+			if index==lastPlayerWhoHitMonster then
 				consecutiveAttack=consecutiveAttack+1
 				if consecutiveAttack>=3 then
 					Game.TurnBasedPhase=1
 				end
 			else
 				consecutiveAttack=1
-				lastPlayerWhoHitMonster=data.Player:GetIndex()
+				lastPlayerWhoHitMonster=index
 			end
 		end
 	end
