@@ -563,39 +563,51 @@ itemindex=1
 
 --increase damage in the tooltip
 function events.CalcStatBonusByItems(t)
---required to correct tooltip of unequipped items
-	if itemindex>=119 then
+local cs = const.Stats
+if not table.find({cs.ArmorClass, cs.MeleeDamageMin, cs.MeleeDamageMax, cs.MeleeAttack, cs.RangedDamageMin, cs.RangedDamageMax }, t.Stat) then return end
+--[[required to correct tooltip of unequipped items
+	if itemindex<=119 then
 	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
 	Game.ItemsTxt[i].Mod1DiceSides=listDiceSides[i]
 	itemindex=itemindex+1
 	end
-		if itemindex>=119 then
-			itemindex=1
-		end
-		
-	for it in t.Player:EnumActiveItems() do
-		-- fix current item
-		Game.ItemsTxt[it.Number].Mod2=listMod2[it.Number]
-		Game.ItemsTxt[it.Number].Mod1DiceSides=listDiceSides[it.Number]
-		if it.ExtraData ~= nil then
-			if t.Stat==const.Stats.ArmorClass and ((it.Number>=66 and it.Number<=93) or (it.Number>=100 and it.Number<=119)) then
-				t.Result=t.Result+it.ExtraData
-			end
-			--melee
-			if it.Number<=41 or (it.Number<=63 and it.Number>=50) then
-				if t.Stat==const.Stats.MeleeDamageMin or t.Stat==const.Stats.MeleeDamageMax or t.Stat==const.Stats.MeleeAttack then
-					t.Result=t.Result+it.ExtraData/2
-				end
-				if t.Stat==const.Stats.MeleeDamageMax then
+	if itemindex>=119 then
+		itemindex=1
+	end
+]]
+	if t.Stat==cs.ArmorClass then
+		for it in t.Player:EnumActiveItems() do
+			-- fix current item
+			Game.ItemsTxt[it.Number].Mod2=listMod2[it.Number]
+			Game.ItemsTxt[it.Number].Mod1DiceSides=listDiceSides[it.Number]
+			if it.ExtraData ~= nil then
+				if ((it.Number>=66 and it.Number<=93) or (it.Number>=100 and it.Number<=119)) then
 					t.Result=t.Result+it.ExtraData
 				end
 			end
-			--ranged
-			if it.Number==65 or it.Number==64 or(it.Number>=42 and it.Number<=49) then
-				if t.Stat==const.Stats.RangedDamageMin or t.Stat==const.Stats.RangedDamageMax then
+		end
+	end
+	if t.Stat==cs.MeleeDamageMin or t.Stat==cs.MeleeDamageMax or t.Stat==cs.MeleeAttack then
+		for it in t.Player:EnumActiveItems() do
+			--melee
+			if it.Number<=41 or (it.Number<=63 and it.Number>=50) then
+				if t.Stat==cs.MeleeDamageMin or t.Stat==cs.MeleeDamageMax or t.Stat==cs.MeleeAttack then
 					t.Result=t.Result+it.ExtraData/2
 				end
-				if t.Stat==const.Stats.RangedDamageMax then
+				if t.Stat==cs.MeleeDamageMax then
+					t.Result=t.Result+it.ExtraData
+				end
+			end
+		end
+	end
+	if t.Stat==cs.RangedDamageMin or t.Stat==cs.RangedDamageMax then
+		for it in t.Player:EnumActiveItems() do
+			--ranged
+			if it.Number==65 or it.Number==64 or(it.Number>=42 and it.Number<=49) then
+				if t.Stat==cs.RangedDamageMin or t.Stat==cs.RangedDamageMax then
+					t.Result=t.Result+it.ExtraData/2
+				end
+				if t.Stat==cs.RangedDamageMax then
 					t.Result=t.Result+it.ExtraData
 				end
 			end 
