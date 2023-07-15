@@ -369,114 +369,114 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 
 --change tooltip
 
+
 function events.ShowItemTooltip(item)
-	function events.ShowItemTooltip(item)
-		if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
-		Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
-			else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
-				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s", itemStatName[item.Item.Bonus])
-				else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
-					else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
-						Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
-					end
+	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
+	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
+			Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s", itemStatName[item.Item.Bonus])
+			else if item.Item.Bonus~=0 and item.Item.Charges~=0 and item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
+				else if item.Item.Bonus~=0 and item.Item.Charges==0 and item.Item.Bonus2==0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("%s",itemStatName[item.Item.Bonus])
 				end
 			end
 		end
-		
-	--Change item name and colour
-	--number of bonuses
-	bonuses=0
-	if item.Item.Bonus~=0 then
-	bonuses=bonuses+1
-	end
-	if item.Item.Charges~=0 then
-	bonuses=bonuses+1
-	end
-	if item.Item.Bonus2~=0 then
-	bonuses=bonuses+1
 	end
 	
-	ancient=0
-	bonus=item.Item.BonusStrength
-	if item.Item.Bonus==0 then
-		bonus=0
-	end
-	if item.Item.Bonus==8 or item.Item.Bonus==9 then
-		bonus=bonus/4
-	end
-	extrabonus=math.ceil(item.Item.Charges/14)
-	if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
-		extrabonus=extrabonus/2
-	end
-	if item.Item.Number<135 then	
-		if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
-			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
-			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
-			
-			elseif bonuses==3 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
-				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
-			elseif bonuses==2 then
-				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
-				if item.Item.Bonus2==0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
-					elseif item.Item.Bonus2>0 then
-						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
-				end
-			elseif bonuses==1 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
-				if item.Item.Bonus>0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
-					elseif item.Item.Bonus2>0 then
-						Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
-				end
-			elseif bonuses==0 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
-		end
-	end
-	--name colour for artifacts/relics
-	if item.Item.Number>399 and item.Item.Number<430 then
-		Game.ItemsTxt[item.Item.Number].Name=StrColor(230,204,128,string.format("%s", itemName[item.Item.Number]))
-	end
+--Change item name and colour
+--number of bonuses
+bonuses=0
+if item.Item.Bonus~=0 then
+bonuses=bonuses+1
+end
+if item.Item.Charges~=0 then
+bonuses=bonuses+1
+end
+if item.Item.Bonus2~=0 then
+bonuses=bonuses+1
+end
 
-	if bonus==100 and extrabonus==100 then
-		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
-		if item.Item.Bonus>0 then
-			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(255,0,0,enchantAdd[item.Item.Bonus-1])
-		end
-		end
+ancient=0
+bonus=item.Item.BonusStrength
+if item.Item.Bonus==0 then
+	bonus=0
+end
+if item.Item.Bonus==8 or item.Item.Bonus==9 then
+	bonus=bonus/4
+end
+extrabonus=math.ceil(item.Item.Charges/14)
+if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
+	extrabonus=extrabonus/2
+end
+if item.Item.Number<135 then	
+	if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
+		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
+		Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
 		
-		--Bonus2
-		if item.Item.Bonus2>0 and item.Item.Bonus>0 then
-			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
-			else
-			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
-		end
-	--Crowns and HATS
-		if item.Item.ExtraData~=nil then
-			if item.Item.Number>=94 and item.Item.Number<=99 then
-				local statbonus=item.Item.ExtraData%10000
-					if statbonus>3000 then
-					statbonus="Damage and Healing"
-					else if statbonus>2000 then
-						statbonus="Healing"
-						else statbonus="Damage"
-					end
-				end		
-				if item.Item.Bonus2==0 then
-				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s %s %s %s%s\n\n%s",StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+		elseif bonuses==3 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
+		elseif bonuses==2 then
+			Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
+			if item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
 				elseif item.Item.Bonus2>0 then
-					Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n%s %s %s %s%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
-				end				
-			elseif item.Item.Bonus2>0 and item.Item.Bonus>0 then
-				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
-			else
-				Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
 			end
+		elseif bonuses==1 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
+			if item.Item.Bonus>0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
+				elseif item.Item.Bonus2>0 then
+					Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
+			end
+		elseif bonuses==0 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
+	end
+end
+--name colour for artifacts/relics
+if item.Item.Number>399 and item.Item.Number<430 then
+	Game.ItemsTxt[item.Item.Number].Name=StrColor(230,204,128,string.format("%s", itemName[item.Item.Number]))
+end
+
+if bonus==100 and extrabonus==100 then
+	Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
+	if item.Item.Bonus>0 then
+		Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(255,0,0,enchantAdd[item.Item.Bonus-1])
+	end
+	end
+	
+	--Bonus2
+	if item.Item.Bonus2>0 and item.Item.Bonus>0 then
+		Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
+		else
+		Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
+	end
+--Crowns and HATS
+	if item.Item.ExtraData~=nil then
+		if item.Item.Number>=94 and item.Item.Number<=99 then
+			local statbonus=item.Item.ExtraData%10000
+				if statbonus>3000 then
+				statbonus="Damage and Healing"
+				else if statbonus>2000 then
+					statbonus="Healing"
+					else statbonus="Damage"
+				end
+			end		
+			if item.Item.Bonus2==0 then
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s %s %s %s%s\n\n%s",StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+			elseif item.Item.Bonus2>0 then
+				Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n%s %s %s %s%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),StrColor(255,255,153,"Increases spell"),StrColor(255,255,153,statbonus),StrColor(255,255,153,"by:"),StrColor(255,255,153,item.Item.ExtraData%1000),StrColor(255,255,153,"%"),itemDesc[item.Item.Number])
+			end				
+		elseif item.Item.Bonus2>0 and item.Item.Bonus>0 then
+			Game.ItemsTxt[item.Item.Number].Notes=string.format("%s\n\n%s",StrColor(255,255,153,Game.SpcItemsTxt[item.Item.Bonus2-1].BonusStat),itemDesc[item.Item.Number])
+		else
+			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
 		end
 	end
 end
+
 
 
 ---------------------------------------
