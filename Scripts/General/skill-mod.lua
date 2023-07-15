@@ -3087,7 +3087,6 @@ if SETTINGS["StatsRework"]==true then
 			chance=0
 			local s, m = SplitSkill(data.Player.Skills[const.Skills.Dagger])
 			crit = false -- just in case
-			if s == 0 then return end
 			-- returns item struct, not item index
 			local main, off = data.Player:GetActiveItem(const.ItemSlot.MainHand, false), data.Player:GetActiveItem(const.ItemSlot.ExtraHand, false)
 			-- damage multiplier
@@ -3097,8 +3096,8 @@ if SETTINGS["StatsRework"]==true then
 				chance = 5 + s 
 			end
 			critChance=critChance+chance*10
-			roll=math.random(1, 1000)
-			if roll <= critChance then
+			critRoll=math.random(1, 1000)
+			if critRoll <= critChance then
 				t.Result=t.Result*(1.5+critDamage)
 				crit2=true
 			end
