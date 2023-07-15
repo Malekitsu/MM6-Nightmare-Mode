@@ -6,6 +6,9 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.8 Changelog
+ - Fix to critical damage
+
 ## Patch 2.1.7 Changelog
  - Fix to Celestial Arena loot
  - Fix to Awards in new game+
