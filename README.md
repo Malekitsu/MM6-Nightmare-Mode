@@ -8,6 +8,7 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 Note to users
 ## Patch 2.1.8 Changelog
  - Fix to critical damage
+ - Major performance improvement in NG+
 
 ## Patch 2.1.7 Changelog
  - Fix to Celestial Arena loot
