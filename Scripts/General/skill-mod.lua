@@ -4032,3 +4032,31 @@ function events.CalcItemValue(t)
 	t.Value=baseValue+BonusStr*100+chargesStr*100+bonus2Value+baseValue*bonus2Mult
 	
 end
+
+--fix to turn mode
+
+lastPlayerWhoHitMonster=-1
+consecutiveAttack=0
+function events.CalcDamageToMonster(t)
+	if Game.TurnBasedPhase==2 then
+		data=WhoHitMonster()
+		if data and data.Player and (data.Object==nil or data.Object==100) and t.DamageKind==0 then
+			if data.Player:GetIndex()==lastPlayerWhoHitMonster then
+				consecutiveAttack=consecutiveAttack+1
+				if consecutiveAttack>=3 then
+					Game.TurnBasedPhase=1
+				end
+			else
+				consecutiveAttack=1
+				lastPlayerWhoHitMonster=data.Player:GetIndex()
+			end
+		end
+	end
+end
+
+function events.Tick()
+	if Game.TurnBasedPhase==1 then
+		consecutiveAttack=0
+		lastPlayerWhoHitMonster=-1
+	end
+end
