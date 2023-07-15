@@ -3815,7 +3815,7 @@ do
 			[const.Skills.Spirit] = {[const.Expert] = {Rank=12, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text="The most advanced spells of spirit magic permit the practitioner to raise the dead back to life. The choice of bringing a soul back from its final resting place is a weighty one indeed, and I will only train those who have 48 spirit magic skill.  My fee is 300000 gold."}},
 			[const.Skills.Mind] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Body] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Light] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Light] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text="A master of light magic is amongst the most powerful spell casters in the world.  I can improve nearly any expert to master status, but I do not do this lightly.  I will only teach persons of the highest reputation and skill.  Living saints (48 light magic skill)."}},
 			[const.Skills.Dark] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 		}
 	end
