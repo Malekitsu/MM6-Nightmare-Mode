@@ -8,7 +8,10 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 Note to users
 ## Patch 2.1.8 Changelog
  - Fix to critical damage
+ - Fix to infinite dagger/arrows attacks in turn mode (a problem that was in original MM6)
  - Major performance improvement in NG+
+ - Fix to Light description in NG+
+
 
 ## Patch 2.1.7 Changelog
  - Fix to Celestial Arena loot
