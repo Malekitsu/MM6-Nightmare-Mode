@@ -43,7 +43,6 @@ end
 asddd=0
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
-
 		if t.Item.Number>580 then
 			t.Item.Number=0
 		end
@@ -186,7 +185,7 @@ function events.ItemGenerated(t)
 			t.Item.BonusStrength=t.Item.BonusStrength*4
 		end
 		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
-			t.Item.Charges=t.Item.Charges+4*math.ceil(t.Item.Charges/14)
+			t.Item.Charges=t.Item.Charges+14*math.ceil(t.Item.Charges/14)*3
 		end
 		
 		--CROWNS & HATS
@@ -565,7 +564,7 @@ itemindex=1
 function events.CalcStatBonusByItems(t)
 local cs = const.Stats
 if not table.find({cs.ArmorClass, cs.MeleeDamageMin, cs.MeleeDamageMax, cs.MeleeAttack, cs.RangedDamageMin, cs.RangedDamageMax }, t.Stat) then return end
---[[required to correct tooltip of unequipped items
+--required to correct tooltip of unequipped items
 	if itemindex<=119 then
 	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
 	Game.ItemsTxt[i].Mod1DiceSides=listDiceSides[i]
@@ -574,7 +573,7 @@ if not table.find({cs.ArmorClass, cs.MeleeDamageMin, cs.MeleeDamageMax, cs.Melee
 	if itemindex>=119 then
 		itemindex=1
 	end
-]]
+
 	if t.Stat==cs.ArmorClass then
 		for it in t.Player:EnumActiveItems() do
 			-- fix current item
