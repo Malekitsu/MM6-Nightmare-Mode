@@ -660,6 +660,10 @@ if evt.Cmp("Awards", 61) then
 		evt.SetNPCTopic{NPC = 15, Index = 1, Event = 93}
 		evt.SetNPCTopic{NPC = 14, Index = 1, Event = 84}  
 		
+	--reset obelisks in notes
+	for i=0,14 do
+		evt.Subtract("AutonotesBits", 79+i)
+	end
 		evt.Set("ReputationIs", 0)
 		Game.Time=Game.Time+250000000
 		evt.MoveToMap{X = 48, Y = -512, Z = 0, Direction = 512, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb04.blv"}
