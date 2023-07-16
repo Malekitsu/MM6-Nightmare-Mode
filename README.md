@@ -15,6 +15,7 @@ Note to users
  - Fix to Light description in NG+
  - Fix to respec in NG+
  - Fix to Bow Requirements in NG+
+ - Fix to obelisk autonotes
 
 
 ## Patch 2.1.7 Changelog
