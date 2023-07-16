@@ -3800,7 +3800,8 @@ do
 			[const.Skills.Dagger] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
 			[const.Skills.Axe] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000, Text = "So, you want to train your axe skill the dwarven way?  My tutorage will show you how to dramatically increase the damage you inflict with an axe. If you are skilled enough already (Rank 48), my fee is 300000 gold"}},
 			[const.Skills.Spear] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
-			[const.Skills.Mace] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},		
+			[const.Skills.Mace] = {[const.Expert] = {Rank=32, Gold=120000},[const.Master] = {Rank=48, Gold=300000}},
+			[const.Skills.Bow] = {[const.Expert] = {Rank=24, Gold=120000},[const.Master] = {Rank=36, Gold=300000}},			
 			--armors
 			[const.Skills.Shield] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
 			[const.Skills.Leather] = {[const.Expert] = {Rank=24, Gold=60000},[const.Master] = {Rank=36, Gold=150000}},
