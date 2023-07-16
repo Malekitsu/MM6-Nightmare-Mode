@@ -7,7 +7,7 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 
 Note to users
 ## Patch 2.1.8 Changelog
-# General
+### General Changes
  - Fix to critical damage
  - Fix to infinite dagger/arrows attacks in turn mode (a problem that was in original MM6)
  - Added shortcut for master healer and duper (ALT+F9)
@@ -18,7 +18,9 @@ Note to users
  - Fix to respec in NG+
  - Fix to Bow Requirements in NG+
  - Fix to obelisk autonotes in NG+
- - Fix to
+ - Fix to Armors AC not being consistent
+ - Fix to primordial items not being recognized as so in the tooltip
+ - Fix to items to roll int/per instead of HP/SP in some circumstances
 
 
 ## Patch 2.1.7 Changelog
