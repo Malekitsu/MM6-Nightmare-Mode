@@ -9,6 +9,8 @@ Note to users
 ## Patch 2.1.8 Changelog
  - Fix to critical damage
  - Fix to infinite dagger/arrows attacks in turn mode (a problem that was in original MM6)
+ - Added shortcut for master healer and duper (ALT+F9)
+ - Reduced master healer price by 30%
  - Major performance improvement in NG+
  - Fix to Light description in NG+
  - Fix to respec in NG+
