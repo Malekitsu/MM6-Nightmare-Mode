@@ -231,3 +231,36 @@ skillRequirementsMaster[17]=12
 skillRequirementsMaster[18]=12
 skillRequirementsMaster[19]=4
 skillRequirementsMaster[20]=4
+
+if SETTINGS["255MOD"]==true then
+	--skill requirements
+	for i=0,20 do
+		skillRequirementsExpert[i]=32
+	end
+	for i=21,30 do	
+	skillRequirementsExpert[i]=4
+	end
+	skillRequirementsExpert[0]=24
+	skillRequirementsExpert[5]=24
+	skillRequirementsExpert[8]=24
+	skillRequirementsExpert[9]=24
+	skillRequirementsExpert[10]=24
+	skillRequirementsExpert[11]=24
+	skillRequirementsExpert[14]=12
+	skillRequirementsExpert[16]=12
+	
+	skillRequirementsMaster={}
+	for i=21,30 do	
+	skillRequirementsMaster[i]=7
+	end
+	for i=0,20 do
+		skillRequirementsMaster[i]=48
+	end
+	skillRequirementsMaster[0]=36
+	skillRequirementsMaster[5]=36
+	skillRequirementsMaster[8]=36
+	skillRequirementsMaster[9]=36
+	skillRequirementsMaster[10]=36
+	skillRequirementsMaster[11]=36
+	skillRequirementsMaster[12]=12
+end
