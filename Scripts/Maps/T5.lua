@@ -35,7 +35,7 @@ evt.map[27] = function()
 		Sleep(400)
 		evt.SummonMonsters{TypeIndexInMapStats = 3, Level = 3, Count = 1, X = 3388, Y = 6122, Z = 384, radius = 256}
 		Sleep(700)
-		pseudoSpawnpoint{monster = 85, x = 3388, y = 6122, z = 384, count = 1, powerChances = {0, 0, 100}, radius = 128, group = 50, transform = function(mon) mon.FullHP = 2500 mon.HP = mon.FullHP end}
+		pseudoSpawnpoint{monster = 85, x = 3388, y = 6122, z = 384, count = 1, powerChances = {0, 0, 100}, radius = 128, group = 50, transform = function(mon) mon.FullHP = mon.FullHP*2 mon.HP = mon.FullHP end}
 		Sleep(1500)
 		Message("Time is twisting, full moon has arrived")
 		mapvars.moon = 1
