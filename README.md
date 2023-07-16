@@ -13,11 +13,11 @@ Note to users
  - Added shortcut for master healer and duper (ALT+F9)
  - Reduced master healer price by 30%
 ### New Game+ Changes
- - Major performance improvement in NG+
- - Fix to Light description in NG+
- - Fix to respec in NG+
- - Fix to Bow Requirements in NG+
- - Fix to obelisk autonotes in NG+
+ - Major performance improvement
+ - Fix to Light description
+ - Fix to respec
+ - Fix to Bow Requirements
+ - Fix to obelisk autonotes
  - Fix to Armors AC not being consistent
  - Fix to primordial items not being recognized as so in the tooltip
  - Fix to items to roll int/per instead of HP/SP in some circumstances
