@@ -89,7 +89,7 @@ function events.ItemGenerated(t)
 				downArmor=0
 				--set goal damage for weapons (end game weapon damage)
 				goalArmorMultiplier=3
-				currentArmor = Game.ItemsTxt[i].Mod1DiceCount+Game.ItemsTxt[i].Mod2 
+				currentArmor = listDiceSides[i]+listMod2[i]
 					for v=1,4 do
 						if Game.ItemsTxt[i].NotIdentifiedName==Game.ItemsTxt[i+v].NotIdentifiedName then
 						upTierDifference=upTierDifference+1
@@ -406,7 +406,7 @@ if item.Item.Bonus==8 or item.Item.Bonus==9 then
 end
 extrabonus=math.ceil(item.Item.Charges/14)
 if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
-	extrabonus=extrabonus/2
+	extrabonus=extrabonus/4
 end
 if item.Item.Number<135 then	
 	if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
@@ -550,11 +550,11 @@ end
 --MOD2 CHANGER
 function events.GameInitialized2()
 	listMod2={}
-	for i=1, 119 do
+	for i=1, 134 do
 	listMod2[i]=Game.ItemsTxt[i].Mod2
 	end
 	listDiceSides={}
-	for i=1, 119 do
+	for i=1, 134 do
 	listDiceSides[i]=Game.ItemsTxt[i].Mod1DiceSides
 	end
 end
