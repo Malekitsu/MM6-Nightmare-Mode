@@ -7,15 +7,18 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 
 Note to users
 ## Patch 2.1.8 Changelog
+#General
  - Fix to critical damage
  - Fix to infinite dagger/arrows attacks in turn mode (a problem that was in original MM6)
  - Added shortcut for master healer and duper (ALT+F9)
  - Reduced master healer price by 30%
+###New Game+ Changes
  - Major performance improvement in NG+
  - Fix to Light description in NG+
  - Fix to respec in NG+
  - Fix to Bow Requirements in NG+
- - Fix to obelisk autonotes
+ - Fix to obelisk autonotes in NG+
+ - Fix to
 
 
 ## Patch 2.1.7 Changelog
