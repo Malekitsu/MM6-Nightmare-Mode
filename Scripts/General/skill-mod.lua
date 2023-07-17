@@ -2076,7 +2076,7 @@ formatSkillRankNumber(Game.SkillRecoveryTimes[const.Skills.Shield + 1] * (rank =
 	setProfessionCost(const.NPCProfession.Teacher, 800)
 	setProfessionCost(const.NPCProfession.SpellMaster, 2000)
 	setProfessionCost(const.NPCProfession.Mystic, 1500)
-	
+	setProfessionCost(const.NPCProfession.MasterHealer, 3500)
 	----------------------------------------------------------------------------------------------------
 	-- class starting skills
 	----------------------------------------------------------------------------------------------------
@@ -2415,6 +2415,8 @@ function events.KeyDown(t)
 			bringHirelingsToParty({const.NPCProfession.Pathfinder, const.NPCProfession.Tracker, })
 		elseif t.Key == const.Keys["8"] then
 			bringHirelingsToParty({const.NPCProfession.WindMaster, const.NPCProfession.WaterMaster, })
+		elseif t.Key == const.Keys["9"] then
+			bringHirelingsToParty({const.NPCProfession.Duper, const.NPCProfession.MasterHealer, })
 		end
 	end
 end
@@ -3101,16 +3103,17 @@ if SETTINGS["StatsRework"]==true then
 				t.Result=t.Result*(1.5+critDamage)
 				crit2=true
 			end
-			if comboPoint==nil then
-				comboPoint=0
+			i=data.Player:GetIndex()
+			if comboPoint[i]==nil then
+				comboPoint[i]=0
 			end
 			if crit or crit2 then
 				if (data.Player.Class==12 or data.Player.Class==13 or data.Player.Class==14) and SETTINGS["ArcherAsAssassin"]==true then
-					ComboCritStrings = {attack = string.format("%s (%s CP)",CritStrings.attack,math.min(comboPoint+1,5)),kill = string.format("%s (%s CP)",CritStrings.kill,math.min(comboPoint+1,5))} 
+					ComboCritStrings = {attack = string.format("%s (%s CP)",CritStrings.attack,math.min(comboPoint[i]+1,5)),kill = string.format("%s (%s CP)",CritStrings.kill,math.min(comboPoint[i]+1,5))} 
 					comboCrit=true
 				end
 			elseif (data.Player.Class==12 or data.Player.Class==13 or data.Player.Class==14) and SETTINGS["ArcherAsAssassin"]==true then
-				ComboStrings = {attack = string.format("%s (%s CP)",NormalStrings.attack,math.min(comboPoint+1,5)),kill = string.format("%s (%s CP)",NormalStrings.kill,math.min(comboPoint+1,5))} 
+				ComboStrings = {attack = string.format("%s (%s CP)",NormalStrings.attack,math.min(comboPoint[i]+1,5)),kill = string.format("%s (%s CP)",NormalStrings.kill,math.min(comboPoint[i]+1,5))} 
 				combo=true
 			end
 		end
