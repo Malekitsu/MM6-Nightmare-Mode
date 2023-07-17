@@ -12,6 +12,7 @@ Note to users
  - Fix to infinite dagger/arrows attacks in turn mode (a problem that was in original MM6)
  - Added shortcut for master healer and duper (ALT+F9)
  - Reduced master healer price by 30%
+ - Fix to Armageddon bug
 ### New Game+ Changes
  - Major performance improvement
  - Fix to Light description
