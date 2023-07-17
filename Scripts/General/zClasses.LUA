@@ -8,7 +8,7 @@ if ASHIKARI==true then
 -- damage scaling with speed (meant to be like classic Agility stat)
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 then
+	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 then
 	m1=data.Player.Skills[const.Skills.Air]
 		if m1>=64 then 
 		m1=m1-64
@@ -323,7 +323,7 @@ end
 --when insane deals 50% extra damage and attack will consume 10 sp, when no SP insane will be removed
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()	
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==1 and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==1 and t.DamageKind==0 and data.Object==nil then
 		t.Result=t.Result*1.5
 		data.Player.HP=data.Player.HP+t.Result*0.1
 		data.Player.SP=data.Player.SP-15
@@ -336,7 +336,7 @@ end
 --when 100 or above SP you have 50% to get insane
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and data.Player.SP>=100 and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and data.Player.SP>=100 and t.DamageKind==0 and data.Object==nil then
 		if math.random(1,100)>50 then
 			data.Player.Insane=1
 	--get mastery info		
@@ -361,7 +361,7 @@ end
 --adds 15 SP when attacking and not insane and reset bonus speed
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()	
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and t.DamageKind==0 and data.Object==nil then
 		if data.Player.SP<0 then
 			data.Player.SP=0
 		end
@@ -1308,7 +1308,7 @@ end
 
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) and t.DamageKind==0 and data.Object==nil then	
+	if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) and t.DamageKind==0 and data.Object==nil then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
