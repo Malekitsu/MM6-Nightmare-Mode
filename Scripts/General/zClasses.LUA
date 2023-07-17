@@ -114,7 +114,13 @@ end
 ASSASSIN=SETTINGS["ArcherAsAssassin"]
 if ASSASSIN==true then
 
+comboPoint={}
 
+function events.LoadMap()
+	for i=0,3 do
+		comboPoint[i]=0
+	end
+end
 --Energy Spender, when energy is 30 or more and adds a combo point up to 5
 function events.CalcDamageToMonster(t)		
 	local data = WhoHitMonster()
@@ -135,10 +141,11 @@ function events.CalcDamageToMonster(t)
 	end
 	t.Result=t.Result*1.2+bonusDamage
 	data.Player.SP=data.Player.SP-30
-		if comboPoint==nil then
-		comboPoint=0
-			else if comboPoint<5 then
-			comboPoint=comboPoint+1
+	i=data.Player:GetIndex()
+		if comboPoint[i]==nil then
+		comboPoint[i]=0
+			else if comboPoint[i]<5 then
+			comboPoint[i]=comboPoint[i]+1
 			end
 		end
 	end
@@ -159,8 +166,7 @@ function events.CalcSpellDamage(t)
 --get mastery
 
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
-	
+	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then		
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -170,11 +176,11 @@ function events.CalcSpellDamage(t)
 	mastery=mastery-64
 	rank=3
 	end
-	
-    if comboPoint==nil then
-		comboPoint=0
+	i=data.Player:GetIndex()
+    if comboPoint[i]==nil then
+		comboPoint[i]=0
 	end
-	if comboPoint==0 then
+	if comboPoint[i]==0 then
 		if data.Player.Class==const.Class.Archer then 			
 		t.Result=t.Result*0.5
 			else if data.Player.Class==const.Class.BattleMage then
@@ -184,14 +190,11 @@ function events.CalcSpellDamage(t)
 				end
 			end
 		end			
-	elseif comboPoint<5 then
-        t.Result=t.Result*(1+0.2*comboPoint+mastery*comboPoint)
-		comboPoint=0		
-	elseif comboPoint==5 then
-            t.Result=t.Result*(2.5+mastery*0.05)
-			comboPoint=0
+	elseif comboPoint[i]<=5 then
+        t.Result=t.Result*(1+0.2*comboPoint[i]+mastery*comboPoint[i])
+		comboPoint[i]=0		
 	end
-		comboPoint=0
+		comboPoint[i]=0
     end
 
 	
