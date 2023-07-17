@@ -469,7 +469,7 @@ if BLOODKNIGHT==true then
 --when above 33% health every attack will cost 8% of hp but will deal 1% more damage for each 1% of missing health
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 and data.Object==nil then
+	if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 and data.Object==nil then
 	
 	--Get Mastery
 	mastery=data.Player.Skills[const.Skills.Thievery]
@@ -509,7 +509,7 @@ function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
 		currentHP=data.Player.HP
 		vampiricTreshold=data.Player:GetFullHP()*0.40
-			if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
+			if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
 			vampiricAttacks=2
 			end
 		if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
