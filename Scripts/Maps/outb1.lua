@@ -9,10 +9,10 @@ evt.map[102] = function()
 	if evt.Cmp("LevelBonus", 15) then
 		evt.StatusText(10)         -- "Refreshing!"
 	else if evt.Cmp("Gold", 15000) then
+			evt.Subtract("Gold", 15000)
 			evt.ForPlayer("All")
 			evt.Set("LevelBonus", 15)
-			evt.Subtract("Gold", 15000)
-			Game.ShowStatusText("+15 Level temporary.  Look Out! (-15000 Gold")
+			Game.ShowStatusText("+15 Level temporary.  Look Out! (-15000 Gold)")
 			evt.Set("AutonotesBits", 47)         -- "30 Temporary levels from the western well in the town of Kriegspire."
 			evt.SummonMonsters{TypeIndexInMapStats = 3, Level = 3, Count = 2, X = -13280, Y = 19696, Z = 160}
 			evt.SummonMonsters{TypeIndexInMapStats = 3, Level = 3, Count = 2, X = -13368, Y = 18096, Z = 160}
