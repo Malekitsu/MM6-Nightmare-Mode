@@ -1747,6 +1747,48 @@ data=WhoHitMonster()
 	end
 end
 
+--MANA COST CHANGE 
+--spell cost increase dictionary
+function events.GameInitialized2()
+	spellCostNormal={}
+	spellCostExpert={}
+	spellCostMaster={}
+	for i=1,99 do
+	spellCostNormal[i] = Game.SpellsTxt[i]["SpellPointsNormal"]
+	spellCostExpert[i] = Game.SpellsTxt[i]["SpellPointsExpert"]
+	spellCostMaster[i] = Game.SpellsTxt[i]["SpellPointsMaster"]
+	end
+end
+
+--adjust mana cost
+function events.Tick()
+	index=Game.CurrentPlayer
+	if index>=0 and index<=3 then
+		if SETTINGS["SorcererAsNecromancer"]==true and math.floor(Party[index].Class/3)==2 then 
+			mastery=Party[index].Skills[const.Skills.Thievery]
+			masteryS,MasteryM=SplitSkill(mastery)
+			for i=1,99 do
+				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
+				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
+				Game.SpellsTxt[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
+			end
+		elseif (Party[index].Class==12 or Party[index].Class==13 or Party[index].Class==14) and SETTINGS["ArcherAsAssassin"]==true and comboPoint[index]==5 then
+			for i=1,99 do
+				Game.SpellsTxt[i]["SpellPointsNormal"]=0
+				Game.SpellsTxt[i]["SpellPointsExpert"]=0
+				Game.SpellsTxt[i]["SpellPointsMaster"] =0
+			end			
+		else
+			for i=1,99 do
+				Game.SpellsTxt[i]["SpellPointsNormal"]=spellCostNormal[i]
+				Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
+				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
+			end
+		end
+	end
+end
+
+
 --[[dark containment black hole
 function events.CalcDamageToMonster(t)
 data=WhoHitMonster()
