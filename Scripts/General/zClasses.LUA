@@ -655,39 +655,7 @@ function events.CalcSpellDamage(t)
 		t.Result=t.Result+(spellCost^0.7*masteryS)
 	end	
 end
---spell cost increase dictionary
-function events.GameInitialized2()
-	spellCostNormal={}
-	spellCostExpert={}
-	spellCostMaster={}
-	for i=1,99 do
-	spellCostNormal[i] = Game.SpellsTxt[i]["SpellPointsNormal"]
-	spellCostExpert[i] = Game.SpellsTxt[i]["SpellPointsExpert"]
-	spellCostMaster[i] = Game.SpellsTxt[i]["SpellPointsMaster"]
-	end
-end
 
---adjust mana cost
-function events.Tick()
-	index=Game.CurrentPlayer
-	if index>=0 and index<=3 then
-		if NECROMANCER==true and math.floor(Party[index].Class/3)==2 then 
-			mastery=Party[index].Skills[const.Skills.Thievery]
-			masteryS,MasteryM=SplitSkill(mastery)
-			for i=1,99 do
-				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
-				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
-				Game.SpellsTxt[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
-			end
-		else
-			for i=1,99 do
-				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostNormal[i]
-				Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
-				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
-			end
-		end
-	end
-end
 
 --leech 3% of damage and replenish 3% mana if spell kills an enemy
 function events.CalcSpellDamage(t)
