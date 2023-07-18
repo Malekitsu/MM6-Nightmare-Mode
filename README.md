@@ -13,6 +13,8 @@ Note to users
  - Added shortcut for master healer and duper (ALT+F9)
  - Reduced master healer price by 30%
  - Fix to Armageddon bug
+ - Assassin 5 combo point spell danage reduced to 200% (was 250)  but now costs no mana
+ - Fixed seraphim Aegis bug
 ### New Game+ Changes
  - Major performance improvement
  - Fix to Light description
