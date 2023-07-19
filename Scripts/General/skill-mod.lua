@@ -3104,8 +3104,10 @@ if SETTINGS["StatsRework"]==true then
 				crit2=true
 			end
 			i=data.Player:GetIndex()
-			if comboPoint[i]==nil then
-				comboPoint[i]=0
+			if SETTINGS["ArcherAsAssassin"]==true then
+				if comboPoint[i]==nil then
+					comboPoint[i]=0
+				end
 			end
 			if crit or crit2 then
 				if (data.Player.Class==12 or data.Player.Class==13 or data.Player.Class==14) and SETTINGS["ArcherAsAssassin"]==true then
