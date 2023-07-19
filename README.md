@@ -15,6 +15,8 @@ Note to users
  - Fix to Armageddon bug
  - Assassin 5 combo point spell danage reduced to 200% (was 250)  but now costs no mana
  - Fixed seraphim Aegis bug
+ - Fix to slow spell sometimes giving error
+   
 ### New Game+ Changes
  - Major performance improvement
  - Fix to Light description
