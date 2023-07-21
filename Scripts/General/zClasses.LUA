@@ -191,7 +191,7 @@ function events.CalcSpellDamage(t)
 			end
 		end			
 	elseif comboPoint[i]<=5 then
-        t.Result=t.Result*(1+0.2*comboPoint[i]+mastery*comboPoint[i])
+        t.Result=t.Result*(1+0.2*comboPoint[i]+mastery*comboPoint[i]*0.01)
 		comboPoint[i]=0		
 	end
 		comboPoint[i]=0
