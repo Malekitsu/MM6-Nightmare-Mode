@@ -35,13 +35,13 @@ function events.GenerateItem(t)
 			t.Strength=t.Strength-1
 		end
 	end
-				if t.Item.Number>580 then
-	t.Item.Number=0
+	if t.Item.Number>580 then
+		t.Item.Number=0
 	end
 
 end
 
-function events.ItemGenerated(t)	
+function events.ItemGenerated(t)		
 	if t.Item.Number<=134 then
 
 						if t.Item.Number>580 then
@@ -82,9 +82,18 @@ function events.ItemGenerated(t)
 			end
 		end
 		
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			t.Item.BonusStrength=math.round(t.Item.BonusStrength*1.2)
+			local charges=t.Item.Charges%14
+			t.Item.Charges=math.round((t.Item.Charges-charges)*1.2)+charges
+		end
+		
 		--chance for ancient item, only if bonus 2 is spawned
 		if t.Item.Bonus2~=0 then 
 			ancient=math.random(1,50)
+			if SETTINGS["TRUENIGHTMARE"]==true then
+				ancient=math.random(1,25)
+			end
 			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" or Game.Map.Name=="zddb09.blv" then
 				t.Item.Charges=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
@@ -97,6 +106,9 @@ function events.ItemGenerated(t)
 		
 		--primordial item
 		primordial=math.random(1,200)
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			primordial=math.random(1,100)
+		end
 		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
 			t.Item.Charges=math.random(547,560)
 			t.Item.Bonus=math.random(1,14)
@@ -577,29 +589,28 @@ if SETTINGS["255MOD"]~=true then
 		extrabonus=extrabonus/2
 	end
 	if item.Item.Number<135 then	
-		if (bonus>25 and extrabonus>25) or (bonus+extrabonus>50 and item.Item.Bonus~=0) then
+		if ((bonus>25 and extrabonus>25) or (bonus+extrabonus>50 and item.Item.Bonus~=0)) and item.Item.Bonus2~=0 then
 			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
 			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
-			
-			elseif bonuses==3 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
-				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
-			elseif bonuses==2 then
-				Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
-				if item.Item.Bonus2==0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
-					elseif item.Item.Bonus2>0 then
-						Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
-				end
-			elseif bonuses==1 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
-				if item.Item.Bonus>0 then
-					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
-					elseif item.Item.Bonus2>0 then
-						Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
-				end
-			elseif bonuses==0 then
-				Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
+		elseif bonuses==3 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(163,53,238,string.format("%s", itemName[item.Item.Number]))
+			Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(163,53,238,enchantAdd2[item.Item.Bonus2-1])
+		elseif bonuses==2 then
+			Game.ItemsTxt[item.Item.Number].Name = StrColor(0,150,255,string.format("%s", itemName[item.Item.Number]))
+			if item.Item.Bonus2==0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd[item.Item.Bonus-1])
+				elseif item.Item.Bonus2>0 then
+					Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(0,150,255,enchantAdd2[item.Item.Bonus2-1])
+			end
+		elseif bonuses==1 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(30,255,0,string.format("%s", itemName[item.Item.Number]))
+			if item.Item.Bonus>0 then
+				Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(30,255,0,enchantAdd[item.Item.Bonus-1])
+				elseif item.Item.Bonus2>0 then
+					Game.SpcItemsTxt[item.Item.Bonus2-1].NameAdd = StrColor(30,255,0,enchantAdd2[item.Item.Bonus2-1])
+			end
+		elseif bonuses==0 then
+			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,255,255,string.format("%s", itemName[item.Item.Number]))
 		end
 	end
 	--name colour for artifacts/relics
