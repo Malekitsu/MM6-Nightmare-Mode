@@ -665,7 +665,11 @@ function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
 	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 	fullHP=data.Player:GetFullHP()
+	if SETTINGS["TRUENIGHTMARE"]==true then
+	data.Player.HP=math.min(data.Player.HP+t.Result*0.015,fullHP)
+	else
 	data.Player.HP=math.min(data.Player.HP+t.Result*0.03,fullHP)
+	end
 	--get endurance 
 	endurance=data.Player:GetEndurance()
 	if data.Player.HP>-endurance then
