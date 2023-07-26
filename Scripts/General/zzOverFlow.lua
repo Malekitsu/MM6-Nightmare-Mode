@@ -178,7 +178,12 @@ end
 function events.LoadMap()
 	if vars.TRUENIGHTMARE==true and SETTINGS["TRUENIGHTMARE"]~=true then
 		Sleep(1)
-		Message("this is a TRUE NIGHTMARE save. Activate it in mm6.ini")
+		Message("this is a True Nightmare save. ACTIVATE it in mm6.ini")
+		Game.ExitMapAction=7
+	end
+	if vars.TRUENIGHTMARE==nil and SETTINGS["TRUENIGHTMARE"]==true then
+		Sleep(1)
+		Message("this is NOT a True Nightmare save. DEACTIVATE it in mm6.ini")
 		Game.ExitMapAction=7
 	end
 end
