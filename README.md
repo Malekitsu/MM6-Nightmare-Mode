@@ -8,6 +8,11 @@ Names are not ordered by importance: everyone had a key role and put a lot of ef
 Note to users
 ## Patch 2.1.9 Changelog
  - Added True Nightmare Mode
+   - Damage Done decreased by 30%
+   - Damage Taken increased by 30%
+   - Healing done reduced by 30%
+   - Enchantment Strength of base items increased by 20%
+   - Chance for Ancient and Primordial items doubled
 
 ## Patch 2.1.8 Changelog
 ### General Changes
