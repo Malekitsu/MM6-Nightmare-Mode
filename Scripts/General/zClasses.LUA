@@ -593,6 +593,9 @@ if FHPx > from then
 chance=mastery*3+5
 			if math.random(1,200)<chance then
 					heal=t.Result-t.Player.LevelBase*0.5-t.Player.HP
+					if SETTINGS["TRUENIGHTMARE"]==true then
+						heal=heal*(1-diffMod)
+					end
 					evt[t.PlayerIndex].Add("HP",heal)
 			Game.ShowStatusText("Forces of Nature saves you from lethal damage")
 	end
