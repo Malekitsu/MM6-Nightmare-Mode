@@ -1728,6 +1728,9 @@ data=WhoHitMonster()
 		skill=data.Player.Skills[const.Skills.Dark]
 		s, m=SplitSkill(skill)
 		killChance= 30/(30+t.Monster.Level+t.Monster.MagicResistance)*((0.02+m*0.01)*s)
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			killChance=killChance/2
+		end		
 		roll=math.random()
 		if roll<killChance then
 			data.Object.Type=9060
