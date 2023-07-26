@@ -517,8 +517,12 @@ function events.CalcDamageToMonster(t)
 			end
 		if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
 		vampiricAttacks=vampiricAttacks-1
+		if SETTINGS["TRUENIGHTMARE"]==true then
+		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
+		else
 		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
 		end
+	end
 end
 
 function events.GameInitialized2()
