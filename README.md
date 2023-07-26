@@ -6,6 +6,9 @@ Creators: Tnevolin, Rawsugar, Malekith, Eksekk, Raekuul.
 Names are not ordered by importance: everyone had a key role and put a lot of effort into this.
 
 Note to users
+## Patch 2.1.9 Changelog
+ - Added True Nightmare Mode
+
 ## Patch 2.1.8 Changelog
 ### General Changes
  - Fix to critical damage
