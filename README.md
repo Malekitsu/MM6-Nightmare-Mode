@@ -11,6 +11,7 @@ Note to users
    - Damage Done decreased by 30%
    - Damage Taken increased by 30%
    - Healing done reduced by 30%
+   - Leech effects reduced by 50%
    - Enchantment Strength of base items increased by 20%
    - Chance for Ancient and Primordial items doubled
 
