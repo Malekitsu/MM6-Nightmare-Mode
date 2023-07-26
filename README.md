@@ -12,6 +12,7 @@ Note to users
    - Damage Taken increased by 30%
    - Healing done reduced by 30%
    - Leech effects reduced by 50%
+   - Finger of dead chance halved
    - Enchantment Strength of base items increased by 20%
    - Chance for Ancient and Primordial items doubled
 
