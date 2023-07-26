@@ -19,8 +19,6 @@ local training = {
 
 local spellTxtIds = {}
 
-local DifficultyModifier = SETTINGS["DifficultyModifier"]
-
 -- helper functions
 
 local function GetPlayer(p)
@@ -934,12 +932,12 @@ end
 
 	if attackType == 0 then
 		-- primary attack is calculated correctly
-		damage = damage * DifficultyModifier
+		damage = damage 
 		return damage
 	elseif attackType == 1 then
 		-- secondary attach uses attack1 DamageAdd
 		-- replace Attack1.DamageAdd with Attack2.DamageAdd
-		damage = (damage - monster.Attack1.DamageAdd + monster.Attack2.DamageAdd) * DifficultyModifier
+		damage = (damage - monster.Attack1.DamageAdd + monster.Attack2.DamageAdd) 
 		return damage
 	elseif attackType == 2 and (monster.Spell == 44 or monster.Spell == 95) then
 		-- don't recalculate Mass Distortion or Finger of Death
@@ -950,9 +948,9 @@ end
 
 	local spellSkill, spellMastery = SplitSkill(monster.SpellSkill)
 	if SETTINGS["ItemRework"]==true and SETTINGS["StatsRework"]==true then
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) * (Mlevel^1.2/1000+1) 
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * ((Mlevel/20)+0.75) * (Mlevel^1.2/1000+1) 
 	else
-	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0) * DifficultyModifier * ((Mlevel/20)+0.75) 
+	damage = Game.CalcSpellDamage(monster.Spell, spellSkill, spellMastery, 0)  * ((Mlevel/20)+0.75) 
 	end
 	
 	return damage
