@@ -160,6 +160,10 @@ function modifiedDrawMonsterInfoName(d, def, dialog, font, left, top, color, str
 
 		damageString[j] = dice[j] .. "D" .. sides[j] .. "+" .. add[j]
 		low[j], high[j] = calculateProbableRange(dice[j], sides[j])
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			low[j]=low[j]*(1+diffMod)
+			high[j]=high[j]*(1+diffMod)
+		end
 	end
 
 	-- invoke original function
