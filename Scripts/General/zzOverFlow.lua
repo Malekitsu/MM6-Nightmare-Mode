@@ -163,6 +163,22 @@ if SETTINGS["TRUENIGHTMARE"]==true then
 
 	function events.CalcDamageToMonster(t)
 		t.Result=t.Result*(1-diffMod)
+		--nerf to vampiric
+		data=WhoHitMonster()
+		leech=0
+		if data and data.Player then
+			for it in data.Player:EnumActiveItems() do
+				if it.Bonus2 == 16 or it.Bonus2 == 41 then
+					if t.Result<t.Monster.HP then
+						leech=1
+					end
+				end
+			end
+		end
+		if leech==1 then
+			data.Player.HP=data.Player.HP-t.Result*0.05
+		end
+		leech=0
 	end
 
 	function events.CalcDamageToPlayer(t)
