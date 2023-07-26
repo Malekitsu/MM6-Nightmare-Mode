@@ -1,3 +1,6 @@
+diffIncrease=30
+diffMod=diffIncrease/100
+
 PowerCureOverflow=SETTINGS["PowerCureOverflow"]
 function events.HealingSpellPower(t)
   if t.Spell == 54 then
@@ -66,14 +69,21 @@ function events.HealingSpellPower(t)
 		end
 	end
 	
-	
-	if roll<=luck+50 then
-	t.Result = t.Result+9*t.Skill*(1+bonus/500)*(1.5+bonus/500)*crownbonus*ringbonus*artifactbonus
-	Game.ShowStatusText("Critical Heal")
+	if SETTINGS["TRUENIGHTMARE"]~=true then
+		if roll<=luck+50 then
+		t.Result = t.Result+9*t.Skill*(1+bonus/500)*(1.5+bonus/500)*crownbonus*ringbonus*artifactbonus
+		Game.ShowStatusText("Critical Heal")
+		else
+		t.Result = t.Result+9*t.Skill*(1+bonus/500)*crownbonus*ringbonus*artifactbonus
+		end
 	else
-	t.Result = t.Result+9*t.Skill*(1+bonus/500)*crownbonus*ringbonus*artifactbonus
+		if roll<=luck+50 then
+		t.Result = t.Result+9*t.Skill*(1+bonus/500)*(1.5+bonus/500)*crownbonus*ringbonus*artifactbonus*(1-diffMod)
+		Game.ShowStatusText("Critical Heal")
+		else
+		t.Result = t.Result+9*t.Skill*(1+bonus/500)*crownbonus*ringbonus*artifactbonus*(1-diffMod)
+		end
 	end
-
 end
 
 
@@ -143,3 +153,32 @@ end
 end
 end
 
+--changes for TRUE NIGHTMARE MODE
+if SETTINGS["TRUENIGHTMARE"]==true then
+	function events.HealingSpellPower(t)
+		if t.Spell ~= 54 then
+			t.Result=t.Result*(1-diffMod)
+		end
+	end
+
+	function events.CalcDamageToMonster(t)
+		t.Result=t.Result*(1-diffMod)
+	end
+
+	function events.CalcDamageToPlayer(t)
+		t.Result=t.Result*(1+diffMod)
+	end
+	
+	function events.BeforeNewGameAutosave() 
+		vars.TRUENIGHTMARE=true
+	end
+end
+
+
+function events.LoadMap()
+	if vars.TRUENIGHTMARE==true and SETTINGS["TRUENIGHTMARE"]~=true then
+		Sleep(1)
+		Message("this is a TRUE NIGHTMARE save. Activate it in mm6.ini")
+		Game.ExitMapAction=7
+	end
+end
