@@ -13,6 +13,7 @@ Note to users
    - Healing done reduced by 30%
    - Leech effects reduced by 50%
    - Finger of dead chance halved
+   - Can't Save, use Town Portal nor Lloyd Beacon when enemies in the nearbies (yellow dot)
    - Enchantment Strength of base items increased by 20%
    - Chance for Ancient and Primordial items doubled
 
