@@ -46,7 +46,9 @@ local baseArmorMultiplier = 1
 -- Gold and Experience will always set calculated (to permit Zero Monster EXP games)
 local baseGoldMultiplier = 2
 local baseExperienceMultiplier = SETTINGS["MonsterExperienceMultiplier"]
-
+if SETTINGS["TRUENIGHTMARE"]==true then
+	baseExperienceMultiplier=1
+end
 local dmesg = ''
 
 -- masteries text
@@ -799,6 +801,7 @@ function events.AfterLoadMap()
 				Map.Monsters[i].Attack2.DamageAdd = Map.Monsters[i].Attack2.DamageAdd * DamageMultiplier
 				d=Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
 				Map.Monsters[i].Attack2.DamageDiceSides = Map.Monsters[i].Attack2.DamageDiceSides * DamageMultiplier
+				
 				--OVERFLOW FIX
 					a=0
 					b=0
@@ -1205,3 +1208,10 @@ if SETTINGS["255MOD"]==true then
 	end
 end
 
+--Experience fix in true nightmare
+function events.GameInitialized2()
+	for i=1, 173 do
+		mon=Game.MonstersTxt[i]
+		mon.Experience=mon.Level^1.8+mon.Level*20
+	end
+end
