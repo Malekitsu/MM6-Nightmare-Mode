@@ -12,10 +12,12 @@ Note to users
    - Damage Taken increased by 30%
    - Healing done reduced by 30%
    - Leech effects reduced by 50%
-   - Finger of dead chance halved
+   - Experience slighty reduced (more noticeably early-mid game)
+   - Finger of Death chance halved
    - Can't Save, use Town Portal nor Lloyd Beacon when enemies in the nearbies (yellow dot)
    - Enchantment Strength of base items increased by 20%
    - Chance for Ancient and Primordial items doubled
+   - True Nightmare can't be disabled nor enabled midway, to play it you have to restart with new game.
 
 ## Patch 2.1.8 Changelog
 ### General Changes
