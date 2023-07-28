@@ -567,7 +567,7 @@ if not table.find({cs.ArmorClass, cs.MeleeDamageMin, cs.MeleeDamageMax, cs.Melee
 --required to correct tooltip of unequipped items
 	if itemindex<=119 then
 	Game.ItemsTxt[itemindex].Mod2=listMod2[itemindex]
-	Game.ItemsTxt[i].Mod1DiceSides=listDiceSides[i]
+	Game.ItemsTxt[itemindex].Mod1DiceSides=listDiceSides[itemindex]
 	itemindex=itemindex+1
 	end
 	if itemindex>=119 then
