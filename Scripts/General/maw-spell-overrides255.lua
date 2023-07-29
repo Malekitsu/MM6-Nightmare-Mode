@@ -1,3 +1,20 @@
+local u1, u2, u4, i1, i2, i4 = mem.u1, mem.u2, mem.u4, mem.i1, mem.i2, mem.i4
+local hook, autohook, autohook2, asmpatch = mem.hook, mem.autohook, mem.autohook2, mem.asmpatch
+local StaticAlloc = mem.StaticAlloc
+local max, min, floor, ceil, round, random = math.max, math.min, math.floor, math.ceil, math.round, math.random
+local format = string.format
+
+local mmver = offsets.MMVersion
+
+-- returns party index
+local function getSlot(player)
+	for i, pl in Party do
+		if pl == player then
+			return i
+		end
+	end
+end
+
 --[[ 
 	Skill Emphasis Mod - RawSugar's Spell Overrides
 	Supersedes various parts of Core; segments list lines to remove from 0.8.2
@@ -1205,19 +1222,44 @@ local healingSpellPowers =
 						
 }						
 
+local function getSpellQueueData(spellQueuePtr, targetPtr)
+	local t = {Spell = i2[spellQueuePtr], Caster = Party.PlayersArray[i2[spellQueuePtr + 2]]}
+	t.SpellSchool = ceil(t.Spell / 11)
+	local flags = u2[spellQueuePtr + 8]
+	if flags:And(0x10) ~= 0 then -- caster is target
+		t.Caster = Party[i2[spellQueuePtr + 4]]
+	end
+    t.CasterIndex = getSlot(t.Caster)
+
+	if flags:And(1) ~= 0 then
+		t.FromScroll = true
+		t.Skill, t.Mastery = SplitSkill(u2[spellQueuePtr + 0xA])
+	else
+		if mmver > 6 then
+			t.Skill, t.Mastery = SplitSkill(t.Caster:GetSkill(const.Skills.Fire + t.SpellSchool - 1))
+		else -- no GetSkill
+			t.Skill, t.Mastery = SplitSkill(t.Caster.Skills[const.Skills.Fire + t.SpellSchool - 1])
+		end
+	end
+
+	local targetIdKey = mmv("TargetIndex", "TargetIndex", "TargetRosterId")
+	if targetPtr then
+		if type(targetPtr) == "number" then
+			t[targetIdKey], t.Target = internal.GetPlayer(targetPtr)
+		else
+			t[targetIdKey], t.Target = targetPtr:GetIndex(), targetPtr
+		end
+	else
+		local pl = Party[i2[spellQueuePtr + 4]]
+		t[targetIdKey], t.Target = pl:GetIndex(), pl
+	end
+	return t
+end
+
 -- def is addHP()
 local function modifiedHealCharacterWithSpell(d, def, targetPtr, amount)
-	local t = {Result = amount}
-	local spellStructurePtr = d.ebx
-	t.TargetIndex, t.Target = GetPlayer(targetPtr) -- also index u2[spellStructurePtr + 4]
-	t.Spell = mem.u2[spellStructurePtr]
-	t.CasterIndex, t.Caster = mem.u2[spellStructurePtr + 2], Party.PlayersArray[mem.u2[spellStructurePtr + 2] ]
-	if mem.u1[spellStructurePtr + 8]:And(1) ~= 0 then -- casted by scroll?
-		t.Skill, t.Mastery = SplitSkill(mem.u1[spellStructurePtr + 10])
-		t.FromScroll = true
-	else
-		t.Skill, t.Mastery = SplitSkill(t.Caster.Skills[const.Skills.Fire + math.ceil(t.Spell / 11) - 1])
-	end
+	local t = getSpellQueueData(d.ebx, targetPtr)
+	t.Result = amount
 	events.call("HealingSpellPower", t)
 	def(targetPtr, t.Result)
 end
@@ -1227,11 +1269,8 @@ mem.hookcall(0x427FFB, 1, 1, modifiedHealCharacterWithSpell) -- healing touch + 
 mem.hookcall(0x4285D7, 1, 1, modifiedHealCharacterWithSpell) -- power cure + maybe more, power cure amount is per player
 mem.hookcall(0x4299A9, 1, 1, modifiedHealCharacterWithSpell) -- moon ray + maybe more, moon ray amount is per player
 mem.autohook(0x4271DC, function(d) -- shared life, amount is total
-	local t = {Result = mem.u4[d.esp + 0x28]}
-	local spellStructurePtr = d.ebx
-	t.Spell = mem.u2[spellStructurePtr]
-	t.CasterIndex, t.Caster = mem.u2[spellStructurePtr + 2], Party.PlayersArray[mem.u2[spellStructurePtr + 2] ]
-	t.Skill, t.Mastery = SplitSkill(t.Caster.Skills[const.Skills.Spirit])
+	local t = getSpellQueueData(d.ebx)
+	t.Result = mem.u4[d.esp + 0x28]
 	events.call("HealingSpellPower", t)
 	mem.u4[d.esp + 0x28] = t.Result
 end)
@@ -1278,15 +1317,8 @@ end
 
 -- removeConditionBySpell()
 mem.hookfunction(0x484840, 1, 3, function(d, def, playerPtr, cond, timeLow,  timeHigh)
-	local t = {Condition = cond, Spell = mem.u2[d.ebx]}
-	t.CasterIndex, t.Caster = mem.u2[d.ebx + 2], Party.PlayersArray[mem.u2[d.ebx + 2] ]
-	t.TargetIndex, t.Target = GetPlayer(playerPtr)
-	if mem.u1[d.ebx + 8]:And(1) ~= 0 then -- casted by scroll?
-		t.Skill, t.Mastery = SplitSkill(mem.u1[d.ebx + 10])
-		t.FromScroll = true
-	else
-		t.Skill, t.Mastery = SplitSkill(t.Caster.Skills[const.Skills.Fire + math.ceil(t.Spell / 11) - 1])
-	end
+	local t = getSpellQueueData(d.ebx, playerPtr)
+	t.Condition = cond
 	-- time is calculated by subtracting spell's time limit from Game.Time, and then
 	-- checking if result is <= condition affect time,
 	-- so to calc spell time limit we need to subtract time from Game.Time
@@ -1376,6 +1408,17 @@ function events.CalcSpellDamage(t)
 		t.Result = t.HP*0.15+t.HP*t.Skill*0.01
 	end
 end
+
+-- Town Portal
+mem.autohook(0x425D3E, function (d)
+	local t = getSpellQueueData(d.ebx)
+	t.Can = true
+	events.cocall("CanCastTownPortal", t)
+	if not t.Can then
+		d:push(0x4297C1)
+		return true
+	end
+end)
 
 
 end
