@@ -58,7 +58,7 @@ end
 	Skill Emphasis Mod - RawSugar's Spell Overrides
 	Supersedes various parts of Core; segments list lines to remove from 0.8.2
 ]]
-if SETTINGS["255MOD"]~=true then
+
 -- set to true to show damage in the spell descriptions as a dice string
 local SHOW_DAMAGE_AS_DICE = SETTINGS["ShowDiceInSpellDescription"]
 local ADAPTIVE = string.lower(SETTINGS["AdaptiveMonsterMode"])
@@ -124,6 +124,12 @@ end
 
 local protectionSpellExtraMultiplier = 0
 
+-----------------255--------------------
+if SETTINGS["255MOD"]==true then
+	protectionSpellExtraMultiplier = 2
+end
+-----------------255 END--------------------
+
 local spellResists =
 {
 	["Harm"] = const.Damage.Phys,
@@ -159,6 +165,40 @@ local spellStatsBuffPowers =
 		["proportional"] = 1,
 	},
 }
+
+-----------------255--------------------
+if SETTINGS["255MOD"]==true then
+	spellBuffPowers =
+	{
+		-- Stone Skin
+		["StoneSkin"] =
+		{
+			["fixed"] = 5,
+			["proportional"] = 2,
+		},
+		-- Bless
+		["Bless"] =
+		{
+			["fixed"] = 5,
+			["proportional"] = 2,
+		},
+		-- Heroism
+		["Heroism"] =
+		{
+			["fixed"] = 5,
+			["proportional"] = 2,
+		},
+	}
+	spellStatsBuffPowers =
+	{
+		["StatsBuff"] =
+		{
+			["fixed"] = 5,
+			["proportional"] = 2,
+		},
+	}
+end
+-----------------255 END--------------------
 
 local function setProtectionSpellDescriptions(name, page, resist)
 	id = spellTxtIds[name]
@@ -303,6 +343,112 @@ local spellDescs = {
 		["Description"] = "Fires an ectoplasmic bolt of negative spiritual energy at a single target. The arrow causes 1-5 points of damage.",
 	},	
 }
+
+-----------------255--------------------
+if SETTINGS["255MOD"]==true then
+	spellDescs = {											
+	["Guardian Angel"] = {										
+		["Description"] = "The Guardian Angel spell helps to reduce the effects of death upon the party. First, the body is preserved from destruction by massive damage, such that only the mightiest of monsters will be able to kill characters outright. Secondly, it sets up a compact with Higher Powers to revive the Party at the last Temple that was visited (the cost of this service is half of the gold that the party has on hand upon death).\nThis compact lasts for one hour, plus five minutes per point of skill in Spirit Magic.",									
+		["Normal"] = "Party is revived at 1 HP each.",									
+		["Expert"] = "Party is revived at half HP.",									
+		["Master"] = "Party is revived at full HP."									
+	},										
+	["Stone Skin"] = {										
+		["Description"] = string.format("Increases the Armor Class of a character by %d + %d per point of skill in Earth Magic.", spellBuffPowers["StoneSkin"]["fixed"], spellBuffPowers["StoneSkin"]["proportional"])									
+	},										
+	["Bless"] = {										
+		["Description"] = string.format("Increases the Attack Bonus (both Melee and Bow) of a character by %d + %d per point of skill in Spirit Magic.",spellBuffPowers["Bless"]["fixed"], spellBuffPowers["Bless"]["proportional"])									
+	},										
+	["Heroism"] = {										
+		["Description"] = string.format("Increases the melee damage of a character by %d + %d per point of skill in Spirit Magic.", spellBuffPowers["Heroism"]["fixed"], spellBuffPowers["Heroism"]["proportional"])									
+	},										
+	["Healing Touch"] = {										
+		["Description"] = "Heals a single character. Skill increases the recovery rate of this spell.",									
+		["Normal"] = "Costs 50 SP.\nHeals 5+12 HP per skill level.",									
+		["Expert"] = "Costs 100 SP.\nHeals 10+18 HP per skill level.",									
+		["Master"] = "Costs 200 SP.\nHeals 15+26 HP per skill level.",									
+	},										
+	["First Aid"] = {										
+		["Description"] = "Cheaply heals a single character. Skill increases the recovery rate of this spell.\nAt Master becomes Final Aid, healing a huge amount of health",									
+		["Normal"] = "Costs 100 SP.\nHeals 100+15/rank HP",									
+		["Expert"] = "Costs 100 SP.\nHeals 100+18/rank HP",									
+		["Master"] = "Final Aid: costs 250 SP.\nHeals 100+27 HP per skill level.",									
+	},										
+	["Cure Wounds"] = {										
+		["Description"] = "Heals a single character. Potency increases relative to the caster's skill in Body Magic.",									
+		["Normal"] = "Costs 16 SP.\nHeals 10 HP + 9 per point of skill.",									
+		["Expert"] = "Costs 16 SP.\nHeals 15 HP + 12 per point of skill.",									
+		["Master"] = "Costs 16 SP.\nHeals 25 HP + 16 per point of skill.",									
+	},										
+	["Power Cure"] = {										
+		["Description"] = "Cures hit points of all characters in your party at once. The number cured is equal to 10 plus 3 per point of skill in Body Magic.",									
+		["Normal"] = "Costs 30 SP.\nHeals 10+3 HP per skill level.",									
+		["Expert"] = "Costs 200 SP.\nHeals 10+6 HP per skill level.",									
+		["Master"] = "Costs 200 SP.\nHeals 10+7 HP per skill level.",									
+	},										
+		["Resurrection"] = {									
+		["Description"] = "The final healing magic. Resurrects an eradicated (body destroyed) character if you cast this spell in time. The greater the skill and rank in Spirit Magic the longer the condition could have been present before the 'point of no return' is reached. After that, the only way to resurrect the character is to visit a temple. Casting this spell will leave your character in the weak condition.",									
+		["Normal"] = "Works if eradicated less than 3 minutes per point of skill.\nHeals 50 HP + 15 per point of skill.",									
+		["Expert"] = "Works if eradicated less than 1 hour per point of skill.\nHeals 100 HP + 20 per point of skill.",									
+		["Master"] = "Works if eradicated less than 1 day per point of skill.\nHeals 150 HP + 25 per point of skill.",									
+	},										
+	["Shared Life"] = {										
+		["Description"] = "Shared Life combines the life force of your characters and redistributes it amongst them as evenly as possible. All current hit points are totaled and 9 extra point per point of skill in Spirit Magic is added to this total. Then the points are distributed back to the characters, with no individual character being allowed to have more points than his maximum total hit points.",									
+		["Normal"] = "Moderate recovery rate. Heals 9 points pr rank.",									
+		["Expert"] = "Faster recovery rate. Heals 12 points pr rank.",									
+		["Master"] = "Fastest recovery rate. Heals 15 points pr rank.",									
+	},										
+	["Cure Poison"] = {										
+		["Description"] = "Heals and cures poison in a character if you cast this spell in time. The greater the skill and rank in Body Magic the longer the character could have been poisoned before the 'point of no return' is reached. After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",									
+		["Normal"] = "Works if poisoned less than 3 minutes per point of skill\nHeals 215 HP.",									
+		["Expert"] = "Works if poisoned less than 1 hour per point of skill\nHeals 430 HP.",									
+		["Master"] = "Works if poisoned less than 1 day per point of skill\nHeals 665 HP.",									
+	},										
+		["Cure Insanity"] = {									
+		["Description"] = "Heals and cures insanity if you cast this spell in time. The greater the skill and rank in Mind Magic the longer the character could have been insane before the 'point of no return' is reached. After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",									
+		["Normal"] = "Works if insane less than 3 minutes per point of skill\nCosts 40 SP.\nHeals 15+12 HP per point of skill.",									
+		["Expert"] = "Works if insane less than 1 hour per point of skill\nCosts 80 SP.\nHeals 25+16 HP per point of skill.",									
+		["Master"] = "Works if insane less than 1 day per point of skill\nCosts 160 SP.\nHeals 35+20 HP per point of skill.",									
+	},										
+			["Remove Fear"] = {								
+		["Description"] = "Heals and removes fear if you cast this spell in time. The greater the skill and rank in Mind Magic the longer the character could have been insane before the 'point of no return' is reached. After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",									
+		["Normal"] = "Works if afraid less than 3 minutes per point of skill\nCosts 6 SP.\nHeals 200 HP.",									
+		["Expert"] = "Works if afraid less than 1 hour per point of skill\nCosts 6 SP.\nHeals 400 HP.",									
+		["Master"] = "Works if afraid less than 1 day per point of skill\nCosts 6 SP.\nHeals 650 HP.",									
+	},										
+			["Remove Curse"] = {								
+		["Description"] = "Heals and removes the cursed condition from a character if you cast this spell in time. The greater the skill and rank in Spirit Magic the longer the condition could have been present before the 'point of no return' is reached. After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",									
+		["Normal"] = "Works if cursed less than 3 minutes per point of skill\nCosts 12 SP.\nHeals 300 HP.",									
+		["Expert"] = "Works if cursed less than 1 hour per point of skill\nCosts 24 SP.\nHeals 600 HP.",									
+		["Master"] = "Works if cursed less than 1 day per point of skill\nCosts 48 SP.\nHeals 1000 HP.",									
+	},										
+			["Cure Disease"] = {								
+		["Description"] = "Heals and cures disease in a character if you cast this spell in time. The greater the skill and rank in Body Magic the longer the character could have been diseased before the 'point of no return' is reached. After that, the only way to remove the condition short of Divine Intervention is to visit a temple.",									
+		["Normal"] = "Works if cursed less than 3 minutes per point of skill\nHeals 265 HP.",									
+		["Expert"] = "Works if cursed less than 1 hour per point of skill\nHeals 475 HP.",									
+		["Master"] = "Works if cursed less than 1 day per point of skill\nHeals 745 HP.",									
+	},										
+			["Flame Arrow"] = {								
+		["Description"] = "Creates and fires a single flaming arrow. The arrow does 6 + 1-2 points of damage per skill.",									
+		["Normal"] = "The arrow does 45 + 1-8 points of damage per skill.",									
+		["Expert"] = "The arrow does 100 + 1-12 points of damage per skill",									
+		["Master"] = "The arrow does 175 + 1-20 points of damage per skill",									
+	},										
+			["Magic Arrow"] = {								
+		["Description"] = "Creates and fires a single magical arrow. Also unlike most spells, Magic Arrow is free to cast when you become a Master of Earth. The arrow does 6 + 1 points of damage per skill.",									
+		["Normal"] = "The arrow does 45 + 1-8 points of damage per skill.",									
+		["Expert"] = "The arrow does 100 + 1-12 points of damage per skill",									
+		["Master"] = "The arrow does 175 + 1-20 points of damage per skill",									
+	},
+			["Spirit Arrow"] = {								
+		["Description"] = "Fires an ectoplasmic bolt of negative spiritual energy at a single target. The arrow causes 1-5 points of damage.",									
+		["Normal"] = "The arrow does 45 + 1-8 points of damage per skill.",									
+		["Expert"] = "The arrow does 100 + 1-12 points of damage per skill",									
+		["Master"] = "The arrow does 175 + 1-20 points of damage per skill",									
+	},										
+	}											
+---------------255 END--------------
+
 
 local SC = 0
 local SD = 1
@@ -579,6 +725,285 @@ local spellPowers =
 	},
 }
 
+-----------------255--------------------
+if SETTINGS["255MOD"]==true then
+	spellCosts =											
+	{											
+		-- healing spells										
+		["Healing Touch"] = {["Normal"] = 50, ["Expert"] = 100, ["Master"] = 200},										
+		["Cure Wounds"] = {["Normal"] = 16, ["Expert"] = 16, ["Master"] = 16},										
+		["First Aid"] = {["Normal"] = 100, ["Expert"] = 100, ["Master"] = 250},										
+		["Remove Fear"] = {["Normal"] = 6, ["Expert"] = 6, ["Master"] = 6},										
+		["Remove Curse"] = {["Normal"] = 25, ["Expert"] = 50, ["Master"] = 100},										
+		["Cure Insanity"] = {["Normal"] = 40, ["Expert"] = 80, ["Master"] = 160},										
+		["Resurrection"] = {["Normal"] = 200, ["Expert"] = 200, ["Master"] = 200},										
+		["Power Cure"] = {["Normal"] = 30, ["Expert"] = 100, ["Master"] = 200},										
+												
+		-- damage spells										
+		["Fireball"] = {["Normal"] = 50, ["Expert"] = 50, ["Master"] = 250},										
+		["Fire Blast"] = {["Normal"] = 50, ["Expert"] = 125, ["Master"] = 250},										
+		["Incinerate"] = {["Normal"] = 30, ["Expert"] = 100, ["Master"] = 250},										
+		["Inferno"] = {["Normal"] = 25, ["Expert"] = 50, ["Master"] = 100},										
+		["Ice Bolt"] = {["Normal"] = 11, ["Expert"] = 100, ["Master"] = 150},										
+		["Acid Burst"] = {["Normal"] = 50, ["Expert"] = 50, ["Master"] = 50},
+		["Ice Blast"] = {["Normal"] = 25, ["Expert"] = 250, ["Master"] = 250},										
+		["Fire Bolt"] = {["Normal"] = 25, ["Expert"] = 50, ["Master"] = 250},
+		["Ring of Fire"] = {["Normal"] = 100, ["Expert"] = 100, ["Master"] = 250},											
+		["Deadly Swarm"] = {["Normal"] = 100, ["Expert"] = 100, ["Master"] = 250},										
+		["Blades"] = {["Normal"] = 20, ["Expert"] = 200, ["Master"] = 250},										
+		["Rock Blast"] = {["Normal"] = 50, ["Expert"] = 150, ["Master"] = 250},										
+		["Mind Blast"] = {["Normal"] = 1, ["Expert"] = 1, ["Master"] = 25},										
+		["Lightning Bolt"] = {["Normal"] = 50, ["Expert"] = 50, ["Master"] = 50},										
+		["Implosion"] = {["Normal"] = 20, ["Expert"] = 250, ["Master"] = 250},										
+		["Moon Ray"] = {["Normal"] = 50, ["Expert"] = 50, ["Master"] = 50},										
+		["Dark Containment"] = {["Normal"] = 100, ["Expert"] = 75, ["Master"] = 50},										
+		["Poison Spray"] = {["Normal"] = 50, ["Expert"] = 50, ["Master"] = 250},										
+		["Sparks"] = {["Normal"] = 50, ["Expert"] = 150, ["Master"] = 250},										
+		["Shrapmetal"] = {["Normal"] = 75, ["Expert"] = 150, ["Master"] = 250},										
+		["Mass Distortion"] = {["Normal"] = 50, ["Expert"] = 150, ["Master"] = 250},										
+		["Toxic Cloud"] = {["Normal"] = 30, ["Expert"] = 100, ["Master"] = 100},										
+		["Flying Fist"] = {["Normal"] = 25, ["Expert"] = 35, ["Master"] = 50},	
+		["Psychic Shock"] = {["Normal"] = 75, ["Expert"] = 75, ["Master"] = 250},
+											
+												
+		--debuff spells										
+		["Slow"] = {["Master"] = 5},										
+		["Paralyze"] = {["Normal"] = 40, ["Expert"] = 40, ["Master"] = 40},										
+		["Mass Curse"] = {["Normal"] = 32, ["Expert"] = 32, ["Master"] = 32},										
+		["Shrinking Ray"] =  {["Normal"] = 32, ["Expert"] = 32, ["Master"] = 32},									
+												
+												
+	}											
+												
+	spellPowers =											
+	{											
+		-- Flame Arrow										
+		[2] =										
+		{										
+			[const.Novice] = {fixedMin = 45, fixedMax = 45, variableMin = 1, variableMax = 8, },									
+			[const.Expert] = {fixedMin = 100, fixedMax = 100, variableMin = 1, variableMax = 12, },									
+			[const.Master] = {fixedMin = 175, fixedMax = 175, variableMin = 1, variableMax = 20, },									
+		},										
+		-- Fire Bolt										
+		[4] =										
+		{										
+			[const.Novice] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 30, },									
+			[const.Master] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 40, },									
+		},										
+		--Fireball										
+		[6] =										
+		{										
+			[const.Novice] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 18, },									
+			[const.Master] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 36, },									
+		},										
+		-- Ring of Fire										
+		[7] =										
+		{										
+			[const.Novice] = {fixedMin = 46, fixedMax = 46, variableMin = 1, variableMax = 10, },									
+			[const.Expert] = {fixedMin = 46, fixedMax = 46, variableMin = 1, variableMax = 12, },									
+			[const.Master] = {fixedMin = 46, fixedMax = 46, variableMin = 1, variableMax = 17, },									
+		},										
+		-- Fire Blast										
+		[8] =										
+		{										
+			[const.Novice] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 18, },									
+			[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 21, },									
+		},										
+		-- Meteor Shower										
+		[9] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 4, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 6, },									
+		},										
+		-- Inferno										
+		[10] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 5, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 9, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 13, },									
+		},										
+		-- Incinerate										
+		[11] =										
+		{										
+			[const.Novice] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 21, },									
+			[const.Expert] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 37, },									
+			[const.Master] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 55, },									
+		},										
+		-- Static Charge										
+		[13] =										
+		{										
+			[const.Novice] = {fixedMin = 85, fixedMax = 85, variableMin = 3, variableMax = 3, },									
+			[const.Expert] = {fixedMin = 200, fixedMax = 200, variableMin = 4, variableMax = 4, },									
+			[const.Master] = {fixedMin = 350, fixedMax = 350, variableMin = 5, variableMax = 5, },									
+		},										
+		-- Sparks										
+		[15] =										
+		{										
+			[const.Novice] = {fixedMin = 3, fixedMax = 3, variableMin = 1, variableMax = 14, },									
+			[const.Expert] = {fixedMin = 3, fixedMax = 3, variableMin = 1, variableMax = 15, },									
+			[const.Master] = {fixedMin = 1, fixedMax = 1, variableMin = 1, variableMax = 16, },									
+		},										
+		-- Lightning Bolt										
+		[18] =										
+		{										
+			[const.Novice] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 24, },									
+			[const.Expert] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 27, },									
+			[const.Master] = {fixedMin = 15, fixedMax = 15, variableMin = 1, variableMax = 30, },									
+		},										
+		-- Implosion										
+		[20] =										
+		{										
+			[const.Novice] = {fixedMin = 18, fixedMax = 18, variableMin = 1, variableMax = 19, },									
+			[const.Expert] = {fixedMin = 18, fixedMax = 18, variableMin = 1, variableMax = 48, },									
+			[const.Master] = {fixedMin = 18, fixedMax = 18, variableMin = 1, variableMax = 56, },									
+		},										
+		-- Cold Beam										
+		[24] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 11, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 17, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 23, },									
+		},										
+		-- Poison Spray										
+		[26] =										
+		{										
+			[const.Novice] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 20, },									
+			[const.Expert] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 20, },									
+			[const.Master] = {fixedMin = 4, fixedMax = 4, variableMin = 1, variableMax = 20, },									
+		},										
+		-- Ice Bolt										
+		[28] =										
+		{										
+			[const.Novice] = {fixedMin = 12, fixedMax = 12, variableMin = 1, variableMax = 18, },									
+			[const.Expert] = {fixedMin = 22, fixedMax = 22, variableMin = 1, variableMax = 26, },									
+			[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 30, },									
+		},										
+		-- Acid Burst										
+		[30] =										
+		{										
+			[const.Novice] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 24, },									
+			[const.Expert] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 27, },									
+			[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 36, },									
+		},										
+		-- Ice Blast										
+		[32] =										
+		{										
+			[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 9, },									
+			[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 21, },									
+			[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 27, },									
+		},										
+		-- Magic Arrow										
+		[35] =										
+		{										
+			[const.Novice] = {fixedMin = 80, fixedMax = 80, variableMin = 2, variableMax = 2, },									
+			[const.Expert] = {fixedMin = 175, fixedMax = 175, variableMin = 3, variableMax = 3, },									
+			[const.Master] = {fixedMin = 300, fixedMax = 300, variableMin = 4, variableMax = 4, },									
+		},										
+		-- Deadly Swarm										
+		[37] =										
+		{										
+			[const.Novice] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 18, },									
+			[const.Expert] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 24, },									
+			[const.Master] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 30, },									
+		},										
+		-- Blades										
+		[39] =										
+		{										
+			[const.Novice] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 35, },									
+			[const.Master] = {fixedMin = 20, fixedMax = 20, variableMin = 1, variableMax = 45, },									
+		},										
+		-- Rock Blast										
+		[41] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 22, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 33, },									
+		},										
+		-- Death blossom										
+		[43] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 11, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 2, variableMax = 19, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 2, variableMax = 31, },									
+		},										
+		-- Spirit Arrow										
+		[45] =										
+		{										
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 14, },									
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 24, },									
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 1, variableMax = 30, },									
+		},										
+		-- Mind Blast										
+		[58] =										
+		{										
+			[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 15, },									
+			[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 25, },									
+			[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 45, },									
+		},										
+		-- Psychic Shock										
+		[65] =										
+		{										
+			[const.Novice] = {fixedMin = 47, fixedMax = 47, variableMin = 1, variableMax = 40, },									
+			[const.Expert] = {fixedMin = 47, fixedMax = 47, variableMin = 1, variableMax = 50, },									
+			[const.Master] = {fixedMin = 47, fixedMax = 47, variableMin = 1, variableMax = 70, },									
+		},										
+		-- Harm deals physical damage, so should use vanilla numbers										
+		[70] =										
+		{										
+			[const.Novice] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 10, },									
+			[const.Expert] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 13, },									
+			[const.Master] = {fixedMin = 8, fixedMax = 8, variableMin = 1, variableMax = 16, },									
+		},										
+		-- Flying Fist deals physical damage, so should use vanilla numbers										
+		[76] =										
+		{										
+			[const.Novice] = {fixedMin = 30, fixedMax = 30, variableMin = 1, variableMax = 18, },									
+			[const.Expert] = {fixedMin = 30, fixedMax = 30, variableMin = 1, variableMax = 22, },									
+			[const.Master] = {fixedMin = 30, fixedMax = 30, variableMin = 1, variableMax = 26, },									
+		},										
+		-- Destroy Undead										
+		[82] =										
+		{										
+			[const.Novice] = {fixedMin = 50, fixedMax = 50, variableMin = 1, variableMax = 40, },									
+			[const.Expert] = {fixedMin = 50, fixedMax = 50, variableMin = 1, variableMax = 60, },									
+			[const.Master] = {fixedMin = 50, fixedMax = 50, variableMin = 1, variableMax = 90, },									
+		},										
+		-- Prismatic Light										
+		[84] =										
+		{										
+			[const.Novice] = {fixedMin = 25, fixedMax = 25, variableMin = 1, variableMax = 7, },									
+			[const.Expert] = {fixedMin = 25, fixedMax = 25, variableMin = 1, variableMax = 14, },									
+			[const.Master] = {fixedMin = 25, fixedMax = 25, variableMin = 1, variableMax = 21, },									
+		},										
+		-- Sun Ray										
+		[87] =										
+		{										
+			[const.Novice] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 60, },									
+			[const.Expert] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 90, },									
+			[const.Master] = {fixedMin = 90, fixedMax = 90, variableMin = 1, variableMax = 120, },									
+		},										
+		--Toxic Cloud										
+		[90] =										
+		{										
+			[const.Novice] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 20, },									
+			[const.Expert] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 37, },									
+			[const.Master] = {fixedMin = 32, fixedMax = 32, variableMin = 1, variableMax = 43, },									
+		},										
+		-- Shrapmetal deals physical damage, so should use vanilla numbers										
+		[92] =										
+		{										
+			[const.Novice] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 12, },									
+			[const.Expert] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 13, },									
+			[const.Master] = {fixedMin = 6, fixedMax = 6, variableMin = 1, variableMax = 14, },									
+		},										
+	}											
+end
+-----------------255 END--------------------
 
 
 
@@ -1287,6 +1712,82 @@ local healingSpellPowers =
 	},
 	
 }
+
+-----------------255--------------------
+if SETTINGS["255MOD"]==true then
+	local healingSpellPowers =						
+	{						
+		[const.Spells.FirstAid] =					
+		{					
+			[const.Novice] = {fixedMin = 100, fixedMax = 100, variableMin = 15, variableMax = 15, },				
+			[const.Expert] = {fixedMin = 100, fixedMax = 100, variableMin = 18, variableMax = 18, },				
+			[const.Master] = {fixedMin = 100, fixedMax = 100, variableMin = 27, variableMax = 27, },				
+		},					
+		[const.Spells.RemoveCurse] =					
+		{					
+			[const.Novice] = {fixedMin = 300, fixedMax = 300, variableMin = 0, variableMax = 0, },				
+			[const.Expert] = {fixedMin = 600, fixedMax = 600, variableMin = 0, variableMax = 0, },				
+			[const.Master] = {fixedMin = 1000, fixedMax = 1000, variableMin = 0, variableMax = 0, },				
+		},					
+		[const.Spells.RemoveFear] =					
+		{					
+			[const.Novice] = {fixedMin = 200, fixedMax = 200, variableMin = 0, variableMax = 0, },				
+			[const.Expert] = {fixedMin = 400, fixedMax = 400, variableMin = 0, variableMax = 0, },				
+			[const.Master] = {fixedMin = 650, fixedMax = 650, variableMin = 0, variableMax = 0, },				
+		},					
+		[const.Spells.CureInsanity] =					
+		{					
+			[const.Novice] = {fixedMin = 15, fixedMax = 15, variableMin = 11, variableMax = 11, },				
+			[const.Expert] = {fixedMin = 25, fixedMax = 25, variableMin = 15, variableMax = 15, },				
+			[const.Master] = {fixedMin = 35, fixedMax = 35, variableMin = 19, variableMax = 19, },				
+		},					
+		[const.Spells.CurePoison] =					
+		{						
+			[const.Novice] = {fixedMin = 215, fixedMax = 215, variableMin = 0, variableMax = 0, },				
+			[const.Expert] = {fixedMin = 430, fixedMax = 430, variableMin = 0, variableMax = 0, },				
+			[const.Master] = {fixedMin = 675, fixedMax = 675, variableMin = 0, variableMax = 0, },				
+		},					
+		[const.Spells.HealingTouch] =					
+		{					
+			[const.Novice] = {fixedMin = 5, fixedMax = 5, variableMin = 12, variableMax = 12, },				
+			[const.Expert] = {fixedMin = 10, fixedMax = 10, variableMin = 18, variableMax = 18, },				
+			[const.Master] = {fixedMin = 15, fixedMax = 15, variableMin = 26, variableMax = 26, },				
+		},					
+		[const.Spells.CureWounds] =					
+		{					
+			[const.Novice] = {fixedMin = 10, fixedMax = 10, variableMin = 9, variableMax = 9, },				
+			[const.Expert] = {fixedMin = 15, fixedMax = 15, variableMin = 12, variableMax = 12, },				
+			[const.Master] = {fixedMin = 25, fixedMax = 25, variableMin = 16, variableMax = 16, },				
+		},					
+		[const.Spells.CureDisease] =					
+		{					
+			[const.Novice] = {fixedMin = 265, fixedMax = 265, variableMin = 0, variableMax = 0, },				
+			[const.Expert] = {fixedMin = 475, fixedMax = 475, variableMin = 0, variableMax = 0, },				
+			[const.Master] = {fixedMin = 745, fixedMax = 745, variableMin = 0, variableMax = 0, },				
+		},					
+		[const.Spells.SharedLife] =					
+		{					
+			[const.Novice] = {fixedMin = 0, fixedMax = 0, variableMin = 9, variableMax = 9, },				
+			[const.Expert] = {fixedMin = 0, fixedMax = 0, variableMin = 12, variableMax = 12, },				
+			[const.Master] = {fixedMin = 0, fixedMax = 0, variableMin = 15, variableMax = 15, },				
+		},					
+		[const.Spells.PowerCure] =					
+		{					
+			[const.Novice] = {fixedMin = 10, fixedMax = 10, variableMin = 3, variableMax = 3, },				
+			[const.Expert] = {fixedMin = 10, fixedMax = 10, variableMin = 5, variableMax = 5, },				
+			[const.Master] = {fixedMin = 10, fixedMax = 10, variableMin = 7, variableMax = 7, },				
+		},					
+		[const.Spells.Resurrection] =					
+		{					
+			[const.Novice] = {fixedMin = 50, fixedMax = 50, variableMin = 15, variableMax = 15, },				
+			[const.Expert] = {fixedMin = 100, fixedMax = 100, variableMin = 20, variableMax = 20, },				
+			[const.Master] = {fixedMin = 150, fixedMax = 150, variableMin = 25, variableMax = 25, },				
+		},					
+							
+	}
+end
+-----------------255 END--------------------
+
 
 -- def is addHP()
 local function modifiedHealCharacterWithSpell(d, def, targetPtr, amount)
