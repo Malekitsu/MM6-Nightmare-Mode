@@ -702,7 +702,7 @@ evt.map[131] = function()
 		if not evt.Cmp("Inventory", 580) and vars.ritual==nil then
 		evt.Add("Inventory", 580)
 
-		else 
+		elseif vars.ritual~=1 then 
 		vars.ritual=1
 		evt.Subtract("Inventory", 580)
 		Game.ShowStatusText("You start the Reality Scroll Ritual, it will take a while, survive until it's over.")
@@ -769,6 +769,7 @@ Timer(evt.map[667].last, 2*const.Minute)
 
 function events.LoadMap()
 	if vars.Endfight or vars.EndoftheworldStarted then
+		vars.ritual=0
 		for mid, model in Map.Models do
 				for fid, facet in model.Facets do
 					facet.Invisible=true
