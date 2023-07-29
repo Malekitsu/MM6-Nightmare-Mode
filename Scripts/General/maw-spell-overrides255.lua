@@ -5,6 +5,11 @@ local max, min, floor, ceil, round, random = math.max, math.min, math.floor, mat
 local format = string.format
 
 local mmver = offsets.MMVersion
+function mmv(...)
+	local r = select(mmver - 5, ...)
+	assert(r ~= nil)
+	return r
+end
 
 -- returns party index
 local function getSlot(player)
