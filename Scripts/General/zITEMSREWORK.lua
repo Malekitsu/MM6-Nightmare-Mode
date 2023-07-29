@@ -43,10 +43,9 @@ end
 
 function events.ItemGenerated(t)		
 	if t.Item.Number<=134 then
-
-						if t.Item.Number>580 then
-	t.Item.Number=0
-	end
+		if t.Item.Number>580 then
+			t.Item.Number=0
+		end
 		
 		--give bonus a chance to proc even if bonus2 is already in the item
 		if t.Item.Bonus2~=0 then
@@ -80,12 +79,6 @@ function events.ItemGenerated(t)
 			if roll<(t.Strength-1)*10 then
 				t.Item.Bonus2=math.random(26,34)
 			end
-		end
-		
-		if SETTINGS["TRUENIGHTMARE"]==true then
-			t.Item.BonusStrength=math.round(t.Item.BonusStrength*1.2)
-			local charges=t.Item.Charges%14
-			t.Item.Charges=math.round((t.Item.Charges-charges)*1.2)+charges
 		end
 		
 		--chance for ancient item, only if bonus 2 is spawned
@@ -129,6 +122,13 @@ function events.ItemGenerated(t)
 		end
 		if t.Item.Charges%14==7 or t.Item.Charges%14==8 then
 			t.Item.Charges=t.Item.Charges+14*math.ceil(t.Item.Charges/14)
+		end
+				
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			t.Item.BonusStrength=math.round(t.Item.BonusStrength*1.25)
+			local bonus=t.Item.Charges%14
+			local bonusStr=math.round(math.floor(t.Item.Charges/14)*1.25)
+			t.Item.Charges=bonusStr*14+bonus
 		end
 		
 		--CROWNS & HATS
@@ -513,9 +513,17 @@ function events.GameInitialized2()
 	
 	--FINAL AWARD
 	Game.AwardsTxt[61]="Completed MAW in Nightmare Mode"
-	Game.ItemsTxt[546].Notes="Congratulation, you were able to clear MAW at its highest difficulty!!!"
+	if SETTINGS["TRUENIGHTMARE"]==true then
+		Game.AwardsTxt[61]="Completed MAW in TRUE Nightmare Mode"
+	end
+	Game.ItemsTxt[546].Notes="Congratulation, you were able to clear MAW!!!"
+	if SETTINGS["TRUENIGHTMARE"]==true then
+		Game.ItemsTxt[546].Notes="Congratulations! you were able to clear MAW TRUE NIGHTMARE!!!\n\nPost a screenshot on reddit and share your adventure!"
+	end
 	Game.ScrollTxt[546]="Congratulations! To enter the Hall of Fame write me on Discord at Malekith#5670 and send me the save file to verify your run.\nDevs are proud of you" 	
-		
+	if SETTINGS["TRUENIGHTMARE"]==true then
+		Game.ScrollTxt[546]="Congratulations! you were able to clear MAW TRUE NIGHTMARE!!!\n\nPost a screenshot on reddit and share your adventure!"
+	end
 	for i = 1, 578 do
 	  itemName[i] = Game.ItemsTxt[i].Name
 	end
@@ -588,6 +596,10 @@ if SETTINGS["255MOD"]~=true then
 	if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
 		extrabonus=extrabonus/2
 	end
+	if SETTINGS["TRUENIGHTMARE"]==true then
+		extrabonus=math.round(extrabonus/1.25)
+		bonus=math.round(bonus/1.25)
+	end
 	if item.Item.Number<135 then	
 		if ((bonus>25 and extrabonus>25) or (bonus+extrabonus>50 and item.Item.Bonus~=0)) and item.Item.Bonus2~=0 then
 			Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
@@ -633,7 +645,7 @@ if SETTINGS["255MOD"]~=true then
 		end
 	--Crowns and HATS
 		if item.Item.ExtraData~=nil then
-			if item.Item.Number>=94 and item.Item.Number<=99 then
+			if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.ExtraData~=0 then
 				local statbonus=item.Item.ExtraData%10000
 					if statbonus>3000 then
 					statbonus="Damage and Healing"
