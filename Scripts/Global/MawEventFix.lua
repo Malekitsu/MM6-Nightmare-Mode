@@ -20,24 +20,45 @@ end
 
 if SETTINGS["TRUENIGHTMARE"]==true then
 	function events.Tick()
-		vars.hasPortal=vars.hasPortal or {}
 		if Party.EnemyDetectorYellow or Party.EnemyDetectorRed then
 			mapvars.event=true
-			for i=0,3 do
-				if Party[i].Spells[31]==true then
-					Party[i].Spells[31]=false
-					vars.hasPortal[i]=true
-				end
-			end
 		else
 			mapvars.event=false
-			for i=0,3 do
-				if Party[i].Spells[31]==false and vars.hasPortal[i]==true then
-					Party[i].Spells[31]=true
-					vars.hasPortal[i]=false
-				end
+		end
+	end
+	function events.CanCastTownPortal(t)
+		if Party.EnemyDetectorYellow or Party.EnemyDetectorRed then
+			t.Can=false
+		else
+			t.Can=true
+		end
+	end	
+end
+
+--grayface fix treasure code
+local function NeedSeed()
+	local t = mapvars.MonsterSeed
+	if not t then
+		t = {}
+		mapvars.MonsterSeed = t
+		for i = 0, Map.Monsters.Limit - 1 do
+			t[i] = Game.RandSeed
+			for i = 1, 30 do
+				Game.Rand()
 			end
 		end
 	end
+	return t
 end
 
+events.LoadMap = NeedSeed
+
+local function f(t)
+	local seed = NeedSeed()
+	Game.RandSeed = seed[t.MonsterIndex]
+	t.CallDefault()
+	seed[t.MonsterIndex] = Game.RandSeed
+end
+
+events.PickCorpse = f
+events.CastTelepathy = f
