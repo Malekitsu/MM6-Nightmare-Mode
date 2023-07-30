@@ -192,6 +192,7 @@ end
 
 
 function events.LoadMap()
+	--check for TNM
 	if vars.TRUENIGHTMARE==true and SETTINGS["TRUENIGHTMARE"]~=true then
 		Sleep(1)
 		Message("this is a True Nightmare save. ACTIVATE it in mm6.ini")
@@ -201,5 +202,63 @@ function events.LoadMap()
 		Sleep(1)
 		Message("this is NOT a True Nightmare save. DEACTIVATE it in mm6.ini")
 		Game.ExitMapAction=7
+	end
+	--check for settings
+	if vars.TRUENIGHTMARE and vars.TRUENIGHTMARE then
+		if SETTINGS["RandomizeMapClusters"]~=false then
+			Sleep(1)
+			Message("Set RandomizedMapClusters to false in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["AdaptiveMonsterMode"]~="disabled" then
+			Sleep(1)
+			Message("Set AdaptiveMonsterMode to disabled in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["EasierMonsters"]~=false then
+			Sleep(1)
+			Message("Set EasierMonsters to false in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["MoreLinkedSkills"]~=false then
+			Sleep(1)
+			Message("Set MoreLinkedSkills to false in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["MonsterExperienceMultiplier"]~=1.00 then
+			Sleep(1)
+			Message("Set MonsterExperienceMultiplier to 1.00 in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["GlobalMapResetDays"]~="default" then
+			Sleep(1)
+			Message("Set GlobalMapResetDays to default in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["HomingProjectiles"]~=true then
+			Sleep(1)
+			Message("Set HomingProjectiles to true in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["EqualizedMode"]~=false then
+			Sleep(1)
+			Message("Set EqualizedMode to false in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["ItemRework"]~=true then
+			Sleep(1)
+			Message("Set ItemRework to true in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["StatsRework"]~=true then
+			Sleep(1)
+			Message("Set StatsRework to true in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end
+		if SETTINGS["PowerCureOverflow"]~=false then
+			Sleep(1)
+			Message("Set PowerCureOverflow to false in mm6.ini to play True Nightmare")
+			Game.ExitMapAction=7
+		end	
 	end
 end
