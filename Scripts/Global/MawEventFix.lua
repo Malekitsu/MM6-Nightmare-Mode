@@ -1,5 +1,5 @@
 function events.CanSaveGame(t)
-	if mapvars.event then
+	if mapvars.event and t.SaveKind ~=1 then
 	t.Result=false
 	Game.ShowStatusText("Can't save now")
 	else
