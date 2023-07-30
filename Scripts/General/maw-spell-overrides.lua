@@ -446,7 +446,8 @@ if SETTINGS["255MOD"]==true then
 		["Expert"] = "The arrow does 100 + 1-12 points of damage per skill",									
 		["Master"] = "The arrow does 175 + 1-20 points of damage per skill",									
 	},										
-	}											
+}
+end
 ---------------255 END--------------
 
 
@@ -1954,7 +1955,6 @@ function events.CalcDamageToMonster(t)
 			t.Result=t.Result*math.max(1-((distance-281.6)/256),0.1)
 		end
 	end
-end
 end
 
 local function GetObject(ptr)
