@@ -4039,7 +4039,7 @@ function events.CalcItemValue(t)
 	
 end
 
---fix to turn mode
+--[[fix to turn mode
 
 lastPlayerWhoHitMonster=-1
 consecutiveAttack=0
@@ -4053,6 +4053,8 @@ function events.CalcDamageToMonster(t)
 					consecutiveAttack=consecutiveAttack+1
 					if consecutiveAttack>=3 then
 						Game.TurnBasedPhase=1
+						consecutiveAttack=0
+						lastPlayerWhoHitMonster=-1
 					end
 				else
 					consecutiveAttack=1
@@ -4069,3 +4071,4 @@ function events.Tick()
 		lastPlayerWhoHitMonster=-1
 	end
 end
+]]
