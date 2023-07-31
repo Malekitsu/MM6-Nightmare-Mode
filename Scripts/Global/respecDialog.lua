@@ -22,7 +22,7 @@ local function calcGoldCost(p)
     cost=0
 	for i=0, p.Skills.High do
 		skill=p.Skills[i]%64
-		refund=skill*(skill+1)/2-1
+		refund=math.max(skill*(skill+1)/2-1,0)
 		cost=cost+refund
 	end
 	cost=cost*50
