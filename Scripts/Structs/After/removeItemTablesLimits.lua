@@ -1169,8 +1169,6 @@ function setItemDrawingHooks()
     hooks.ref.armorXYwasSet = armorXYwasSet
 
     -- armors
-    Items.PaperdollArmorCoords[609] = {Body = {505, 95}, ArmOneHanded = {566, 95}, ArmTwoHanded = {569, 95}}
-    Items.PaperdollArmorCoords[610] = {Body = {510, 95}, ArmOneHanded = {566, 95}, ArmTwoHanded = {569, 95}}
     -- correct bitmap id
     hooks.asmpatch(0x4125C8, [[
         push ecx

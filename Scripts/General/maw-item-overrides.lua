@@ -593,3 +593,9 @@ function events.GameInitialized2()
 	setNewItemNames()
 	setNewItemNotes()
 end
+
+function events.GameInitialized2()
+	-- test item coords
+	Items.PaperdollArmorCoords[609] = {Body = {505, 95}, ArmOneHanded = {566, 95}, ArmTwoHanded = {569, 95}}
+	Items.PaperdollArmorCoords[610] = {Body = {510, 95}, ArmOneHanded = {566, 95}, ArmTwoHanded = {569, 95}}
+end
