@@ -1864,38 +1864,6 @@ function setAlchemyHooks(itemCount)
 
     -- TODO: autonotes 0x410FDD
 
-    -- tests
-    do
-        local superResistance, magicPotion, divinePower, protection, curePoison, resistance = 173, 165, 178, 167, 169, 168
-        --[[
-            local pots = {173, 165, 178, 167, 169, 168}
-            for i, pot in ipairs(pots) do
-                for j = 1, 5 do
-                    evt.GiveItem{Id = pot}
-                end
-            end
-        ]]
-        function events.MixPotion(t)
-            local idMouse, idClicked = t.MousePotion.Number, t.ClickedPotion.Number
-            if idMouse == superResistance then
-                t.Result = magicPotion
-                t.ResultPower = random(5, 24)
-            elseif idMouse == magicPotion and idClicked == magicPotion then
-                t.Result = divinePower
-                t.ResultPower = random(100, 200)
-            elseif t.CheckCombination(protection, curePoison) then
-                t.Result = math.random(2) == 1 and divinePower or resistance
-                t.ResultPower = 0
-            elseif t.CheckCombination(magicPotion, protection) then
-                t.Explosion = 4
-            elseif t.CheckCombination(curePoison, magicPotion) then
-                t.Result = false -- cannot mix
-            elseif t.CheckCombination(curePoison, curePoison) then
-                t.Handled = true -- do nothing at all
-            end
-        end
-    end
-
     table.copy({sprintf = 0x4AE273, formatText = mem.topointer("Power: %lu"), screenAddText = 0x442E90}, hooks.ref, true)
 
     -- show power in tooltip

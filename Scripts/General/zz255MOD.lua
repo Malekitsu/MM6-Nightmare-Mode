@@ -370,6 +370,9 @@ itemStatName = {"Might", "Intellect", "Personality", "Endurance", "Accuracy", "S
 
 
 function events.ShowItemTooltip(item)
+	if item.Item:T().EquipStat == const.ItemType.Potion - 1 then
+		return
+	end
 	if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges~=0 then
 	Game.StdItemsTxt[item.Item.Bonus-1].BonusStat=string.format("\n%s +%s\n%s",itemStatName[item.Item.Charges%14+1],math.ceil(item.Item.Charges/14), itemStatName[item.Item.Bonus])
 		else if item.Item.Bonus~=0 and item.Item.Bonus2~=0 and item.Item.Charges==0 then
