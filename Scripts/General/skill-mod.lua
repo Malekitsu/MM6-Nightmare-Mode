@@ -4039,7 +4039,7 @@ function events.CalcItemValue(t)
 	
 end
 
---[[fix to turn mode
+--fix to turn mode
 
 lastPlayerWhoHitMonster=-1
 consecutiveAttack=0
@@ -4052,7 +4052,7 @@ function events.CalcDamageToMonster(t)
 				if index==lastPlayerWhoHitMonster then
 					consecutiveAttack=consecutiveAttack+1
 					if consecutiveAttack>=3 then
-						Game.TurnBasedPhase=1
+						Game.TurnBasedDelays[index]=30
 						consecutiveAttack=0
 						lastPlayerWhoHitMonster=-1
 					end
@@ -4065,10 +4065,18 @@ function events.CalcDamageToMonster(t)
 	end
 end
 
+ticks=0
 function events.Tick()
 	if Game.TurnBasedPhase==1 then
 		consecutiveAttack=0
 		lastPlayerWhoHitMonster=-1
+		ticks=ticks+1
+	else
+		ticks=0
+	end
+	--emergency turn mode removal
+	if ticks>300 then
+		Game.TurnBasedPhase=2
 	end
 end
-]]
+
