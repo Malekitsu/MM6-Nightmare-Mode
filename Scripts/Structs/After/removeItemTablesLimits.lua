@@ -1249,8 +1249,8 @@ function setItemDrawingHooks()
     -- no offhand equipped arm
 
     table.copy({
-        defaultXoff = 0x4BCE68,
-        defaultYoff = 0x4BCE84,
+        defaultXoff = 0x4BCE84,
+        defaultYoff = 0x4BCE68,
         coordsOffX = 8,
         coordsOffY = 10,
         bmpOff = 8,
