@@ -1,7 +1,7 @@
 															
 Item #	Pic File	Name	Value	Equip Stat	Skill Group	Mod1	Mod2	material	ID/Rep/St	Not identified name	Sprite Index	Shape	Equip X	Equip Y	Notes
 0															
-1	lsword1	Longsword	50	Weapon	Sword	3d3	0	8	1	Longsword	1	4	499	8	"Of simple make and design, this longsword is deadly nonetheless."
+1	lsword1	Longswordd	50	Weapon	Sword	3d3	0	8	1	Longsword	1	4	499	8	"Of simple make and design, this longsword is deadly nonetheless."
 2	lsword2	Warrior Sword	200	Weapon	Sword	3d3	3	8	3	Longsword	1	4	501	9	A longsword of superior strength and edge.
 3	lsword3	Crusader Sword	350	Weapon	Sword	3d3	6	8	5	Longsword	1	4	506	10	Hammered metal patterns on the blade of this longsword suggest high quality Dwarven manufacture.
 4	lsword4	Champion Sword	500	Weapon	Sword	3d3	9	8	7	Longsword	1	4	508	4	"An extremely high quality longsword, this weapon is one of no more than one thousand of its kind forged by master weaponsmith Mekorig the Blind circa 780-800."
