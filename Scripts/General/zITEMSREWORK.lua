@@ -524,10 +524,12 @@ function events.GameInitialized2()
 	if SETTINGS["TRUENIGHTMARE"]==true then
 		Game.ScrollTxt[546]="Congratulations! you were able to clear MAW TRUE NIGHTMARE!!!\n\nPost a screenshot on reddit and share your adventure!"
 	end
-	for i = 1, 578 do
-	  itemName[i] = Game.ItemsTxt[i].Name
+	for i = 1, Game.ItemsTxt.High do
+		if i~=579 or i~=580 then
+			itemName[i] = Game.ItemsTxt[i].Name
+		end
 	end
-	for i = 1, 134 do
+	for i = 1, Game.ItemsTxt.High do
 	  itemDesc[i] = Game.ItemsTxt[i].Notes
 	end
 	--copy enchants
