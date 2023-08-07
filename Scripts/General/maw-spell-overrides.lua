@@ -2499,3 +2499,14 @@ mem.autohook(0x425D3E, function (d)
 		return true
 	end
 end)
+
+autohook(0x43C010, function(d)
+	if d.ecx == const.NPCProfession.GateMaster then
+		local t = {Can = true, ByNPC = true}
+		events.cocall("CanCastTownPortal", t)
+		if not t.Can then
+			d:push(0x43C075)
+			return true
+		end
+	end
+end)
