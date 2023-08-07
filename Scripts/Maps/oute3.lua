@@ -619,7 +619,8 @@ end
 
 
 evt.map[666] = function()  -- Timer(<function>, 5*const.Minute)
-	if vars.Endoftheworld then
+	if vars.Endoftheworld then	
+		Game.FlyCeiling=0
 		Game.PlayTrack(1)
 		mapvars.event=true
 		vars.EndoftheworldStarted=true
@@ -678,13 +679,6 @@ if vars.Endoftheworld then
 	mapvars.event=true
 end
 
-if mapvars.event then
-	Game.FlyCeiling=0
-	else
-	Game.FlyCeiling=3000
-end
-
-
 
 evt.hint[131] = evt.str[7]  -- "Drink from Fountain"
 evt.map[131] = function()
@@ -736,6 +730,7 @@ evt.map[131] = function()
 		vars.noStable=false
 		mapvars.event=false
 		vars.teleport=true
+		Game.FlyCeiling=3000
 		for i = 0, Map.Monsters.High	 do
 			if Map.Monsters[i].Id==25 or Map.Monsters[i].Id==26 or Map.Monsters[i].Id==27 or Map.Monsters[i].Id==172 then
 			Map.Monsters[i].HP=0
