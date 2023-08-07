@@ -252,4 +252,5 @@ Game.MapStats[61].Trap = 0
 Game.MapStats[50].Trap = 0
 Game.MapStats[61].RedbookTrack = 10
 Game.MapStats[56].Name = "Limbo"
+Game.MapStats[65].Name = "Forgotten Temple"
 end
