@@ -83,8 +83,8 @@ end
 
 evt.hint[101] = evt.str[25]  -- "Door to the unknown"
 evt.map[101] = function()
-	if  evt.Cmp("Inventory", 568) then        -- Key
-		evt.MoveToMap{X = 7829, Y = -7173, Z = 224, Direction = 568, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 8, Name = "OutD1.Odm"}
+	if  evt.Cmp("Inventory", 497) then        -- Key
+		evt.MoveToMap{X = 0, Y = 1280, Z = 0, Direction = 1536, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 8, Name = "zdwj01.blv"}
 		else
 		evt.StatusText(23)
 	end
