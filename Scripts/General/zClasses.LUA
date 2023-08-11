@@ -510,17 +510,19 @@ end
 --When health is below 40% instead of consuming HP your next 3 attacks will heal you by 10% of damage
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
+	if data and data.Player then
 		currentHP=data.Player.HP
 		vampiricTreshold=data.Player:GetFullHP()*0.40
-			if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
-			vampiricAttacks=2
-			end
-		if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
+		if (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
+		vampiricAttacks=2
+		end
+		if (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
 		vampiricAttacks=vampiricAttacks-1
-		if SETTINGS["TRUENIGHTMARE"]==true then
-		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
-		else
-		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
+			if SETTINGS["TRUENIGHTMARE"]==true then
+				data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
+			else
+				data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
+			end
 		end
 	end
 end
