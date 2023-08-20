@@ -23,13 +23,6 @@ table.copy(TXT, evt.str, true)
 evt.map[100] = function()
 	if mapvars.alert ~= 1 then 
 		mapvars.event=true
-		vars.portal=vars.portal or {}
-		for i=0,3 do
-			if Party[i].Spells[31]==true then
-				Party[i].Spells[31]=false
-				vars.portal[i]=true
-			end
-		end
 		evt.StatusText(15)
 		if mapvars.alert == nil then
 		mapvars.alert = 1
@@ -59,11 +52,6 @@ evt.map[102] = function()
 		mapvars.teleport = 1	
 		Sleep(100)	
 		mapvars.event=false
-		for i=0,3 do
-			if vars.portal[i]==true then
-				Party[i].Spells[31]=true
-			end
-		end
 		evt.MoveToMap{x = 296, y = -221, z = 1, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb02.blv"}
 		end
 	end	
