@@ -1,22 +1,22 @@
 function events.CanSaveGame(t)
 	if (mapvars.event and t.SaveKind ~=1) or (mapvars.eventNightmare and t.SaveKind ~=1) then
-	t.Result=false
-	Game.ShowStatusText("Can't save now")
-	else
-	t.Result=true
+		t.Result=false
+		Game.ShowStatusText("Can't save now")
 	end
 end
 
 function events.CanCastLloyd(t)
 	if mapvars.event or mapvars.eventNightmare then
-	t.Result=false
-	Sleep(1)
-	Game.ShowStatusText("Can't teleport now")
-	else
-	t.Result=true
+		t.Result=false
+		Sleep(1)
+		Game.ShowStatusText("Can't teleport now")
 	end
 end
-
+function events.CanCastTownPortal(t)
+	if mapvars.event then
+		t.Can=false
+	end
+end	
 
 if SETTINGS["TRUENIGHTMARE"]==true then
 	function events.Tick()
