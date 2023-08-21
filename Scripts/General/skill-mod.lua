@@ -1182,6 +1182,26 @@ function events.GetAttackDelay(t)
 	
 end
 
+--double crossbow speed
+function events.GetAttackDelay(t)
+	if t.Ranged then
+		local it=t.Player:GetActiveItem(2)
+		if it and it.Number==47 or it.Number==48 or it.Number==49 then
+			t.Result=t.Result/2
+		end
+	end
+end
+--halve crossbow Damage
+function events.CalcDamageToMonster(t)
+    local data = WhoHitMonster()
+	if data and data.Player and data.Object and data.Object.Item then
+		local n=data.Object.Item.Number
+		if n==47 or n==48 or n==49 then
+			t.Result=t.Result/2
+		end
+	end
+end
+
 -- calculate stat bonus by item
 
 function events.CalcStatBonusByItems(t)
@@ -4048,7 +4068,7 @@ function events.CalcDamageToMonster(t)
 		local data=WhoHitMonster()
 		if data then
 			local index=data.Player:GetIndex()
-			if data and data.Player and (data.Object==nil or data.Object==100) and t.DamageKind==0 then
+			if data and data.Player and (data.Object==nil or data.Object.Spell==100) and t.DamageKind==0 then
 				if index==lastPlayerWhoHitMonster then
 					consecutiveAttack=consecutiveAttack+1
 					if consecutiveAttack>=3 then
