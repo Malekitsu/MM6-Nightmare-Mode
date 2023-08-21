@@ -166,7 +166,7 @@ if SETTINGS["TRUENIGHTMARE"]==true then
 		--nerf to vampiric
 		data=WhoHitMonster()
 		leech=0
-		if data and data.Player then
+		if data and data.Player and data.Object==nil and t.DamageKind==0 then
 			for it in data.Player:EnumActiveItems() do
 				if it.Bonus2 == 16 or it.Bonus2 == 41 then
 					if t.Result<t.Monster.HP then
