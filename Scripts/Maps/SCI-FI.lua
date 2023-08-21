@@ -240,6 +240,16 @@ evt.hint[34] = evt.str[2]  -- "Storage Container"
 evt.map[34] = function()
 	evt.OpenChest(5)
 	evt.ForPlayer("All")
+	for i=0,3 do
+		if Party[i].Skills[const.Skills.Air]>0 then
+		Party[i].Spells[19]=true
+		Party[i].Spells[21]=true
+		end
+		if Party[i].Skills[const.Skills.Water]>0 then
+		Party[i].Spells[31]=true
+		Party[i].Spells[33]=true
+		end
+	end
 	evt.Set("Awards", 61)         -- "Super-Goober"
 end
 

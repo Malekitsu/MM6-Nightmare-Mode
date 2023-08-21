@@ -1,29 +1,29 @@
 function events.CanSaveGame(t)
-	if mapvars.event and t.SaveKind ~=1 then
-	t.Result=false
-	Game.ShowStatusText("Can't save now")
-	else
-	t.Result=true
+	if (mapvars.event and t.SaveKind ~=1) or (mapvars.eventNightmare and t.SaveKind ~=1) then
+		t.Result=false
+		Game.ShowStatusText("Can't save now")
 	end
 end
 
 function events.CanCastLloyd(t)
-	if mapvars.event then
-	t.Result=false
-	Sleep(1)
-	Game.ShowStatusText("Can't teleport now")
-	else
-	t.Result=true
+	if mapvars.event or mapvars.eventNightmare then
+		t.Result=false
+		Sleep(1)
+		Game.ShowStatusText("Can't teleport now")
 	end
 end
-
+function events.CanCastTownPortal(t)
+	if mapvars.event then
+		t.Can=false
+	end
+end	
 
 if SETTINGS["TRUENIGHTMARE"]==true then
 	function events.Tick()
 		if Party.EnemyDetectorYellow or Party.EnemyDetectorRed then
-			mapvars.event=true
+			mapvars.eventNightmare=true
 		else
-			mapvars.event=false
+			mapvars.eventNightmare=false
 		end
 	end
 	function events.CanCastTownPortal(t)
@@ -62,3 +62,14 @@ end
 
 events.PickCorpse = f
 events.CastTelepathy = f
+
+--cheer when killing an unique Monster
+function events.CalcDamageToMonster(t)
+	data=WhoHitMonster()
+	if data and data.Player then
+		if t.Result>=t.Monster.HP and t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
+			local i=data.Player:GetIndex()
+			Party[i]:ShowFaceAnimation(2)
+		end
+	end
+end

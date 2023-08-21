@@ -646,7 +646,7 @@ if SETTINGS["255MOD"]~=true then
 			Game.ItemsTxt[item.Item.Number].Notes=itemDesc[item.Item.Number]
 		end
 	--Crowns and HATS
-		if item.Item.ExtraData~=nil then
+		if item.Item.ExtraData~=0 then
 			if item.Item.Number>=94 and item.Item.Number<=99 and item.Item.ExtraData~=0 then
 				local statbonus=item.Item.ExtraData%10000
 					if statbonus>3000 then
@@ -937,3 +937,142 @@ end
 function events.GameInitialized2()
 Game.SpcItemsTxt[2].BonusStat="Explosive Impact! (half damage)"
 end
+
+--fix to special enchants
+
+function events.CalcStatBonusByItems(t)
+	for it in t.Player:EnumActiveItems() do
+		--of Protection
+		if it.Bonus2 == 1 then
+			if it.Bonus>=11 and it.Bonus<=14 then 
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+			--of The Gods
+		elseif it.Bonus2 == 2 then
+			if it.Bonus>=1 and it.Bonus<=7 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of Doom
+		elseif it.Bonus2 == 42 then
+			if it.Bonus>=1 and it.Bonus<=14 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 1
+				end
+			end
+		--of Earth
+		elseif it.Bonus2 == 43 then
+			if it.Bonus== 4 or it.Bonus== 8 or it.Bonus== 10 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of Life
+		elseif it.Bonus2 == 44 then
+			if it.Bonus== 8 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--Rogues
+		elseif it.Bonus2 == 45 then
+			if it.Bonus== 5 or it.Bonus== 6 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 5
+				end
+			end
+		--of The Dragon
+		elseif it.Bonus2 == 46 then
+			if it.Bonus== 1 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 25
+				end
+			end
+		--of The Eclipse
+		elseif it.Bonus2 == 47 then
+			if it.Bonus== 9 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of The Golem
+		elseif it.Bonus2 == 48 then
+			if it.Bonus== 4 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 15
+				end
+			elseif it.Bonus== 10 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 5
+				end
+			end
+		--of The Moon
+		elseif it.Bonus2 == 49 then
+			if it.Bonus== 2 or it.Bonus== 7 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of The Phoenix
+		elseif it.Bonus2 == 50 then
+			if it.Bonus== 11 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 30
+				end
+			end
+		--of The Sky
+		elseif it.Bonus2 == 51 then
+			if it.Bonus== 2 or it.Bonus== 6 or it.Bonus== 9 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of The Stars
+		elseif it.Bonus2 == 52 then
+			if it.Bonus== 4 or it.Bonus== 5 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of The Sun
+		elseif it.Bonus2 == 53 then
+			if it.Bonus== 1 or it.Bonus== 3 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 10
+				end
+			end
+		--of The Troll
+		elseif it.Bonus2 == 54 then
+			if it.Bonus== 4 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 15
+				end
+			end
+		--of The Unicorn
+		elseif it.Bonus2 == 55 then
+			if it.Bonus== 7 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 15
+				end
+			end
+		--Warriors
+		elseif it.Bonus2 == 56 then
+			if it.Bonus== 1 or it.Bonus== 4 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 5
+				end
+			end
+		--Wizards			
+		elseif it.Bonus2 == 57 then
+			if it.Bonus== 2 or it.Bonus== 3 then
+				if t.Stat==it.Bonus-1 then
+					t.Result = t.Result + 5
+				end
+			end	
+		end
+	end
+end
+

@@ -10,7 +10,7 @@ if ASHIKARI~=true then
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattlerMage or data.Player.Class==const.Class.Archer) then	
+	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
 	m1=data.Player.Skills[const.Skills.Axe]
 		if m1>=64 then 
 		m1=m1-64
@@ -69,7 +69,7 @@ end
 
 function events.CalcDamageToMonster(t)	
 local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattlerMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 then	
+	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -167,10 +167,8 @@ end
 ----------------------------------------------------
 --CLERIC MASTERY
 ----------------------------------------------------
-SERAPHIN=SETTINGS["ClericAsSeraphin"]
 Mastery=SETTINGS["Mastery"]
 if Mastery==true then
-if SERAPHIN~=true then
 
 function events.HealingSpellPower(t)
 	if (t.Caster.Class==const.Class.HighPriest or t.Caster.Class==const.Class.Priest or t.Caster.Class==const.Class.Cleric) then
@@ -232,8 +230,6 @@ end
 function events.GameInitialized2()
 Game.ClassKinds.StartingSkills[1][const.Skills.Thievery] = 1
 
-
-end
 end
 end
 
@@ -388,9 +384,10 @@ end
 --PALADIN MASTERY
 ----------------------------------------------------
 BERSERKER=SETTINGS["PaladinAsBerseker"]
+SERAPHIM=SETTINGS["PaladinAsSeraphim"]
 Mastery=SETTINGS["Mastery"]
 if Mastery==true then
-if BERSERKER~=true then
+if BERSERKER~=true and SERAPHIM~=true then
 
 function events.HealingSpellPower(t)
 	if (t.Caster.Class==const.Class.Hero or t.Caster.Class==const.Class.Crusader or t.Caster.Class==const.Class.Paladin) then	

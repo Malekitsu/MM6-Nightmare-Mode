@@ -5,13 +5,6 @@ evt.hint[27] = evt.str[10]  -- "Altar of the Moon"
 evt.map[27] = function()
 	if mapvars.medusa ~= 1 then
 		mapvars.event=true
-		vars.portal=vars.portal or {}
-		for i=0,3 do
-			if Party[i].Spells[31]==true then
-				Party[i].Spells[31]=false
-				vars.portal[i]=true
-			end
-		end
 		Message("Moon Crystal repulse you")
 		mapvars.medusa = 1
 		evt.SetDoorState{Id = 5, State = 0}
@@ -39,11 +32,6 @@ evt.map[27] = function()
 		Sleep(1500)
 		Message("Time is twisting, full moon has arrived")
 		mapvars.moon = 1
-		for i=0,3 do
-			if vars.portal[i]==true then
-				Party[i].Spells[31]=true
-			end
-		end
 		mapvars.event=false
 		evt.SetDoorState{Id = 5, State = 1}
 		evt.SetDoorState{Id = 6, State = 1} 

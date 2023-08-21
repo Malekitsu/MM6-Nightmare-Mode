@@ -873,6 +873,7 @@ function events.GameInitialized2()
 	Game.MonListBin[28].Radius=56
 	Game.MonListBin[29].Radius=56
 	Game.MonListBin[30].Radius=56
+	Game.MonListBin[48].Radius=56
 	Game.MonListBin[78].Height=179
 	--change paesants into wall titans
 	--titanA

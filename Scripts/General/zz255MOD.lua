@@ -233,7 +233,7 @@ enchantbonusdamage2[46] = 15
 
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-    if data.Player and t.DamageKind ~= 0 and data.Object == nil then
+    if data and data.Player and t.DamageKind ~= 0 and data.Object == nil then
 	n=1
 	bonusDamage2=1
         for i = 0,1 do
@@ -264,7 +264,7 @@ end
 
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-    if data.Player and t.DamageKind ~= 0 and data.Object~=nil then
+    if data and data.Player and t.DamageKind ~= 0 and data.Object~=nil then
 			if data.Object.Spell==100 then
 			it=data.Player:GetActiveItem(2)
 			-- calculation

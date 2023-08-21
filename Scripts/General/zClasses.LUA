@@ -510,17 +510,19 @@ end
 --When health is below 40% instead of consuming HP your next 3 attacks will heal you by 10% of damage
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
+	if data and data.Player then
 		currentHP=data.Player.HP
 		vampiricTreshold=data.Player:GetFullHP()*0.40
-			if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
-			vampiricAttacks=2
-			end
-		if data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
+		if (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and currentHP<vampiricTreshold and t.DamageKind==0 and data.Object==nil then
+		vampiricAttacks=2
+		end
+		if (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
 		vampiricAttacks=vampiricAttacks-1
-		if SETTINGS["TRUENIGHTMARE"]==true then
-		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
-		else
-		data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
+			if SETTINGS["TRUENIGHTMARE"]==true then
+				data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
+			else
+				data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
+			end
 		end
 	end
 end
@@ -617,6 +619,9 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Fire] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Mind] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Spirit] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+	Game.ClassDescriptions[const.Class.Druid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
+	Game.ClassDescriptions[const.Class.GreatDruid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
+	Game.ClassDescriptions[const.Class.ArchDruid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
 end
 end
 end
