@@ -62,3 +62,14 @@ end
 
 events.PickCorpse = f
 events.CastTelepathy = f
+
+--cheer when killing an unique Monster
+function events.CalcDamageToMonster(t)
+	data=WhoHitMonster()
+	if data and data.Player then
+		if t.Result>=t.Monster.HP and t.Monster.Name~=Game.MonstersTxt[t.Monster.Id].Name then
+			local i=data.Player:GetIndex()
+			Party[i]:ShowFaceAnimation(2)
+		end
+	end
+end
