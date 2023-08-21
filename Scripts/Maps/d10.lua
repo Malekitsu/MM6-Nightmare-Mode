@@ -49,9 +49,9 @@ evt.map[102] = function()
 	if	mapvars.teleport ~= 1 then
 		if mapvars.pull == 1 then
 		Message("Something from the door is pulling you")
-		mapvars.teleport = 1	
 		Sleep(100)	
-		mapvars.event=false
+		mapvars.event=false	
+		mapvars.teleport = 1	
 		evt.MoveToMap{x = 296, y = -221, z = 1, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 0, Name = "zddb02.blv"}
 		end
 	end	
