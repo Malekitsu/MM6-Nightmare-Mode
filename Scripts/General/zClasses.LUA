@@ -619,6 +619,9 @@ Game.ClassKinds.StartingSkills[5][const.Skills.Fire] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Mind] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Spirit] = 0
 Game.ClassKinds.StartingSkills[5][const.Skills.Thievery] = 1
+	Game.ClassDescriptions[const.Class.Druid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
+	Game.ClassDescriptions[const.Class.GreatDruid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
+	Game.ClassDescriptions[const.Class.ArchDruid] = "Gain light, lose Spirit, Mind, Earth, Fire. Damage done is -15%. Healing done is +50% and -2 pr rank, as well as multiplied by (1.5-current % HP), meaning Herbalists are adept at healing single targets at low HP, but not so strong casting Power Cure to a party at high HP. Healed targets gain 10% of the healed amount (before class modifications) as SP in addition. If an attack would reduce a partymember below -0.5 HP pr level, mastery gives a 1.5% chance to set the HP of the target to -0.5 HP pr level instead"
 end
 end
 end
