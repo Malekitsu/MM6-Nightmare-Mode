@@ -485,7 +485,7 @@ end
 
 function events.CalcDamageToPlayer(t)
 local data=WhoHitPlayer()
-if data.Monster~=nil then
+if data and data.Monster then
 	if data.Monster.Id==110 then
 	pseudoSpawnpoint{monster = 88, x = (Party.X+data.Monster.X)/2, y = (Party.Y+data.Monster.Y)/2, z = Party.Z, count = 1, powerChances = {50, 30, 20}, radius = 64, group = 255}
 	end
