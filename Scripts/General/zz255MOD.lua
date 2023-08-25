@@ -209,6 +209,12 @@ function events.ItemGenerated(t)
 				end
 			end
 		end
+		if SETTINGS["TRUENIGHTMARE"]==true then
+			t.Item.BonusStrength=math.round(t.Item.BonusStrength*1.25)
+			local bonus=t.Item.Charges%14
+			local bonusStr=math.round(math.floor(t.Item.Charges/14)*1.25)
+			t.Item.Charges=bonusStr*14+bonus
+		end
 	end
 end
 
