@@ -2482,7 +2482,7 @@ function events.Tick()
 		Game.SpellsTxt[81].Expert= "Costs 15 and deals 18+1d12 per level of skill"
 		Game.SpellsTxt[81].Master= "Costs 25 and deals 27+1d18 per level of skill"
 		--paralysis
-		Game.SpellsTxt[86].Description=string.format("%s\nDuration vs same level monster: %s minutes",desc[61], math.round(ls/level^0.7*100)*lm*3/100)
+		Game.SpellsTxt[86].Description=string.format("%s\nDuration vs same level monster: %s minutes",desc[86], math.round(ls/level^0.7*100)*lm*3/100)
 		Game.SpellsTxt[86].Novice= "Slow Recovery, 2% increased chance per Skill"
 		Game.SpellsTxt[86].Expert= "Fast Recovery, 4% increased chance per Skill"
 		Game.SpellsTxt[86].Master= "Fastest Recovery, 6% increased chance per Skill"
