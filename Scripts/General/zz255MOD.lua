@@ -166,7 +166,7 @@ function events.ItemGenerated(t)
 		
 		--primordial item
 		primordial=math.random(1,200)
-		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
+		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" or Game.Map.Name=="zddb09.blv" then
 			t.Item.Charges=math.random(1387,1400)
 			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=100
