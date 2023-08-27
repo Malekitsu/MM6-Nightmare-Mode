@@ -1186,7 +1186,7 @@ end
 function events.GetAttackDelay(t)
 	if t.Ranged then
 		local it=t.Player:GetActiveItem(2)
-		if it and it.Number==47 or it.Number==48 or it.Number==49 then
+		if it and (it.Number==47 or it.Number==48 or it.Number==49) then
 			t.Result=t.Result/2
 		end
 	end
