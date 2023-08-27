@@ -1716,7 +1716,7 @@ local healingSpellPowers =
 
 -----------------255--------------------
 if SETTINGS["255MOD"]==true then
-	local healingSpellPowers =						
+	healingSpellPowers =						
 	{						
 		[const.Spells.FirstAid] =					
 		{					
