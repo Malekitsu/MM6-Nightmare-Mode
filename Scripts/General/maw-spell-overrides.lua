@@ -2310,18 +2310,27 @@ function events.Tick()
 				Game.SpellsTxt[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
 				Game.SpellsTxt[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
 				Game.SpellsTxt[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
+				Game.Spells[i]["SpellPointsNormal"] = math.min(math.round(spellCostNormal[i] * (1+0.05*masteryS)),255)
+				Game.Spells[i]["SpellPointsExpert"] = math.min(math.round(spellCostExpert[i] * (1+0.05*masteryS)),255)
+				Game.Spells[i]["SpellPointsMaster"] = math.min(math.round(spellCostMaster[i] * (1+0.05*masteryS)),255)
 			end
 		elseif (Party[index].Class==12 or Party[index].Class==13 or Party[index].Class==14) and SETTINGS["ArcherAsAssassin"]==true and comboPoint[index]==5 then
 			for i=1,99 do
 				Game.SpellsTxt[i]["SpellPointsNormal"]=0
 				Game.SpellsTxt[i]["SpellPointsExpert"]=0
 				Game.SpellsTxt[i]["SpellPointsMaster"] =0
+				Game.Spells[i]["SpellPointsNormal"]=0
+				Game.Spells[i]["SpellPointsExpert"]=0
+				Game.Spells[i]["SpellPointsMaster"] =0
 			end			
 		else
 			for i=1,99 do
 				Game.SpellsTxt[i]["SpellPointsNormal"]=spellCostNormal[i]
 				Game.SpellsTxt[i]["SpellPointsExpert"]=spellCostExpert[i]
 				Game.SpellsTxt[i]["SpellPointsMaster"]=spellCostMaster[i] 
+				Game.Spells[i]["SpellPointsNormal"]=spellCostNormal[i]
+				Game.Spells[i]["SpellPointsExpert"]=spellCostExpert[i]
+				Game.Spells[i]["SpellPointsMaster"]=spellCostMaster[i] 
 			end
 		end
 	end
