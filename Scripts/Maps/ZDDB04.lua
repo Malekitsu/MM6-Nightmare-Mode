@@ -42,9 +42,15 @@ evt.map[100] = function()
 		Game.Time=Game.Time+const.Year*3-Game.Time%const.Day+const.Hour*9
 		local seed = vars.Seed
 		local shrine = vars.shrineBlessings
+		if vars.TRUENIGHTMARE then
+			TRUENIGHTMARE=true
+		end
 		table.clear(vars)
 		vars.shrineBlessings=shrine
 		vars.Seed=seed
+		if TRUENIGHTMARE then
+			vars.TRUENIGHTMARE=true
+		end
 		vars.CelestialArena1=true
 		for i=0,11 do
 			vars.shrineBlessings[i]=0

@@ -87,7 +87,7 @@ function events.ItemGenerated(t)
 			if SETTINGS["TRUENIGHTMARE"]==true then
 				ancient=math.random(1,25)
 			end
-			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" or Game.Map.Name=="zddb09.blv" then
+			if ancient<=t.Strength-3 or Game.Map.Name=="zddb10.blv" then
 				t.Item.Charges=math.random(364,560)
 				t.Item.Bonus=math.random(1,14)
 				t.Item.BonusStrength=math.random(26,40)
@@ -102,7 +102,7 @@ function events.ItemGenerated(t)
 		if SETTINGS["TRUENIGHTMARE"]==true then
 			primordial=math.random(1,100)
 		end
-		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" then
+		if primordial<=t.Strength-4 or Game.Map.Name=="sci-fi.blv" or Game.Map.Name=="zddb09.blv" then
 			t.Item.Charges=math.random(547,560)
 			t.Item.Bonus=math.random(1,14)
 			t.Item.BonusStrength=40

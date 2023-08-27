@@ -88,7 +88,7 @@ function events.GameInitialized2()
 --	Game.ClassKinds.StartingSkills[4][const.Skills.Spear] = 0
 --	Game.ClassKinds.StartingSkills[4][const.Skills.Chain] = 0
 	Game.ClassKinds.StartingSkills[4][const.Skills.Bodybuilding] = 2
---	Game.ClassKinds.StartingSkills[4][const.Skills.Thievery] = 1
+	Game.ClassKinds.StartingSkills[4][const.Skills.Thievery] = 1
 	Game.ClassKinds.StartingSkills[4][const.Skills.Meditation] = 2
 
 Game.ClassNames[const.Class.Archer]="Ashikari"
