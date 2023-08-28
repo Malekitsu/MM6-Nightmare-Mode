@@ -2178,7 +2178,17 @@ function events.MonsterHitByObject(t)
 			end	
 		end
 		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
-		t.Monster.HP=math.max(t.Monster.HP-damage,0)
+		if t.Monster.HP>damage then
+			t.Monster.HP=t.Monster.HP-damage	
+			t.Monster:GotHit(t.Object.Owner)
+		else
+			Party.AddKillExp(t.Monster.Experience)
+			t.Monster.HP=0
+			if Game.TurnBasedPhase>0 then
+				t.Monster.AIState=4
+				t.Monster:UpdateGraphicState(4)
+			end
+		end
 		Game.ShowStatusText(string.format("Slow hits %s for %s points", t.Monster.Name, damage))
 	end
 end
