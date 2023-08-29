@@ -234,7 +234,7 @@ currentDamage = (Game.ItemsTxt[i].Mod1DiceCount *Game.ItemsTxt[i]. Mod1DiceSides
 --calculate expected value
 tierRange=upTierDifference+downTierDifference+1
 damageRange=goalDamage-downDamage
-expectedDamageIncrease=damageRange^(downTierDifference/(tierRange-1))
+expectedDamageIncrease=damageRange*(downTierDifference/(tierRange-1))
 Game.ItemsTxt[i].Mod1DiceSides = Game.ItemsTxt[i].Mod1DiceSides + (expectedDamageIncrease / Game.ItemsTxt[i].Mod1DiceCount)
 Game.ItemsTxt[i].Mod2=expectedDamageIncrease/2
 
