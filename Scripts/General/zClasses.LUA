@@ -900,13 +900,15 @@ vars.divineShieldCooldown=vars.divineShieldCooldown or {}
 vars.divineShield=vars.divineShield or {}
 end
 --end table
-function events.CalcDamageToPlayer(t)
-	if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  and vars.divineShield[t.PlayerIndex]==1 then
-	t.Result=0
-	Game.ShowStatusText("Immune")
+function events.GameInitialized2()
+	function events.CalcDamageToPlayer(t)
+		if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  and vars.divineShield[t.PlayerIndex]==1 then
+			t.Result=0
+			Game.ShowStatusText("Immune")
+		end
 	end
 end
---[[activation button	
+--activation button	
 function Keys.E(t)
 CPI=Game.CurrentPlayer
 	if CPI==-1 then
@@ -920,19 +922,19 @@ if Party[CPI].Class==const.Class.Hero or Party[CPI].Class==const.Class.Crusader 
 			else
 				cost=Party[CPI].LevelBase+5
 				if Party[CPI].SP>cost then
-				Party[CPI].SP=Party[CPI].SP-cost
-				Game.ShowStatusText(string.format("%s activates 'Divine Shield'",Party[CPI].Name))
-				vars.divineShield[CPI] = 1
-				vars.divineShieldTime[CPI] = Game.Time + const.Minute * 6
-				vars.divineShieldCooldown[CPI] = Game.Time + const.Minute * 90
+					Party[CPI].SP=Party[CPI].SP-cost
+					Game.ShowStatusText(string.format("%s activates 'Divine Shield'",Party[CPI].Name))
+					vars.divineShield[CPI] = 1
+					vars.divineShieldTime[CPI] = Game.Time + const.Minute * 6
+					vars.divineShieldCooldown[CPI] = Game.Time + const.Minute * 90
 				else 
-				Game.ShowStatusText(string.format("Not enought mana (%s mana needed)",cost))
+					Game.ShowStatusText(string.format("Not enought mana (%s mana needed)",cost))
 				end
 			end
 		end
 	end
 end
-]]
+
 --
 function events.LoadMap(wasInGame)
 local function divineShieldTimer() 
@@ -953,9 +955,9 @@ function events.CalcDamageToMonster(t)
 	 if data then
 		ind=data.Player:GetIndex()
 	 end
-		if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and vars.divineShield[ind]==1 then
-			t.Result=t.Result/2
-		end
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and vars.divineShield[ind]==1 then
+		t.Result=t.Result/2
+	end
 end
 
 -------------end of divine shield---------------
