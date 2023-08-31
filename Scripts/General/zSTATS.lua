@@ -120,11 +120,13 @@ function events.ShowStatDescription(t)
 	i=Game.CurrentPlayer
 	endurance=Party[i]:GetEndurance()
 	HPScaling=Game.Classes.HPFactor[Party[i].Class]
-	
-	
+	if endurance<22 then
+		enduranceBaseEffect=math.max(math.floor((endurance-13)/2),-3)
+	else
+		enduranceBaseEffect=math.floor(endurance/5)
+	end
 	level=Party[i]:GetLevel()
-	
-	Game.StatsDescriptions[3]=string.format("%s\n\nHealth bonus from Endurance: %s%s\n\nFlat HP bonus from Endurance: %s",Game.StatsDescriptionsRework[3],endurance/5,"%",math.floor(endurance/5)*HPScaling)
+	Game.StatsDescriptions[3]=string.format("%s\n\nHealth bonus from Endurance: %s%s\n\nFlat HP bonus from Endurance: %s",Game.StatsDescriptionsRework[3],endurance/5,"%",enduranceBaseEffect*HPScaling)
 	end
 	if t.Stat==4 then
 	i=Game.CurrentPlayer
