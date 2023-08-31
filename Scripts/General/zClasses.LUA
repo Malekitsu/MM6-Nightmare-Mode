@@ -857,39 +857,53 @@ end
 --AUTORESS SKILL
 
 function events.LoadMap(wasInGame)
-vars.divineProtectionCooldown=vars.divineProtectionCooldown or {}
+	vars.divineProtectionCooldown=vars.divineProtectionCooldown or {}
+	for i=0,3 do
+		vars.divineProtectionCooldown[i]=vars.divineProtectionCooldown[i] or 0
+	end
 end
 
 
+function events.GameInitialized2()
 
-function events.CalcDamageToPlayer(t)
-	if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0 then
-		if vars.divineProtectionCooldown[t.PlayerIndex]==nil then
-			vars.divineProtectionCooldown[t.PlayerIndex]=0
-		end		
+	--divine shield
+
+	function events.CalcDamageToPlayer(t)
+		if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  and vars.divineShield[t.PlayerIndex] and vars.divineShield[t.PlayerIndex]>0 then
+			if t.Result>vars.divineShield[t.PlayerIndex] then
+				Game.ShowStatusText("Shield Broken")
+				t.Result=t.Result-vars.divineShield[t.PlayerIndex]
+				t.Result=0
+				vars.divineShield[t.PlayerIndex]=0
+			else
+				vars.divineShield[t.PlayerIndex]=math.max(vars.divineShield[t.PlayerIndex]-t.Result)
+				t.Result=0
+				Game.ShowStatusText("Absorb")
+			end
+		end
+	--divine protection
+		if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0 then
+			if vars.divineProtectionCooldown[t.PlayerIndex]==nil then
+				vars.divineProtectionCooldown[t.PlayerIndex]=0
+			end		
 			if t.Result>=t.Player.HP and Game.Time>vars.divineProtectionCooldown[t.PlayerIndex] then
 				totMana=t.Player:GetFullSP()
 				currentMana=t.Player.SP
 				treshold=totMana/4
 				if currentMana>=treshold then
-				t.Player.SP=t.Player.SP-(totMana/4)
-				--calculate healing
-				mastery=t.Player.Skills[const.Skills.Thievery]
-					if mastery>=64 then 
-					mastery=mastery-64
-					end
-					if mastery>=64 then
-					mastery=mastery-64
-					end
+					t.Player.SP=t.Player.SP-(totMana/4)
+					--calculate healing
+					mastery=SplitSkill(t.Player.Skills[const.Skills.Thievery])
 					heal=(totMana/2)*(1+mastery*0.05)
 					evt[t.PlayerIndex].Add("HP",heal)
 					vars.divineProtectionCooldown[t.PlayerIndex] = Game.Time + const.Minute * 150
 					Game.ShowStatusText("Divine Protection saves you from lethal damage")
-
+					t.Result=math.min(t.Result, t.Player.HP-1)
 				end
 			end	
-		
+		end
 	end
+
 end
 
 -- DIVINE SHIELD 
@@ -898,15 +912,6 @@ function events.LoadMap(wasInGame)
 vars.divineShieldTime=vars.divineShieldTime or {}
 vars.divineShieldCooldown=vars.divineShieldCooldown or {}
 vars.divineShield=vars.divineShield or {}
-end
---end table
-function events.GameInitialized2()
-	function events.CalcDamageToPlayer(t)
-		if (t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  and vars.divineShield[t.PlayerIndex]==1 then
-			t.Result=0
-			Game.ShowStatusText("Immune")
-		end
-	end
 end
 --activation button	
 function Keys.E(t)
@@ -924,7 +929,7 @@ if Party[CPI].Class==const.Class.Hero or Party[CPI].Class==const.Class.Crusader 
 				if Party[CPI].SP>cost then
 					Party[CPI].SP=Party[CPI].SP-cost
 					Game.ShowStatusText(string.format("%s activates 'Divine Shield'",Party[CPI].Name))
-					vars.divineShield[CPI] = 1
+					vars.divineShield[CPI] = Party[CPI]:GetFullHP()
 					vars.divineShieldTime[CPI] = Game.Time + const.Minute * 6
 					vars.divineShieldCooldown[CPI] = Game.Time + const.Minute * 90
 				else 
@@ -1002,9 +1007,9 @@ Game.ClassKinds.SPBase[3] = Game.ClassKinds.SPBase[3]+10
 Game.ClassNames[const.Class.Paladin]="Seraphim"
 Game.ClassNames[const.Class.Crusader]="Angel"
 Game.ClassNames[const.Class.Hero]="Archangel"
-Game.ClassDescriptions[const.Class.Paladin] = "Seraphim is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphim wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n3 HP and 1 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown."
-Game.ClassDescriptions[const.Class.Crusader] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n4 HP and 2 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown."
-Game.ClassDescriptions[const.Class.Hero] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n5 HP and 3 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown."
+Game.ClassDescriptions[const.Class.Paladin] = "Seraphim is a divine warrior, blessed by the gods with otherworldly powers that set him apart from mortal fighters. His origins are shrouded in mystery, but it is said that he was chosen by the divine to carry out their will on the mortal plane. Some whisper that he was born from the union of a mortal and an angel, while others believe that he was created by the gods themselves. Regardless of his origins, there is no denying the power that Seraphim wields, and his presence on the battlefield is a testament to the will of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n3 HP and 1 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants a shield equal to Max HP for 12 seconds, but dealing half damage. 3 minutes cooldown."
+Game.ClassDescriptions[const.Class.Crusader] = "The Angel, the ultimate form of seraphic evolution. Radiant and powerful, they wield holy magic with grace, and their wings span great distances as they soar through the heavens. Their mere presence fills mortals with awe and courage, and they are protectors of the weak and defenders of the just. Truly, the Angel is a magnificent being, a testament to the glory of the divine.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n4 HP and 2 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants a shield equal to Max HP for 12 seconds, but dealing half damage. 3 minutes cooldown."
+Game.ClassDescriptions[const.Class.Hero] = "The Archangel, the pinnacle of angelic evolution. Radiant and powerful, their wings shine like the sun, and their divine presence inspires awe and reverence. They wield holy magic with effortless skill, their swords and shields imbued with the force of the cosmos. As the guardians of the divine realm, their judgment is swift and true, their mercy boundless. The Archangel is the embodiment of divine justice and the ultimate manifestation of angelic might.\n\nStats:\n+20 starting HP and +10 mana points\nProficiency in Plate, Sword, Mace, and Shield (can't dual wield)\n5 HP and 3 mana points gained per level\n\nAbilities:\n\nGods Wrath:Attacks deal extra magic damage based on Light skill (2 damage added per point in Light and Mind, 4 points per mastery Skill)\n\nHoly Strikes: Attacking will heal the most injured party member based on Body skill (2 points per point in Body and Spirit, 3 points per mastery point)\n\nDivine Protection: converts 25% of mana into self-healing when facing lethal attacks (2 healing per mana spent, increased by 5% per mastery point), 5 minutes cooldown.\n\nDivine Shield: Grants a shield equal to Max HP for 12 seconds, but dealing half damage. 3 minutes cooldown."
 end
 end
 end
