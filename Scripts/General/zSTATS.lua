@@ -149,7 +149,11 @@ function events.ShowStatDescription(t)
 	i=Game.CurrentPlayer
 	endurance=Party[i]:GetEndurance()
 	HPScaling=Game.Classes.HPFactor[Party[i].Class]
-	
+	if endurance<22 then
+		enduranceBaseEffect=math.max(math.floor((endurance-13)/2),-3)
+	else
+		enduranceBaseEffect=math.floor(endurance/5)
+	end
 	m=math.ceil(Party[i].Skills[const.Skills.Bodybuilding]/64)
 	s=Party[i].Skills[const.Skills.Bodybuilding]%64
 	if m<3 then
@@ -158,7 +162,7 @@ function events.ShowStatDescription(t)
 		BBHP=s^2-6*s+s*m*HPScaling
 	end
 	fullHP=Party[i]:GetFullHP()
-	enduranceTotalBonus=math.floor(fullHP-fullHP/(1+endurance/500))+math.floor(endurance/5)*HPScaling
+	enduranceTotalBonus=math.floor(fullHP-fullHP/(1+endurance/500))+enduranceBaseEffect*HPScaling
 	
 	level=Party[i]:GetLevel()
 	BASEHP=Game.ClassKinds.HPBase[math.floor(Party[i].Class/3)]+level*HPScaling
