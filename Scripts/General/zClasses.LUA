@@ -1061,15 +1061,17 @@ if HERBALIST~=true then
 				t.Result =t.Result+t.Result*m8/200
 			end
 		end
-
-		function events.CalcDamageToPlayer(t)
-			if (t.Player.Class==const.Class.ArchDruid or t.Player.Class==const.Class.GreatDruid or t.Player.Class==const.Class.Druid) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  then
-				m1=SplitSkill(t.Player.Skills[const.Skills.Air])
-				m4=SplitSkill(t.Player.Skills[const.Skills.Water])			
-				t.Result=t.Result*(1-m1^0.5/10+0.09)-m4^1.25
+		
+		function events.GameInitialized2()
+			function events.CalcDamageToPlayer(t)
+				if (t.Player.Class==const.Class.ArchDruid or t.Player.Class==const.Class.GreatDruid or t.Player.Class==const.Class.Druid) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  then
+					m1=SplitSkill(t.Player.Skills[const.Skills.Air])
+					m4=SplitSkill(t.Player.Skills[const.Skills.Water])			
+					t.Result=t.Result*(1-m1^0.5/10+0.09)-m4^1.25
+				end
 			end
 		end
-
+		
 		function events.CalcDamageToMonster(t)	
 			local data = WhoHitMonster()
 			if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) and t.DamageKind==0 and data.Object==nil then	
