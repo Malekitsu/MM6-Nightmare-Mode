@@ -37,6 +37,7 @@ local PRESETS = {
 	["255MOD"] = false,
 	["colouredStats"] = false,
 	["TRUENIGHTMARE"] = false,
+	["SeraphDivineShield"] = true,
 }
 
 SETTINGS = { }
