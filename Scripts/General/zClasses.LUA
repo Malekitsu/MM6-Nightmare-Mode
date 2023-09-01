@@ -823,7 +823,7 @@ if BERSERKER~=true then
 		--activation button	
 		function Keys.E(t)
 		CPI=Game.CurrentPlayer
-			if CPI==-1 then
+			if CPI==-1 or SETTINGS["SeraphDivineShield"]~=true then
 			return
 			end
 		if Party[CPI].Class==const.Class.Hero or Party[CPI].Class==const.Class.Crusader or Party[CPI].Class==const.Class.Paladin then
