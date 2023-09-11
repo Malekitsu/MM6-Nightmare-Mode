@@ -43,6 +43,9 @@ end
 asddd=0
 function events.ItemGenerated(t)	
 	if t.Item.Number<=134 then
+		if t.Item.Number>=120 then
+			t.Item.ExtraData=1
+		end
 		if t.Item.Number>580 then
 			t.Item.Number=0
 		end
@@ -414,8 +417,13 @@ extrabonus=math.ceil(item.Item.Charges/14)
 if item.Item.Charges%14==7 or item.Item.Charges%14==8 then
 	extrabonus=extrabonus/4
 end
+req1=75
+if SETTINGS["TRUENIGHTMARE"]==true then
+	req1=94
+end
+
 if item.Item.Number<135 then	
-	if (bonus>75 and extrabonus>75) or bonus+extrabonus>150 then
+	if (bonus>req1 and extrabonus>req1) or bonus+extrabonus>req1*2 then
 		Game.ItemsTxt[item.Item.Number].Name=StrColor(255,128,0,string.format("%s %s","Ancient", itemName[item.Item.Number]))	
 		Game.StdItemsTxt[item.Item.Bonus-1].NameAdd = StrColor(255,128,0,enchantAdd2[item.Item.Bonus2-1])
 		
@@ -444,8 +452,11 @@ end
 if item.Item.Number>399 and item.Item.Number<430 then
 	Game.ItemsTxt[item.Item.Number].Name=StrColor(230,204,128,string.format("%s", itemName[item.Item.Number]))
 end
-
-if bonus==100 and extrabonus==100 then
+req2=100
+if SETTINGS["TRUENIGHTMARE"]==true then
+	req2=125
+end
+if bonus==req2 and extrabonus==req2 then
 	Game.ItemsTxt[item.Item.Number].Name=StrColor(255,0,0,string.format("%s %s","Primordial", itemName[item.Item.Number]))
 	if item.Item.Bonus>0 then
 		Game.StdItemsTxt[item.Item.Bonus-1].NameAdd=StrColor(255,0,0,enchantAdd[item.Item.Bonus-1])
