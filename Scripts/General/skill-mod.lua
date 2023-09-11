@@ -1902,7 +1902,9 @@ function events.GameInitialized2()
 				formatSkillRankNumber(newWeaponSkillDamageBonuses[const.Skills.Sword][rank], 225)
 			)
 	end
-	
+	for rank = const.Novice, const.Master do
+		SkillDescriptionsRanks[rank][const.Skills.Thievery]="N/A"
+	end
 --[[	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "slower opponents'.", "slower opponents'. The dagger can also do more damage when you're fighting multiple enemies at once.")
 	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "Expert dagger fighters can wield a dagger in their left hand while using another weapon in their right.", "\nCan be held in left hand as an auxiliary weapon.")
 	Game.SkillDescriptions[const.Skills.Dagger] = Game.SkillDescriptions[const.Skills.Dagger]:gsub( "Master dagger fighters have a chance of doing a triple damage attack.", "\nChance to deliver triple damage per attack.")
