@@ -22,11 +22,11 @@ evt.hint[7] = "Exit"
 evt.map[7] = function()
 	if mapvars.event==false or vars.CelestialArena1 then
 		if vars.CelestialArena1~=nil then  
-			if vars.GameOver~=nil then
-			evt.MoveToMap{X = 14088, Y = 2800, Z = 96, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "OutD3.Odm"}	
-			else
+			if vars.lastFight then
 			Message("That's your final battle, I hope you are ready")
 			evt.MoveToMap{evt.MoveToMap{X = -3657, Y =  -387, Z = 1185, Direction = 0, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "sci-fi.blv"}}	
+			else
+			evt.MoveToMap{X = 14088, Y = 2800, Z = 96, Direction = 1024, LookAngle = 0, SpeedZ = 0, HouseId = 0, Icon = 1, Name = "OutD3.Odm"}	
 			end
 		else
 			Game.ShowStatusText("prove your worth before leaving the Celestial Arena")
