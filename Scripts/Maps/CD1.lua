@@ -89,3 +89,10 @@ evt.map[101] = function()
 		evt.StatusText(23)
 	end
 end
+AES(2241,110)
+evt.map[110] = function()
+	if not mapvars.mex then
+		Message("Something very dangerous lies ahead")
+		mapvars.mex=true
+	end
+end
