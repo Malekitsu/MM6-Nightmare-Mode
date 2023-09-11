@@ -51,7 +51,6 @@ evt.map[100] = function()
 		if TRUENIGHTMARE then
 			vars.TRUENIGHTMARE=true
 		end
-		vars.GameOver=true
 		vars.CelestialArena1=true
 		for i=0,11 do
 			vars.shrineBlessings[i]=0
