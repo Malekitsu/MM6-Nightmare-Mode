@@ -647,7 +647,7 @@ if BERSERKER~=true then
 		--body magic will increase healing done on attack
 		function events.CalcDamageToMonster(t)
 			local data = WhoHitMonster()
-			if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
+				if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
 				--get body
 				body=data.Player.Skills[const.Skills.Body]
 				bodyS,bodyM=SplitSkill(body)
@@ -656,12 +656,12 @@ if BERSERKER~=true then
 				masteryS,masteryM=SplitSkill(mastery)
 				
 				rankBonusM=3
-		if data.Player.Class==const.Class.Crusader then
-				rankBonusM=3
-		end
-		if data.Player.Class==const.Class.Hero then
-				rankBonusM=3
-		end
+				if data.Player.Class==const.Class.Crusader then
+					rankBonusM=3
+				end
+				if data.Player.Class==const.Class.Hero then
+					rankBonusM=3
+				end
 
 				--get spirit
 				spirit=data.Player.Skills[const.Skills.Spirit]
@@ -723,42 +723,31 @@ if BERSERKER~=true then
 				
 		end
 
-		--light and mastery increases melee damage
+		--mind light and mastery increases melee damage
 
-		function events.CalcDamageToMonster(t)
-			local data = WhoHitMonster()
-			if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 and data.Object==nil then
-				--get light
-				light=data.Player.Skills[const.Skills.Light]
-				lightS,lightM=SplitSkill(light)
-				--get mastery
-				mastery=data.Player.Skills[const.Skills.Thievery]
-				masteryS,masteryM=SplitSkill(mastery)
-				rankBonusMD=4
-				--get mind
-				mind=data.Player.Skills[const.Skills.Mind]
-				mindS,mindM=SplitSkill(mind)
-				
-				if data.Player.Class==const.Class.Crusader then
+		function events.CalcStatBonusBySkills(t)
+			if t.Stat==const.Stats.MeleeDamageBase then
+				if t.Player.Class==const.Class.Hero or t.Player.Class==const.Class.Crusader or t.Player.Class==const.Class.Paladin then
+					light=t.Player.Skills[const.Skills.Light]
+					lightS,lightM=SplitSkill(light)
+					--get mastery
+					mastery=t.Player.Skills[const.Skills.Thievery]
+					masteryS,masteryM=SplitSkill(mastery)
+					rankBonusMD=4
+					--get mind
+					mind=t.Player.Skills[const.Skills.Mind]
+					mindS,mindM=SplitSkill(mind)
+					
+					if t.Player.Class==const.Class.Crusader then
 						rankBonusMD=4
-				end
-				if data.Player.Class==const.Class.Hero then
+					end
+					if t.Player.Class==const.Class.Hero then
 						rankBonusMD=4
+					end
+					damage=mindS*2+lightS*2+masteryS*4
+					t.Result=t.Result+damage
 				end
-
-				damage=mindS*2+lightS*2+masteryS*4
-				res=t.Monster.MagicResistance 
-				--simulate rolls and check for immunity
-				roll = 1
-				while (math.random() < (1 - 30/(30 + res))) and (roll <= 4) do
-					damage = damage / 2
-					roll = roll + 1
-				end	
-				if t.Result==0 then 
-					damage=0 
-				end
-				t.Result=t.Result+damage
-				end
+			end
 		end
 
 		--AUTORESS SKILL
@@ -1067,7 +1056,7 @@ if HERBALIST~=true then
 				if (t.Player.Class==const.Class.ArchDruid or t.Player.Class==const.Class.GreatDruid or t.Player.Class==const.Class.Druid) and t.Player.Unconscious==0 and t.Player.Dead==0 and t.Player.Eradicated==0  then
 					m1=SplitSkill(t.Player.Skills[const.Skills.Air])
 					m4=SplitSkill(t.Player.Skills[const.Skills.Water])			
-					t.Result=math.max(t.Result*0.98^m1-m4^1.25,0)
+					t.Result=math.max(t.Result*0.99^m1-m4^1.25,0)
 				end
 			end
 		end
@@ -1076,20 +1065,30 @@ if HERBALIST~=true then
 			local data = WhoHitMonster()
 			if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) and t.DamageKind==0 and data.Object==nil then	
 				mastery=SplitSkill(data.Player.Skills[const.Skills.Thievery])
-				m1=SplitSkill(data.Player.Skills[const.Skills.Air])
 				m2=SplitSkill(data.Player.Skills[const.Skills.Earth])
-				m3=SplitSkill(data.Player.Skills[const.Skills.Fire])
-				m4=SplitSkill(data.Player.Skills[const.Skills.Water])
-				m5=SplitSkill(data.Player.Skills[const.Skills.Spirit])
 				m6=SplitSkill(data.Player.Skills[const.Skills.Body])
 				m7=SplitSkill(data.Player.Skills[const.Skills.Mind])
-				m8=m2+m3+m4+m5+m1+m6+m7
 				data.Player.SP=data.Player.SP+m7
-				t.Result=t.Result*(1+m5/100)+m8*(1+mastery/20)+t.Monster.HP*(m3^0.5/500)+mastery*2
-				data.Player.HP=(data.Player.HP+m6)+m2/100*t.Result
+				data.Player.HP=(data.Player.HP+m6)+(m2^0.4/250)/100*t.Result
+				t.Result=t.Result*(1+m5/100)+math.max(t.Monster.HP*(m3^0.4/250),m3)
 			end
 		end
-
+		function events.CalcStatBonusBySkills(t)
+			if t.Stat==const.Stats.MeleeDamageBase then
+				if t.Player.Class==const.Class.ArchDruid or t.Player.Class==const.Class.GreatDruid or t.Player.Class==const.Class.Druid then	
+					mastery=SplitSkill(t.Player.Skills[const.Skills.Thievery])
+					m1=SplitSkill(t.Player.Skills[const.Skills.Air])
+					m2=SplitSkill(t.Player.Skills[const.Skills.Earth])
+					m3=SplitSkill(t.Player.Skills[const.Skills.Fire])
+					m4=SplitSkill(t.Player.Skills[const.Skills.Water])
+					m5=SplitSkill(t.Player.Skills[const.Skills.Spirit])
+					m6=SplitSkill(t.Player.Skills[const.Skills.Body])
+					m7=SplitSkill(t.Player.Skills[const.Skills.Mind])
+					m8=m2+m3+m4+m5+m1+m6+m7
+					t.Result=t.Result+m8*(0.5+mastery/10)+mastery*2
+				end
+			end
+		end
 		function events.GameInitialized2()
 			Game.ClassNames[const.Class.Druid]="Shaman"
 			Game.ClassNames[const.Class.GreatDruid]="Sekhem"
@@ -1101,9 +1100,9 @@ if HERBALIST~=true then
 			Game.Classes.SPFactor[const.Class.Druid] = 1
 			Game.Classes.SPFactor[const.Class.GreatDruid] = 1.5
 			Game.Classes.SPFactor[const.Class.ArchDruid] = 2
-			Game.ClassDescriptions[const.Class.Druid] = "The Shaman is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by ca 1.5%\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 5% per mastery point) and 2 more per each point in mastery (cannot be resisted)\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
-			Game.ClassDescriptions[const.Class.GreatDruid] = "The Sekhem is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by ca 1.5%\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 5% per mastery point) and 2 more per each point in mastery (cannot be resisted)\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
-			Game.ClassDescriptions[const.Class.ArchDruid] = "The MarabouFetishist is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by 2% (multiplicative)\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 5% per mastery point) and 2 more per each point in mastery (cannot be resisted)\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
+			Game.ClassDescriptions[const.Class.Druid] = "The Shaman is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by 1% (multiplicative)\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 10% per mastery point) and 2 more per each point in mastery\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
+			Game.ClassDescriptions[const.Class.GreatDruid] = "The Sekhem is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by 1% (multiplicative)\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 5% per mastery point) and 2 more per each point in mastery (cannot be resisted)\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
+			Game.ClassDescriptions[const.Class.ArchDruid] = "The MarabouFetishist is a mystical warrior whose knowledge of magic enhances his martial prowess.\n\n - Each rank in Magic schools will increase spell damage and healing by 0.5%\n - Each point in Air will reduce damage by 1% (multiplicative)\n - Each point in Water will reduce damage by Skill^1.25 (not influenced by AC reduction)\n\nMelee damage calculation:\n - Each point in spirit will increase damage by 1%\n - Each point in any schools will increase damage by 1 (increased by 5% per mastery point) and 2 more per each point in mastery (cannot be resisted)\n - Each point in Fire will deal around 0.025% of total monster HP as damage (cannot be resisted)\n\nRecovery on Melee attack:\n - Each point in Earth will heal by 1% of damage\n - Each point in Body will heal by 1\n - Each point in mind will restore 1 mana"
 
 		end
 	end
