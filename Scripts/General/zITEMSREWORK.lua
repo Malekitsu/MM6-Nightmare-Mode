@@ -553,8 +553,8 @@ function events.GameInitialized2()
 	Game.SpcItemsTxt[53].BonusStat=" +15 Endurance and Regenerate HP over time."
 	--new tooltips
 	Game.SpcItemsTxt[17].BonusStat="Disease and Curse Immunity"
-	Game.SpcItemsTxt[18].BonusStat="Insanity and fear Immunity"
-	Game.SpcItemsTxt[19].BonusStat="Paralysis and SP drain Immunity"
+	Game.SpcItemsTxt[18].BonusStat="Insanity and SP drain Immunity"
+	Game.SpcItemsTxt[19].BonusStat="Paralysis and fear Immunity"
 	Game.SpcItemsTxt[20].BonusStat="Poison and weakness Immunity"
 	Game.SpcItemsTxt[21].BonusStat="Sleep and Unconscious Immunity"
 	Game.SpcItemsTxt[22].BonusStat="Stone and premature ageing Immunity"
