@@ -438,7 +438,7 @@ if BLOODKNIGHT==true then
 			if (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and vampiricAttacks~=nil and vampiricAttacks>0 and t.DamageKind==0 and data.Object==nil then
 			vampiricAttacks=vampiricAttacks-1
 				if SETTINGS["TRUENIGHTMARE"]==true then
-					data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.5)
+					data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery*0.75)
 				else
 					data.Player.HP=data.Player.HP+t.Result*(0.1+0.005*mastery)
 				end
@@ -583,9 +583,9 @@ if NECROMANCER==true then
 		if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 		fullHP=data.Player:GetFullHP()
 		if SETTINGS["TRUENIGHTMARE"]==true then
-		data.Player.HP=math.min(data.Player.HP+t.Result*0.015,fullHP)
-		else
 		data.Player.HP=math.min(data.Player.HP+t.Result*0.03,fullHP)
+		else
+		data.Player.HP=math.min(data.Player.HP+t.Result*0.04,fullHP)
 		end
 		--get endurance 
 		endurance=data.Player:GetEndurance()
