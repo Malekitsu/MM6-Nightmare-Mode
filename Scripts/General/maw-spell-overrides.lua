@@ -2177,7 +2177,11 @@ function events.MonsterHitByObject(t)
 				damage=damage+math.random(1,18)
 			end	
 		end
-		damage=t.Monster:CalcTakenDamage(const.Damage.Magic, damage)
+		res=t.Monster.MagicResistance
+		roll = 1
+		while (math.random() < (1 - 30/(30 + res))) and (roll <= 4) do
+			damage = damage / 2
+			roll = roll + 1
 		if t.Monster.HP>damage then
 			t.Monster.HP=t.Monster.HP-damage	
 			t.Monster:GotHit(t.Object.Owner)
