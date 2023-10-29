@@ -1068,8 +1068,8 @@ if HERBALIST~=true then
 				m2=SplitSkill(data.Player.Skills[const.Skills.Earth])
 				m6=SplitSkill(data.Player.Skills[const.Skills.Body])
 				m7=SplitSkill(data.Player.Skills[const.Skills.Mind])
-				data.Player.SP=data.Player.SP+m7
-				data.Player.HP=(data.Player.HP+m6)+(m2^0.4/250)/100*t.Result
+				data.Player.SP=math.min(data.Player.SP+m7, data.Player:GetFullSP())
+				data.Player.HP=math.min((data.Player.HP+m6)+(m2^0.4/250)/100*t.Result, data.Player:GetFullHP())
 				t.Result=t.Result*(1+m5/100)+math.max(t.Monster.HP*(m3^0.4/250),m3)
 			end
 		end
