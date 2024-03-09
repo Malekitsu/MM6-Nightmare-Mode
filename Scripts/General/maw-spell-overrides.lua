@@ -2100,7 +2100,7 @@ function events.Tick()
 	if Game.TurnBasedPhase==0 then
 		if mapvars.monstersVelocity then
 			for index, value in pairs(mapvars.monstersVelocity) do
-				if value>0 then
+				if value>0 and index<=Map.Monsters.High then
 					Map.Monsters[index].Velocity=value
 				end
 			end
