@@ -1034,7 +1034,7 @@ function events.CalcSpellDamage(t)
 		ringNerf=1
 		artifactNerf=1
 		data=WhoHitMonster()
-		if data.Player then
+		if data and data.Player then
 			for it in data.Player:EnumActiveItems() do
 				if it.Bonus2 == 34 and t.Spell>22 and t.Spell<=33 then		
 					ringNerf=0.8
