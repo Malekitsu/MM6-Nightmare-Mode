@@ -2027,7 +2027,7 @@ end
 
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-	if data.Object then
+	if data and data.Object then
 		if data.Object.Spell==18 and data.Object.SpellMastery==3 then
 			monsterIndex=getClosestMonsterInRange(t.Monster.X,t.Monster.Y,t.Monster.Z,512)
 			if monsterIndex~=nil then
@@ -2275,7 +2275,7 @@ for i=0,Map.Objects.high do
 end
 --will remove 1/4 hp vs unique monsters, chances above 100 will increase kill chance, but will not be increased by "of dark" enchant
 function events.CalcDamageToMonster(t)
-data=WhoHitMonster()
+        data=WhoHitMonster()
 	if data and data.Object and data.Object.Spell==0 then
 		t.Result=0
 		skill=data.Player.Skills[const.Skills.Dark]
@@ -2354,8 +2354,8 @@ end
 
 --[[dark containment black hole
 function events.CalcDamageToMonster(t)
-data=WhoHitMonster()
-	if data.Object and data.Object.Spell==99 then
+        data=WhoHitMonster()
+	if data and data.Object and data.Object.Spell==99 then
 		data.Object.TypeIndex=222
 		monsterData=getMonstersInRange(t.Monster.X,t.Monster.Y,t.Monster.Z,100024)
 		blackHole=true
