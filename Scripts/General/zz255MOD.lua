@@ -293,8 +293,8 @@ spellbonusdamage2[15] = 180
 
 aoespells = {6, 7, 8, 9, 10, 15, 22, 26, 32, 41, 43, 84, 92, 97, 98, 99}
 function events.CalcSpellDamage(t)
-data=WhoHitMonster()
-	if data.Player then
+	data=WhoHitMonster()
+	if data and data.Player then
 		it=data.Player:GetActiveItem(1)
 		if it then
 			if (it.Bonus2 >= 4 and (it.Bonus2 <= 15) or it.Bonus2 == 46) and it.ExtraData>0 then
@@ -330,7 +330,7 @@ end
 --[[
 function events.CalcDamageToMonster(t)
     local data = WhoHitMonster()
-    if data.Player and data.Object ~= nil and data.Object.Spell<100 then
+    if data and data.Player and data.Object ~= nil and data.Object.Spell<100 then
 		
 		it=data.Player:GetActiveItem(0)
 			
