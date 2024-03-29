@@ -2,11 +2,13 @@ if SETTINGS["StatsRework"]==true then
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()	
 	--might bonus
+	if data and data.Player then
 		if t.DamageKind==0 and (data.Object==nil or data.Object.Spell==100) then
 		might=data.Player:GetMight()
 		damageBonus=might/500		
 		t.Result=t.Result*(1+damageBonus)
 		end
+	end
 end
 
 --speed
@@ -24,17 +26,19 @@ end
 
 --intellect/personality
 function events.CalcSpellDamage(t)
-	local data = WhoHitMonster()	
-	intellect=data.Player:GetIntellect()	
-	personality=data.Player:GetPersonality()
-	luck=data.Player:GetLuck()
-	bonus=math.max(intellect,personality)
-	critDamage=bonus/500
-	t.Result=t.Result*(1+bonus/500)
-	critChance=50+luck
-	roll=math.random(1, 1000)
-	if roll <= critChance then
-		t.Result=t.Result*(1.5+critDamage)
+	local data = WhoHitMonster()
+	if data and data.Player then
+		intellect=data.Player:GetIntellect()
+		personality=data.Player:GetPersonality()
+		luck=data.Player:GetLuck()
+		bonus=math.max(intellect,personality)
+		critDamage=bonus/500
+		t.Result=t.Result*(1+bonus/500)
+		critChance=50+luck
+		roll=math.random(1, 1000)
+		if roll <= critChance then
+			t.Result=t.Result*(1.5+critDamage)
+		end
 	end
 end
 
