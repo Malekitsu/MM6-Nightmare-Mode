@@ -21,7 +21,7 @@ if ASSASSIN~=true then
 		function events.CalcSpellDamage(t)
 		--get mastery
 			local data = WhoHitMonster()
-			if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
+			if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
 				mastery=SplitSkill(data.Player.Skills[const.Skills.Thievery])
 				modif = data.Player.LevelBase
 					modik = data.Player.Exp
@@ -116,7 +116,7 @@ if ASSASSIN==true then
 	--get mastery
 
 		local data = WhoHitMonster()
-		if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then		
+		if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then		
 		mastery, rank=SplitSkill(data.Player.Skills[const.Skills.Thievery])
 		i=data.Player:GetIndex()
 		if comboPoint[i]==nil then
@@ -243,7 +243,7 @@ if BERSERKER==true then
 		--removes Raise dead:
 		function events.CalcDamageToMonster(t)	
 			local data = WhoHitMonster()	
-			if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and t.DamageKind==0 and data.Object==nil then
+			if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and data.Player.Insane==0 and t.DamageKind==0 and data.Object==nil then
 				if data.Player.Spells[53]==true then
 				data.Player.Spells[53]=false
 				Message("Berserkers are known for taking lives rather than giving them. They are not typically associated with the ability to bring the dead back to life. You lost your raise dead ability.")
@@ -486,7 +486,7 @@ if SHAMAN~=true then
 
 		function events.CalcSpellDamage(t)
 			local data = WhoHitMonster()
-			if data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
+			if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
 				t.Result =t.Result*0.85
 			end
 		end
@@ -552,7 +552,7 @@ if NECROMANCER==true then
 	--mastery increasing cost by 5% and deal extra damage by mana*spent^0.7*mastery skill
 	function events.CalcSpellDamage(t)
 		local data = WhoHitMonster()
-			if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
+			if data and data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 				--get Mastery level
 			mastery=data.Player.Skills[const.Skills.Thievery]
 			masteryS,masteryM=SplitSkill(mastery)
@@ -580,7 +580,7 @@ if NECROMANCER==true then
 	--leech 3% of damage and replenish 3% mana if spell kills an enemy
 	function events.CalcSpellDamage(t)
 		local data = WhoHitMonster()
-		if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
+		if data and data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 		fullHP=data.Player:GetFullHP()
 		if SETTINGS["TRUENIGHTMARE"]==true then
 		data.Player.HP=math.min(data.Player.HP+t.Result*0.03,fullHP)
@@ -853,7 +853,7 @@ if BERSERKER~=true then
 		--reduced damage when in divine shield
 		function events.CalcDamageToMonster(t)
 			 data=WhoHitMonster()
-			 if data then
+			 if data and data.Player then
 				ind=data.Player:GetIndex()
 			 end
 			if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and vars.divineShield[ind]==1 then
@@ -866,7 +866,7 @@ if BERSERKER~=true then
 		---deactivate offhand weapon
 		function events.CalcDamageToMonster(t)
 			 data=WhoHitMonster()
-			 if data then
+			 if data and data.Player then
 				item=data.Player:GetActiveItem(0)
 			 end
 			 if item~=nil then
@@ -973,7 +973,7 @@ if NECROMANCER~=true then
 
 		function events.CalcSpellDamage(t)
 			local data = WhoHitMonster()
-			if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
+			if data and data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 				--get Mastery level
 				mastery=SplitSkill(data.Player.Skills[const.Skills.Thievery])
 				modik = data.Player.LevelBase
@@ -1038,7 +1038,7 @@ if HERBALIST~=true then
 
 		function events.CalcSpellDamage(t)
 			local data = WhoHitMonster()
-			if data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
+			if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
 				m1=SplitSkill(data.Player.Skills[const.Skills.Air])
 				m2=SplitSkill(data.Player.Skills[const.Skills.Earth])
 				m3=SplitSkill(data.Player.Skills[const.Skills.Fire])
