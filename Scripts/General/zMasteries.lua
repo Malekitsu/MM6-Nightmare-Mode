@@ -10,7 +10,7 @@ if ASHIKARI~=true then
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
+	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) then	
 	m1=data.Player.Skills[const.Skills.Axe]
 		if m1>=64 then 
 		m1=m1-64
@@ -68,7 +68,7 @@ end
 end
 
 function events.CalcDamageToMonster(t)	
-local data = WhoHitMonster()
+	local data = WhoHitMonster()
 	if data and data.Player and (data.Player.Class==const.Class.WarriorMage or data.Player.Class==const.Class.BattleMage or data.Player.Class==const.Class.Archer) and t.DamageKind==0 then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
@@ -192,7 +192,7 @@ end
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) then	
+	if data and data.Player and (data.Player.Class==const.Class.HighPriest or data.Player.Class==const.Class.Priest or data.Player.Class==const.Class.Cleric) then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -268,7 +268,7 @@ end
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
+	if data and data.Player and (data.Player.Class==const.Class.ArchDruid or data.Player.Class==const.Class.GreatDruid or data.Player.Class==const.Class.Druid) then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -356,7 +356,7 @@ end
 
 function events.CalcDamageToMonster(t)
 	local data = WhoHitMonster()
-		if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 then
+	if data and data.Player and (data.Player.Class==const.Class.Champion or data.Player.Class==const.Class.Cavalier or data.Player.Class==const.Class.Knight) and t.DamageKind==0 then
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
@@ -452,7 +452,7 @@ end
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) then	
+	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) then	
 	m1=data.Player.Skills[const.Skills.Axe]
 		if m1>=64 then 
 		m1=m1-64
@@ -509,7 +509,7 @@ end
 end
 
 function events.CalcDamageToMonster(t)	
-local data = WhoHitMonster()
+	local data = WhoHitMonster()
 	if data and data.Player and (data.Player.Class==const.Class.Hero or data.Player.Class==const.Class.Crusader or data.Player.Class==const.Class.Paladin) and t.DamageKind==0 then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
@@ -599,7 +599,7 @@ if SHADOW~=true then
 
 function events.CalcSpellDamage(t)
 	local data = WhoHitMonster()
-	if data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
+	if data and data.Player and (data.Player.Class==const.Class.ArchMage or data.Player.Class==const.Class.Wizard or data.Player.Class==const.Class.Sorcerer) then	
 	mastery=data.Player.Skills[const.Skills.Thievery]
 	if mastery>=64 then 
 	mastery=mastery-64
