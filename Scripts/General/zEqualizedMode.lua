@@ -1,16 +1,18 @@
 
 EM=SETTINGS["EqualizedMode"]
 if EM==true then
-function events.CalcDamageToMonster(t)	
-	local data = WhoHitMonster()
-	local PL = data.Player.LevelBase
-	local ML = t.Monster.Level
-if PL > ML then
-t.Result=t.Result*(2+ML)/(2+PL)
-elseif ML > PL then
-t.Result=t.Result*(0.5+(2+ML)/(2+PL)/2)
-end
-end
+	function events.CalcDamageToMonster(t)	
+		local data = WhoHitMonster()
+		if data and data.Player then
+			local PL = data.Player.LevelBase
+			local ML = t.Monster.Level
+			if PL > ML then
+				t.Result=t.Result*(2+ML)/(2+PL)
+			elseif ML > PL then
+				t.Result=t.Result*(0.5+(2+ML)/(2+PL)/2)
+			end
+		end
+	end
 
 function events.CalcDamageToPlayer(t)
 
