@@ -1216,3 +1216,28 @@ function events.GameInitialized2()
 		mon.Experience=mon.Level^1.8+mon.Level*20
 	end
 end
+
+function events.LoadMap(wasInGame)
+	function checkOutOfBound()
+		if Map.IndoorOrOutdoor==2 then
+			for i=0, Map.Monsters.High do
+				monster=Map.Monsters[i]
+				-- Check and adjust X coordinate
+				if monster.X > 22528 then
+					monster.X = 22400
+				elseif monster.X < -22528 then
+					monster.X = -22400
+				end
+
+				-- Check and adjust Y coordinate
+				if monster.Y > 22528 then
+					monster.Y = 22400
+				elseif monster.Y < -22528 then
+					monster.Y = -22400
+				end
+			end
+		end
+	end
+
+	Timer(checkOutOfBound, const.Minute) 
+end
